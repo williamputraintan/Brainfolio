@@ -68,17 +68,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SignInSide() {
+export default function SignUp() {
   const classes = useStyles();
 
+
   return (
-    
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Slide in={true} direction='right' >
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      </Slide>
-      <Slide direction='left' in={true} >
+      <Slide direction='down' in={true}>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -86,7 +83,7 @@ export default function SignInSide() {
           </Avatar>
           <Typography >
                 <div className={classes.title}>
-                    Sign in
+                    Sign Up
                 </div>
           </Typography>
           <form className={classes.form} noValidate>
@@ -106,13 +103,32 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
+              name="first name"
+              label="First Name"
+              type="first name"
+              id="first name"
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="last name"
+              label="Last Name"
+              type="last name"
+              id="last name"
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            
             <Button
               type="submit"
               fullWidth
@@ -120,14 +136,12 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
-              <Grid item xs>
-              </Grid>
               <Grid item>
-                <Link href="/signUp" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/signIn" variant="body2">
+                  {"Already a member? Sign In"}
                 </Link>
               </Grid>
             </Grid>
@@ -138,10 +152,9 @@ export default function SignInSide() {
         </div>
       </Grid>
       </Slide>
+      <Slide in={true} direction='up'>
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      </Slide>
     </Grid>
- 
-  
-
-   
   );
 }

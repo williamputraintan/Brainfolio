@@ -2,15 +2,19 @@ import React from 'react';
 import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 
 import SignIn from './pages/SignIn.js'
+import SignUp from './pages/SignUp.js'
+import NavigationBar from './components/NavigationBar.js'
 
 function App() {
   return (
     <div className="App">
+      
       <Router>
-        <Switch>
-            <Route path="/SignIn" component={SignIn}/>
-          
-        </Switch>
+        <NavigationBar/> 
+          <Switch>
+              <Route path="/signIn" component={SignIn}/> 
+              <Route path="/signUp" component={SignUp}/>
+          </Switch>
       </Router>
     </div>
   );
