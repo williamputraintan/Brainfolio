@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -13,8 +11,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
-
-import WelcomeImg from '../images/welcome.png';
 
 function Copyright() {
   return (
@@ -29,6 +25,7 @@ function Copyright() {
   );
 }
 
+var WelcomeImg;
 const font =  "'Raleway', sans-serif";
 
 const useStyles = makeStyles((theme) => ({
@@ -69,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
+
+  WelcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   const classes = useStyles();
 
   return (

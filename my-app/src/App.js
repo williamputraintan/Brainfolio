@@ -1,9 +1,11 @@
 import React from 'react';
 import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 
-import SignIn from './pages/SignIn.js'
-import SignUp from './pages/SignUp.js'
-import NavigationBar from './components/NavigationBar.js'
+import NavigationBar from './components/NavigationBar.js';
+import SignIn from './pages/SignIn.js';
+import SignUp from './pages/SignUp.js';
+import AboutUs from './pages/AboutUs.js';
+
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Switch>
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
+              <Route path="/aboutUs" component={AboutUs}/>
+
           </Switch>
       </Router>
     </div>
