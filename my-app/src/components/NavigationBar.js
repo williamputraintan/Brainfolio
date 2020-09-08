@@ -1,27 +1,25 @@
   import React from 'react';
-  import { Nav, Navbar, Form, FormControl,Row,Col,NavDropdown,Button} from "react-bootstrap";
+  import { Nav, Navbar, Form,Col,Button} from "react-bootstrap";
   import logo from "../images/logo-transparent.png"
   import SearchIcon from '@material-ui/icons/Search';
 
 import './NavBar.css';
 
-  function SearchBar(props){
+  // function SearchBar(props){
     
-      return <Form className='searchbar'>
-           <Form.Row>
-           <Col xs={10}>
+  //     return <Form className='searchbar'>
+  //          <Form.Row>
+  //          <Col xs={10}>
                 
-                 <Form.Control placeholder="Search" />
-              </Col>
-               <Col >
-                 <Button variant="link"><SearchIcon/></Button>
-              </Col>  
-            </Form.Row>
-           </Form>;
-    
-  }
+  //                <Form.Control placeholder="Search" />
+  //             </Col>
+  //              <Col >
+  //                <Button variant="link"><SearchIcon/></Button>
+  //             </Col>  
+  //           </Form.Row>
+  //          </Form>;
+  // }
  
-
   
   export default function NavigationBar(props) {
   
