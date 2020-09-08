@@ -6,7 +6,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { Container } from '@material-ui/core';
-import image from '../../images/bluebulb-logo-t.png';
+import image from '../../images/logo-transparent.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
