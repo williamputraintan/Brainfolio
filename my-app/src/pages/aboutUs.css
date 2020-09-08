@@ -1,9 +1,9 @@
-
 .about-container{
     min-width: 100%;
     margin:0;
     padding-right: 0px;
     padding-left: 0px;
+    font-family: 'Lato', sans-serif; 
 }
 .whatwedo{
     background: url('../images/whatwedo.png') center center/cover no-repeat;
@@ -39,9 +39,9 @@
     height:70vh;
     width:100%;
     text-align: center;
-    padding: 2% 2% 5% 2%;
+    padding: 4%;
     overflow: hidden;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;  
 }
 
 .instructions img{
@@ -50,19 +50,18 @@
     margin:auto;
     display: block;
     overflow: hidden;
+
 }
 .meettheteam{
     background-color: white;
-    height:100vh;
+    height:150vh;
+    padding:5%;
+    
 }
 .meettheteam>h2{
     font-size:40px;
     color:black;
     text-align: center;
-}
-.desc{
-    font-family: 'Raleway', sans-serif;
-    padding: 0 10% 0 10%;
 }
 
 
