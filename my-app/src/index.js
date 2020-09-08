@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ProjectPage from './components/project/projectPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProjectPage />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

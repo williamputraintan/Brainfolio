@@ -21,7 +21,7 @@ function ProjectAuthor() {
                     <Card>
                         <CardHeader
                         avatar={
-                            <Avatar aria-label="recipe" className={classes.avatar}>
+                            <Avatar className={classes.avatar}>
                             </Avatar>
                         }
                         title="Name | Author"

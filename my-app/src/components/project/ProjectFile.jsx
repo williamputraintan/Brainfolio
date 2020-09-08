@@ -6,6 +6,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { Container } from '@material-ui/core';
+import image from '../../images/bluebulb-logo-t.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,27 +31,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 const tileData = [
     {
-        img: 'image',
+        img: image,
         title: 'Title',
         author: 'Author'
     },
     {
-        img: 'image',
+        img: image,
+        title: 'Picture Title',
+        author: 'Author'
+    },
+    {
+        img: image,
         title: 'Title',
         author: 'Author'
     },
     {
-        img: 'image',
+        img: image,
         title: 'Title',
         author: 'Author'
     },
     {
-        img: 'image',
-        title: 'Title',
-        author: 'Author'
-    },
-    {
-        img: 'image',
+        img: image,
         title: 'Title',
         author: 'Author'
     },

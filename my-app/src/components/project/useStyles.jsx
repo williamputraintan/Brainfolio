@@ -1,7 +1,11 @@
 import React from "react"
 import { makeStyles } from '@material-ui/core/styles';
+import { colors } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  back: {
+    padding: theme.spacing(1, 0, 1),
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -27,13 +31,34 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
   },
+  comment: {
+    width:'75%',
+    maxWidth:'md'
+
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
-  likeSpacing: {
+  like: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(3, 2, 0),
+    float: "right",
+    padding: theme.spacing(2, 0, 2),
+  },
+  // Comment's
+  paper: {
+    padding: theme.spacing(2),
+    margin: '2',
+    maxWidth: 'md',
+    // border: 1,
+  },
+  space: {
+    padding: theme.spacing(2),
+    maxWidth:'md',
+  },
+  post: {
+    float: "right",
+    padding: theme.spacing(1,0,1),
   },
 }));
 
