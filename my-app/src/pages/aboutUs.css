@@ -32,14 +32,27 @@
     left: 15%;
     top:42%;
     font-size: 30px;
+     
 }
 
 .instructions{
-    background-color:#DBDBDB;
+    background-color:#DFDFDF;
     height:70vh;
     width:100%;
-}
+    text-align: center;
+    padding: 2% 2% 5% 2%;
+    overflow: hidden;
 
+    
+  
+}
+.instructions img{
+        max-width: 40%;
+        max-height: 40%;
+        margin:auto;
+        display: block;
+        overflow: hidden;
+}
 .meettheteam{
     background-color: white;
     height:100vh;
@@ -47,5 +60,7 @@
 .meettheteam>h2{
     font-size:40px;
     color:black;
+    text-align: center;
 }
+
 
