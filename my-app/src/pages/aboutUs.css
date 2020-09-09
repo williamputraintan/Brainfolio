@@ -20,17 +20,21 @@
 .whatwedo>h1{
     color:white;
     position: absolute;
+    /* justify-content: right; */
     text-align: center;
     left: 15%;
-    top:35%;
-    font-size: 50px;
+    top:45%;
+    font-size: 40px;
 }
 .whatwedo>h2{
     color:white;
     position: absolute;
     text-align: center;
+    /* justify-content: center; */
+    /* left: 50%; */
+    top:52%;
     left: 15%;
-    top:42%;
+    
     font-size: 30px; 
 }
 

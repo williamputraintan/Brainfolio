@@ -101,9 +101,11 @@ export default function VerticalTabs() {
                 <h1 style={{textAlign: "left", paddingBottom:"2%"}}>
                     Create your account
                 </h1>
-                <h5 style={{textAlign: "left", paddingBottom:"2%"}}>Add description here</h5>
-            <Button variant="outlined" color="primary"  style={{position:'center'}} >
-                Click here to Sign Up
+                <h5 style={{textAlign: "left", paddingBottom:"2%"}}>
+                  Join Brainfolio to link with your colleagues and <br/>
+                  showcase your portfolio </h5>
+            <Button variant="outlined" color="primary"  style={{position:'center', fontFamily:"'Lato', sans-serif"}} >
+                Get started
             </Button>
             <img src={step1} style={{float: "right"}} alt="create your account "></img>
             </div>
@@ -113,7 +115,10 @@ export default function VerticalTabs() {
                 <h1 style={{textAlign: "right"}}>
                     Edit your profile
                 </h1>
-                <h5 style={{textAlign: "right"}}>Add description here</h5>
+                <h5 style={{textAlign: "right"}}>
+                  Upload your profile picture <br/>
+                  and your previous projects 
+                  </h5>
                 <img src={step2} style={{float: "left"}} alt="edit your profile"></img>
             </div>
         </TabPanel>
@@ -122,16 +127,22 @@ export default function VerticalTabs() {
                 <h1 style={{textAlign: "left"}}>
                     Connect with your friends
                 </h1>
-                <h5 style={{textAlign: "left"}}>Add description here</h5>
+                <h5 style={{textAlign: "left"}}>
+                  Find your friends and connect to see <br/>
+                  what they have been up to
+                  </h5>
                 <img src={step3} style={{float: "right"}} alt="connect with friends "></img>
             </div>
         </TabPanel>
         <TabPanel value={value} index={3}>
             <div className="desc">
                 <h1 style={{textAlign: "right"}}>
-                    Create your own post!
+                    Create your own post
                 </h1>
-                <h5 style={{textAlign: "right"}}>Add description here</h5>
+                <h5 style={{textAlign: "right"}}>
+                  Post your projects and <br/>
+                  experiencs to let your colleagues know
+                </h5>
                 <img src={step4} style={{float: "left"}} alt="create your own post"></img>
             </div>
         </TabPanel>
@@ -140,7 +151,10 @@ export default function VerticalTabs() {
                 <h1 style={{textAlign: "left"}}>
                     Comment and like on other's posts
                 </h1>
-                <h5 style={{textAlign: "left"}}>Add description here</h5>
+                <h5 style={{textAlign: "left"}}>
+                  Leave comments and reactions on <br/>
+                  your connections' posts to encourage them
+                </h5>
                 <img src={step5} style={{float: "right"}} alt="react to other's post "></img>
             </div>
         </TabPanel>
