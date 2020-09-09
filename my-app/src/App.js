@@ -5,7 +5,7 @@ import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
 import NavigationBar from './components/NavigationBar.js'
 
-import Timeline from './pages/Timeline.js'
+import Timeline from './pages/Timeline/Timeline.jsx'
 
 function App() {
   return (
