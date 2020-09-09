@@ -7,6 +7,8 @@ import SignUp from './pages/SignUp.js';
 import AboutUs from './pages/AboutUs.js';
 
 
+import Timeline from './pages/Timeline/Timeline.jsx'
+
 function App() {
   return (
     <div className="App">
@@ -14,6 +16,9 @@ function App() {
       <Router>
         <NavigationBar/> 
           <Switch>
+            
+              <Route path="/" component={Timeline}/> 
+
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
               <Route path="/aboutUs" component={AboutUs}/>
