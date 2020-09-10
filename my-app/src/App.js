@@ -15,10 +15,10 @@ function App() {
         <NavigationBar/> 
           <Switch>
             
-              <Route path="/" component={Timeline}/> 
-
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
+
+              <Route path="/" component={Timeline}/> 
           </Switch>
       </Router>
     </div>
