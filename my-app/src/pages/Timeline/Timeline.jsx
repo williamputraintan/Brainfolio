@@ -15,12 +15,15 @@ import Avatar from '@material-ui/core/Avatar';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
+import Display from './ProjectDisplay.jsx'
+
 
 const useStyles = makeStyles({
   root: {
 
-    
+
     maxWidth: '90%',
+    marginTop: 25,
     margin: 'auto',
   },
   gridList: {
@@ -29,7 +32,7 @@ const useStyles = makeStyles({
     transform: 'translateZ(0)',
   },
   background:{
-    background: 'linear-gradient(90deg, #041e42,#5C788F)',
+    // background: 'linear-gradient(90deg, #041e42,#5C788F)',
   }
 
 });
@@ -68,31 +71,17 @@ export default function MediaCard() {
   const classes = useStyles();
 
   return (
-    <div className={classes.background}>
     <div className={classes.root}>
       <Grid
         container
         direction="column"
         // justify="center"
         // alignItems="left"
-        spacing={1}
+        spacing={2}
       >
       {datas.map((data) => (
-        <Grid item xs={8} container>
-          <Grid item xs={12}>
-            <Card>
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {data.Title}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    {data.Description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
+        <Grid item xs={8} container direction="column">
+          <Display projectDetails={data}/>
 
 
 
@@ -128,7 +117,6 @@ export default function MediaCard() {
 
 
  
-    </div>
     </div>
 
   );

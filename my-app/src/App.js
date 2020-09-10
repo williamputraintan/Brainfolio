@@ -19,13 +19,13 @@ function App() {
         <NavigationBar/> 
           <Switch>
             
-              <Route path="/" component={Timeline}/> 
-
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
 
+
+              <Route path="/" component={Timeline}/> 
           </Switch>
       </Router>
     </div>
