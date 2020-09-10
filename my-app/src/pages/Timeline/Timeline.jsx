@@ -21,7 +21,6 @@ import Display from './ProjectDisplay.jsx'
 const useStyles = makeStyles({
   root: {
 
-
     maxWidth: '90%',
     marginTop: 25,
     margin: 'auto',
