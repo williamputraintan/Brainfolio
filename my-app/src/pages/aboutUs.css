@@ -1,0 +1,71 @@
+.about-container{
+    min-width: 100%;
+    margin:0;
+    padding-right: 0px;
+    padding-left: 0px;
+    font-family: 'Lato', sans-serif; 
+}
+.whatwedo{
+    background: url('../images/whatwedo.png') center center/cover no-repeat;
+    height: 80vh;
+    min-width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    object-fit: cover;
+    margin: 0;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.whatwedo>h1{
+    color:white;
+    position: absolute;
+    /* justify-content: right; */
+    text-align: center;
+    left: 15%;
+    top:45%;
+    font-size: 40px;
+}
+.whatwedo>h2{
+    color:white;
+    position: absolute;
+    text-align: center;
+    /* justify-content: center; */
+    /* left: 50%; */
+    top:52%;
+    left: 15%;
+    
+    font-size: 30px; 
+}
+
+.instructions{
+    background-color:white;
+    height:70vh;
+    width:100%;
+    text-align: center;
+    padding: 4%;
+    overflow: hidden;
+    font-family: 'Raleway', sans-serif;  
+}
+
+.instructions img{
+    max-width: 40%;
+    max-height: 40%;
+    margin:auto;
+    display: block;
+    overflow: hidden;
+
+}
+.meettheteam{
+    background-color: white;
+    height:150vh;
+    padding:5%;
+    
+}
+.meettheteam>h2{
+    font-size:40px;
+    color:black;
+    text-align: center;
+}
+
+

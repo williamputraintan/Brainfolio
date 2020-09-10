@@ -1,7 +1,15 @@
 .navbar{
     background-color: #fff;
     border-bottom: 1px solid #ebeaeb;
+    width:100%;
 }
 .img{
     padding-bottom: 10%;
 }
+.searchbar{
+    width:25%;
+  
+
+}
+
+

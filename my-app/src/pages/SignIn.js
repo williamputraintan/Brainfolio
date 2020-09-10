@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SignInSide() {
+export default function SignIn() {
 
   WelcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   const classes = useStyles();
