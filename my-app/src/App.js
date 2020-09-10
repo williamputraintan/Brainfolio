@@ -1,10 +1,12 @@
 import React from 'react';
 import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 
-import NavigationBar from './components/NavigationBar.js';
-import SignIn from './pages/SignIn.js';
-import SignUp from './pages/SignUp.js';
+import SignIn from './pages/SignIn.js'
+import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
+import NavigationBar from './components/NavigationBar.js'
+import ProjectPage from './components/project/projectPage'
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
           <Switch>
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
+              <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
 
           </Switch>
