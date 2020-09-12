@@ -25,7 +25,6 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
       
       <Router>
         <NavigationBar/> 
@@ -42,11 +41,11 @@ function App() {
               //possibly replacing portfolio path with token or unique id
               <Route path="/portfolio" component={Portfolio}/>
 
-              <Route path="/" component={Timeline} /> 
+              <Route path="/" component={Timeline} className={classes.root} /> 
               
           </Switch>
       </Router>
-    </div>
+
   );
 }
 
