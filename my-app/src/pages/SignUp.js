@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
 
+//based on sign up template material ui
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
