@@ -26,6 +26,7 @@ import useStyles from './useStyles'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import CommentIcon from '@material-ui/icons/Comment';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 
 import SingleLineGridList from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
@@ -51,7 +52,7 @@ export default function ProjectPage() {
   const classes = useStyles();
 
   return (
-    <div>      
+    <div className={classes.bgcolor}>      
       <main>
         <div className={classes.heroContent}>
         
@@ -65,9 +66,9 @@ export default function ProjectPage() {
           <Container maxWidth="md">
             <Typography component="h4" variant="h3" align="left" color="textPrimary" gutterBottom>
               IT Project (COMP30022)
-                <Button className={classes.like}>
+                <IconButton className={classes.like}>
                   <FavoriteBorderIcon/>
-                </Button>
+                </IconButton>
             </Typography>
             <Typography variant="h6" align="left" color="textSecondary" paragraph>
               Put the project description here. <br/>
@@ -78,40 +79,29 @@ export default function ProjectPage() {
 
         <SingleLineGridList/>
         <ProjectAuthor/>
-        <div>
+        <div >
           <Container className={classes.space} maxWidth="md">
-            <Typography>
+            <Typography variant='h6'>
               Comments
             </Typography>
-
-            <div>
+            
             <br/>
+            <div className={classes.comment}>
+
             <TextField
-                  id="filled-textarea"
-                  placeholder="Comment"
-                  multiline
-                  fullWidth
-                  size='medium'
-            />
+              id="outlined-textarea"
+              label="Comment"
+              fullWidth
+              multiline
+              size = 'medium'
+              color='primary'
+              variant="outlined"
+        />
             <Button className={classes.post} color="danger">
               Post
             </Button>
             </div>
 
-            {/* comment column */}
-            {/* <div className={classes.comment}>
-              <Avatar className={classes.avatar}/>
-              <TextField
-                id="filled-textarea"
-                placeholder="Comment"
-                multiline
-                fullWidth
-                size='medium'
-              />
-              <Button className={classes.post} color='Primary' >
-                Post
-              </Button>
-            </div> */}
             <br/>
             <br/>
             {/* comment section */}
@@ -160,9 +150,6 @@ export default function ProjectPage() {
       
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
         <Copyright />
       </footer>
       {/* End footer */}
