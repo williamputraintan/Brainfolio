@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs.js';
 import NavigationBar from './components/NavigationBar.js'
 import ProjectPage from './components/project/projectPage'
 
+import Portfolio from './pages/portfolio/portfolioPage.js';
 
 
 import Timeline from './pages/Timeline/Timeline.jsx'
@@ -26,6 +27,8 @@ function App() {
 
 
               <Route path="/" component={Timeline}/> 
+              //possibly replacing portfolio path with token or unique id
+              <Route path="/portfolio" component={Portfolio}/>
           </Switch>
       </Router>
     </div>

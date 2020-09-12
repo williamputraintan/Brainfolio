@@ -1,0 +1,38 @@
+.portfolio-container{
+    min-width: 100% !important;
+    object-fit: cover;
+    margin: auto !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    font-family: "Times New Roman", Times, serif; 
+    text-align: center;
+    color: black !important;
+    
+}
+
+.portfolio-template{
+    background-image: url('../../images/portfolio-jumbotron/The-Spot.jpg')!important;
+    background-position: center center;
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    min-width:100%;
+}
+
+.portfolio-contact{
+    display: inline-flex !important;
+    height: 10vh;
+    min-width:100%;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.rowC{display: inline-flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-items: center !important;
+    opacity: 1 !important;
+
+}
+.profile-picture {
+    border-radius: 50%;
+}
