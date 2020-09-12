@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
 
+//based on sign up template material ui
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -74,6 +75,7 @@ export default function SignUp() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+
       <Slide direction='down' in={true}>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>

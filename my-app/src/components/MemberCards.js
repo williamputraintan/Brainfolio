@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MuiThemeProvider,makeStyles,createMuiTheme } from '@material-ui/core/styles';
 
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
 import avatar from '../images/avatar.png';
@@ -29,11 +27,18 @@ const cardTheme = createMuiTheme({
       minWidth: 350,
       minHeight: 400,
       display: "inline-block",
-      margin:"2%"
+      margin:"2%",
+      alignContent:"center",
     },
     media: {
       height: 250,
     },
+    name: {
+      fontFamily: "'Kumbh Sans', sans-serif",
+    },
+    memDesc: {
+      fontFamily: "'Roboto', sans-serif",
+    }
   });
   
 export default function MemberCards() {
@@ -41,7 +46,7 @@ export default function MemberCards() {
   
     return (
       
-        <div className="teammember" style={{ display: "inline-block"}}>
+        <div style={{ display: "inline-block"}}>
           
           <Card className={classes.root}>
             <MuiThemeProvider theme={cardTheme}>
@@ -53,10 +58,10 @@ export default function MemberCards() {
               />
             </CardActionArea>
             <CardActions>
-                <h4 class="name">Andrew Tjen</h4>
+                <h4 className={classes.name}>Andrew Tjen</h4>
             </CardActions>
             <CardActions>
-                <h5 style={{fontFamily:"Roboto, sans-serif"}}>Member Description</h5>
+                <h5 className={classes.memDesc}>Member Description</h5>
             </CardActions>
           </MuiThemeProvider>
 
@@ -71,10 +76,10 @@ export default function MemberCards() {
               />
             </CardActionArea>
             <CardActions>
-                <h4 class="name">Franklin Aldo Darmansa</h4>
+                <h4 class={classes.name}>Franklin Aldo Darmansa</h4>
             </CardActions>
             <CardActions>
-                <h5 style={{fontFamily:"Roboto, sans-serif"}}>Member Description</h5>
+                <h5 className={classes.memDesc}>Member Description</h5>
             </CardActions>
           </Card>
 
@@ -87,10 +92,10 @@ export default function MemberCards() {
               />
             </CardActionArea>
             <CardActions>
-                <h4 class="name">Hanson Lynn</h4>
+                <h4 class={classes.name}>Hanson Lynn</h4>
             </CardActions>
             <CardActions>
-                <h5 style={{fontFamily:"Roboto, sans-serif"}}>Member Description</h5>
+                <h5 className={classes.memDesc}>Member Description</h5>
             </CardActions>
           </Card>
        
@@ -104,10 +109,10 @@ export default function MemberCards() {
             />
           </CardActionArea>
           <CardActions>
-              <h4 class="name" >Patricia Angelica Budiman</h4>
+              <h4 class={classes.name} >Patricia Angelica Budiman</h4>
           </CardActions>
           <CardActions>
-              <h5 style={{fontFamily:"Roboto, sans-serif"}}>Member Description</h5>
+              <h5 className={classes.memDesc}>Member Description</h5>
           </CardActions>
         </Card>
         <Card className={classes.root}>
@@ -119,10 +124,10 @@ export default function MemberCards() {
             />
           </CardActionArea>
           <CardActions>
-              <h4 class="name">William Putra Intan</h4>
+              <h4 class={classes.name}>William Putra Intan</h4>
           </CardActions>
           <CardActions>
-              <h5 style={{fontFamily:"Roboto, sans-serif"}}>Member Description</h5>
+              <h5 className={classes.memDesc}>Member Description</h5>
           </CardActions>
         </Card>
        
