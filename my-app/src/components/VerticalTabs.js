@@ -14,8 +14,6 @@ import step3 from '../images/instruction/connect-t.png';
 import step4 from '../images/instruction/post-t.png';
 import step5 from '../images/instruction/explore-t.png';
 
-import './VerticalTabs.css';
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -54,9 +52,12 @@ function TabPanel(props) {
       display: 'flex',
       minWidth:'0px',
     },
-    
-    
+    desc: {
+      fontFamily: "'Lato', sans-serif",
+      padding: '0 10% 0 10%',
+    }
   }));
+
   const theme = createMuiTheme({
     overrides: {
       MuiTab: {
@@ -97,7 +98,7 @@ export default function VerticalTabs() {
         </Tabs>
         <div>
         <TabPanel value={value} index={0} >
-          <div className="desc">
+          <div className={classes.desc}>
                 <h1 style={{textAlign: "left", paddingBottom:"2%"}}>
                     Create your account
                 </h1>
@@ -111,7 +112,7 @@ export default function VerticalTabs() {
             </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            <div className="desc">
+            <div className={classes.desc}>
                 <h1 style={{textAlign: "right"}}>
                     Edit your profile
                 </h1>
@@ -123,7 +124,7 @@ export default function VerticalTabs() {
             </div>
         </TabPanel>
         <TabPanel value={value} index={2}>
-            <div className="desc">
+            <div className={classes.desc}>
                 <h1 style={{textAlign: "left"}}>
                     Connect with your friends
                 </h1>
@@ -135,7 +136,7 @@ export default function VerticalTabs() {
             </div>
         </TabPanel>
         <TabPanel value={value} index={3}>
-            <div className="desc">
+            <div className={classes.desc}>
                 <h1 style={{textAlign: "right"}}>
                     Create your own post
                 </h1>
@@ -147,7 +148,7 @@ export default function VerticalTabs() {
             </div>
         </TabPanel>
         <TabPanel value={value} index={4}>
-            <div className="desc">
+            <div className={classes.desc}>
                 <h1 style={{textAlign: "left"}}>
                     Comment and like on other's posts
                 </h1>
