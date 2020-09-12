@@ -1,6 +1,7 @@
 import React from 'react';
-import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 
+import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
@@ -9,12 +10,22 @@ import ProjectPage from './components/project/projectPage'
 
 import Portfolio from './pages/portfolio/portfolioPage.js';
 
+import Timeline from './pages/Timeline.jsx'
 
-import Timeline from './pages/Timeline/Timeline.jsx'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: 'linear-gradient(90deg, #041e42,#5C788F)',
+    minHeight:"100vh"
+  },
+}));
+
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="App">
+    <div className={classes.root}>
       
       <Router>
         <NavigationBar/> 
@@ -25,10 +36,14 @@ function App() {
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
 
+          
+              
 
-              <Route path="/" component={Timeline}/> 
               //possibly replacing portfolio path with token or unique id
               <Route path="/portfolio" component={Portfolio}/>
+
+              <Route path="/" component={Timeline} /> 
+              
           </Switch>
       </Router>
     </div>

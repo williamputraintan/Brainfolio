@@ -15,25 +15,30 @@ import Avatar from '@material-ui/core/Avatar';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
-import Display from './ProjectDisplay.jsx'
+import ProjectDisplay from '../components/Timeline/ProjectDisplay.jsx'
+import PeopleDisplay from '../components/Timeline/PeopleDisplay.jsx'
 
 
 const useStyles = makeStyles({
   root: {
 
     maxWidth: '90%',
-    marginTop: 25,
+
     margin: 'auto',
+    paddingTop: 30
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
-  background:{
-    // background: 'linear-gradient(90deg, #041e42,#5C788F)',
+  bgcolor:{
+    background: 'linear-gradient(90deg, #041e42,#5C788F)',
+    minHeight: '100vh',
+  },
+  people:{
+    position: "sticky"
   }
-
 });
 
 const datas = [
@@ -60,7 +65,8 @@ const datas = [
     "Price" : 43.15,
     "Category" : "Computers",
     "Contributor" : ["Robert C. Martin","Jackson Smith"]
-  }
+  },
+
 
 ];
 
@@ -68,54 +74,58 @@ const authors = [1,2,3,4]
 
 export default function MediaCard() {
   const classes = useStyles();
+  const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div className={classes.root}>
-      <Grid
-        container
-        direction="column"
-        // justify="center"
-        // alignItems="left"
-        spacing={2}
-      >
-      {datas.map((data) => (
-        <Grid item xs={8} container direction="column">
-          <Display projectDetails={data}/>
+    <div className={classes.bgcolor}>
 
-
-
-          <GridList 
-            className={classes.gridList} 
-            cols={3}
-            cellHeight='auto'
+      <div className={classes.root}>
+        <Grid
+          container
+          direction="row"
+          spacing={3}
           >
-              {authors.map((author) => (
-                
-                <GridListTile key={author}>
-                    <CardActionArea>
-                      <Card>
-                          <CardHeader
-                          avatar={
-                              <Avatar className={classes.avatar}>
-                              </Avatar>
-                          }
-                          title="Name | Author"
-                          subheader="Email: author@email.com"
-                          />
-                      </Card>
-                    </CardActionArea>
-                </GridListTile>
-              ))}
-            </GridList>
 
+          <Grid 
+            item
+            container
+            direction="column"
+            // justify="center"
+            // alignItems="left"
+            spacing={2}
+            xs={8}
+          >
+          {datas.map((data) => (
+            <Grid item>
+              <ProjectDisplay projectDetails={data}/>
+            </Grid>
+          ))}
 
+          </Grid>
+            
+
+          <Grid
+            item
+            container
+            direction="column"
+            spacing={1}
+            xs={4}
+            className={classes.position}
+          >
+            <Grid item className={classes.position}>
+              <PeopleDisplay/>
+              <PeopleDisplay/>
+              <PeopleDisplay/>
+     
+            </Grid>
+
+          </Grid>
+      
         </Grid>
-      ))}
 
-      </Grid>
+  
+      </div>
 
-
- 
     </div>
 
   );
