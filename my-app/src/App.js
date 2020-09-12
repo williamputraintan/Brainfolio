@@ -9,6 +9,8 @@ import ProjectPage from './components/project/projectPage'
 
 
 
+import Timeline from './pages/Timeline/Timeline.jsx'
+
 function App() {
   return (
     <div className="App">
@@ -16,11 +18,14 @@ function App() {
       <Router>
         <NavigationBar/> 
           <Switch>
+            
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
 
+
+              <Route path="/" component={Timeline}/> 
           </Switch>
       </Router>
     </div>
