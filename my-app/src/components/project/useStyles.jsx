@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   comment: {
     // width:'75%',
     maxWidth:'md',
+    padding: theme.spacing(2,2,2)
     // backgroundColor: theme.palette.background.paper,
 
   },
@@ -49,15 +50,18 @@ const useStyles = makeStyles((theme) => ({
     float: "right",
     // padding: theme.spacing(2, 0, 2),
   },
+  title: {
+    padding: theme.spacing(3),
+  },
   // Comment's
   paper: {
     padding: theme.spacing(2),
-    margin: '2',
+    margin: '1',
     maxWidth: 'md',
     // border: 1,
   },
   space: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2,2,0),
     maxWidth:'md',
   },
   post: {

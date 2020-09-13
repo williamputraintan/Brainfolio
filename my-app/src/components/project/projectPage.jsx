@@ -20,6 +20,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+
 
 import useStyles from './useStyles'
 
@@ -30,7 +32,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import SingleLineGridList from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
-import { TextField } from '@material-ui/core';
+import { TextField, CardActionArea } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -52,7 +54,8 @@ export default function ProjectPage() {
   const classes = useStyles();
 
   return (
-    <div className={classes.bgcolor}>      
+    <div className={classes.bgcolor}>     
+ 
       <main>
         <div className={classes.heroContent}>
         
@@ -64,6 +67,7 @@ export default function ProjectPage() {
           <br/>
           </Container>
           <Container maxWidth="md">
+            <Card className={classes.title}>
             <Typography component="h4" variant="h3" align="left" color="textPrimary" gutterBottom>
               IT Project (COMP30022)
                 <IconButton className={classes.like}>
@@ -74,34 +78,35 @@ export default function ProjectPage() {
               Put the project description here. <br/>
               can be multiple line
             </Typography>
+            </Card>
+            
           </Container>
         </div>
 
         <SingleLineGridList/>
         <ProjectAuthor/>
+        
         <div >
+
           <Container className={classes.space} maxWidth="md">
-            <Typography variant='h6'>
+          <Card>
+            <Typography variant='h6' className={classes.space}>
               Comments
             </Typography>
             
-            <br/>
             <div className={classes.comment}>
-
-            <TextField
-              id="outlined-textarea"
-              label="Comment"
-              fullWidth
-              multiline
-              size = 'medium'
-              color='primary'
-              variant="outlined"
-        />
-            <Button className={classes.post} color="danger">
-              Post
-            </Button>
+                <TextField
+                      id="filled-textarea"
+                      placeholder="Comment"
+                      multiline
+                      fullWidth
+                      size='medium'
+                />
+                <Button className={classes.post} color="danger">
+                  Post
+                </Button>
             </div>
-
+          </Card>
             <br/>
             <br/>
             {/* comment section */}
