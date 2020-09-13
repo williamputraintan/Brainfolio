@@ -20,16 +20,19 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+
 
 import useStyles from './useStyles'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import CommentIcon from '@material-ui/icons/Comment';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 
 import SingleLineGridList from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
-import { TextField } from '@material-ui/core';
+import { TextField, CardActionArea } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -51,7 +54,8 @@ export default function ProjectPage() {
   const classes = useStyles();
 
   return (
-    <div>      
+    <div className={classes.bgcolor}>     
+ 
       <main>
         <div className={classes.heroContent}>
         
@@ -63,55 +67,46 @@ export default function ProjectPage() {
           <br/>
           </Container>
           <Container maxWidth="md">
+            <Card className={classes.title}>
             <Typography component="h4" variant="h3" align="left" color="textPrimary" gutterBottom>
               IT Project (COMP30022)
-                <Button className={classes.like}>
+                <IconButton className={classes.like}>
                   <FavoriteBorderIcon/>
-                </Button>
+                </IconButton>
             </Typography>
             <Typography variant="h6" align="left" color="textSecondary" paragraph>
               Put the project description here. <br/>
               can be multiple line
             </Typography>
+            </Card>
+            
           </Container>
         </div>
 
         <SingleLineGridList/>
         <ProjectAuthor/>
-        <div>
+        
+        <div >
+
           <Container className={classes.space} maxWidth="md">
-            <Typography>
+          <Card>
+            <Typography variant='h6' className={classes.space}>
               Comments
             </Typography>
-
-            <div>
-            <br/>
-            <TextField
-                  id="filled-textarea"
-                  placeholder="Comment"
-                  multiline
-                  fullWidth
-                  size='medium'
-            />
-            <Button className={classes.post} color="danger">
-              Post
-            </Button>
+            
+            <div className={classes.comment}>
+                <TextField
+                      id="filled-textarea"
+                      placeholder="Comment"
+                      multiline
+                      fullWidth
+                      size='medium'
+                />
+                <Button className={classes.post} color="danger">
+                  Post
+                </Button>
             </div>
-
-            {/* comment column */}
-            {/* <div className={classes.comment}>
-              <Avatar className={classes.avatar}/>
-              <TextField
-                id="filled-textarea"
-                placeholder="Comment"
-                multiline
-                fullWidth
-                size='medium'
-              />
-              <Button className={classes.post} color='Primary' >
-                Post
-              </Button>
-            </div> */}
+          </Card>
             <br/>
             <br/>
             {/* comment section */}
@@ -160,9 +155,6 @@ export default function ProjectPage() {
       
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
         <Copyright />
       </footer>
       {/* End footer */}

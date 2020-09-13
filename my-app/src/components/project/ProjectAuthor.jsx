@@ -17,18 +17,18 @@ function ProjectAuthor() {
           <Grid container spacing={2}>
             {author.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                  <CardActionArea>
-                    <Card>
-                        <CardHeader
-                        avatar={
-                            <Avatar className={classes.avatar}>
-                            </Avatar>
-                        }
-                        title="Name | Author"
-                        subheader="Email: author@email.com"
-                        />
-                    </Card>
-                  </CardActionArea>
+                <Card>
+                    <CardHeader
+                    avatar={
+                      <CardActionArea>
+                        <Avatar className={classes.avatar}>
+                        </Avatar>
+                      </CardActionArea>
+                    }
+                    title="Name | Author"
+                    subheader="Email: author@email.com"
+                    />
+                </Card>
               </Grid>
             ))}
           </Grid>

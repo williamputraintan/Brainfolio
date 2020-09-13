@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { colors } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  bgcolor: {
+    background: 'linear-gradient(180deg, #D7EFFF 10%, #FFFFFF 90%)'
+  },
   back: {
     padding: theme.spacing(1, 0, 1),
   },
@@ -10,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
@@ -26,14 +29,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%',
   },
   cardContent: {
     flexGrow: 1,
   },
   comment: {
-    width:'75%',
-    maxWidth:'md'
+    // width:'75%',
+    maxWidth:'md',
+    padding: theme.spacing(2,2,2)
+    // backgroundColor: theme.palette.background.paper,
 
   },
   footer: {
@@ -41,24 +46,29 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
   like: {
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
     float: "right",
-    padding: theme.spacing(2, 0, 2),
+    // padding: theme.spacing(2, 0, 2),
+  },
+  title: {
+    padding: theme.spacing(3),
   },
   // Comment's
   paper: {
     padding: theme.spacing(2),
-    margin: '2',
+    margin: '1',
     maxWidth: 'md',
     // border: 1,
   },
   space: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2,2,0),
     maxWidth:'md',
   },
   post: {
     float: "right",
     padding: theme.spacing(1,0,1),
+    backgroundColor: theme.palette.background.paper,
+
   },
 }));
 
