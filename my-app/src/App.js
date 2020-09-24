@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
-import NavigationBar from './components/NavigationBar.js'
+// import NavigationBar from './components/NavigationBar.js'
+import NavigationBar from './components/Navbar/NavBar';
 import ProjectPage from './components/project/projectPage'
 
 import Portfolio from './pages/portfolio/portfolioPage.js';

@@ -7,7 +7,7 @@ export class UsersController {
 
     constructor(private readonly usersService : UsersService){}
 
-    @Post()
+    @Post('signUp')
     async addUser(
         @Body('username') username : string, 
         @Body('firstName') firstName : string, 
@@ -15,9 +15,16 @@ export class UsersController {
         @Body('email') email:string ,
         @Body('password') password : string, 
          )  {
-             console.log(firstName);
-        const getUName = await this.usersService.insertUser(username,firstName,lastName,email,password);
-        return {username : getUName};
+            
+        const getResult = await this.usersService.insertUser(username,firstName,lastName,email,password);
+        let result;
+        if(getResult){
+            result = {success:true, username:username}
+        }else{
+            result = {success:false, username:null}
+            console.log("Username has already existed!")
+        }
+        return result;
     }
 
     @Get()
@@ -26,9 +33,15 @@ export class UsersController {
         return users;
     } 
 
-    @Get(':username')
-    getUser(@Param('username') username: string){
-        return this.usersService.getSingleUser(username);
+    @Get('signIn')
+    async getUser(@Body('email') email: string, @Body('password') password: string){
+        const res = await this.usersService.getSingleUser(email,password);
+        if(res){
+            return {success:true, email:email}
+        }else{
+            return {success:false, email:null}
+        }
+        
     }
 
     @Patch(':username')
@@ -39,14 +52,20 @@ export class UsersController {
         @Body('email') email: string,
         @Body('password') password: string ,
         ){ 
-            console.log(username);
-        await this.usersService.updateUser(username,firstName,lastName,email, password);
+          
+        const res = await this.usersService.updateUser(username,firstName,lastName,email, password);
+        if(res){
+            console.log("Details updated!")
+        }
         return null;
     }
 
     @Delete(':username')
     async removeUser(@Param('username') username: string){
-        await this.usersService.deleteUser(username);
+        const res = await this.usersService.deleteUser(username);
+        if(res){
+            console.log("User has been deleted!")
+        }
         return null;
     }
 

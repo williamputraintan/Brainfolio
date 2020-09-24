@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
+import {useForm} from '../hooks/useForm';
+import axios from 'axios';
 
 //based on sign up template material ui
 function Copyright() {
@@ -72,6 +74,25 @@ export default function SignUp() {
   WelcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   const classes = useStyles();
 
+  const [form, handleFieldChange] = useForm({
+    username: "",
+    email: "",
+    firstName: "",
+    lastName:"",
+    password: ""
+  });
+
+  async function validateSignup(event){
+    event.preventDefault();
+    const res = await axios.post('/users/signUp',{
+      username:form.username,
+      email : form.email,
+      firstName:form.firstName,
+      lastName: form.lastName,
+      password: form.password});
+  
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -98,26 +119,48 @@ export default function SignUp() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={form.email}
+              onChange={handleFieldChange}
+              
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="first name"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={form.username}
+              onChange={handleFieldChange}
+            />
+            <TextField
+              autoComplete="fname"
+              name="firstName"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
               label="First Name"
-              type="first name"
-              id="first name"
+              autoFocus
+              value={form.firstName}
+              onChange={handleFieldChange}
             />
             <TextField
+              autoComplete="lname"
+              name="lastName"
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="last name"
+              id="lastName"
               label="Last Name"
-              type="last name"
-              id="last name"
+              autoFocus
+              value={form.lastName}
+              onChange={handleFieldChange}
             />
             <TextField
               variant="outlined"
@@ -129,6 +172,8 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={form.password}
+              onChange={handleFieldChange}
             />
             <Button
               type="submit"
@@ -136,6 +181,7 @@ export default function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(event)=>validateSignup(event)}
             >
               Sign Up
             </Button>

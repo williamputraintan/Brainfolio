@@ -1,17 +1,23 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import { InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
-
-import {User} from './user.model';
+import { Model } from 'mongoose';
+import { Injectable , NotFoundException} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+// import {User} from './user.model';
+import { User } from '../schemas/user.schema';
 
 
 @Injectable()
 export class UsersService{
-    constructor(@InjectModel('User') private readonly userModel: Model<User>,){}
+    constructor(@InjectModel(User.name) private readonly userModel: Model<User>){}
 
     async insertUser(username: string, firstName: string, lastName: string, email: string, password:string){
-        const newUser = new this.userModel({username,firstName,lastName,email,password});
-        const result = await newUser.save();
+        let result;
+        if(await this.userModel.findOne({username: username})){
+            result = false;
+        }else{
+            const newUser = new this.userModel({username,firstName,lastName,email,password});
+            newUser.save;
+            result = true;
+        }
         return result.username;
     }  
 
@@ -20,53 +26,43 @@ export class UsersService{
         console.log(users);
         return users;
     }
-
-    async getSingleUser(username: string){
-        const user =  await this.findUser(username);
-        // return {
-
-        //     firstName: user.firstName,
-        //     lastName :  user.lastName,
-        //     email: user.email,
-           
-        // };
-        return user;
+   
+    async getSingleUser(email: string, password:string){
+        const user =  await this.userModel.findOne({email: email, password:password});
+        console.log(password)
+        if(!user){
+         
+            return null;
+        }else{
+            return user;
+        }
 
     }
 
     async updateUser(username:string, firstName:string, lastName: string , email: string, password: string){
-        const updatedUser = await this.findUser(username);
+        const updatedUser = await this.userModel.findOne({username:username});
     
         if(email){
             updatedUser.email=email;
+        }
+        if(firstName){
+            updatedUser.firstName=firstName;
         }
         if(lastName){
             updatedUser.lastName=lastName;
         }
         updatedUser.save();
-
+        return true;
     }
 
     async deleteUser(username:string){
         const result  = await this.userModel.deleteOne({username:username});
         if (result.n===0){
             throw new NotFoundException ('Could not find user.');
+        } else{
+            return true;
         }
-    }
-    private async findUser(username: string){
-        let user;
-        try
-        {
-            user = await this.userModel.findOne({username: username});
-        }catch(error){
-            throw new NotFoundException('Could not find user.');
-        }
-        if(!user){
-            throw new NotFoundException('Could not find user.');
-        }
-        return user;
-    }
-
+      }
     
 
 

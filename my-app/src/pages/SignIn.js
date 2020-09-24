@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
+import {useForm} from '../hooks/useForm';
+import axios from 'axios';
 
 // based on sign in template material ui
 function Copyright() {
@@ -71,6 +73,21 @@ export default function SignIn() {
   WelcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   const classes = useStyles();
 
+  const [form, handleFieldChange] = useForm({
+    email: "",
+    password: ""
+  });
+
+  async function validateSignIn(event){
+    event.preventDefault();
+    const res = await axios.get('/users/signIn',{
+      email : form.email,
+      password: form.password});
+
+    console.log(res);
+  }
+
+  
   return (
     
     <Grid container component="main" className={classes.root}>
@@ -100,6 +117,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={form.email}
+              onChange={handleFieldChange}
             />
             <TextField
               variant="outlined"
@@ -110,7 +129,8 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              value={form.password}
+              onChange={handleFieldChange}
             />
             
             <Button
@@ -119,6 +139,7 @@ export default function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(event)=>validateSignIn(event)}
             >
               Sign In
             </Button>

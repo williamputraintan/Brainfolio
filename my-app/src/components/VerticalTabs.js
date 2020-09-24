@@ -7,12 +7,15 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+
 
 import step1 from '../images/instruction/register-t.png';
 import step2 from '../images/instruction/profile-t.png';
 import step3 from '../images/instruction/connect-t.png';
 import step4 from '../images/instruction/post-t.png';
 import step5 from '../images/instruction/explore-t.png';
+import { white } from 'chalk';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -50,12 +53,25 @@ function TabPanel(props) {
       flexGrow: 1,
       backgroundColor: "white",
       display: 'flex',
-      minWidth:'0px',
+      minWidth:'10px',
+      
     },
     desc: {
       fontFamily: "'Lato', sans-serif",
       padding: '0 10% 0 10%',
+    },
+    container:{
+      '@media (max-width: 600px)': {
+        maxWidth: "310px"}
+
+    },
+    btn:
+      {
+        position:'center', 
+      fontFamily:"'Lato', sans-serif",
+      
     }
+    
   }));
 
   const theme = createMuiTheme({
@@ -63,11 +79,32 @@ function TabPanel(props) {
       MuiTab: {
         root: {
             '@media (min-width: 600px)': {
-                minWidth: "20px"},
-          minWidth:'20px',
+                minWidth: "50px"},
+          minWidth:'50px',
+          padding:'10px',
+          
           }
-        },   
       },
+      MuiButton: {
+        containedPrimary: {
+          backgroundColor: '#1D3B64',
+          color: 'white',
+        },
+      },
+    
+        
+      
+      },
+    
+      palette: {
+        primary: {
+          main: '#1D3B64',
+          
+        },
+        
+        
+        
+    },
 
     });
   
@@ -96,7 +133,7 @@ export default function VerticalTabs() {
           <Tab label= "4" {...a11yProps(3)} />
           <Tab label= "5" {...a11yProps(4)} />
         </Tabs>
-        <div>
+        <div className={classes.container}>
         <TabPanel value={value} index={0} >
           <div className={classes.desc}>
                 <h1 style={{textAlign: "left", paddingBottom:"2%"}}>
@@ -105,19 +142,24 @@ export default function VerticalTabs() {
                 <h5 style={{textAlign: "left", paddingBottom:"2%"}}>
                   Join Brainfolio to link with your colleagues and <br/>
                   showcase your portfolio </h5>
-            <Button variant="outlined" color="primary"  style={{position:'center', fontFamily:"'Lato', sans-serif"}} >
-                Get started
+            <Button variant="contained" color="primary" className={classes.btn}  href="signUp"> 
+              
+              Get started
+              
+               
             </Button>
+            
+            
             <img src={step1} style={{float: "right"}} alt="create your account "></img>
             </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
             <div className={classes.desc}>
                 <h1 style={{textAlign: "right"}}>
-                    Edit your profile
+                    Edit your portfolio and showcase your skills
                 </h1>
                 <h5 style={{textAlign: "right"}}>
-                  Upload your profile picture <br/>
+                  Upload your profile picture 
                   and your previous projects 
                   </h5>
                 <img src={step2} style={{float: "left"}} alt="edit your profile"></img>

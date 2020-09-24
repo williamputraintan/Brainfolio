@@ -1,9 +1,32 @@
+
+@media only screen and (max-width: 600px){
+    :root{
+        max-width: 100%;
+    }
+    .whatwedo>h1{
+        color:white;
+        position: absolute;
+        text-align: center;
+        left: 10%;
+        top:45%;
+        font-size:35px;
+    }
+    .whatwedo>h2{
+        color:white;
+        position: absolute;
+        text-align: center;
+        top:52%;
+        left: 10%; 
+        font-size: 20px; 
+    }
+}
+
 .about-container{
     min-width: 100%;
     margin:0;
     padding-right: 0px;
     padding-left: 0px;
-    font-family: 'Lato', sans-serif; 
+    font-family: 'PT Sans', sans-serif;
 }
 .whatwedo{
     background: url('../images/whatwedo.png') center center/cover no-repeat;
@@ -17,26 +40,30 @@
     padding-right: 0px;
     padding-left: 0px;
 }
-.whatwedo>h1{
-    color:white;
-    position: absolute;
-    /* justify-content: right; */
-    text-align: center;
-    left: 15%;
-    top:45%;
-    font-size: 40px;
+
+@media only screen and (min-width: 600px){
+    .whatwedo>h1{
+        color:white;
+        position: absolute;
+        /* justify-content: right; */
+        text-align: center;
+        left: 15%;
+        top:45%;
+        font-size: 40px;
+    }
+    .whatwedo>h2{
+        color:white;
+        position: absolute;
+        text-align: center;
+        /* justify-content: center; */
+        /* left: 50%; */
+        top:52%;
+        left: 15%;
+        
+        font-size: 30px; 
+    }
 }
-.whatwedo>h2{
-    color:white;
-    position: absolute;
-    text-align: center;
-    /* justify-content: center; */
-    /* left: 50%; */
-    top:52%;
-    left: 15%;
-    
-    font-size: 30px; 
-}
+
 
 .instructions{
     background-color:white;
@@ -45,7 +72,8 @@
     text-align: center;
     padding: 4%;
     overflow: hidden;
-    font-family: 'Raleway', sans-serif;  
+    font-family:  'Lato', sans-serif;
+   
 }
 
 .instructions img{
