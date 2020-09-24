@@ -1,39 +1,41 @@
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { Project } from './interfaces/project.interface'
+
 
 @Injectable()
 export class ProjectsService {
-    private readonly projects:Project[] = [
-        {
-            id: "14045",
-            title: "Machine Learning Algorithm",
-            description:  "Machine Learning Algorithm",
-            projectFile:  "Machine Learning Algorithm",
-            contributor:  "Machine Learning Algorithm",
-            like: 10,
-            comment:  "Machine Learning Algorithm",
-            share:  "Machine Learning Algorithm",
-        },
-        {
-            id: "33333",
-            title: "Machine Learning Algorithm 2.0",
-            description:  "Machine Learning Algorithm 2.0",
-            projectFile:  "Machine Learning Algorithm 2.0",
-            contributor:  "Machine Learning Algorithm 2.0",
-            like: 100,
-            comment:  "Machine Learning Algorithm 2.0",
-            share:  "Machine Learning Algorithm 2.0",
-        }
-    ];
 
-    findAll(): Project[]{
-        return this.projects;
+    constructor(@InjectModel('Project') private readonly projectModel: Model<Project>) {}
+
+
+    async create(project: Project): Promise<Project> {
+        const newProject = new this.projectModel(project);
+        return newProject.save();
+      }
+    
+    async findAll(): Promise<Project[]> {
+        return this.projectModel.find().exec();
     }
 
-    findOne(id: string): Project{
-        return this.projects.find(project => project.id === id)
+
+    async findOne(id: string): Promise<Project> {
+        return await this.projectModel.findOne({_id: id})
         
     }
+
+    async delete(id: string): Promise<Project> {
+        return await this.projectModel.findByIdAndRemove(id)
+        
+    }
+
+    async update(id: string, project:Project): Promise<Project> {
+        return await this.projectModel.findByIdAndUpdate(id, project, {new: true})
+        
+    }
+
+
 
 
 }
