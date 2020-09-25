@@ -3,10 +3,19 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { RecoilRoot } from "recoil";
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+//Recoil is our global State
+//Check https://recoiljs.org/docs/introduction/getting-started
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RecoilRoot>
+      <CssBaseline>
+        <App />
+      </CssBaseline>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,17 +1,15 @@
 import React from 'react';
 
-import  {Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
 import NavigationBar from './components/NavigationBar.js'
 import ProjectPage from './components/project/projectPage'
-
 import Portfolio from './pages/portfolio/portfolioPage.js';
-
 import Timeline from './pages/Timeline.jsx'
-
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
