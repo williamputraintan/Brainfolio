@@ -73,7 +73,6 @@ export default function SignIn() {
   return (
     
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Slide in={true} direction='right' >
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       </Slide>

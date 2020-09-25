@@ -9,7 +9,6 @@ import NavigationBar from './components/NavigationBar.js'
 import ProjectPage from './components/project/projectPage'
 import Portfolio from './pages/portfolio/portfolioPage.js';
 import Timeline from './pages/Timeline.jsx'
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,10 +32,6 @@ function App() {
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
 
-          
-              
-
-              //possibly replacing portfolio path with token or unique id
               <Route path="/portfolio" component={Portfolio}/>
 
               <Route path="/" component={Timeline} className={classes.root} /> 
