@@ -10,29 +10,24 @@
  */
 
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper'
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 
 
 import useStyles from './useStyles'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import CommentIcon from '@material-ui/icons/Comment';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 
 import SingleLineGridList from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
-import { TextField, CardActionArea } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 function Copyright() {
   return (
