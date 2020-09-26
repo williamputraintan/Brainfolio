@@ -1,9 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
-import { CreateUserDto } from 'src/user/dto/create-user-dto';
-import { SignInDto } from 'src/user/dto/sign-in-dto';
 import { AuthService } from './auth.service';
-import { IAccessToken } from './jwt/access-token.interface';
 import { User } from 'src/user/user.schema';
+import { CreateUserDto } from './dto/create-user-dto';
+import { SignInDto } from './dto/sign-in-dto';
 
 @Controller('auth')
 export class AuthController {

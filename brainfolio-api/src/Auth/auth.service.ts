@@ -1,13 +1,14 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist/jwt.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto } from 'src/user/dto/create-user-dto';
-import { SignInDto } from 'src/user/dto/sign-in-dto';
+
 import { User } from 'src/user/user.schema';
 import { IAccessToken } from './jwt/access-token.interface';
 import { JwtPayload } from './jwt/jwt-payload.interface';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user-dto';
+import { SignInDto } from './dto/sign-in-dto';
 
 
 @Injectable()

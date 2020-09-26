@@ -1,6 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user-dto';
-import { SignInDto } from './dto/sign-in-dto';
+import { CreateUserDto } from 'src/auth/dto/create-user-dto';
 import { User } from './user.schema';
 import { UserService } from './user.service';
 

@@ -7,10 +7,10 @@ const theme = createMuiTheme({
       background: 'linear-gradient(to right, #da22ff, #9733ee)'
     },
     primary: { 
-      main: '#9733ee'
+      main: '#004AAF'
     },
     secondary: {
-      main: '#F6AE2D',
+      main: '#A0CFE7',
     },
     backgroundWhite: '#ffffff',
     fontDefault: '#323232',

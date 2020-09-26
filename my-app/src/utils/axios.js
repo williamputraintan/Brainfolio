@@ -11,7 +11,7 @@ const URL_PATH = (process.env.NODE_ENV === "development")?
     ""
 
 const axios = Axios.create({
-  baseURL: "https://run.mocky.io/v3/b352b65b-939b-4fc1-9b66-82b58cf32366",
+  baseURL: "http://localhost:5000",
 })
 
 // Based on HTTP status code automatically 

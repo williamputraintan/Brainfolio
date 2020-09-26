@@ -1,25 +1,20 @@
-import React from 'react';
-import { userState } from '../Recoil/atoms';
-import { useRecoilState } from "recoil";
-import { logUserIn } from "../Recoil/actions";
-
+import React, {useContext} from 'react';
+import { UserContext, } from '../context/user.context';
+import { Switch,Route, Redirect, Link } from 'react-router-dom';
+import Portfolio from '../pages/portfolio/portfolioPage.js';
 
 
 function AuthenticatedRoute(props) {
-
-  const [user, setUser] = useRecoilState(userState);
-
-
-
-  const onBtnClick = () => {
-    // setUser({...user,fullname: "hans"});
-    // console.log(user)
-    logUserIn(setUser);
-  }; 
+  const {state} = useContext(UserContext);
 
   return (
     <div>
-      <button onClick={onBtnClick}>Login</button>
+      {(!state.token) && <Redirect to="/signin"/>}
+      <h1>User: {state.user}</h1>
+      <Link to="/home/portfolio">Portfolio</Link>
+      <Switch>
+        <Route exact path="/home/portfolio" component={Portfolio}/>
+      </Switch>
     </div>
   )
 }

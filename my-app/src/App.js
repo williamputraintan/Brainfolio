@@ -7,14 +7,13 @@ import AboutUs from './pages/AboutUs.js';
 import NavigationBar from './components/NavigationBar.js'
 import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
-import Portfolio from './pages/portfolio/portfolioPage.js';
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: 'linear-gradient(90deg, #041e42,#5C788F)',
-    minHeight:"100vh"
+    minHeight:"100vh",
   },
 }));
 
@@ -36,7 +35,6 @@ function App() {
         
               <Route path="/home" component={AuthenticatedRoute}/>
 
-              <Route path="/portfolio" component={Portfolio}/>
 
               <Route path="/" component={Timeline} className={classes.root} /> 
               
