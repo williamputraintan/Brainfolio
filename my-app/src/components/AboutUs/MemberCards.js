@@ -1,13 +1,13 @@
 import React from 'react';
 import { MuiThemeProvider,makeStyles,createMuiTheme } from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 
-import avatar from '../images/avatar.png';
+import avatar from '../../images/aboutUs/avatar.png';
 
 
 const cardTheme = createMuiTheme({
@@ -21,25 +21,33 @@ const cardTheme = createMuiTheme({
 
     });
   
-  const cardStyles = makeStyles({
+  const cardStyles = makeStyles((theme) => ({
    
     root: {
-      minWidth: 350,
-      minHeight: 400,
+      width: 350,
+      minHeight: 450,
       display: "inline-block",
       margin:"2%",
-      alignContent:"center",
     },
     media: {
-      height: 250,
+      height: '250px',
     },
     name: {
-      fontFamily: "'Kumbh Sans', sans-serif",
+      fontFamily: theme.typography.fontFamily,
+      fontSize:'20px',
+      fontWeight:"bold",
+      alignItems:"center",
+      height:"60px"
     },
     memDesc: {
-      fontFamily: "'Roboto', sans-serif",
+      fontFamily: theme.typography.alternative,
+      fontSize:'13px',
+      fontWeight:'450',
+      padding: '0px 8px 0px',
+      justify:"center"
+  
     }
-  });
+  }));
   
 export default function MemberCards() {
     const classes = cardStyles();
@@ -47,9 +55,9 @@ export default function MemberCards() {
     return (
       
         <div style={{ display: "inline-block"}}>
-          
+           <MuiThemeProvider theme={cardTheme}>
           <Card className={classes.root}>
-            <MuiThemeProvider theme={cardTheme}>
+           
             <CardActionArea>
               <CardMedia
                 className={classes.media}
@@ -57,13 +65,15 @@ export default function MemberCards() {
                 title="Andrew"
               />
             </CardActionArea>
-            <CardActions>
-                <h4 className={classes.name}>Andrew Tjen</h4>
+            <CardActions className={classes.name}>
+                <h4>Andrew Tjen</h4>
             </CardActions>
             <CardActions>
-                <h5 className={classes.memDesc}>Member Description</h5>
+            <Typography component="p" className={classes.memDesc}>
+              Insert description here
+            </Typography>
             </CardActions>
-          </MuiThemeProvider>
+          
 
           </Card>
 
@@ -75,11 +85,13 @@ export default function MemberCards() {
                 title="Franklin"
               />
             </CardActionArea>
-            <CardActions>
-                <h4 class={classes.name}>Franklin Aldo Darmansa</h4>
+            <CardActions className={classes.name}>
+                <h4 >Franklin Aldo Darmansa</h4>
             </CardActions>
             <CardActions>
-                <h5 className={classes.memDesc}>Member Description</h5>
+            <Typography component="p" className={classes.memDesc}>
+              Insert description here
+            </Typography>
             </CardActions>
           </Card>
 
@@ -91,11 +103,13 @@ export default function MemberCards() {
                 title="Hanson"
               />
             </CardActionArea>
-            <CardActions>
-                <h4 class={classes.name}>Hanson Lynn</h4>
+            <CardActions className={classes.name}>
+                <h4 >Hanson Lynn</h4>
             </CardActions>
             <CardActions>
-                <h5 className={classes.memDesc}>Member Description</h5>
+            <Typography component="p" className={classes.memDesc}>
+              Insert description here
+            </Typography>
             </CardActions>
           </Card>
        
@@ -108,11 +122,13 @@ export default function MemberCards() {
               title="Patricia"
             />
           </CardActionArea>
-          <CardActions>
-              <h4 class={classes.name} >Patricia Angelica Budiman</h4>
+          <CardActions className={classes.name}>
+              <h4  >Patricia Angelica Budiman</h4>
           </CardActions>
           <CardActions>
-              <h5 className={classes.memDesc}>Member Description</h5>
+            <Typography component="p" className={classes.memDesc}>
+              Insert description here
+            </Typography>
           </CardActions>
         </Card>
         <Card className={classes.root}>
@@ -123,14 +139,16 @@ export default function MemberCards() {
               title="William"
             />
           </CardActionArea>
-          <CardActions>
-              <h4 class={classes.name}>William Putra Intan</h4>
+          <CardActions className={classes.name}>
+              <h4>William Putra Intan</h4>
           </CardActions>
           <CardActions>
-              <h5 className={classes.memDesc}>Member Description</h5>
+            <Typography component="p" className={classes.memDesc}>
+              Insert description here
+            </Typography>
           </CardActions>
         </Card>
-       
+        </MuiThemeProvider>
         </div>
         
     );
