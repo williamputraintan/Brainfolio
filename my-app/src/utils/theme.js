@@ -7,7 +7,11 @@ const theme = createMuiTheme({
       background: 'linear-gradient(to right, #da22ff, #9733ee)'
     },
     primary: { 
+<<<<<<< HEAD
       main: '#1D3B64'
+=======
+      main: '#004AAF'
+>>>>>>> staging
     },
     secondary: {
       main: '#A0CFE7',
