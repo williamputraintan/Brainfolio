@@ -11,6 +11,7 @@ import ProjectPage from './components/project/projectPage'
 import Portfolio from './pages/portfolio/portfolioPage.js';
 
 import Timeline from './pages/Timeline.jsx'
+import EditingPage from './pages/editing/EditingPage.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,7 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
 
           
-              
+              <Route path="/edit" component={EditingPage}/>              
 
               //possibly replacing portfolio path with token or unique id
               <Route path="/portfolio" component={Portfolio}/>
