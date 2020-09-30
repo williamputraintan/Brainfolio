@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { Controller, Get, Post, Put, Delete, Body, Param, ValidationPipe } from '@nestjs/common';
+import { ProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service'
 import { Project } from './interfaces/project.interface'
 
@@ -18,7 +18,7 @@ export class ProjectsController {
     }
 
     @Post()
-    create(@Body() createProjectDto: CreateProjectDto): Promise<Project> {
+    create(@Body(ValidationPipe) createProjectDto: ProjectDto): Promise<Project> {
         return this.projectsService.create(createProjectDto);
     }
 
@@ -28,7 +28,7 @@ export class ProjectsController {
     }
 
     @Put(':id')
-    update(@Body() updateItemDto: CreateProjectDto, @Param() param): Promise<Project> {
+    update(@Body() updateItemDto: ProjectDto, @Param() param): Promise<Project> {
         return this.projectsService.update(param.id,updateItemDto);
 
     }
