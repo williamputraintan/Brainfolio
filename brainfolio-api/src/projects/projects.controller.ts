@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service'
-import { Project } from './interfaces/project.interface'
+import { Project } from './schemas/project.schema'
 
 @Controller('projects')
 export class ProjectsController {

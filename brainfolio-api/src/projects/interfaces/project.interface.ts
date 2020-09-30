@@ -1,4 +1,5 @@
-export interface Project{
+import mongoose from 'mongoose';
+export interface Project {
     id?: string;
     title: string;
     description: string;
