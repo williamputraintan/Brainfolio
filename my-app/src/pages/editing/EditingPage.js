@@ -4,8 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 
+
 import theme from '../../utils/theme'
 import Contacts from './Contacts';
+import Description from './Description';
+import Education from './Education'
 
 
 const buttonStyles = makeStyles(() => ({
@@ -18,7 +21,7 @@ const buttonStyles = makeStyles(() => ({
     },
     formContainer:{
         height:'85%',
-        padding:'3%'
+        padding:'1% 3% 3% 3%'
     },
     button:{
         backgroundColor:theme.palette.primary.main,
@@ -28,7 +31,14 @@ const buttonStyles = makeStyles(() => ({
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
-          },
+        },
+    },
+    buttonOn:{
+        backgroundColor:theme.palette.secondary.main,
+        color:'#4C516D',
+        margin:'2%',
+        fontFamily:theme.typography.fontFamily,
+
     }
 }));
 
@@ -39,6 +49,10 @@ export default function EditingPage(){
 
     function contactsDetail(){
         if(page=='contacts') {return <Contacts/>}
+        if(page=='description') {return <Description/>}
+        if(page=='education') {return <Education/>}
+        
+
       
     }
 
@@ -46,10 +60,10 @@ export default function EditingPage(){
     return (
         <div className={classes.container}> 
             <div className={classes.buttonContainer}>
-                <Button variant="contained" className={classes.button} onClick={()=>( setPage('contacts'))}>
+                <Button variant="contained" className={(page!='contacts')? classes.button :classes.buttonOn } onClick={()=>( setPage('contacts'))}>
                     Contact
                 </Button>
-                <Button variant="contained" className={classes.button} onClick={()=>(setPage('description'))}>
+                <Button variant="contained" className={(page!='description')? classes.button :classes.buttonOn } onClick={()=>(setPage('description'))}>
                     Description
                 </Button>
                 <Button variant="contained" className={classes.button} onClick={()=>(setPage('education'))}>
