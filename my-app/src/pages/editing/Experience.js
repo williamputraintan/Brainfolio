@@ -7,10 +7,13 @@ import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import theme from '../../utils/theme'
 
-const contactStyles = makeStyles(() => ({
+const experienceStyles = makeStyles(() => ({
     paper: {
       display: 'inline',
       flexDirection: 'column',
@@ -44,8 +47,9 @@ const contactStyles = makeStyles(() => ({
     },
     cardRoot: {
       minWidth: 235,
-      minHeight:400,
-      padding:'2%'
+      minHeight:250,
+      padding:'2%',
+      marginBottom:'5%'
     },
    
     listContainer:{
@@ -60,10 +64,13 @@ const contactStyles = makeStyles(() => ({
       fontWeight: 600,
       justifyContent:'center'
     },
+    select:{
+        width:'30%'
+    }
   }));
   
-  export default function Education() {
-    const classes = contactStyles();
+  export default function Experience() {
+    const classes = experienceStyles();
   
     return (
     <Container component="main" maxWidth="lg" >
@@ -73,38 +80,55 @@ const contactStyles = makeStyles(() => ({
             <form className={classes.form} noValidate>
               <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter your Degree </div>
-                      <TextField
-                      name="degree"
-                      variant="outlined"
-                      fullWidth
-                      id="degree"
-                      placeholder="Bachelor of Science"
-                      autoFocus
-                      />
+                      
+                      <InputLabel id="demo-simple-select-label">Section Title</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        className={classes.select}
+                        // value={age}
+                        // onChange={handleChange}
+                        >
+                        <MenuItem value={'work'}>Work</MenuItem>
+                        <MenuItem value={'volunteer'}>Volunteer</MenuItem>
+                        </Select>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter your University name </div>
+                      <div className={classes.field}> Enter Company name </div>
                       <TextField
-                      name="university"
+                      name="company"
                       variant="outlined"
                       fullWidth
-                      id="university"
+                      id="company"
                       placeholder="University of Melbourne"
                       autoFocus
-                      autoComplete='name'
+                      autoComplete='company'
                       />
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Course Description</div>
+                      <div className={classes.field}> Job Title</div>
                       <TextField
                       variant="outlined"
                       required
                       fullWidth
-                      id="description"
-                      placeholder="Majoring in Chemical Systems"
-                      name="email"
-                      autoComplete="email"
+                      id="jobTitle"
+                      placeholder="Tutor for COMP30022"
+                      name="jobTitle"
+                      autoComplete="jobTitle"
+                      />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                      <div className={classes.field}> Job Description </div>
+                      <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="desc"
+                      placeholder="Tutors 2 tutorial classes, each consisting of 20 students and supervising their Capstone Project"
+                      name="desc"
+                      autoComplete="desc"
+                      multiline
+                      row={4}
                       />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -141,7 +165,7 @@ const contactStyles = makeStyles(() => ({
                   fullWidth
                   color='primary'
                   >
-                  Save to Education List
+                  Save to Experience List
                   </Button>
               </Grid>
             </form>
@@ -149,13 +173,21 @@ const contactStyles = makeStyles(() => ({
         </Container>
       <Container component="main" maxWidth="lg" className={classes.listContainer}>
         <Card className={classes.cardRoot}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            Your Education
-          </Typography>
-          
-        </CardContent>
-        </Card>
+            <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Your Work Experience
+            </Typography>
+            
+            </CardContent>
+            </Card>
+            <Card className={classes.cardRoot}>
+            <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Your Volunteer Experience
+            </Typography>
+            
+            </CardContent>
+            </Card>
       </Container>  
     </Container >
 

@@ -34,7 +34,7 @@ const contactStyles = makeStyles(() => ({
     }
   }));
   
-  export default function SignUp() {
+  export default function Contact() {
     const classes = contactStyles();
   
     return (
@@ -43,7 +43,7 @@ const contactStyles = makeStyles(() => ({
         <div className={classes.paper}>
          
           <form className={classes.form} noValidate>
-            <Grid container spacing={3}> 
+            <Grid container spacing={3} > 
                 <Grid item xs={12} sm={6}>
                     <div className={classes.field}> Title </div>
                     <TextField
@@ -80,6 +80,18 @@ const contactStyles = makeStyles(() => ({
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
+                    <div className={classes.field}> Phone Number</div>
+                    <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="phoneNumber"
+                    placeholder="(61) 400123123"
+                    name="phoneNumber"
+                    autoComplete="phoneNumber"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
                     <div className={classes.field}> Address </div>
                     <TextField
                     name="address"
@@ -103,19 +115,6 @@ const contactStyles = makeStyles(() => ({
                     autoComplete="link"
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <div className={classes.field}> Phone Number</div>
-                    <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="phoneNumber"
-                    placeholder="(61) 400123123"
-                    name="phoneNumber"
-                    autoComplete="phoneNumber"
-                    />
-                </Grid>
-              
             </Grid>
             <Grid  >
                 <Button

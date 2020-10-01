@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
-
 import theme from '../../utils/theme'
 import Contacts from './Contacts';
 import Description from './Description';
 import Education from './Education'
+import Skills from './Skills';
+import Experience from './Experience';
 
 
 const buttonStyles = makeStyles(() => ({
@@ -45,34 +45,32 @@ const buttonStyles = makeStyles(() => ({
 export default function EditingPage(){
     const classes = buttonStyles();
     const [page,setPage]= useState("");
-    var currentState = 'contacts'
-
+ 
     function contactsDetail(){
-        if(page=='contacts') {return <Contacts/>}
-        if(page=='description') {return <Description/>}
-        if(page=='education') {return <Education/>}
-        
+        if(page==='contacts') {return <Contacts/>}
+        if(page==='description') {return <Description/>}
+        if(page==='education') {return <Education/>}
+        if(page==='skills') {return <Skills/>}
+        if(page==='experience') {return <Experience/>}
 
-      
     }
 
-  
     return (
         <div className={classes.container}> 
             <div className={classes.buttonContainer}>
-                <Button variant="contained" className={(page!='contacts')? classes.button :classes.buttonOn } onClick={()=>( setPage('contacts'))}>
+                <Button variant="contained" className={(page!=='contacts')? classes.button :classes.buttonOn } onClick={()=>( setPage('contacts'))}>
                     Contact
                 </Button>
-                <Button variant="contained" className={(page!='description')? classes.button :classes.buttonOn } onClick={()=>(setPage('description'))}>
+                <Button variant="contained" className={(page!=='description')? classes.button :classes.buttonOn } onClick={()=>(setPage('description'))}>
                     Description
                 </Button>
-                <Button variant="contained" className={classes.button} onClick={()=>(setPage('education'))}>
+                <Button variant="contained" className={(page!=='education')? classes.button :classes.buttonOn }  onClick={()=>(setPage('education'))}>
                     Education
                 </Button>
-                <Button variant="contained" className={classes.button} onClick={()=>(setPage('experience'))}>
+                <Button variant="contained" className={(page!=='experience')? classes.button :classes.buttonOn }onClick={()=>(setPage('experience'))}>
                     Experience
                 </Button>
-                <Button variant="contained" className={classes.button} onClick={()=>(setPage('skills'))}>
+                <Button variant="contained" className={(page!=='skills')? classes.button :classes.buttonOn } onClick={()=>(setPage('skills'))}>
                     Skills
                 </Button>
             </div>
