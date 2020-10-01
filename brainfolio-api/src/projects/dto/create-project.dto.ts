@@ -13,13 +13,4 @@ export class ProjectDto {
     @IsNotEmpty()
     readonly contributor: string;
 
-    @IsNotEmpty()
-    readonly like: number;
-
-    @IsNotEmpty()
-    readonly comment: string;
-
-    @IsNotEmpty()
-    readonly share: string;
-
 }  
