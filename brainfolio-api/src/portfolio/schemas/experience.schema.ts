@@ -26,4 +26,4 @@ export class Experience extends Document {
   description: string;
 }
 
-export const kExperienceSchema = SchemaFactory.createForClass(Experience);
+export const ExperienceSchema = SchemaFactory.createForClass(Experience);
