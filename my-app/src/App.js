@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-
+import Portfolio from './pages/portfolio/portfolioPage';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: 'linear-gradient(90deg, #041e42,#5C788F)',
@@ -31,6 +31,7 @@ function App() {
               <Route path="/signUp" component={SignUp}/>
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
+              <Route path="/portfolio" component={Portfolio}/>
 
         
               <Route path="/home" component={AuthenticatedRoute}/>

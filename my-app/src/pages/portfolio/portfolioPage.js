@@ -68,6 +68,5 @@ export default function Portfolio(){
             </Container>
             <VerticalTabs/> 
         </Container>
-        
     );
 }
