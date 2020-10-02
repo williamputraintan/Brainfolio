@@ -33,15 +33,6 @@ export class Project extends Document {
 
     @Prop()
     contributor: String;
-
-    @Prop()
-    like: Number;
-
-    @Prop()
-    comment: String;
-
-    @Prop()
-    share: String;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

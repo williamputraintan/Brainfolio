@@ -2,11 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { Router } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { history } from "./utils/BrowserHistory"; 
+import theme from "./utils/theme";
+
+import { UserContextProvider } from './context/user.context';
+
+
+/** Router History -> ability to pass history to props (Global history) 
+ *  Recoil -> global useState, to store user etc...
+ *  Check https://recoiljs.org/docs/introduction/getting-started
+ *  Cssbaseline -> CSS reset
+ * **/
+//
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router history={history}>
+       <ThemeProvider theme={theme}>
+       <UserContextProvider>
+          <CssBaseline>
+            <App />
+          </CssBaseline>
+        </UserContextProvider>
+      </ThemeProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
