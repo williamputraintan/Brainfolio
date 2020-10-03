@@ -77,28 +77,47 @@ const projectStyles = makeStyles(() => ({
         display: 'none',
       },
   }));
-  
+
   export default function Projects() {
     const classes = projectStyles();
+
+    // form fields
     const [fields, setFields] = React.useState({
-      visibility: "",
+      visibility:"",
       projectTitle: "",
       startDate:"",
       endDate:"",
-      // contributers here
+      // contributors here
     })
-    function onInputChange(e){
+
+    function onFormInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
     }
-    function handleSubmit(e){
+
+    function handleFormSubmit(e){
       e.preventDefault();
       console.log('button clicked')
       history.push('/edit/projects')
     }
+
+    // file
+    const [selectedFile,setFile] =  React.useState(null);
+
+    function onFileChangeHandler(event){
+      setFile({selectedFile: event.target.files[0],
+        loaded: 0,})
+      console.log(event.target.files[0])
+    }
+    function onFileClickHandler ()  {
+      const data = new FormData() 
+      data.append('file', selectedFile)
+      console.log(data)
+    }
   
+
     return (
     <Container component="main" maxWidth="lg" >
 
@@ -113,29 +132,13 @@ const projectStyles = makeStyles(() => ({
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         className={classes.select}
-                    
-                        // value={age}
+                        value={fields.visibility}
                         // onChange={handleChange}
                         >
                         <MenuItem value={'public'}>Public</MenuItem>
                         <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
                         <MenuItem value={'private'}>Private</MenuItem>
-
                         </Select>
-
-                        {/* Upload file */}
-                        <input
-                            accept="image/*"
-                            className={classes.input}
-                            id="contained-button-file"
-                            multiple
-                            type="file"
-                        />
-                        <label htmlFor="contained-button-file">
-                            <Button variant="contained" color="primary" component="span">
-                            Choose your file
-                            </Button>
-                        </label>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Enter Project Title </div>
@@ -146,7 +149,7 @@ const projectStyles = makeStyles(() => ({
                       id="projectTitle"
                       placeholder="Brainfolio"
                       autoFocus
-                      onChange={onInputChange}                   
+                      onChange={onFormInputChange}                   
                       />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -159,7 +162,7 @@ const projectStyles = makeStyles(() => ({
                       placeholder="July 2018"
                       name="startDate"
                       autoComplete="startDate"
-                      onChange={onInputChange}                   
+                      onChange={onFormInputChange}                   
 
                       />
                   </Grid>
@@ -173,7 +176,7 @@ const projectStyles = makeStyles(() => ({
                       placeholder="October 2018"
                       name="endDate"
                       autoComplete="endDate"
-                      onChange={onInputChange}                   
+                      onChange={onFormInputChange}                   
 
                       />
                   </Grid>
@@ -188,7 +191,7 @@ const projectStyles = makeStyles(() => ({
                         variant="outlined"
                         className={classes.contributor}
                         style={{marginRight:'4%'}}
-                        onChange={onInputChange}                   
+                        onChange={onFormInputChange}                   
 
                         
                         />
@@ -198,13 +201,10 @@ const projectStyles = makeStyles(() => ({
                         label="Email"
                         placeholder="October 2018"
                         variant="outlined"
-                        onChange={onInputChange}                   
-
+                        onChange={onFormInputChange}                   
                         />
                     </div>
-                                    
-                      
-                      
+
                   </Grid>
                   <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Project Description </div>
@@ -218,12 +218,19 @@ const projectStyles = makeStyles(() => ({
                       autoComplete="desc"
                       multiline
                       row={3}
-                      onChange={onInputChange}                   
-
+                      onChange={onFormInputChange}                   
                       />
                   </Grid>
-                 
-                  
+                  <Grid item xs={12} sm={12}>
+                    <div>
+                      <input type="file" name="file" onChange={(event)=> onFileChangeHandler(event)}/>
+                        <label htmlFor="contained-button-file">
+                          <Button variant="contained" color="primary" component="span" onClick={onFileClickHandler}>
+                            Upload File
+                            </Button>
+                        </label>
+                      </div>
+                  </Grid> 
               </Grid>
               <Grid xs={12} sm={12}>
                   <Button
@@ -232,7 +239,7 @@ const projectStyles = makeStyles(() => ({
                   className={classes.submit}
                   fullWidth
                   color='primary'
-                  onClick={event=>handleSubmit(event)}
+                  onClick={event=>handleFormSubmit(event)}
                   >
                   Save to my Projects
                   </Button>

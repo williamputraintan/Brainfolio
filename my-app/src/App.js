@@ -36,7 +36,7 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
 
-          
+              {/* later changed to authenticed routes */}
               <Redirect exact from="/edit" to="/edit/contact" />
               <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
               
