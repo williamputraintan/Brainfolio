@@ -10,12 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { history } from '../../utils/BrowserHistory';
 
 import theme from '../../utils/theme'
 
-import { history } from '../../utils/BrowserHistory';
-
-const experienceStyles = makeStyles(() => ({
+const projectStyles = makeStyles(() => ({
     paper: {
       display: 'inline',
       flexDirection: 'column',
@@ -47,10 +46,10 @@ const experienceStyles = makeStyles(() => ({
         
     },
     cardRoot: {
-      minWidth: 235,
-      minHeight:250,
-      padding:'2%',
-      marginBottom:'5%'
+        minWidth: 235,
+        minHeight:400,
+        padding:'2%',
+        marginBottom:'5%'
     },
    
     listContainer:{
@@ -66,18 +65,27 @@ const experienceStyles = makeStyles(() => ({
       justifyContent:'center'
     },
     select:{
-        width:'30%'
-    }
+        width:'30%',
+        height:'40px',
+        marginRight:'10%'
+    },
+    contributor:{
+    
+        width:'48%'
+    },
+    input: {
+        display: 'none',
+      },
   }));
   
-  export default function Experience() {
-    const classes = experienceStyles();
+  export default function Projects() {
+    const classes = projectStyles();
     const [fields, setFields] = React.useState({
-      section: "",
-      jobTitle: "",
-      jobDesc:"",
+      visibility: "",
+      projectTitle: "",
       startDate:"",
       endDate:"",
+      // contributers here
     })
     function onInputChange(e){
       setFields({
@@ -88,9 +96,8 @@ const experienceStyles = makeStyles(() => ({
     function handleSubmit(e){
       e.preventDefault();
       console.log('button clicked')
-      history.push('/edit/experience')
+      history.push('/edit/projects')
     }
-  
   
     return (
     <Container component="main" maxWidth="lg" >
@@ -101,54 +108,44 @@ const experienceStyles = makeStyles(() => ({
               <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
                       
-                      <InputLabel id="demo-simple-select-label">Section Title</InputLabel>
+                      <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         className={classes.select}
-                        // value={section}
-                        name='section'
+                    
+                        // value={age}
                         // onChange={handleChange}
                         >
-                        <MenuItem value={'work'}>Work</MenuItem>
-                        <MenuItem value={'volunteer'}>Volunteer</MenuItem>
+                        <MenuItem value={'public'}>Public</MenuItem>
+                        <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
+                        <MenuItem value={'private'}>Private</MenuItem>
+
                         </Select>
+
+                        {/* Upload file */}
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="contained-button-file"
+                            multiple
+                            type="file"
+                        />
+                        <label htmlFor="contained-button-file">
+                            <Button variant="contained" color="primary" component="span">
+                            Choose your file
+                            </Button>
+                        </label>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter Company name </div>
+                      <div className={classes.field}> Enter Project Title </div>
                       <TextField
-                      name="company"
+                      name="projectTitle"
                       variant="outlined"
                       fullWidth
-                      id="company"
-                      placeholder="University of Melbourne"
+                      id="projectTitle"
+                      placeholder="Brainfolio"
                       autoFocus
-                      onChange={onInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Job Title</div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="jobTitle"
-                      placeholder="Tutor for COMP30022"
-                      name="jobTitle"
-                      onChange={onInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Job Description </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="jobDesc"
-                      placeholder="Tutors 2 tutorial classes, each consisting of 20 students and supervising their Capstone Project"
-                      name="jobDesc"
-                      multiline
-                      row={4}
                       onChange={onInputChange}                   
                       />
                   </Grid>
@@ -161,7 +158,9 @@ const experienceStyles = makeStyles(() => ({
                       id="startDate"
                       placeholder="July 2018"
                       name="startDate"
+                      autoComplete="startDate"
                       onChange={onInputChange}                   
+
                       />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -171,11 +170,59 @@ const experienceStyles = makeStyles(() => ({
                       required
                       fullWidth
                       id="endDate"
-                      placeholder="July 2021"
+                      placeholder="October 2018"
                       name="endDate"
+                      autoComplete="endDate"
                       onChange={onInputChange}                   
+
                       />
                   </Grid>
+                  <Grid item xs={12} sm={12}>
+                      <div className={classes.field}> Enter Contributors </div>
+                      <div>
+                        <TextField
+                     
+                        id="name"
+                        label="Name"
+                        placeholder="October 2018"
+                        variant="outlined"
+                        className={classes.contributor}
+                        style={{marginRight:'4%'}}
+                        onChange={onInputChange}                   
+
+                        
+                        />
+                        <TextField
+                        className={classes.contributor}
+                        id="email"
+                        label="Email"
+                        placeholder="October 2018"
+                        variant="outlined"
+                        onChange={onInputChange}                   
+
+                        />
+                    </div>
+                                    
+                      
+                      
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                      <div className={classes.field}> Project Description </div>
+                      <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="desc"
+                      placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
+                      name="desc"
+                      autoComplete="desc"
+                      multiline
+                      row={3}
+                      onChange={onInputChange}                   
+
+                      />
+                  </Grid>
+                 
                   
               </Grid>
               <Grid xs={12} sm={12}>
@@ -187,7 +234,7 @@ const experienceStyles = makeStyles(() => ({
                   color='primary'
                   onClick={event=>handleSubmit(event)}
                   >
-                  Save to my Experiences
+                  Save to my Projects
                   </Button>
               </Grid>
             </form>
@@ -197,21 +244,13 @@ const experienceStyles = makeStyles(() => ({
         <Card className={classes.cardRoot}>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Your Work Experience
-            </Typography>
-            
-            </CardContent>
-            </Card>
-            <Card className={classes.cardRoot}>
-            <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Your Volunteer Experience
+                Your Projects
             </Typography>
             
             </CardContent>
             </Card>
       </Container>  
-    </Container >
+    </Container>
 
     );
   }

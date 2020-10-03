@@ -4,11 +4,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
-import theme from '../../utils/theme'
+import theme from '../../utils/theme';
+import { history } from '../../utils/BrowserHistory';
 
 const descStyles = makeStyles(() => ({
     paper: {
@@ -43,7 +41,7 @@ const descStyles = makeStyles(() => ({
         fontFamily:theme.typography.fontFamily,
         margin: theme.spacing(3, 0, 2),
         justifyContent: 'center',
-        backgroundColor:'#1D3B64',
+  
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
@@ -57,8 +55,25 @@ const descStyles = makeStyles(() => ({
   }));
 export default function Description(){
     const classes = descStyles();
+
+    const [fields, setFields] = React.useState({
+      description:""
+    })
+    function onInputChange(e){
+      setFields({
+        ...fields,
+        [e.target.name]: e.target.value
+      })
+    }
+    function handleSubmit(e){
+      e.preventDefault();
+      console.log('button clicked')
+      history.push('/edit/description')
+    }
+    
     
     return (
+
         <Container component="main" maxWidth="lg">
        
         <div className={classes.paper}>
@@ -76,6 +91,7 @@ export default function Description(){
                     autoFocus
                     multiline
                     rows={5}
+                    onChange={onInputChange}
                     />
                 </Grid>
             </Grid>
@@ -86,6 +102,7 @@ export default function Description(){
                 className={classes.submit}
                 fullWidth
                 color='primary'
+                onClick={event=>handleSubmit(event)}
                 >
                 Save my description
                 </Button>
@@ -94,5 +111,7 @@ export default function Description(){
         </div>
        
       </Container>
+
+
     )
 }

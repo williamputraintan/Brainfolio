@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
-import { UserContext, } from '../context/user.context';
+import { UserContext } from '../context/user.context';
 import { logUserIn } from '../context/actions/auth.actions';
 
 // based on sign in template material ui
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#6a97d4",
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(1),
   },
   submit: {

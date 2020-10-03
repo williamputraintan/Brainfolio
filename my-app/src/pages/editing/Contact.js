@@ -4,7 +4,11 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import theme from '../../utils/theme'
+import { history } from '../../utils/BrowserHistory';
 
 const contactStyles = makeStyles(() => ({
     paper: {
@@ -21,7 +25,6 @@ const contactStyles = makeStyles(() => ({
         fontFamily:theme.typography.fontFamily,
         margin: theme.spacing(3, 0, 2),
         justifyContent: 'center',
-        backgroundColor:'#1D3B64',
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
@@ -31,14 +34,53 @@ const contactStyles = makeStyles(() => ({
         marginBottom:"3%",
         fontWeight:600
         
-    }
+    },
+    formContainer:{
+      width:'70%', 
+      float:'left',
+      marginBottom:'3%',
+  
+    },
+    listContainer:{
+      padding:"5%",
+      width:'30%',
+      float:'right'
+    },
+    cardRoot: {
+      minWidth: 235,
+      minHeight:300,
+      padding:'2%'
+    },
   }));
   
   export default function Contact() {
     const classes = contactStyles();
+
+    const [fields, setFields] = React.useState({
+      title: "",
+      fullName: "",
+      email:"",
+      phoneNumber:"",
+      address:"",
+      link: ""
+    })
+    function onInputChange(e){
+      setFields({
+        ...fields,
+        [e.target.name]: e.target.value
+      })
+    }
+    function handleSubmit(e){
+      e.preventDefault();
+      console.log('button clicked')
+      history.push('/edit/contact')
+    }
   
     return (
-    <Container component="main" maxWidth="lg">
+    <Container component="main" maxWidth="lg" >
+
+     
+    <Container component="main" maxWidth="lg" className={classes.formContainer}>
        
         <div className={classes.paper}>
          
@@ -52,7 +94,7 @@ const contactStyles = makeStyles(() => ({
                     fullWidth
                     id="title"
                     placeholder="Ms"
-                    autoFocus
+                    onChange={onInputChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -63,8 +105,8 @@ const contactStyles = makeStyles(() => ({
                     fullWidth
                     id="name"
                     placeholder="Patricia Angelica"
-                    autoFocus
-                    autoComplete='name'
+                    onChange={onInputChange}                   
+                    autoComplete='name'                 
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -77,6 +119,7 @@ const contactStyles = makeStyles(() => ({
                     placeholder="patriciaangelica@email.com"
                     name="email"
                     autoComplete="email"
+                    onChange={onInputChange}              
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -89,6 +132,7 @@ const contactStyles = makeStyles(() => ({
                     placeholder="(61) 400123123"
                     name="phoneNumber"
                     autoComplete="phoneNumber"
+                    onChange={onInputChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -99,8 +143,8 @@ const contactStyles = makeStyles(() => ({
                     fullWidth
                     id="address"
                     placeholder="100 Elizabeth Street"
-                    autoFocus
-                    autoComplete="address"
+                    onChange={onInputChange}
+                    autoComplete="address"              
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -113,6 +157,7 @@ const contactStyles = makeStyles(() => ({
                     placeholder="github.com/yourname"
                     name="link"
                     autoComplete="link"
+                    onChange={onInputChange}
                     />
                 </Grid>
             </Grid>
@@ -123,13 +168,28 @@ const contactStyles = makeStyles(() => ({
                 className={classes.submit}
                 fullWidth
                 color='primary'
+                onClick={event=>handleSubmit(event)}
                 >
                 Save my details
                 </Button>
             </Grid>
           </form>
         </div>
-       
       </Container>
+
+      <Container component="main" maxWidth="lg" className={classes.listContainer}>
+        <Card className={classes.cardRoot}>
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Your Details
+          </Typography>
+          <Typography  color="textSecondary" gutterBottom>
+          {/* get details from database */}
+          </Typography>
+        </CardContent>
+        </Card>
+      </Container>  
+
+    </Container>
     );
   }

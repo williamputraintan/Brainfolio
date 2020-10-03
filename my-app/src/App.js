@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch,  Route } from 'react-router-dom';
+import { Switch,  Route, Redirect} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
@@ -10,6 +10,7 @@ import Timeline from './pages/Timeline.jsx'
 import EditingPage from './pages/editing/EditingPage.js';
 
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,10 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
 
           
-              <Route path="/edit" component={EditingPage}/>              
+              <Redirect exact from="/edit" to="/edit/contact" />
+              <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
+              
+
         
               <Route path="/home" component={AuthenticatedRoute}/>
 

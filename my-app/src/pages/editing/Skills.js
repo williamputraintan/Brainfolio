@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { history } from '../../utils/BrowserHistory';
 
 import theme from '../../utils/theme'
 
@@ -25,7 +26,6 @@ const skillsStyle = makeStyles(() => ({
         fontFamily:theme.typography.fontFamily,
         margin: theme.spacing(3, 0, 2),
         justifyContent: 'center',
-        backgroundColor:'#1D3B64',
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
@@ -64,6 +64,22 @@ const skillsStyle = makeStyles(() => ({
   }));
 export default function Skills(){
     const classes = skillsStyle();
+    const [fields, setFields] = React.useState({
+      tech: "",
+      soft: "",
+    })
+    function onInputChange(e){
+      setFields({
+        ...fields,
+        [e.target.name]: e.target.value
+      })
+    }
+    function handleSubmit(e){
+      e.preventDefault();
+      console.log('button clicked')
+      history.push('/edit/skills')
+    }
+  
     
     return (
         <Container component="main" maxWidth="lg">
@@ -85,6 +101,7 @@ export default function Skills(){
                     autoFocus
                     multiline
                     rows={5}
+                    onChange={onInputChange}                   
                     />
                 </Grid>
                 <Grid style={{marginLeft:'2%'}}>
@@ -94,6 +111,8 @@ export default function Skills(){
                     className={classes.submit}
                     fullWidth
                     color='primary'
+                    onClick={event=>handleSubmit(event)}
+
                     >
                     Save to my Techincal Skills List
                     </Button>
@@ -101,14 +120,15 @@ export default function Skills(){
                 <Grid item xs={12} sm={12}>
                     <div className={classes.field}> Enter your Soft Skills</div>
                     <TextField
-                    name="tech"
+                    name="soft"
                     variant="outlined"
                     fullWidth
-                    id="tech"
+                    id="soft"
                     placeholder="Cooperative Team member"
                     autoFocus
                     multiline
                     rows={5}
+                    onChange={onInputChange}                   
                     />
                 </Grid>
                 <Grid style={{marginLeft:'2%'}} >
@@ -118,6 +138,8 @@ export default function Skills(){
                     className={classes.submit}
                     fullWidth
                     color='primary'
+                    onClick={event=>handleSubmit(event)}
+
                     >
                     Save to my Soft Skills List
                     </Button>
