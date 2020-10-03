@@ -45,14 +45,23 @@ const useStyles = makeStyles(() => ({
     button:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,
-        margin:'2%',
+        margin:'0.5%',
         fontFamily:theme.typography.fontFamily,
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
         },
     },
-
+    button2:{
+        backgroundColor:theme.palette.secondary.main,
+        color: '#4C516D',
+        margin:'0.5%',
+        fontFamily:theme.typography.fontFamily,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.main,
+            color: '#4C516D'
+        },
+    },
     // paper: {
     //     textAlign: 'center',
     //     color: theme.palette.text.paper,
@@ -69,30 +78,43 @@ const useStyles = makeStyles(() => ({
     
   }));
 
-export default function PF_Experience(){
+export default function PF_Skill(){
     var classes = useStyles();
     return(
         <div>
             <Container className={classes.paper}>
-                <Typography variant="h4"> Experience</Typography>
+                <Typography variant="h4"> Skill</Typography>
                 <br/>
 
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
+                <div>
+                    <Typography variant="h5">
+                        Technical Skill
                     </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
+                </div>
+                <div>
+                    <Button className={classes.button}>React.js</Button>
+                    <Button className={classes.button}>Nest.js</Button>
+                    <Button className={classes.button}>Redux</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Docker</Button>
+                    <Button className={classes.button}>Python</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Docker</Button>
+                    <Button className={classes.button}>Python</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                </div>
+                <br/>
+                <br/>
+                <div>
+                    <Typography variant="h5">
+                        Soft Skill
                     </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
-                    <Typography variant="h3" class="desc">
-                        Job Description:
-                        <Typography>
-                            - bam bam bam
-                        </Typography>
-                    </Typography>
+                </div>
+                <div>
+                    <Button className={classes.button2}>Teamwork</Button>
+                    <Button className={classes.button2}>Communication</Button>
+                    <Button className={classes.button2}>Leadership</Button>
                 </div>
 
             </Container>

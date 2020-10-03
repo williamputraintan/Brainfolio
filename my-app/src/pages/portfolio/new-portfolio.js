@@ -63,8 +63,8 @@ export default function New(){
                         <Avatar src={require('../../images/portfolio-profilepic/arthursetiawan.jpg')} className = {classes.large} />
                     </div>
                     <div class="profile">
-                        <Typography variant="h4"> <b> Daniel Andrews </b></Typography>
-                        <Typography variant="h6"> <b> Victoria Premier </b></Typography>
+                        <Typography variant="h3"> <b> Daniel Andrews </b></Typography>
+                        <Typography variant="h5"> <b> Victoria Premier </b></Typography>
                         <br/>
                         <Typography> Location: Melbourne, Australia </Typography>
                         <Typography> Ph.: 048592847 </Typography>
@@ -72,16 +72,16 @@ export default function New(){
 
                     </div>
                     <div class="edit1">
-                        <Button className={classes.button}>Edit Profile</Button>
+                        <Button className={classes.button} href="../edit/contact">Edit Profile</Button>
                     </div>
                     <div class="edit2">
-                        <Button className={classes.button}>Edit Portfolio</Button>
+                        <Button className={classes.button} href="../edit">Edit Portfolio</Button>
                     </div>                    
                 </div>
                 
             </Container>
-            <hr class="solid"/>
-            
+            {/* <hr class="solid"/> */}
+
             <div class='grid-body'>
                 <PF_Timeline/>
                 <PF_Body/>

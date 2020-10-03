@@ -64,16 +64,80 @@ hr.solid {
 }
 
 div.timeline {
-    background-color: azure;
+    padding-top: 15%;
+    /* background-color: azure; */
 }
 
 div.pf {
-    height: 100vh;
+    /* height: 100vh; */
     /* padding-top: 5%; */
     /* padding-left: 5%; */
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
+.grid-exp {
+    display: grid;
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: 1fr 0.5fr auto;
+    grid-template-areas: 
+        "role year"
+        "company year"
+        "desc year";
+}
+
+.role {
+    display: grid;
+    grid-area: role;
+}
+.year {
+    display: grid;
+    grid-area: year;
+}
+.company {
+    display: grid;
+    grid-area: company;
+    padding-left: 2%;
+    margin-top: -2.6%;
+    
+}
+.desc {
+    display: grid;
+    grid-area: desc;
+    margin-top: -1%;
+    padding-left: 2%;
+}
+
+.grid-edu {
+    display: grid;
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: 1fr 0.5fr auto;
+    grid-template-areas: 
+        "school year"
+        "degree year"
+        "desc year";
+}
+
+.school {
+    display: grid;
+    grid-area: school;
+}
+.year {
+    display: grid;
+    grid-area: year;
+}
+.degree {
+    display: grid;
+    grid-area: degree;
+    padding-left: 2%;
+    margin-top: -2.6%;
+    
+}
+.desc {
+    display: grid;
+    grid-area: desc;
+    margin-top: -1%;
+    padding-left: 2%;
+}
 
 @media only screen and (max-width: 680px) {
     .grid-container {
@@ -128,10 +192,6 @@ div.pf {
     
     div.pf {
         grid-area: pf;
-        height: 100vh;
-        /* padding-top: 5%; */
-        /* padding-left: 5%; */
-        background-color: aquamarine;
     }
   }
   
@@ -180,6 +240,35 @@ div.pf {
     .avatar {
         width: 110px;
         height: 110px;
+    }
+
+    .role {
+        display: grid;
+        grid-area: role;
+    }
+    .year {
+        display: grid;
+        grid-area: year;
+    }
+    .company {
+        display: grid;
+        grid-area: company;
+        padding-left: 2%;
+        margin-top: -6.7%;
+        
+    }
+    .desc {
+        display: grid;
+        grid-area: desc;
+        margin-top: -1%;
+        padding-left: 2%;
+    }
+
+    .degree {
+        display: grid;
+        grid-area: degree;
+        padding-left: 2%;
+        margin-top: -5%;
     }
 
   }

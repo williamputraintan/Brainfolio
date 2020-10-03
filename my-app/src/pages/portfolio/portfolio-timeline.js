@@ -19,14 +19,14 @@ export default function PF_Timeline(){
                     <IconButton><TimelineDot /></IconButton>
                     <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Eat</TimelineContent>
+                    <TimelineContent>Description</TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                     <IconButton><TimelineDot /></IconButton>
                     <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Code</TimelineContent>
+                    <TimelineContent>Experience</TimelineContent>
                 </TimelineItem>
                 
                 <TimelineItem>
@@ -34,17 +34,24 @@ export default function PF_Timeline(){
                     <IconButton><TimelineDot /></IconButton>
                     <TimelineConnector />
                     </TimelineSeparator>
-
-                    <TimelineContent>Sleep</TimelineContent>
-
+                    <TimelineContent>Education</TimelineContent>
                 </TimelineItem>
+
+                <TimelineItem>
+                    <TimelineSeparator>
+                    <IconButton><TimelineDot /></IconButton>
+                    <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>Skill</TimelineContent>
+                </TimelineItem>
+
                 <TimelineItem>
                     <TimelineSeparator>
                     <IconButton><TimelineDot /></IconButton>
                     </TimelineSeparator>
-                    <TimelineContent>Repeat</TimelineContent>
+                    <TimelineContent>Project</TimelineContent>
                 </TimelineItem>
-                </Timeline>                    
+                </Timeline>
             </div>
         );
 };

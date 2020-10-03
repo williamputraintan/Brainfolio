@@ -22,6 +22,9 @@ import IconButton from '@material-ui/core/IconButton';
 
 import './new-pf.css'
 import PF_Experience from './experience';
+import PF_Education from './education';
+import PF_Skill from './skill';
+import PF_Project from './project';
 
 const useStyles = makeStyles(() => ({
     pf_container:{
@@ -72,8 +75,6 @@ export default function PF_Body(){
     return(
         <div class="pf">
 
-            <PF_Experience/>
-
             <Container className={classes.paper}>
                 <Typography variant="h4"> Description</Typography>
                 <br/>
@@ -85,58 +86,19 @@ export default function PF_Body(){
                     Looking forward to see you soon!
                 </Typography>
             </Container>
-            <div>    
-                <Container className={classes.paper}>
-                    <Typography variant="h4"> Description</Typography>
-                    <br/>
+            <hr class="solid"/>
 
-                    <Typography theme="theme">
-                        I'm diligent, love to connect with new people and do teamwork. 
-                        cool right? Lets meet up and talk!
-                        <br/>
-                        Looking forward to see you soon!
-                    </Typography>
-                </Container>
-            </div>
-            <div>    
-                <Container className={classes.paper}>
-                    <Typography variant="h4"> Description</Typography>
-                    <br/>
+            <PF_Experience/>
+            <hr class="solid"/>
 
-                    <Typography theme="theme">
-                        I'm diligent, love to connect with new people and do teamwork. 
-                        cool right? Lets meet up and talk!
-                        <br/>
-                        Looking forward to see you soon!
-                    </Typography>
-                </Container>
-            </div>
-            <div>    
-                <Container className={classes.paper}>
-                    <Typography variant="h4"> Description</Typography>
-                    <br/>
+            <PF_Education/>
+            <hr class="solid"/>
 
-                    <Typography theme="theme">
-                        I'm diligent, love to connect with new people and do teamwork. 
-                        cool right? Lets meet up and talk!
-                        <br/>
-                        Looking forward to see you soon!
-                    </Typography>
-                </Container>
-            </div>
-            <div>    
-                <Container className={classes.paper}>
-                    <Typography variant="h4"> Description</Typography>
-                    <br/>
+            <PF_Skill/>
+            <hr class="solid"/>
 
-                    <Typography theme="theme">
-                        I'm diligent, love to connect with new people and do teamwork. 
-                        cool right? Lets meet up and talk!
-                        <br/>
-                        Looking forward to see you soon!
-                    </Typography>
-                </Container>
-            </div>
+            <PF_Project/>
+
         </div>
     );
 }

@@ -69,26 +69,27 @@ const useStyles = makeStyles(() => ({
     
   }));
 
-export default function PF_Experience(){
+export default function PF_Education(){
     var classes = useStyles();
     return(
         <div>
             <Container className={classes.paper}>
-                <Typography variant="h4"> Experience</Typography>
+                <Typography variant="h4"> Education</Typography>
                 <br/>
 
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
+                <div class="grid-edu">
+                    <Typography variant="h2" class="school">
+                        The University of Melbourne
+                    </Typography>
+                    <Typography variant="h2" class="degree">
+                        Master of Information Technology
                     </Typography>
                     <Typography variant="h3" class="year">
                             2008-present
                     </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
+                    
                     <Typography variant="h3" class="desc">
-                        Job Description:
+                        Course description:
                         <Typography>
                             - bam bam bam
                         </Typography>
