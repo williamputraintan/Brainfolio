@@ -1,35 +1,20 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide, Container } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 
-
 import './new-pf.css'
 
+import PF_Timeline from './portfolio-timeline';
+import PF_Body from './portfolio-body';
 const useStyles = makeStyles(() => ({
     pf_container:{
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
         maxWidth: "xl",
-        // height: 1234,
         backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-        
-        
     },
     large: {
         // width: "10em",
@@ -62,29 +47,45 @@ const useStyles = makeStyles(() => ({
         // textAlign: 'center',
         color: theme.palette.text.secondary,
         backgroundColor: "white"
-      },
-    compName: {
-        padding: theme.spacing(2),
-    }
+      }
     
   }));
 
-export default function PF_Experience(){
+export default function New(){
     var classes = useStyles();
     return(
         <div>
-            <Container className={classes.paper}>
-                <Typography variant="h4"> Experience</Typography>
-                <br/>
 
-                <div>
-                    <Typography variant="h6" className={classes.compName}>
-                        Apple Inc.
-                    </Typography>
+            <Container className="portfolio-template">
+
+                <div class="grid-container">
+                    <div class="picture">
+                        <Avatar src={require('../../images/portfolio-profilepic/arthursetiawan.jpg')} className = {classes.large} />
+                    </div>
+                    <div class="profile">
+                        <Typography variant="h4"> <b> Daniel Andrews </b></Typography>
+                        <Typography variant="h6"> <b> Victoria Premier </b></Typography>
+                        <br/>
+                        <Typography> Location: Melbourne, Australia </Typography>
+                        <Typography> Ph.: 048592847 </Typography>
+                        <Typography> Links: <a href="github.com">github.com</a> </Typography>
+
+                    </div>
+                    <div class="edit1">
+                        <Button className={classes.button}>Edit Profile</Button>
+                    </div>
+                    <div class="edit2">
+                        <Button className={classes.button}>Edit Portfolio</Button>
+                    </div>                    
                 </div>
-                    
+                
             </Container>
-
+            <hr class="solid"/>
+            
+            <div class='grid-body'>
+                <PF_Timeline/>
+                <PF_Body/>
+            </div>   
         </div>
     );
 }
