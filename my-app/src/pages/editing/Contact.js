@@ -2,59 +2,19 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import theme from '../../utils/theme'
+import Hidden from '@material-ui/core/Hidden';
+
+import PopUpInfo from './PopUpInfo';
+import {useStyles} from './Styles.js';
+
 import { history } from '../../utils/BrowserHistory';
 
-const contactStyles = makeStyles(() => ({
-    paper: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    form: {
-      width: '100%',
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-        backgroundColor:theme.palette.primary.main,
-        fontFamily:theme.typography.fontFamily,
-        margin: theme.spacing(3, 0, 2),
-        justifyContent: 'center',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-            color: '#4C516D'
-          },
-    },
-    field:{
-        marginBottom:"3%",
-        fontWeight:600
-        
-    },
-    formContainer:{
-      width:'70%', 
-      float:'left',
-      marginBottom:'3%',
-  
-    },
-    listContainer:{
-      padding:"5%",
-      width:'30%',
-      float:'right'
-    },
-    cardRoot: {
-      minWidth: 235,
-      minHeight:300,
-      padding:'2%'
-    },
-  }));
-  
-  export default function Contact() {
-    const classes = contactStyles();
+export default function Contact() {
+    const classes = useStyles();
 
     const [fields, setFields] = React.useState({
       title: "",
@@ -64,12 +24,14 @@ const contactStyles = makeStyles(() => ({
       address:"",
       link: ""
     })
+
     function onInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
     }
+
     function handleSubmit(e){
       e.preventDefault();
       console.log('button clicked')
@@ -77,14 +39,23 @@ const contactStyles = makeStyles(() => ({
     }
   
     return (
-    <Container component="main" maxWidth="lg" >
+    <Container component="main" maxWidth="lg">
 
-     
-    <Container component="main" maxWidth="lg" className={classes.formContainer}>
-       
+      <Container component="main" maxWidth="lg" className={classes.listContainer}>
+        <Card className={classes.cardRoot}>
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Your Details
+          </Typography>
+        </CardContent>
+        </Card>
+        <Hidden smUp><PopUpInfo  title={'Contact'}/></Hidden>
+      </Container>
+
+      <Container component="main" maxWidth="lg" className={classes.formContainer}>
         <div className={classes.paper}>
-         
           <form className={classes.form} noValidate>
+          
             <Grid container spacing={3} > 
                 <Grid item xs={12} sm={6}>
                     <div className={classes.field}> Title </div>
@@ -161,7 +132,8 @@ const contactStyles = makeStyles(() => ({
                     />
                 </Grid>
             </Grid>
-            <Grid  >
+
+            <Grid>
                 <Button
                 type="submit"
                 variant="contained"
@@ -176,20 +148,6 @@ const contactStyles = makeStyles(() => ({
           </form>
         </div>
       </Container>
-
-      <Container component="main" maxWidth="lg" className={classes.listContainer}>
-        <Card className={classes.cardRoot}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            Your Details
-          </Typography>
-          <Typography  color="textSecondary" gutterBottom>
-          {/* get details from database */}
-          </Typography>
-        </CardContent>
-        </Card>
-      </Container>  
-
     </Container>
     );
   }

@@ -28,9 +28,6 @@ const buttonStyles = makeStyles(() => ({
         height:'85%',
         padding:'1% 3% 3% 3%'
     },
-    mobile:{
-     
-    },
     button:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,

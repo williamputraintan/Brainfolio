@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,84 +9,28 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Hidden from '@material-ui/core/Hidden';
+
+import PopUpInfo from './PopUpInfo';
+import {useStyles} from './Styles.js';
+
 import { history } from '../../utils/BrowserHistory';
+import theme from '../../utils/theme';
 
-import theme from '../../utils/theme'
+export default function Projects() {
+    const classes = useStyles();
 
-const projectStyles = makeStyles(() => ({
-    paper: {
-      display: 'inline',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    form: {
-      width: '100%',
-      marginTop: theme.spacing(3),
-    },
-    formContainer:{
-      width:'60%', 
-      float:'left',
-      marginBottom:'3%',
-  
-    },
-    submit: {
-        backgroundColor:theme.palette.primary.main,
-        fontFamily:theme.typography.fontFamily,
-        margin: theme.spacing(3, 0, 2),
-        justifyContent: 'center',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-            color: '#4C516D'
-          },
-    },
-    field:{
-        marginBottom:"3%",
-        fontWeight:600
-        
-    },
-    cardRoot: {
-        minWidth: 235,
-        minHeight:400,
-        padding:'2%',
-        marginBottom:'5%'
-    },
-   
-    listContainer:{
-      padding:"5%",
-      width:'40%',
-      float:'right'
-    },
-    title: {
-      fontSize: 18,
-      fontFamily: theme.typography.fontFamily,
-      colot:"#000",
-      fontWeight: 600,
-      justifyContent:'center'
-    },
-    select:{
-        width:'30%',
-        height:'40px',
-        marginRight:'10%'
-    },
-    contributor:{
-    
-        width:'48%'
-    },
-    input: {
-        display: 'none',
-      },
-  }));
-
-  export default function Projects() {
-    const classes = projectStyles();
-
-    // form fields
+    // fields form
     const [fields, setFields] = React.useState({
       visibility:"",
       projectTitle: "",
       startDate:"",
       endDate:"",
-      // contributors here
+      contributors:[]
     })
 
     function onFormInputChange(e){
@@ -116,17 +59,57 @@ const projectStyles = makeStyles(() => ({
       data.append('file', selectedFile)
       console.log(data)
     }
+
+    //contributors
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
   
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const[oneName,setOneName] = React.useState("");
+    const[oneEmail,setOneEmail]= React.useState("");
+
+    const AddContributor = ()=>{
+      fields.contributors.push([oneName,oneEmail]);
+      console.log(fields.contributors)
+    }
+    const confirmAdd = ()=>{
+      AddContributor();
+      handleClose();
+    }
+    function displayContributors(){
+      var res=[];
+      var i;
+      for(i=0;i<fields.contributors.length;i++){
+        res[i]= (i+1).toString()+". "+fields.contributors[i][0]+", "+fields.contributors[i][1]
+      }
+      return res;
+    }
 
     return (
-    <Container component="main" maxWidth="lg" >
+    <Container component="main" maxWidth="lg">
+
+      <Container component="main" maxWidth="lg" className={classes.listContainer}>
+        <Card className={classes.cardRoot}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Your Projects
+            </Typography>
+          </CardContent>
+        </Card>
+        <Hidden smUp><PopUpInfo title={'Project'} className={classes.popUp}/></Hidden>  
+      </Container>  
 
       <Container component="main" maxWidth="lg" className={classes.formContainer}>
           <div className={classes.paper}>
             <form className={classes.form} noValidate>
               <Grid container spacing={3}> 
+
                   <Grid item xs={12} sm={12}>
-                      
                       <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
@@ -163,7 +146,6 @@ const projectStyles = makeStyles(() => ({
                       name="startDate"
                       autoComplete="startDate"
                       onChange={onFormInputChange}                   
-
                       />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -177,34 +159,56 @@ const projectStyles = makeStyles(() => ({
                       name="endDate"
                       autoComplete="endDate"
                       onChange={onFormInputChange}                   
-
                       />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter Contributors </div>
-                      <div>
+                  <Grid item xs={12} sm={12}>  
+                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                      Add Contributor
+                    </Button>
+                    <Card className={classes.cardContributors}>
+                      <CardContent>
+                        <Typography color="textSecondary" gutterBottom>
+                          Contributors    
+                        </Typography>
+                          {displayContributors().map(res=>(
+                            <div>
+                              {res} <br/>
+                            </div>
+                          ))}
+                      </CardContent>
+                    </Card>
+                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                      <DialogTitle id="form-dialog-title">Add contributor</DialogTitle>
+                      <DialogContent>
                         <TextField
-                     
-                        id="name"
-                        label="Name"
-                        placeholder="October 2018"
-                        variant="outlined"
-                        className={classes.contributor}
-                        style={{marginRight:'4%'}}
-                        onChange={onFormInputChange}                   
-
-                        
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          label="Name"
+                          type="name"
+                          style={{paddingRight:'5%'}}
+                          fullWidth
+                          onChange={event=>setOneName(event.target.value)}                   
                         />
                         <TextField
-                        className={classes.contributor}
-                        id="email"
-                        label="Email"
-                        placeholder="October 2018"
-                        variant="outlined"
-                        onChange={onFormInputChange}                   
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          label="Email Address"
+                          type="email"
+                          fullWidth                       
+                          onChange={event=>setOneEmail(event.target.value)}
                         />
-                    </div>
-
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          Cancel
+                        </Button>
+                        <Button onClick={confirmAdd} color="primary">
+                          Add
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Project Description </div>
@@ -245,18 +249,8 @@ const projectStyles = makeStyles(() => ({
                   </Button>
               </Grid>
             </form>
-            </div>      
+          </div>      
         </Container>
-      <Container component="main" maxWidth="lg" className={classes.listContainer}>
-        <Card className={classes.cardRoot}>
-            <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Your Projects
-            </Typography>
-            
-            </CardContent>
-            </Card>
-      </Container>  
     </Container>
 
     );
