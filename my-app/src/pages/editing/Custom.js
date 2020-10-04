@@ -48,7 +48,7 @@ export default function Custom() {
             </Typography>
           </CardContent>
         </Card>
-        <Hidden smUp><PopUpInfo title={'Custom'} className={classes.popUp}/></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Custom'} className={classes.popUp}/></Hidden>
       </Container>  
 
       <Container component="main" maxWidth="lg" className={classes.formContainer}>

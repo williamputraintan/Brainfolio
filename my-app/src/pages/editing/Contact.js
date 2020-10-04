@@ -22,7 +22,8 @@ export default function Contact() {
       email:"",
       phoneNumber:"",
       address:"",
-      link: ""
+      link: "",
+      description: ""
     })
 
     function onInputChange(e){
@@ -49,7 +50,7 @@ export default function Contact() {
           </Typography>
         </CardContent>
         </Card>
-        <Hidden smUp><PopUpInfo  title={'Contact'}/></Hidden>
+        <Hidden mdUp><PopUpInfo  title={'Contact'}/></Hidden>
       </Container>
 
       <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -128,6 +129,20 @@ export default function Contact() {
                     placeholder="github.com/yourname"
                     name="link"
                     autoComplete="link"
+                    onChange={onInputChange}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                    <div className={classes.field}> Describe yourself </div>
+                    <TextField
+                    name="description"
+                    variant="outlined"
+                    fullWidth
+                    id="description"
+                    placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems. "
+                    autoFocus
+                    multiline
+                    rows={5}
                     onChange={onInputChange}
                     />
                 </Grid>

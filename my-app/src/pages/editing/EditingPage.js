@@ -9,7 +9,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import theme from '../../utils/theme'
 import Contact from './Contact';
-import Description from './Description';
 import Education from './Education'
 import Skills from './Skills';
 import Experience from './Experience';
@@ -69,22 +68,20 @@ export default function EditingPage(props){
     };
     const tabNameToIndex = {
       0: "contact",
-      1: "description",
-      2: "education",
-      3: "experience",
-      4: "skills",
-      5: "projects",
-      6: "custom"
+      1: "education",
+      2: "experience",
+      3: "skills",
+      4: "projects",
+      5: "custom"
     };
   
     const indexToTabName = {
       contact: 0,
-      description: 1,
-      education: 2,
-      experience: 3,
-      skills: 4,
-      projects: 5,
-      custom: 6
+      education: 1,
+      experience:2,
+      skills: 3,
+      projects: 4,
+      custom: 5
     };
   
     const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
@@ -108,9 +105,6 @@ export default function EditingPage(props){
 
                     <Button variant="contained" className={(page!=='contact')? classes.button :classes.buttonOn } onClick={()=>( handleChange(0))}>
                         Contact
-                    </Button>
-                    <Button variant="contained" className={(page!=='description')? classes.button :classes.buttonOn } onClick={()=>(handleChange(1))}>
-                        Description
                     </Button>
                     <Button variant="contained" className={(page!=='education')? classes.button :classes.buttonOn }  onClick={()=>(handleChange(2))}>
                         Education
@@ -141,12 +135,11 @@ export default function EditingPage(props){
                             onClose={handleCloseMenu}
                         >
                         <MenuItem onClick={()=>menuClick(0)}>Contact</MenuItem>
-                        <MenuItem onClick={()=>menuClick(1)}>Description</MenuItem>
-                        <MenuItem onClick={()=>menuClick(2)}>Education</MenuItem>
-                        <MenuItem onClick={()=>menuClick(3)}>Experience</MenuItem>
-                        <MenuItem onClick={()=>menuClick(4)}>Skills</MenuItem>
-                        <MenuItem onClick={()=>menuClick(5)}>Projects</MenuItem>
-                        <MenuItem onClick={()=>menuClick(6)}>Custom</MenuItem>
+                        <MenuItem onClick={()=>menuClick(1)}>Education</MenuItem>
+                        <MenuItem onClick={()=>menuClick(2)}>Experience</MenuItem>
+                        <MenuItem onClick={()=>menuClick(3)}>Skills</MenuItem>
+                        <MenuItem onClick={()=>menuClick(4)}>Projects</MenuItem>
+                        <MenuItem onClick={()=>menuClick(5)}>Custom</MenuItem>
                         </Menu>
                        
                 </Hidden>
@@ -155,12 +148,11 @@ export default function EditingPage(props){
            
             <div className={classes.formContainer}>
                 {selectedTab === 0 && <Contact/>}
-                {selectedTab === 1 && <Description />}
-                {selectedTab === 2 && <Education />}
-                {selectedTab === 3 && <Experience />}
-                {selectedTab === 4 && <Skills />}
-                {selectedTab === 5 && <Projects />}
-                {selectedTab === 6 && <Custom />}
+                {selectedTab === 1 && <Education />}
+                {selectedTab === 2 && <Experience />}
+                {selectedTab === 3 && <Skills />}
+                {selectedTab === 4 && <Projects />}
+                {selectedTab === 5 && <Custom />}
                 
             </div>
         </div>

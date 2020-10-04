@@ -52,8 +52,8 @@ export default function Skills(){
             
             </CardContent>
             </Card>
-        <Hidden smUp><PopUpInfo title={'Technical Skills'} className={classes.popUp}/></Hidden>
-        <Hidden smUp><PopUpInfo title={'Soft Skills'} className={classes.popUp}/></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Technical Skills'} className={classes.popUp}/></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Soft Skills'} className={classes.popUp}/></Hidden>
         </Container>
 
         <Container component="main" maxWidth="lg" className={classes.formContainer}>

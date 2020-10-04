@@ -47,7 +47,7 @@ export default function Education() {
           
         </CardContent>
         </Card>
-        <Hidden smUp><PopUpInfo title={'Education'}/></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Education'}/></Hidden>
 
       </Container>  
 

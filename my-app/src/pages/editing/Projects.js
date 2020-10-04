@@ -101,7 +101,7 @@ export default function Projects() {
             </Typography>
           </CardContent>
         </Card>
-        <Hidden smUp><PopUpInfo title={'Project'} className={classes.popUp}/></Hidden>  
+        <Hidden mdUp><PopUpInfo title={'Project'} className={classes.popUp}/></Hidden>  
       </Container>  
 
       <Container component="main" maxWidth="lg" className={classes.formContainer}>

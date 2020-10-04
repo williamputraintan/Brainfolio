@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -58,8 +57,8 @@ import {useStyles} from './Styles.js';
             </Typography>
           </CardContent>
         </Card>
-        <Hidden smUp><PopUpInfo title={'Work'}/></Hidden>
-        <Hidden smUp><PopUpInfo title={'Volunteer'} /></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Work'}/></Hidden>
+        <Hidden mdUp><PopUpInfo title={'Volunteer'} /></Hidden>
       </Container>  
 
       <Container component="main" maxWidth="lg" className={classes.formContainer}>

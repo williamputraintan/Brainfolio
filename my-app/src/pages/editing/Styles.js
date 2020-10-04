@@ -54,7 +54,7 @@ const useStyles = makeStyles(() => ({
         width:'40%',
         float:'right',
       },
-      padding:"5%",
+      padding:"5% 5% 5% 4%",
       [theme.breakpoints.down('sm')]:{
         width:'100%'
       }
