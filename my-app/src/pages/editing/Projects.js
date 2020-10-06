@@ -15,14 +15,23 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Hidden from '@material-ui/core/Hidden';
 
+import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
 import { history } from '../../utils/BrowserHistory';
-import theme from '../../utils/theme';
 
 export default function Projects() {
     const classes = useStyles();
+
+    const fakedata=[{
+      visibility: "ho",
+      projectTitle: "ho",
+      startDate:"ho",
+      endDate:"ho",
+      contributors:"ho"}]
+
+    const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributors"]
 
     // fields form
     const [fields, setFields] = React.useState({
@@ -91,167 +100,162 @@ export default function Projects() {
     }
 
     return (
-    <Container component="main" maxWidth="lg">
 
-      <Container component="main" maxWidth="lg" className={classes.listContainer}>
-        <Card className={classes.cardRoot}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Your Projects
-            </Typography>
-          </CardContent>
-        </Card>
-        <Hidden mdUp><PopUpInfo title={'Project'} className={classes.popUp}/></Hidden>  
-      </Container>  
+        <Container component="main" maxWidth="lg">
 
-      <Container component="main" maxWidth="lg" className={classes.formContainer}>
-          <div className={classes.paper}>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={3}> 
+          <Container component="main" maxWidth="lg" className={classes.listContainer}>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
+            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+          </Container> 
 
-                  <Grid item xs={12} sm={12}>
-                      <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        className={classes.select}
-                        value={fields.visibility}
-                        // onChange={handleChange}
-                        >
-                        <MenuItem value={'public'}>Public</MenuItem>
-                        <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
-                        <MenuItem value={'private'}>Private</MenuItem>
-                        </Select>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter Project Title </div>
-                      <TextField
-                      name="projectTitle"
-                      variant="outlined"
-                      fullWidth
-                      id="projectTitle"
-                      placeholder="Brainfolio"
-                      autoFocus
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                      <div className={classes.field}> Start Date </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="startDate"
-                      placeholder="July 2018"
-                      name="startDate"
-                      autoComplete="startDate"
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                      <div className={classes.field}> End Date </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="endDate"
-                      placeholder="October 2018"
-                      name="endDate"
-                      autoComplete="endDate"
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>  
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                      Add Contributor
-                    </Button>
-                    <Card className={classes.cardContributors}>
-                      <CardContent>
-                        <Typography color="textSecondary" gutterBottom>
-                          Contributors    
-                        </Typography>
-                          {displayContributors().map(res=>(
-                            <div>
-                              {res} <br/>
-                            </div>
-                          ))}
-                      </CardContent>
-                    </Card>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                      <DialogTitle id="form-dialog-title">Add contributor</DialogTitle>
-                      <DialogContent>
-                        <TextField
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          label="Name"
-                          type="name"
-                          style={{paddingRight:'5%'}}
+          <Container component="main" maxWidth="lg" className={classes.formContainer}>
+              <div className={classes.paper}>
+                <form className={classes.form} noValidate>
+                  <Grid container spacing={3}> 
+
+                      <Grid item xs={12} sm={12}>
+                          <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            className={classes.select}
+                            value={fields.visibility}
+                            // onChange={handleChange}
+                            >
+                            <MenuItem value={'public'}>Public</MenuItem>
+                            <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
+                            <MenuItem value={'private'}>Private</MenuItem>
+                            </Select>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                          <div className={classes.field}> Enter Project Title </div>
+                          <TextField
+                          name="projectTitle"
+                          variant="outlined"
                           fullWidth
-                          onChange={event=>setOneName(event.target.value)}                   
-                        />
-                        <TextField
+                          id="projectTitle"
+                          placeholder="Brainfolio"
                           autoFocus
-                          margin="dense"
-                          id="name"
-                          label="Email Address"
-                          type="email"
-                          fullWidth                       
-                          onChange={event=>setOneEmail(event.target.value)}
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                          Cancel
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <div className={classes.field}> Start Date </div>
+                          <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="startDate"
+                          placeholder="July 2018"
+                          name="startDate"
+                          autoComplete="startDate"
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <div className={classes.field}> End Date </div>
+                          <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="endDate"
+                          placeholder="October 2018"
+                          name="endDate"
+                          autoComplete="endDate"
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>  
+                        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                          Add Contributor
                         </Button>
-                        <Button onClick={confirmAdd} color="primary">
-                          Add
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Project Description </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="desc"
-                      placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
-                      name="desc"
-                      autoComplete="desc"
-                      multiline
-                      row={3}
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <div>
-                      <input type="file" name="file" onChange={(event)=> onFileChangeHandler(event)}/>
-                        <label htmlFor="contained-button-file">
-                          <Button variant="contained" color="primary" component="span" onClick={onFileClickHandler}>
-                            Upload File
+                        <Card className={classes.cardContributors}>
+                          <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                              Contributors    
+                            </Typography>
+                              {displayContributors().map(res=>(
+                                <div>
+                                  {res} <br/>
+                                </div>
+                              ))}
+                          </CardContent>
+                        </Card>
+                        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                          <DialogTitle id="form-dialog-title">Add contributor</DialogTitle>
+                          <DialogContent>
+                            <TextField
+                              autoFocus
+                              margin="dense"
+                              id="name"
+                              label="Name"
+                              type="name"
+                              style={{paddingRight:'5%'}}
+                              fullWidth
+                              onChange={event=>setOneName(event.target.value)}                   
+                            />
+                            <TextField
+                              autoFocus
+                              margin="dense"
+                              id="name"
+                              label="Email Address"
+                              type="email"
+                              fullWidth                       
+                              onChange={event=>setOneEmail(event.target.value)}
+                            />
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                              Cancel
                             </Button>
-                        </label>
-                      </div>
-                  </Grid> 
-              </Grid>
-              <Grid xs={12} sm={12}>
-                  <Button
-                  type="submit"
-                  variant="contained"
-                  className={classes.submit}
-                  fullWidth
-                  color='primary'
-                  onClick={event=>handleFormSubmit(event)}
-                  >
-                  Save to my Projects
-                  </Button>
-              </Grid>
-            </form>
-          </div>      
+                            <Button onClick={confirmAdd} color="primary">
+                              Add
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                          <div className={classes.field}> Project Description </div>
+                          <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="desc"
+                          placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
+                          name="desc"
+                          autoComplete="desc"
+                          multiline
+                          row={3}
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <div>
+                          <input type="file" name="file" onChange={(event)=> onFileChangeHandler(event)}/>
+                            <label htmlFor="contained-button-file">
+                              <Button variant="contained" color="primary" component="span" onClick={onFileClickHandler}>
+                                Upload File
+                                </Button>
+                            </label>
+                          </div>
+                      </Grid> 
+                  </Grid>
+                  <Grid xs={12} sm={12}>
+                      <Button
+                      type="submit"
+                      variant="contained"
+                      className={classes.submit}
+                      fullWidth
+                      color='primary'
+                      onClick={event=>handleFormSubmit(event)}
+                      >
+                      Save to my Projects
+                      </Button>
+                  </Grid>
+                </form>
+              </div>      
+            </Container>
         </Container>
-    </Container>
 
     );
   }

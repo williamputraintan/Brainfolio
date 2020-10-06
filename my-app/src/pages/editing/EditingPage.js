@@ -6,22 +6,34 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import theme from '../../utils/theme'
 import Contact from './Contact';
-import Education from './Education'
+import Education from './Education';
 import Skills from './Skills';
 import Experience from './Experience';
 import Projects from './Projects';
 import Custom from './Custom';
+import Overview from './Overview';
 
 const buttonStyles = makeStyles(() => ({
     container:{
-        padding:'5%',
-        height:'100%'
+        padding:'5% 0% 5% 5%',
+        height:'100%',
+        display: 'flex',
+        flexWrap: 'wrap',
+        width:'90%',
+        '& > *': {
+            margin: theme.spacing(1),
+            width: "90%",
+            padding:'3%'
+        },
+
     },
     buttonContainerDesk:{
-        height:'15%'
+        height:'12%'
     },
     formContainer:{
         height:'85%',
@@ -72,7 +84,8 @@ export default function EditingPage(props){
       2: "experience",
       3: "skills",
       4: "projects",
-      5: "custom"
+      5: "custom",
+      6: "overview"
     };
   
     const indexToTabName = {
@@ -81,7 +94,8 @@ export default function EditingPage(props){
       experience:2,
       skills: 3,
       projects: 4,
-      custom: 5
+      custom: 5,
+      overview: 6
     };
   
     const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
@@ -99,30 +113,35 @@ export default function EditingPage(props){
   
 
     return (
+        <Grid container justify = "center"  alignItems="center">
         <div className={classes.container}> 
+            <Paper elevation={5} >
             <div className={classes.buttonContainerDesk}>
-                <Hidden only={['xs','sm']}>
+                <Hidden smDown>
 
                     <Button variant="contained" className={(page!=='contact')? classes.button :classes.buttonOn } onClick={()=>( handleChange(0))}>
                         Contact
                     </Button>
-                    <Button variant="contained" className={(page!=='education')? classes.button :classes.buttonOn }  onClick={()=>(handleChange(2))}>
+                    <Button variant="contained" className={(page!=='education')? classes.button :classes.buttonOn }  onClick={()=>(handleChange(1))}>
                         Education
                     </Button>
-                    <Button variant="contained" className={(page!=='experience')? classes.button :classes.buttonOn }onClick={()=>(handleChange(3))}>
+                    <Button variant="contained" className={(page!=='experience')? classes.button :classes.buttonOn }onClick={()=>(handleChange(2))}>
                         Experience
                     </Button>
-                    <Button variant="contained" className={(page!=='skills')? classes.button :classes.buttonOn } onClick={()=>(handleChange(4))}>
+                    <Button variant="contained" className={(page!=='skills')? classes.button :classes.buttonOn } onClick={()=>(handleChange(3))}>
                         Skills
                     </Button>
-                    <Button variant="contained" className={(page!=='projects')? classes.button :classes.buttonOn } onClick={()=>(handleChange(5))}>
+                    <Button variant="contained" className={(page!=='projects')? classes.button :classes.buttonOn } onClick={()=>(handleChange(4))}>
                         Projects
                     </Button>
-                    <Button variant="contained" className={(page!=='custom')? classes.button :classes.buttonOn } onClick={()=>(handleChange(6))}>
+                    <Button variant="contained" className={(page!=='custom')? classes.button :classes.buttonOn } onClick={()=>(handleChange(5))}>
                         Custom
                     </Button>
+                    <Button variant="contained" className={(page!=='overview')? classes.button :classes.buttonOn } onClick={()=>(handleChange(6))}>
+                        Overview
+                    </Button>
                 </Hidden>
-                <Hidden only={['md', 'lg']}> 
+                <Hidden mdUp> 
 
                     <Button className={classes.button} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
                          <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[selectedTab]}
@@ -140,6 +159,8 @@ export default function EditingPage(props){
                         <MenuItem onClick={()=>menuClick(3)}>Skills</MenuItem>
                         <MenuItem onClick={()=>menuClick(4)}>Projects</MenuItem>
                         <MenuItem onClick={()=>menuClick(5)}>Custom</MenuItem>
+                        <MenuItem onClick={()=>menuClick(6)}>Overview</MenuItem>
+
                         </Menu>
                        
                 </Hidden>
@@ -155,7 +176,8 @@ export default function EditingPage(props){
                 {selectedTab === 5 && <Custom />}
                 
             </div>
-        </div>
+            </Paper>
+        </div></Grid>
 
     );
 }
