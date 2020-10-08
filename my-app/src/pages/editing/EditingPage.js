@@ -28,12 +28,15 @@ const buttonStyles = makeStyles(() => ({
         '& > *': {
             margin: theme.spacing(1),
             width: "90%",
-            padding:'3%'
+            padding:'3%',
+            height:'fit-content'
         },
+        
 
     },
     buttonContainerDesk:{
-        height:'12%'
+        height:'12%',
+        marginBottom:'5%'
     },
     formContainer:{
         height:'85%',
@@ -44,12 +47,14 @@ const buttonStyles = makeStyles(() => ({
         color:theme.overrides.MuiButton.containedPrimary.color,
         margin:'1%',
         fontFamily:theme.typography.fontFamily,
-        paddingRight:'2%',
-        paddingLeft:'2%',
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
         },
+        // [theme.breakpoints.down('sm')]:{
+        //     margin:'10%'
+        // }
+
     },
     buttonOn:{
         backgroundColor:theme.palette.secondary.main,
@@ -144,15 +149,15 @@ export default function EditingPage(props){
                 <Hidden mdUp> 
 
                     <Button className={classes.button} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                         <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[selectedTab]}
-                        </Button>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleCloseMenu}
-                        >
+                        <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[selectedTab]}
+                    </Button>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleCloseMenu}
+                    >
                         <MenuItem onClick={()=>menuClick(0)}>Contact</MenuItem>
                         <MenuItem onClick={()=>menuClick(1)}>Education</MenuItem>
                         <MenuItem onClick={()=>menuClick(2)}>Experience</MenuItem>
@@ -161,7 +166,7 @@ export default function EditingPage(props){
                         <MenuItem onClick={()=>menuClick(5)}>Custom</MenuItem>
                         <MenuItem onClick={()=>menuClick(6)}>Overview</MenuItem>
 
-                        </Menu>
+                    </Menu>
                        
                 </Hidden>
 
@@ -174,6 +179,8 @@ export default function EditingPage(props){
                 {selectedTab === 3 && <Skills />}
                 {selectedTab === 4 && <Projects />}
                 {selectedTab === 5 && <Custom />}
+                {selectedTab === 6 && <Overview />}
+
                 
             </div>
             </Paper>
