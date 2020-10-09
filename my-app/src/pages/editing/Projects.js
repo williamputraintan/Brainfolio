@@ -18,7 +18,7 @@ import Hidden from '@material-ui/core/Hidden';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
+import axios from 'axios';
 import { history } from '../../utils/BrowserHistory';
 
 export default function Projects() {
@@ -26,21 +26,24 @@ export default function Projects() {
 
     const fakedata=[{
       visibility: "ho",
-      projectTitle: "ho",
+      title: "ho",
       startDate:"ho",
       endDate:"ho",
-      contributors:"ho"}]
+      contributor:[["dksjbksdbd","jhdbajbjs"]]}]
 
-    const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributors"]
+    const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributor"]
 
     // fields form
     const [fields, setFields] = React.useState({
       visibility:"",
-      projectTitle: "",
+      title: "",
       startDate:"",
       endDate:"",
-      contributors:[]
+      description:"",
+      contributor:[[""]],
+      selectedFile:null
     })
+
 
     function onFormInputChange(e){
       setFields({
@@ -49,12 +52,7 @@ export default function Projects() {
       })
     }
 
-    function handleFormSubmit(e){
-      e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/projects')
-    }
-
+    
     // file
     const [selectedFile,setFile] =  React.useState(null);
 
@@ -69,7 +67,14 @@ export default function Projects() {
       console.log(data)
     }
 
-    //contributors
+    function handleFormSubmit(e){
+          e.preventDefault();
+          console.log('button clicked')
+          // history.push('/edit/projects')
+          axios.post('http://localhost:5000/project',{fields,files:selectedFile})
+    }
+
+    //contributor
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -83,18 +88,18 @@ export default function Projects() {
     const[oneEmail,setOneEmail]= React.useState("");
 
     const AddContributor = ()=>{
-      fields.contributors.push([oneName,oneEmail]);
-      console.log(fields.contributors)
+      fields.contributor.push([oneName,oneEmail]);
+      console.log(fields.contributor)
     }
     const confirmAdd = ()=>{
       AddContributor();
       handleClose();
     }
-    function displayContributors(){
+    function displayContributor(){
       var res=[];
       var i;
-      for(i=0;i<fields.contributors.length;i++){
-        res[i]= (i+1).toString()+". "+fields.contributors[i][0]+", "+fields.contributors[i][1]
+      for(i=0;i<fields.contributor.length;i++){
+        res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
       }
       return res;
     }
@@ -116,24 +121,24 @@ export default function Projects() {
                       <Grid item xs={12} sm={12}>
                           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
                             <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            className={classes.select}
-                            value={fields.visibility}
-                            // onChange={handleChange}
+                              labelId="demo-simple-select-helper-label"
+                              id="demo-simple-select-helper"
+                              value={fields.visibility}
+                              className={classes.select}
+                              name='visibility'
+                              onChange={onFormInputChange}
                             >
-                            <MenuItem value={'public'}>Public</MenuItem>
-                            <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
-                            <MenuItem value={'private'}>Private</MenuItem>
+                              <MenuItem value={'public'}>Public</MenuItem>
+                              <MenuItem value={'private'}>Private</MenuItem>
                             </Select>
                       </Grid>
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Enter Project Title </div>
                           <TextField
-                          name="projectTitle"
+                          name="title"
                           variant="outlined"
                           fullWidth
-                          id="projectTitle"
+                          id="title"
                           placeholder="Brainfolio"
                           autoFocus
                           onChange={onFormInputChange}                   
@@ -142,39 +147,40 @@ export default function Projects() {
                       <Grid item xs={12} sm={6}>
                           <div className={classes.field}> Start Date </div>
                           <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="startDate"
-                          placeholder="July 2018"
-                          name="startDate"
-                          autoComplete="startDate"
-                          onChange={onFormInputChange}                   
-                          />
+                              variant="outlined"
+                              id="startDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="startDate"
+                              defaultValue="2019-05-24"
+                              onChange={onFormInputChange} 
+                              
+                            />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                           <div className={classes.field}> End Date </div>
                           <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="endDate"
-                          placeholder="October 2018"
-                          name="endDate"
-                          autoComplete="endDate"
-                          onChange={onFormInputChange}                   
-                          />
+                              variant="outlined"
+                              id="endDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="endDate"
+                              defaultValue="2019-05-24"
+                              onChange={onFormInputChange} 
+                            />
                       </Grid>
                       <Grid item xs={12} sm={12}>  
                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                           Add Contributor
                         </Button>
-                        <Card className={classes.cardContributors}>
+                        <Card className={classes.cardContributor}>
                           <CardContent>
                             <Typography color="textSecondary" gutterBottom>
-                              Contributors    
+                              Contributor    
                             </Typography>
-                              {displayContributors().map(res=>(
+                              {displayContributor().map(res=>(
                                 <div>
                                   {res} <br/>
                                 </div>
