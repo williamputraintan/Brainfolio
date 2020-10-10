@@ -18,8 +18,11 @@ import Projects from './Projects';
 import Custom from './Custom';
 import Overview from './Overview';
 
+import editbackground from '../../images/editbackground.png';
+
 const buttonStyles = makeStyles(() => ({
     container:{
+        
         padding:'5% 0% 5% 5%',
         height:'100%',
         display: 'flex',
@@ -51,9 +54,6 @@ const buttonStyles = makeStyles(() => ({
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
         },
-        // [theme.breakpoints.down('sm')]:{
-        //     margin:'10%'
-        // }
 
     },
     buttonOn:{
@@ -118,7 +118,7 @@ export default function EditingPage(props){
   
 
     return (
-        <Grid container justify = "center"  alignItems="center">
+        <Grid container justify = "center"  alignItems="center" style={{backgroundImage: `url(${editbackground})`,}}>
         <div className={classes.container}> 
             <Paper elevation={5} >
             <div className={classes.buttonContainerDesk}>

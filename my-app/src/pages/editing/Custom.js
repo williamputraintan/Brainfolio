@@ -118,7 +118,7 @@ export default function Custom() {
                       color='primary'
                       className={classes.itemBtn}
                       >
-                        Save to my Items List
+                        Add to my Items List
                       </Button>
                     </Grid>
                   <Button

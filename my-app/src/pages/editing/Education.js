@@ -8,27 +8,31 @@ import Hidden from '@material-ui/core/Hidden';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
+import axios from 'axios';
 
 import { history } from '../../utils/BrowserHistory';
 
 export default function Education() {
     const classes = useStyles();
 
+    //later get data from database
     const fakedata=[{
       degree: "ho",
-      university: "ho",
-      courseDesc:"ho",
+      institution: "ho",
+      location:"ho",
       startDate:"ho",
-      endDate:"ho"}]
+      endDate:"ho",
+      score:"ho"}]
 
-    const fieldNames = ["Degree", "University", "Course Description", "Start Date","End Date"]
+    const fieldNames = ["Degree", "institution", "Course Description", "Start Date","End Date","Score"]
 
     const [fields, setFields] = React.useState({
-      degree: "",
-      university: "",
-      courseDesc:"",
       startDate:"",
       endDate:"",
+      degree: "",
+      institution: "",
+      location:"",
+      score:""
     })
     function onInputChange(e){
       setFields({
@@ -36,10 +40,11 @@ export default function Education() {
         [e.target.name]: e.target.value
       })
     }
+
     function handleSubmit(e){
       e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/education')
+      //later change to AxiosInstance & portfolioId -> username
+      axios.post('http://localhost:5000/edit/education',{portfolioId:'sup',...fields});
     }
   
   
@@ -62,60 +67,77 @@ export default function Education() {
                             variant="outlined"
                             fullWidth
                             id="degree"
-                            placeholder="Bachelor of Science"
+                            placeholder="Bachelor of Science (Chemical Systems)"
                             autoFocus
                             onChange={onInputChange}                   
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter your University name </div>
+                            <div className={classes.field}> Enter your institution name </div>
                             <TextField
-                            name="university"
+                            name="institution"
                             variant="outlined"
                             fullWidth
-                            id="university"
+                            id="institution"
                             placeholder="University of Melbourne"
                             autoFocus
                             onChange={onInputChange}                   
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Course Description</div>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classes.field}> Location</div>
                             <TextField
                             variant="outlined"
                             required
                             fullWidth
-                            id="courseDesc"
-                            placeholder="Majoring in Chemical Systems"
-                            name="courseDesc"
+                            id="location"
+                            placeholder="Melbourne, Australia"
+                            name="location"
+                            onChange={onInputChange}                   
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classes.field}> Score </div>
+                            <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="score"
+                            placeholder="80%"
+                            name="score"
                             onChange={onInputChange}                   
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
+                      
                             <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="startDate"
-                            placeholder="July 2018"
-                            name="startDate"
-                            onChange={onInputChange}                   
-
+                              variant="outlined"
+                              id="startDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="startDate"
+                              defaultValue="2017-05-24"
+                              onChange={onInputChange}  
+                              
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
                             <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="endDate"
-                            placeholder="July 2021"
-                            name="endDate"
-                            onChange={onInputChange}                   
+                              variant="outlined"
+                              id="endDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="endDate"
+                              defaultValue="2019-05-24"
+                              onChange={onInputChange} 
+                              
                             />
                         </Grid>
+                        
                         
                     </Grid>
                     <Grid xs={12} sm={12}>

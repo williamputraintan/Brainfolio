@@ -61,7 +61,7 @@ const useStyles = makeStyles(() => ({
       justifyContent:'center'
     },
     select:{
-      width:'30%'
+      width:'auto'
     },
     contributor:{
       width:'48%'

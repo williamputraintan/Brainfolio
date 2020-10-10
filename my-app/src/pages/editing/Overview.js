@@ -1,13 +1,11 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import {useStyles} from './Styles.js';
 
@@ -19,9 +17,6 @@ export default function Overview(){
     return (
 
           <Container component="main" maxWidth="lg">
-
-            
-          
             <div className={classes.paper}>
               
                 <Grid container spacing={3}> 
@@ -33,6 +28,7 @@ export default function Overview(){
                             </Grid>
                         </ListItem>
                         <Divider /> 
+
                         <ListItem >
                             <Grid item xs={12} sm={12}>
                                 <div className={classes.field}> Your Experiences</div>
@@ -80,14 +76,12 @@ export default function Overview(){
                         fullWidth
                         color='primary'
                         >
-                        Save my Portfolio
+                            Save my Portfolio
                         </Button>
                     </Grid>
                   </Grid>
     
               </div>
             </Container>
-       
-  
     )
 }

@@ -9,6 +9,7 @@ import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
+import axios from 'axios';
 import { history } from '../../utils/BrowserHistory';
 
 export default function Contact() {
@@ -19,29 +20,24 @@ export default function Contact() {
       title: "ho",
       fullName: "ho",
       email:"ho",
-      phoneNumber:"ho",
+      phone:"ho",
       address:"ho",
-      link: "ho",
-      description: "ho"},{
-      title: "hi",
-      fullName: "hi",
-      email:"hi",
-      phoneNumber:"",
-      address:"",
-      link: "",
-      description: ""}]
+      relevantLink: "ho",
+      linkedin:"jh",
+      description: "ho"}]
    
     const [fields, setFields] = React.useState({
       title: "",
       fullName: "",
       email:"",
-      phoneNumber:"",
+      phone:"",
       address:"",
-      link: "",
+      relevantLink: "",
+      linkedIn:"",
       description: ""
     })
 
-    const fieldNames = ["Title", "Name", "Email","Phone Number","Address", "Link","Description"]
+    const fieldNames = ["Title", "Name", "Email","Phone Number","Address", "Link","LinkedIn","Description"]
    
     function onInputChange(e){
       setFields({
@@ -52,8 +48,8 @@ export default function Contact() {
 
     function handleSubmit(e){
       e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/contact')
+      //later change to AxiosInstance & portfolioId -> username
+      axios.post('http://localhost:5000/edit/profile',{portfolioId:'sup',...fields});
     }
 
     return (
@@ -112,23 +108,11 @@ export default function Contact() {
                         variant="outlined"
                         required
                         fullWidth
-                        id="phoneNumber"
+                        id="phone"
                         placeholder="(61) 400123123"
-                        name="phoneNumber"
-                        autoComplete="phoneNumber"
+                        name="phone"
+                        autoComplete="phone"
                         onChange={onInputChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <div className={classes.field}> Address </div>
-                        <TextField
-                        name="address"
-                        variant="outlined"
-                        fullWidth
-                        id="address"
-                        placeholder="100 Elizabeth Street"
-                        onChange={onInputChange}
-                        autoComplete="address"              
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -142,6 +126,31 @@ export default function Contact() {
                         name="link"
                         autoComplete="link"
                         onChange={onInputChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <div className={classes.field}> LinkedIn</div>
+                        <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="link"
+                        placeholder="linkedin.com/yourname"
+                        name="link"
+                        autoComplete="link"
+                        onChange={onInputChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <div className={classes.field}> Address </div>
+                        <TextField
+                        name="address"
+                        variant="outlined"
+                        fullWidth
+                        id="address"
+                        placeholder="100 Elizabeth Street"
+                        onChange={onInputChange}
+                        autoComplete="address"              
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>

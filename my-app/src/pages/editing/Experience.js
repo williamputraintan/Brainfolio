@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import Hidden from '@material-ui/core/Hidden';
 
 import { history } from '../../utils/BrowserHistory';
+import axios from 'axios';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -18,18 +19,20 @@ import {useStyles} from './Styles.js';
     const classes = useStyles();
 
     const fakedata=[{
-      section: "ho",
-      jobTitle: "ho",
-      jobDesc:"ho",
+      type: "ho",
+      title: "ho",
+      companyName:"ho",
+      description:"ho",
       startDate:"ho",
       endDate:"ho"}]
 
-    const fieldNames = ["Section", "Job Title","Job Description", "Start Date", "End Date"]
+    const fieldNames = ["Type", "Job title","Company Name","Job Description", "Start Date", "End Date"]
 
     const [fields, setFields] = React.useState({
-      section: "",
-      jobTitle: "",
-      jobDesc:"",
+      type: "",
+      title: "",
+      companyName:"",
+      description:"",
       startDate:"",
       endDate:"",
     })
@@ -41,8 +44,9 @@ import {useStyles} from './Styles.js';
     }
     function handleSubmit(e){
       e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/experience')
+      console.log(fields);
+      //later change to AxiosInstance & portfolioId -> username
+      axios.post('http://localhost:5000/edit/experience',{...fields})
     }
   
   
@@ -63,14 +67,14 @@ import {useStyles} from './Styles.js';
 
                     <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                            <InputLabel id="demo-simple-select-label">Section Title</InputLabel>
+                            <InputLabel id="demo-simple-select-label">Type</InputLabel>
                               <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
                               className={classes.select}
-                              name='section'
-                              // value={section}
-                              // onChange={handleChange}
+                              name='type'
+                              value={fields.type}
+                              onChange={onInputChange}
                               >
                                 <MenuItem value={'work'}>Work</MenuItem>
                                 <MenuItem value={'volunteer'}>Volunteer</MenuItem>
@@ -79,36 +83,36 @@ import {useStyles} from './Styles.js';
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Enter Company name </div>
                             <TextField
-                            name="company"
+                            name="companyName"
                             variant="outlined"
                             fullWidth
-                            id="company"
+                            id="companyName"
                             placeholder="University of Melbourne"
                             autoFocus
                             onChange={onInputChange}                   
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Job Title</div>
+                            <div className={classes.field}> Job title</div>
                             <TextField
                             variant="outlined"
                             required
                             fullWidth
-                            id="jobTitle"
+                            id="title"
                             placeholder="Tutor for COMP30022"
-                            name="jobTitle"
+                            name="title"
                             onChange={onInputChange}                   
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Job Description </div>
+                            <div className={classes.field}> Job description </div>
                             <TextField
                             variant="outlined"
                             required
                             fullWidth
-                            id="jobDesc"
+                            id="description"
                             placeholder="Tutors 2 tutorial classes, each consisting of 20 students and supervising their Capstone Project"
-                            name="jobDesc"
+                            name="description"
                             multiline
                             row={4}
                             onChange={onInputChange}                   
@@ -117,25 +121,29 @@ import {useStyles} from './Styles.js';
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
                             <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="startDate"
-                            placeholder="July 2018"
-                            name="startDate"
-                            onChange={onInputChange}                   
+                              variant="outlined"
+                              id="startDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="startDate"
+                              defaultValue="2017-05-24"
+                              onChange={onInputChange} 
+                              
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
                             <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="endDate"
-                            placeholder="July 2021"
-                            name="endDate"
-                            onChange={onInputChange}                   
+                              variant="outlined"
+                              id="endDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="endDate"
+                              defaultValue="2019-05-24"
+                              onChange={onInputChange} 
+                              
                             />
                         </Grid>
                     </Grid>
