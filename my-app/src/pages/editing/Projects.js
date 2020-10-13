@@ -24,6 +24,8 @@ import { history } from '../../utils/BrowserHistory';
 export default function Projects() {
     const classes = useStyles();
 
+    var existingFiles=new FormData();
+
     const fakedata=[{
       visibility: "ho",
       title: "ho",
@@ -40,8 +42,7 @@ export default function Projects() {
       startDate:"",
       endDate:"",
       description:"",
-      contributor:[[""]],
-      selectedFile:null
+      contributor:[]
     })
 
 
@@ -54,24 +55,27 @@ export default function Projects() {
 
     
     // file
-    const [selectedFile,setFile] =  React.useState(null);
+    // const [selectedFiles,setFiles] =  React.useState([]);
+    // const [selectedFiles, setSelectedFiles] = React.useState(undefined); 
 
-    function onFileChangeHandler(event){
-      setFile({selectedFile: event.target.files[0],
-        loaded: 0,})
-      console.log(event.target.files[0])
+    function onFileChangeUpload(e){
+      const formData = new FormData()
+      for(var i = 0; i<(e.target.files).length; i++) {
+          formData.append('file', (e.target.files)[i])
+      }
+      console.log(formData.getAll('file'))
+      axios.post("http://localhost:5000/projects/files", formData)
     }
-    function onFileClickHandler ()  {
-      const data = new FormData() 
-      data.append('file', selectedFile)
-      console.log(data)
+  
+    function displayProjects(){
+      // console.log(existingFiles.getAll('files'));
     }
 
     function handleFormSubmit(e){
           e.preventDefault();
-          console.log('button clicked')
-          // history.push('/edit/projects')
-          axios.post('http://localhost:5000/project',{fields,files:selectedFile})
+          const formData = new FormData(); 
+        
+          // send axios here
     }
 
     //contributor
@@ -99,9 +103,12 @@ export default function Projects() {
       var res=[];
       var i;
       for(i=0;i<fields.contributor.length;i++){
+        console.log(fields.contributor[i]);
         res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
       }
+      
       return res;
+
     }
 
     return (
@@ -175,6 +182,7 @@ export default function Projects() {
                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                           Add Contributor
                         </Button>
+            
                         <Card className={classes.cardContributor}>
                           <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -182,7 +190,7 @@ export default function Projects() {
                             </Typography>
                               {displayContributor().map(res=>(
                                 <div>
-                                  {res} <br/>
+                                  {res?res:null} <br/>
                                 </div>
                               ))}
                           </CardContent>
@@ -237,13 +245,21 @@ export default function Projects() {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <div>
-                          <input type="file" name="file" onChange={(event)=> onFileChangeHandler(event)}/>
-                            <label htmlFor="contained-button-file">
-                              <Button variant="contained" color="primary" component="span" onClick={onFileClickHandler}>
-                                Upload File
-                                </Button>
-                            </label>
-                          </div>
+                          <input type="file" multiple name="file" onChange={onFileChangeUpload}/>
+                        </div>
+                        <Card className={classes.cardContributor}>
+                          <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                              Uploaded Files   
+                            </Typography>
+                            {displayProjects()}
+                              {/* {displayProjects().map(res=>(
+                                <div>
+                                  {res?res:null} <br/>
+                                </div>
+                              ))} */}
+                          </CardContent>
+                        </Card>
                       </Grid> 
                   </Grid>
                   <Grid xs={12} sm={12}>
@@ -253,7 +269,7 @@ export default function Projects() {
                       className={classes.submit}
                       fullWidth
                       color='primary'
-                      onClick={event=>handleFormSubmit(event)}
+                      onClick={event=>handleFormSubmit(event) }
                       >
                       Save to my Projects
                       </Button>
