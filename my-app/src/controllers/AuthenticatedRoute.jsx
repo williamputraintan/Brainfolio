@@ -11,8 +11,8 @@ function AuthenticatedRoute(props) {
   console.log(state)
   return (
     <div>
-      {(!state.token) && <Redirect to="/signin"/>}
-      <h1>User: {state.token.user}</h1>
+      {((!state.token) || !(state.user))&& <Redirect to="/signin"/>}
+      <h1>User: {state.user}</h1>
       <Link to="/home/portfolio">Portfolio</Link>
       <Link to={"/home/edit/contact/"+state.token.user}>Edit Portfolio</Link>
       <Switch>

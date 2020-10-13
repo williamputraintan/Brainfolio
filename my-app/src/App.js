@@ -40,6 +40,7 @@ function App() {
               {/* <Redirect exact from="/edit" to="/edit/contact" />
               <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
          */}
+             
               <Route path="/home" component={AuthenticatedRoute}/>
               <Route path="/" component={Timeline} className={classes.root} /> 
               

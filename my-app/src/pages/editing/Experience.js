@@ -13,7 +13,6 @@ import AxiosInstance  from "../../utils/axios";
 import { UserContext } from '../../context/user.context';
 
 import CardInfo from './CardInfo.js';
-import PopUpInfo from './PopUpInfo';
 import ExperienceInfo from './ExperienceInfo';
 import {useStyles} from './Styles.js';
 
@@ -64,7 +63,7 @@ import {useStyles} from './Styles.js';
       var workRes=[];
       var volRes=[]
       for (var i = 0, len = res.length; i < len; i++) {
-        if(res[i].type=="work"){
+        if(res[i].type==="Work"){
           workRes.push(res[i]);
         }else{
           volRes.push(res[i]);
@@ -85,8 +84,7 @@ import {useStyles} from './Styles.js';
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}/> </Hidden><br/>
               <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}/> </Hidden>
-              <Hidden lgUp><PopUpInfo  title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}/></Hidden><br/>
-              {/* <Hidden lgUp><ExperienceInfo  title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}/></Hidden> */}
+              <Hidden lgUp><ExperienceInfo  title={'Experiences'}  worklist={existingWorkData} vollist={existingVolunteerData} fieldNames={fieldNames}/></Hidden>
             </Container> 
       
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -104,8 +102,8 @@ import {useStyles} from './Styles.js';
                               value={fields.type}
                               onChange={onInputChange}
                               >
-                                <MenuItem value={'work'}>Work</MenuItem>
-                                <MenuItem value={'volunteer'}>Volunteer</MenuItem>
+                                <MenuItem value={'Work'}>Work</MenuItem>
+                                <MenuItem value={'Volunteer'}>Volunteer</MenuItem>
                               </Select>
                         </Grid>
                         <Grid item xs={12} sm={12}>

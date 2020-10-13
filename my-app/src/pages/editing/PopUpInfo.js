@@ -75,16 +75,18 @@ export default function PopupInfo(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(false);
+    setOpen(true);
+  
   };
   const handleClose = () => {
-    setOpen(true);
+    setOpen(false);
+    
   };
 
   
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen()}>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Your {title}
       </Button>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
