@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -9,23 +12,14 @@ import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
-import axios from 'axios';
+// import AxiosInstance from "../../utils/axios";
+// import axios from 'axios';
 import { history } from '../../utils/BrowserHistory';
 
-export default function Contact() {
+export default function Contact(props) {
+    const {state} = useContext(UserContext);
     const classes = useStyles();
 
-    //later use data from database
-    const fakedata=[{
-      title: "ho",
-      fullName: "ho",
-      email:"ho",
-      phone:"ho",
-      address:"ho",
-      relevantLink: "ho",
-      linkedin:"jh",
-      description: "ho"}]
-   
     const [fields, setFields] = React.useState({
       title: "",
       fullName: "",
@@ -37,7 +31,9 @@ export default function Contact() {
       description: ""
     })
 
-    const fieldNames = ["Title", "Name", "Email","Phone Number","Address", "Link","LinkedIn","Description"]
+    const [existingData,setExistingData] = useState([]);
+
+    const fieldNames = ["Title", "Full Name", "Email","Phone Number","Address", "Relevant Link","LinkedIn","Description"]
    
     function onInputChange(e){
       setFields({
@@ -48,17 +44,24 @@ export default function Contact() {
 
     function handleSubmit(e){
       e.preventDefault();
-      //later change to AxiosInstance & portfolioId -> username
-      axios.post('http://localhost:5000/edit/profile',{portfolioId:'sup',...fields});
+      AxiosInstance.post('http://localhost:5000/edit/profile',{username:state.user,...fields});
     }
+    function getExistingProfile(){
+      AxiosInstance.get("http://localhost:5000/edit/profile/"+state.user)
+      .then(res=> setExistingData(res.data))
+      
+    }
+    useEffect(() => {
+      getExistingProfile();
+    });
 
     return (
      
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Contact'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
-            <Hidden mdUp><PopUpInfo  title={'Contact'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames}/></Hidden>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -123,7 +126,7 @@ export default function Contact() {
                         fullWidth
                         id="link"
                         placeholder="github.com/yourname"
-                        name="link"
+                        relevantLink="link"
                         autoComplete="link"
                         onChange={onInputChange}
                         />
@@ -136,7 +139,7 @@ export default function Contact() {
                         fullWidth
                         id="link"
                         placeholder="linkedin.com/yourname"
-                        name="link"
+                        name="linkedin"
                         autoComplete="link"
                         onChange={onInputChange}
                         />
@@ -176,7 +179,7 @@ export default function Contact() {
                     className={classes.submit}
                     fullWidth
                     color='primary'
-                    onClick={event=>handleSubmit(event)}
+                    onClick={event=>handleSubmit(event) && getExistingProfile()}
                     >
                     Save my details
                     </Button>

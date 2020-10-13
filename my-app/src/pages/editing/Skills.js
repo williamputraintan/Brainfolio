@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -32,6 +32,8 @@ export default function Skills(){
       rating:4
     })
 
+    const [existingData,setExistingData] = useState([]);
+
     function onInputChange(e){
       setFields({
         ...fields,
@@ -44,6 +46,19 @@ export default function Skills(){
       axios.post('http://localhost:5000/edit/skills',{portfolioId:'sup',...fields})
     }
   
+    // function handleSubmit(e){
+    //   e.preventDefault();
+    //   AxiosInstance.post('http://localhost:5000/edit/profile',{username:state.user,...fields});
+    // }
+    // function getExistingProfile(){
+    //   AxiosInstance.get("http://localhost:5000/edit/profile/"+state.user)
+    //   .then(res=> setExistingData(res.data))
+      
+    // }
+    // useEffect(() => {
+    //   getExistingProfile();
+    // });
+
     return (
 
           <Container component="main" maxWidth="lg">

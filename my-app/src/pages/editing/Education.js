@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
+import { history } from '../../utils/BrowserHistory';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -8,32 +12,24 @@ import Hidden from '@material-ui/core/Hidden';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-import axios from 'axios';
-
-import { history } from '../../utils/BrowserHistory';
 
 export default function Education() {
+    const {state} = useContext(UserContext);
     const classes = useStyles();
 
-    //later get data from database
-    const fakedata=[{
-      degree: "ho",
-      institution: "ho",
-      location:"ho",
-      startDate:"ho",
-      endDate:"ho",
-      score:"ho"}]
-
-    const fieldNames = ["Degree", "institution", "Course Description", "Start Date","End Date","Score"]
+    const fieldNames = ["Degree", "Institution", "Course Description", "Start Date","End Date","Score"]
 
     const [fields, setFields] = React.useState({
-      startDate:"",
-      endDate:"",
       degree: "",
       institution: "",
       location:"",
-      score:""
+      score:"",
+      startDate:"",
+      endDate:""
     })
+
+    const [existingData,setExistingData] = useState([]);
+
     function onInputChange(e){
       setFields({
         ...fields,
@@ -43,17 +39,29 @@ export default function Education() {
 
     function handleSubmit(e){
       e.preventDefault();
-      //later change to AxiosInstance & portfolioId -> username
-      axios.post('http://localhost:5000/edit/education',{portfolioId:'sup',...fields});
+      AxiosInstance.post('http://localhost:5000/edit/education',{username:state.user,...fields});
     }
   
+    function handleSubmit(e){
+      e.preventDefault();
+      AxiosInstance.post('http://localhost:5000/edit/education',{username:state.user,...fields});
+    }
+
+    function getExistingEducation(){
+      AxiosInstance.get("http://localhost:5000/edit/education/"+state.user)
+      .then(res => setExistingData(res.data))
+      
+    }
+    useEffect(() => {
+      getExistingEducation();
+    });
   
     return (
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden smDown><CardInfo title={'Education'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
-              <Hidden mdUp><PopUpInfo  title={'Education'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>

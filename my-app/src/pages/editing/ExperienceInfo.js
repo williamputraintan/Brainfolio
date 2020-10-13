@@ -38,7 +38,7 @@ const DialogTitle = withStyles(styles)((props) => {
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+        <IconButton aria-label="close" className={classes.closeButton} onClick={this.onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -59,7 +59,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function PopupInfo(props) {
+export default function ExperienceInfo(props) {
   const title = props.title
   const fieldNames = props.fieldNames;
   var data = props.datalist;
@@ -76,9 +76,11 @@ export default function PopupInfo(props) {
 
   const handleClickOpen = () => {
     setOpen(false);
+    console.log(open)
   };
   const handleClose = () => {
     setOpen(true);
+    console.log(open)
   };
 
   
@@ -108,7 +110,7 @@ export default function PopupInfo(props) {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={this.handleClose} color="primary">
             Continue
           </Button>
         </DialogActions>

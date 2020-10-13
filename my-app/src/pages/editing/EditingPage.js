@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../context/user.context';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -69,11 +70,11 @@ const buttonStyles = makeStyles(() => ({
 }));
 
 export default function EditingPage(props){
+    const {state} = useContext(UserContext);
     const classes = buttonStyles();
     const { match, history } = props;
     const { params } = match;
     const { page } = params;
-    
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClickMenu = (event) => {
@@ -107,7 +108,7 @@ export default function EditingPage(props){
 
     function handleChange (newValue) {
         console.log('button clicked')
-      history.push(`/edit/${tabNameToIndex[newValue]}`);
+      history.push(`/home/edit/${tabNameToIndex[newValue]}/${state.user}`);
       setSelectedTab(newValue);
     };
 

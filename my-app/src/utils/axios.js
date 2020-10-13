@@ -19,7 +19,7 @@ axios.interceptors.response.use(response => {
   return response
 }, 
 ({response}) => {
-  console.log(response);
+  // console.log(response);
   switch(response.status){
     case 404: 
       history.push("/404")

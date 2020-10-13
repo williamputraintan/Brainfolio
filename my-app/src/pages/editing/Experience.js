@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -9,56 +9,84 @@ import Select from '@material-ui/core/Select';
 import Hidden from '@material-ui/core/Hidden';
 
 import { history } from '../../utils/BrowserHistory';
-import axios from 'axios';
+import AxiosInstance  from "../../utils/axios";
+import { UserContext } from '../../context/user.context';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
+import ExperienceInfo from './ExperienceInfo';
 import {useStyles} from './Styles.js';
 
   export default function Experience() {
+    const {state} = useContext(UserContext);
     const classes = useStyles();
 
     const fakedata=[{
       type: "ho",
+      name:"ho",
       title: "ho",
-      companyName:"ho",
       description:"ho",
       startDate:"ho",
       endDate:"ho"}]
 
-    const fieldNames = ["Type", "Job title","Company Name","Job Description", "Start Date", "End Date"]
+    const fieldNames = ["Type", "Company Name","Job title","Job Description", "Start Date", "End Date"]
 
     const [fields, setFields] = React.useState({
       type: "",
+      name:"",
       title: "",
-      companyName:"",
       description:"",
       startDate:"",
       endDate:"",
     })
+
+    const [existingWorkData,setExistingWork] = useState([]);
+    const [existingVolunteerData,setExistingVolunteer] = useState([]);
+
     function onInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
     }
+ 
     function handleSubmit(e){
       e.preventDefault();
-      console.log(fields);
-      //later change to AxiosInstance & portfolioId -> username
-      axios.post('http://localhost:5000/edit/experience',{...fields})
+      AxiosInstance.post('http://localhost:5000/edit/experience',{username:state.user,...fields});
     }
-  
+
+    function getExistingExperience(){
+      AxiosInstance.get("http://localhost:5000/edit/experience/"+state.user,{type:'work'})
+      .then(res=> separateType(res.data));
+    }
+
+    function separateType(res){
+      var workRes=[];
+      var volRes=[]
+      for (var i = 0, len = res.length; i < len; i++) {
+        if(res[i].type=="work"){
+          workRes.push(res[i]);
+        }else{
+          volRes.push(res[i]);
+        }
+      }
+      setExistingWork(workRes);
+      setExistingVolunteer(volRes);
+    }
+
+    useEffect(() => {
+      getExistingExperience();
+    });
   
     return (
    
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden smDown><CardInfo title={'Work Experience'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden><br/>
-              <Hidden smDown><CardInfo title={'Volunteer Experience'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
-              <Hidden mdUp><PopUpInfo  title={'Work Experience'} datalist={fakedata} fieldNames={fieldNames}/></Hidden><br/>
-              <Hidden mdUp><PopUpInfo  title={'Volunteer Experience'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}/> </Hidden><br/>
+              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}/></Hidden><br/>
+              {/* <Hidden lgUp><ExperienceInfo  title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}/></Hidden> */}
             </Container> 
       
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -83,10 +111,10 @@ import {useStyles} from './Styles.js';
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Enter Company name </div>
                             <TextField
-                            name="companyName"
+                            name="name"
                             variant="outlined"
                             fullWidth
-                            id="companyName"
+                            id="name"
                             placeholder="University of Melbourne"
                             autoFocus
                             onChange={onInputChange}                   

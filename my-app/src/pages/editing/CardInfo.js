@@ -11,9 +11,17 @@ import EditButton from './EditButton.js'
 import {useStyles} from './Styles';
 
 export default function cardInfo(props){
-    const fakedata = props.datalist;
+    
     const title = props.title;
     const fieldNames = props.fieldNames;
+    var data = props.datalist;
+
+    for (var i = 0, len = data.length; i < len; i++) {
+        delete data[i]._id;
+        delete data[i].username;
+        delete data[i].__v;
+    }
+
     var count = 0;
 
     return(
@@ -23,18 +31,17 @@ export default function cardInfo(props){
                 Your {title}
             </Typography>
             <List>
-                {/* will use data from database */}
-                {fakedata.map(res=>(
-                <div>
-                <ListItem style={{ display:'inline'}}>
-                    <div style={{float:'right'}}> <EditButton /> </div>
+                {data.map(res=>(
+                    <div>
+                    <ListItem style={{ display:'inline'}}>
+                    <div style={{float:'right'}}> <EditButton />  </div>
                     {fieldNames? 
                         Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {fieldNames[i]} : {value} </div>)) 
                         : Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {value} </div>))
                     }
-                </ListItem> 
-                {++count < fakedata.length? <Divider/>:null}
-                </div>
+                    </ListItem> 
+                    {++count < data.length? <Divider/>:null}
+                    </div>
                 ))}
             </List>
         </CardContent>
