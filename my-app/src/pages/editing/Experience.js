@@ -20,15 +20,14 @@ import {useStyles} from './Styles.js';
     const {state} = useContext(UserContext);
     const classes = useStyles();
 
-    const fakedata=[{
-      type: "ho",
-      name:"ho",
-      title: "ho",
-      description:"ho",
-      startDate:"ho",
-      endDate:"ho"}]
-
-    const fieldNames = ["Type", "Company Name","Job title","Job Description", "Start Date", "End Date"]
+    const fieldNames={
+      "type":"Type",
+      "name":"Company Name",
+      "title":"Job title",
+      "description":"Job Description",
+      "startDate":"Start Date",
+      "endDate":"End Date"
+    }
 
     const [fields, setFields] = React.useState({
       type: "",
@@ -55,7 +54,7 @@ import {useStyles} from './Styles.js';
     }
 
     function getExistingExperience(){
-      AxiosInstance.get("http://localhost:5000/edit/experience/"+state.user,{type:'work'})
+      AxiosInstance.get("http://localhost:5000/edit/experience/"+state.user)
       .then(res=> separateType(res.data));
     }
 

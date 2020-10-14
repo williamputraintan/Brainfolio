@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch,  Route, Redirect} from 'react-router-dom';
+import { Switch,  Route} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
@@ -7,8 +7,6 @@ import AboutUs from './pages/AboutUs.js';
 import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
-import EditingPage from './pages/editing/EditingPage.js';
-
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
 
 
@@ -40,7 +38,7 @@ function App() {
               {/* <Redirect exact from="/edit" to="/edit/contact" />
               <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
          */}
-             
+           
               <Route path="/home" component={AuthenticatedRoute}/>
               <Route path="/" component={Timeline} className={classes.root} /> 
               

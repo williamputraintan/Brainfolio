@@ -12,8 +12,6 @@ import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
-// import AxiosInstance from "../../utils/axios";
-// import axios from 'axios';
 import { history } from '../../utils/BrowserHistory';
 
 export default function Contact(props) {
@@ -33,7 +31,16 @@ export default function Contact(props) {
 
     const [existingData,setExistingData] = useState([]);
 
-    const fieldNames = ["Title", "Full Name", "Email","Phone Number","Address", "Relevant Link","LinkedIn","Description"]
+    const fieldNames = {
+      "title": "Title",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "address": "Address", 
+      "relevantLink": "Relevant Link",
+      "linkedIn": "LinkedIn",
+      "description": "Description"
+    }
    
     function onInputChange(e){
       setFields({

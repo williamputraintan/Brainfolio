@@ -16,9 +16,16 @@ import {useStyles} from './Styles.js';
 export default function Education() {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-
-    const fieldNames = ["Degree", "Institution", "Course Description", "Start Date","End Date","Score"]
-
+    
+    const fieldNames = {
+      "degree":"Degree",
+      "institution":"Institution",
+      "location":"Location",
+      "score":"Score",
+      "startDate":"Start Date",
+      "endDate":"End Date"
+    }
+    
     const [fields, setFields] = React.useState({
       degree: "",
       institution: "",

@@ -113,19 +113,6 @@ export default function PopupInfo(props) {
   const fieldNames = props.fieldNames;
   var work = props.worklist;
   var vol = props.vollist;
-
-  for (var i = 0, len = work.length; i < len; i++) {
-    delete work[i]._id;
-    delete work[i].username;
-    delete work[i].__v;
-  }
-
-  for (var i = 0, len = vol.length; i < len; i++) {
-    delete vol[i]._id;
-    delete vol[i].username;
-    delete vol[i].__v;
-  }
-
   var count=0;
     
   const [open, setOpen] = React.useState(false);
@@ -144,6 +131,10 @@ export default function PopupInfo(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  
+  function checkUnwanted(key, value){
+    return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+  }
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -163,13 +154,13 @@ export default function PopupInfo(props) {
                 </Tabs>
               </AppBar>
               <TabPanel value={value} index={0}>
-                {work.map(res=>(
+                  {work.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
                   <div style={{float:'right'}}> <EditButton />  </div>
                     {fieldNames? 
-                      Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {fieldNames[i]} : {value} </div>)) 
-                      : Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {value} </div>))
+                      Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
+                      : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
                     }
                   </ListItem> 
                   {++count < work.length? <Divider/>:null}
@@ -177,13 +168,13 @@ export default function PopupInfo(props) {
                 ))}
               </TabPanel>
               <TabPanel value={value} index={1}>
-                {vol.map(res=>(
+                  {vol.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
                   <div style={{float:'right'}}> <EditButton />  </div>
                     {fieldNames? 
-                      Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {fieldNames[i]} : {value} </div>)) 
-                      : Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {value} </div>))
+                      Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {value} </div>)) 
+                      : Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {value} </div>))
                     }
                   </ListItem> 
                   {++count < vol.length? <Divider/>:null}
@@ -192,18 +183,8 @@ export default function PopupInfo(props) {
               </TabPanel>
             </div>
 
-            {/* {data.map(res=>(
-              <div>
-              <ListItem style={{ display:'inline'}}>
-              <div style={{float:'right'}}> <EditButton />  </div>
-                {fieldNames? 
-                  Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {fieldNames[i]} : {value} </div>)) 
-                  : Object.entries(res).map(([key,value],i) => ((value!=="") &&  <div> {value} </div>))
-                }
-              </ListItem> 
-              {++count < data.length? <Divider/>:null}
-              </div>
-            ))} */}
+            
+            
             
           </Typography>
         </DialogContent>
