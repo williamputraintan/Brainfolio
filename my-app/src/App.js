@@ -34,7 +34,7 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
 
-              {/* the other pages are authenticated already except the project page */}
+              {/* the other pages are authenticated already except the project page 'edit/projects' */}
               {/* for unauthenticated project page uncomment below*/}
               {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
              
