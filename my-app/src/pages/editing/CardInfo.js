@@ -23,6 +23,10 @@ export default function cardInfo(props){
         return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
     }
 
+    const myCallback = (dataFromChild) => {
+        props.toEdit(dataFromChild)
+    }
+
     return(
     <Card className={useStyles.cardRoot}>
         <CardContent>
@@ -33,7 +37,7 @@ export default function cardInfo(props){
                 {data.map(res=>(
                 <div>
                 <ListItem style={{ display:'inline'}}>
-                <div style={{float:'right'}}> <EditButton path={path+res._id} />  </div>
+                <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
                
                     {fieldNames? 
                     Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 

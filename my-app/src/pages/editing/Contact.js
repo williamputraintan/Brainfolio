@@ -54,15 +54,29 @@ export default function Contact(props) {
 
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/profile',{username:state.user,...fields}).then(res=> resetForm());
+      AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=> resetForm());
     }
     function getExistingProfile(){
-      AxiosInstance.get("/edit/profile/"+state.user)
+      AxiosInstance.get("/edit/profile/uname/"+state.user)
       .then(res=> setExistingData(res.data))
     }
 
     function resetForm(){
       setFields({ ...initialState });
+    }
+
+    const myCallback = (dataFromChild) => {
+      setFields({
+        title:dataFromChild.title,
+        fullName:dataFromChild.fullName,
+        email:dataFromChild.email,
+        phone:dataFromChild.phone,
+        address:dataFromChild.address,
+        relevantLink:dataFromChild.relevantLink,
+        linkedIn:dataFromChild.linkedIn,
+        description:dataFromChild.description
+      })
+      console.log(fields)
     }
 
     useEffect(() => {
@@ -74,8 +88,8 @@ export default function Contact(props) {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'}/> </Hidden>
-            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'}/></Hidden>
+            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'} toEdit={myCallback}/></Hidden>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -183,7 +197,7 @@ export default function Contact(props) {
                         fullWidth
                         id="description"
                         value={fields.description}
-                        placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems. "
+                        placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems."
                         autoFocus
                         multiline
                         rows={5}
@@ -199,7 +213,7 @@ export default function Contact(props) {
                     className={classes.submit}
                     fullWidth
                     color='primary'
-                    onClick={event=>handleSubmit(event) && getExistingProfile()}
+                    onClick={event=>handleSubmit(event)}
                     >
                     Save my details
                     </Button>

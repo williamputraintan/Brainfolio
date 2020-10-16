@@ -53,7 +53,7 @@ export default function Skills(){
       AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> resetForm());
     }
     function getExistingSkills(){
-      AxiosInstance.get("/edit/skills/"+state.user)
+      AxiosInstance.get("/edit/skills/uname/"+state.user)
       .then(res=> separateType(res.data))
     }
 
@@ -75,6 +75,14 @@ export default function Skills(){
       setExistingSoft(soft);
     }
 
+    const myCallback = (dataFromChild) => {
+      setFields({
+        category: dataFromChild.category,
+        name: dataFromChild.name,
+        rating: dataFromChild.rating
+      })
+    }
+
     useEffect(() => {
       getExistingSkills();
     });
@@ -84,8 +92,8 @@ export default function Skills(){
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={fieldNames} path={'/edit/skills/'}/> </Hidden><br/>
-              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={fieldNames} path={'/edit/skills/'}/> </Hidden>
+              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden><br/>
+              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden>
               <Hidden lgUp>
                 <ExperienceInfo  
                   title={'Skills'} 
@@ -146,7 +154,7 @@ export default function Skills(){
                         className={classes.submit}
                         fullWidth
                         color='primary'
-                        onClick={event=>handleSubmit(event)}
+                        onClick={event=>handleSubmit(event) }
                         >
                         Save to my Skills
                         </Button>

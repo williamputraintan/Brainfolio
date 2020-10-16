@@ -138,6 +138,12 @@ export default function ExperienceInfo(props) {
   function checkUnwanted(key, value){
     return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
   }
+
+  const myCallback = (dataFromChild) => {
+    props.toEdit(dataFromChild)
+    handleClose();
+  }
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -160,7 +166,7 @@ export default function ExperienceInfo(props) {
                   {tab1List.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton path={path+res._id}/>  </div>
+                  <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
                     {fieldNames? 
                       Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
                       : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
@@ -174,7 +180,7 @@ export default function ExperienceInfo(props) {
                   {tab2List.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton path={path+res._id}/>  </div>
+                  <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
                     {fieldNames? 
                       Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {value} </div>)) 
                       : Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {value} </div>))

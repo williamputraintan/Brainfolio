@@ -52,12 +52,23 @@ export default function Education() {
     }
 
     function getExistingEducation(){
-      AxiosInstance.get("/edit/education/"+state.user)
+      AxiosInstance.get("/edit/education/uname/"+state.user)
       .then(res => setExistingData(res.data))
     }
 
     function resetForm(){
       setFields({ ...initialState });
+    }
+
+    const myCallback = (dataFromChild) => {
+      setFields({
+        degree: dataFromChild.degree,
+        institution: dataFromChild.institution,
+        location: dataFromChild.location,
+        score: dataFromChild.score,
+        startDate: dataFromChild.startDate,
+        endDate: dataFromChild.endDate
+      })
     }
     
     useEffect(() => {
@@ -68,8 +79,8 @@ export default function Education() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'}/> </Hidden>
-              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -154,7 +165,6 @@ export default function Education() {
                               type="date"
                               value={fields.endDate}
                               name="endDate"
-                              defaultValue="2019-05-24"
                               onChange={onInputChange} 
                               
                             />

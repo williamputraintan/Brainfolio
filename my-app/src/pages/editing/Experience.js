@@ -56,7 +56,7 @@ import {useStyles} from './Styles.js';
     }
 
     function getExistingExperience(){
-      AxiosInstance.get("/edit/experience/"+state.user)
+      AxiosInstance.get("/edit/experience/uname/"+state.user)
       .then(res=> separateType(res.data));
     }
 
@@ -78,6 +78,17 @@ import {useStyles} from './Styles.js';
       setExistingVolunteer(volRes);
     }
 
+    const myCallback = (dataFromChild) => {
+      setFields({
+        type: dataFromChild.type,
+        name: dataFromChild.name,
+        title: dataFromChild.title,
+        description: dataFromChild.description,
+        startDate: dataFromChild.startDate,
+        endDate: dataFromChild.endDate
+      })
+    }
+
     useEffect(() => {
       getExistingExperience();
     });
@@ -87,15 +98,16 @@ import {useStyles} from './Styles.js';
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}  path={'edit/experience/'}/> </Hidden><br/>
-              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'}/> </Hidden>
+              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> </Hidden><br/>
+              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> </Hidden>
               <Hidden lgUp>
                 <ExperienceInfo  
                   title={'Experiences'} 
                   type1={"Work"} type2={"Volunteer"} 
                   tab1List={existingWorkData} tab2List={existingVolunteerData} 
                   fieldNames={fieldNames}
-                  path={'/edit/experience/'}/></Hidden>
+                  path={'/edit/experience/'}
+                  toEdit={myCallback}/></Hidden>
             </Container> 
       
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -124,22 +136,22 @@ import {useStyles} from './Styles.js';
                             variant="outlined"
                             fullWidth
                             id="name"
-                            placeholder="University of Melbourne"
-                            autoFocus
                             value={fields.name}
+                            placeholder="University of Melbourne"                 
+                            autoFocus
                             onChange={onInputChange}                   
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Job title</div>
                             <TextField
+                            name="title"   
                             variant="outlined"
                             required
                             fullWidth
                             id="title"
-                            placeholder="Tutor for COMP30022"
-                            name="title"
                             value={fields.title}
+                            placeholder="Tutor for COMP30022"                          
                             onChange={onInputChange}                   
                             />
                         </Grid>
@@ -147,7 +159,6 @@ import {useStyles} from './Styles.js';
                             <div className={classes.field}> Job description </div>
                             <TextField
                             variant="outlined"
-                            required
                             fullWidth
                             id="description"
                             placeholder="Tutors 2 tutorial classes, each consisting of 20 students and supervising their Capstone Project"
@@ -163,11 +174,9 @@ import {useStyles} from './Styles.js';
                             <TextField
                               variant="outlined"
                               id="startDate"
-                              required
                               fullWidth
                               type="date"
                               name="startDate"
-                              defaultValue="2017-05-24"
                               value={fields.startDate}
                               onChange={onInputChange} 
                               
@@ -183,7 +192,6 @@ import {useStyles} from './Styles.js';
                               type="date"
                               name="endDate"
                               value={fields.endDate}
-                              defaultValue="2019-05-24"
                               onChange={onInputChange} 
                               
                             />
@@ -196,7 +204,7 @@ import {useStyles} from './Styles.js';
                         className={classes.submit}
                         fullWidth
                         color='primary'
-                        onClick={event=>handleSubmit(event)}
+                        onClick={event=>handleSubmit(event) }
                         >
                           Save to my Experiences
                         </Button>

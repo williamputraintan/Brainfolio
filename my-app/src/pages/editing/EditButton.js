@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,17 +8,22 @@ import AxiosInstance from '../../utils/axios';
 export default function EditButton(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   var path =  props.path;
+  var id= props.id;
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleEdit = ()=>{
-    //axios  here
+  // const [toEdit,setToEdit]= useState(null);
+
+  function getToEdit(){
+    AxiosInstance.get(path+'item/'+id).then(res=>(res?props.toEdit(res.data) :null));
+    handleClose();
   }
 
   const handleDelete = ()=>{
-    AxiosInstance.delete(path).then(res=>console.log(res))
+    AxiosInstance.delete(path+id)
     handleClose();
   }
   const handleClose = () => {
@@ -40,7 +45,7 @@ export default function EditButton(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <MenuItem onClick={getToEdit}>Edit</MenuItem>
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
     </div>
