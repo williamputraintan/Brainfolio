@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-
+import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
 const useStyles = makeStyles((theme) => ({
@@ -34,10 +34,10 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
 
-              {/* later changed to authenticed routes */}
-              {/* <Redirect exact from="/edit" to="/edit/contact" />
-              <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
-         */}
+              {/* the other pages are authenticated already except the project page */}
+              {/* for unauthenticated project page uncomment below*/}
+              {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
+             
            
               <Route path="/home" component={AuthenticatedRoute}/>
               <Route path="/" component={Timeline} className={classes.root} /> 
