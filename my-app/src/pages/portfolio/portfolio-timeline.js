@@ -13,44 +13,56 @@ export default function PF_Timeline(){
     // var classes = useStyles();
         return (
             <div class='timeline'>
-                <Timeline align="right">
-                <TimelineItem>
-                    <TimelineSeparator>
-                    <IconButton><TimelineDot /></IconButton>
-                    <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>Description</TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                    <TimelineSeparator>
-                    <IconButton><TimelineDot /></IconButton>
-                    <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>Experience</TimelineContent>
-                </TimelineItem>
-                
-                <TimelineItem>
-                    <TimelineSeparator>
-                    <IconButton><TimelineDot /></IconButton>
-                    <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>Education</TimelineContent>
-                </TimelineItem>
+                <Timeline 
+                    align="right"
+                >
+                    <TimelineItem>
+                        <TimelineSeparator>
+                        <IconButton>
+                            <TimelineDot />
+                            </IconButton>
+                        <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>Description</TimelineContent>
+                    </TimelineItem>
+                    <TimelineItem>
+                        <TimelineSeparator>
+                        <IconButton>
+                            <TimelineDot />
+                            </IconButton>
+                        <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>Experience</TimelineContent>
+                    </TimelineItem>
+                    
+                    <TimelineItem>
+                        <TimelineSeparator>
+                        <IconButton>
+                            <TimelineDot />
+                            </IconButton>
+                        <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>Education</TimelineContent>
+                    </TimelineItem>
 
-                <TimelineItem>
-                    <TimelineSeparator>
-                    <IconButton><TimelineDot /></IconButton>
-                    <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>Skill</TimelineContent>
-                </TimelineItem>
+                    <TimelineItem>
+                        <TimelineSeparator>
+                        <IconButton>
+                            <TimelineDot />
+                            </IconButton>
+                        <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>Skill</TimelineContent>
+                    </TimelineItem>
 
-                <TimelineItem>
-                    <TimelineSeparator>
-                    <IconButton><TimelineDot /></IconButton>
-                    </TimelineSeparator>
-                    <TimelineContent>Project</TimelineContent>
-                </TimelineItem>
+                    <TimelineItem>
+                        <TimelineSeparator>
+                        <IconButton>
+                            <TimelineDot />
+                            </IconButton>
+                        </TimelineSeparator>
+                        <TimelineContent>Project</TimelineContent>
+                    </TimelineItem>
                 </Timeline>
             </div>
         );
