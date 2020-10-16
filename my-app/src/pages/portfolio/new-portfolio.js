@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Slide, Container } from '@material-ui/core';
 import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 
 import './new-pf.css'
 
@@ -59,24 +60,38 @@ export default function New(){
             <Container className="portfolio-template">
 
                 <div class="grid-container">
+                    <div class='left'>
+                        
+                    </div>
                     <div class="picture">
                         <Avatar src={require('../../images/portfolio-profilepic/arthursetiawan.jpg')} className = {classes.large} />
                     </div>
+
+                    <div class="right">
+                        
+                    </div>
+
                     <div class="profile">
-                        <Typography variant="h3"> <b> Daniel Andrews </b></Typography>
-                        <Typography variant="h5"> <b> Victoria Premier </b></Typography>
+                        <Typography variant="h3"> <b> John Doe </b></Typography>
+                        <Typography variant="h5"> <b> Machine Learning Enthusiast </b></Typography>
                         <br/>
                         <Typography> Location: Melbourne, Australia </Typography>
                         <Typography> Ph.: 048592847 </Typography>
                         <Typography> Links: <a href="github.com">github.com</a> </Typography>
 
                     </div>
-                    <div class="edit1">
-                        <Button className={classes.button} href="../edit/contact">Edit Profile</Button>
+
+                    {/* <div class='left'></div> */}
+                    <div class="edit">
+                        <IconButton 
+                            color="default"
+                            className={classes.button} 
+                            href="../edit/contact"
+                        >
+                            <EditIcon/>
+                        </IconButton>
                     </div>
-                    <div class="edit2">
-                        <Button className={classes.button} href="../edit">Edit Portfolio</Button>
-                    </div>                    
+                    {/* <div class='right'></div> */}
                 </div>
                 
             </Container>
