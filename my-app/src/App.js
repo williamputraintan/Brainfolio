@@ -1,15 +1,18 @@
 import React from 'react';
-import { Switch,  Route } from 'react-router-dom';
+import { Switch,  Route, Redirect} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
-import NavigationBar from './components/NavigationBar.js'
 import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
+import EditingPage from './pages/editing/EditingPage.js';
+
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-import Portfolio from './pages/portfolio/portfolioPage'
+
+
+import Portfolio from './pages/portfolio/portfolioPage';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: 'linear-gradient(90deg, #041e42,#5C788F)',
@@ -32,6 +35,12 @@ function App() {
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
+
+              {/* later changed to authenticed routes */}
+              <Redirect exact from="/edit" to="/edit/contact" />
+              <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
+              
+
         
               <Route path="/home" component={AuthenticatedRoute}/>
 

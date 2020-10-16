@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 
-export class ProjectDto {
+export class PortfolioDto {
     @IsNotEmpty()
     readonly title: string;
 
@@ -12,5 +12,14 @@ export class ProjectDto {
 
     @IsNotEmpty()
     readonly contributor: string;
+
+    @IsNotEmpty()
+    readonly like: number;
+
+    @IsNotEmpty()
+    readonly comment: string;
+
+    @IsNotEmpty()
+    readonly share: string;
 
 }  
