@@ -13,12 +13,13 @@ import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
 import { history } from '../../utils/BrowserHistory';
+import { reset } from 'chalk';
 
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
 
-    const [fields, setFields] = React.useState({
+    const initialState = {
       title: "",
       fullName: "",
       email:"",
@@ -27,7 +28,9 @@ export default function Contact(props) {
       relevantLink: "",
       linkedIn:"",
       description: ""
-    })
+    };
+    
+    const [fields, setFields] = React.useState(initialState);
 
     const [existingData,setExistingData] = useState([]);
 
@@ -51,13 +54,17 @@ export default function Contact(props) {
 
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('http://localhost:5000/edit/profile',{username:state.user,...fields});
+      AxiosInstance.post('/edit/profile',{username:state.user,...fields}).then(res=> resetForm());
     }
     function getExistingProfile(){
-      AxiosInstance.get("http://localhost:5000/edit/profile/"+state.user)
+      AxiosInstance.get("/edit/profile/"+state.user)
       .then(res=> setExistingData(res.data))
-      
     }
+
+    function resetForm(){
+      setFields({ ...initialState });
+    }
+
     useEffect(() => {
       getExistingProfile();
     });
@@ -67,8 +74,8 @@ export default function Contact(props) {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames}/> </Hidden>
-            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames}/></Hidden>
+            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'}/></Hidden>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -84,6 +91,7 @@ export default function Contact(props) {
                         fullWidth
                         id="title"
                         placeholder="Ms"
+                        value={fields.title}
                         onChange={onInputChange}
                         />
                     </Grid>
@@ -93,8 +101,9 @@ export default function Contact(props) {
                         name="fullName"
                         variant="outlined"
                         fullWidth
-                        id="name"
+                        id="fullName"
                         placeholder="Patricia Angelica"
+                        value={fields.fullName}
                         onChange={onInputChange}                   
                         autoComplete='name'                 
                         />
@@ -108,6 +117,7 @@ export default function Contact(props) {
                         id="email"
                         placeholder="patriciaangelica@email.com"
                         name="email"
+                        value={fields.email}
                         autoComplete="email"
                         onChange={onInputChange}              
                         />
@@ -121,6 +131,7 @@ export default function Contact(props) {
                         id="phone"
                         placeholder="(61) 400123123"
                         name="phone"
+                        value={fields.phone}
                         autoComplete="phone"
                         onChange={onInputChange}
                         />
@@ -131,10 +142,10 @@ export default function Contact(props) {
                         variant="outlined"
                         required
                         fullWidth
-                        id="link"
+                        id="relevantLink"
                         placeholder="github.com/yourname"
-                        relevantLink="link"
-                        autoComplete="link"
+                        value={fields.relevantLink}
+                        name="relevantLink"
                         onChange={onInputChange}
                         />
                     </Grid>
@@ -144,10 +155,10 @@ export default function Contact(props) {
                         variant="outlined"
                         required
                         fullWidth
-                        id="link"
-                        placeholder="linkedin.com/yourname"
-                        name="linkedin"
-                        autoComplete="link"
+                        id="linkedIn"
+                        placeholder="linkedIn.com/yourname"
+                        name="linkedIn"
+                        value={fields.linkedIn}
                         onChange={onInputChange}
                         />
                     </Grid>
@@ -160,6 +171,7 @@ export default function Contact(props) {
                         id="address"
                         placeholder="100 Elizabeth Street"
                         onChange={onInputChange}
+                        value={fields.address}
                         autoComplete="address"              
                         />
                     </Grid>
@@ -170,6 +182,7 @@ export default function Contact(props) {
                         variant="outlined"
                         fullWidth
                         id="description"
+                        value={fields.description}
                         placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems. "
                         autoFocus
                         multiline

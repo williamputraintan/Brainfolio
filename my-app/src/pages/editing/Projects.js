@@ -19,12 +19,11 @@ import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import axios from 'axios';
-import { history } from '../../utils/BrowserHistory';
 
 export default function Projects() {
     const classes = useStyles();
 
-    var existingFiles=new FormData();
+    var existingFiles = new FormData();
 
     const fakedata=[{
       visibility: "ho",

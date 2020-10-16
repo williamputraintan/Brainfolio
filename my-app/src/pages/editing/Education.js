@@ -25,15 +25,17 @@ export default function Education() {
       "startDate":"Start Date",
       "endDate":"End Date"
     }
-    
-    const [fields, setFields] = React.useState({
+
+    const initialState = {
       degree: "",
       institution: "",
       location:"",
       score:"",
       startDate:"",
       endDate:""
-    })
+    }
+    
+    const [fields, setFields] = React.useState(initialState);
 
     const [existingData,setExistingData] = useState([]);
 
@@ -43,22 +45,21 @@ export default function Education() {
         [e.target.name]: e.target.value
       })
     }
-
-    function handleSubmit(e){
-      e.preventDefault();
-      AxiosInstance.post('http://localhost:5000/edit/education',{username:state.user,...fields});
-    }
   
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('http://localhost:5000/edit/education',{username:state.user,...fields});
+      AxiosInstance.post('/edit/education',{username:state.user,...fields}).then(res=> resetForm());
     }
 
     function getExistingEducation(){
-      AxiosInstance.get("http://localhost:5000/edit/education/"+state.user)
+      AxiosInstance.get("/edit/education/"+state.user)
       .then(res => setExistingData(res.data))
-      
     }
+
+    function resetForm(){
+      setFields({ ...initialState });
+    }
+    
     useEffect(() => {
       getExistingEducation();
     });
@@ -67,8 +68,8 @@ export default function Education() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames}/> </Hidden>
-              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -82,6 +83,7 @@ export default function Education() {
                             variant="outlined"
                             fullWidth
                             id="degree"
+                            value={fields.degree}
                             placeholder="Bachelor of Science (Chemical Systems)"
                             autoFocus
                             onChange={onInputChange}                   
@@ -94,6 +96,7 @@ export default function Education() {
                             variant="outlined"
                             fullWidth
                             id="institution"
+                            value={fields.institution}
                             placeholder="University of Melbourne"
                             autoFocus
                             onChange={onInputChange}                   
@@ -106,6 +109,7 @@ export default function Education() {
                             required
                             fullWidth
                             id="location"
+                            value={fields.location}
                             placeholder="Melbourne, Australia"
                             name="location"
                             onChange={onInputChange}                   
@@ -120,6 +124,7 @@ export default function Education() {
                             id="score"
                             placeholder="80%"
                             name="score"
+                            value={fields.score}
                             onChange={onInputChange}                   
                             />
                         </Grid>
@@ -132,6 +137,7 @@ export default function Education() {
                               required
                               fullWidth
                               type="date"
+                              value={fields.startDate}
                               name="startDate"
                               defaultValue="2017-05-24"
                               onChange={onInputChange}  
@@ -146,6 +152,7 @@ export default function Education() {
                               required
                               fullWidth
                               type="date"
+                              value={fields.endDate}
                               name="endDate"
                               defaultValue="2019-05-24"
                               onChange={onInputChange} 

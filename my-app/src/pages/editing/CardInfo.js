@@ -14,6 +14,8 @@ export default function cardInfo(props){
     
     const title = props.title;
     const fieldNames = props.fieldNames;
+    var path =  props.path;
+
     var data = props.datalist;
     var count = 0;
     
@@ -31,7 +33,8 @@ export default function cardInfo(props){
                 {data.map(res=>(
                 <div>
                 <ListItem style={{ display:'inline'}}>
-                <div style={{float:'right'}}> <EditButton />  </div>
+                <div style={{float:'right'}}> <EditButton path={path+res._id} />  </div>
+               
                     {fieldNames? 
                     Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
                     : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))

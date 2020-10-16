@@ -108,11 +108,14 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function PopupInfo(props) {
+export default function ExperienceInfo(props) {
   const title = props.title
   const fieldNames = props.fieldNames;
-  var work = props.worklist;
-  var vol = props.vollist;
+  var tab1List = props.tab1List;
+  var tab2List = props.tab2List;
+  const tab1= props.type1;
+  const tab2 =  props.type2;
+  var path =  props.path;
   var count=0;
     
   const [open, setOpen] = React.useState(false);
@@ -149,35 +152,35 @@ export default function PopupInfo(props) {
             <div className={styles.tabRoot}>
               <AppBar position="static" color="#000">
                 <Tabs value={value} indicatorColor="primary" onChange={handleChange} >
-                  <Tab label="Work" {...a11yProps(0)} />
-                  <Tab label="Volunteer" {...a11yProps(1)} />
+                  <Tab label={tab1} {...a11yProps(0)} />
+                  <Tab label={tab2} {...a11yProps(1)} />
                 </Tabs>
               </AppBar>
               <TabPanel value={value} index={0}>
-                  {work.map(res=>(
+                  {tab1List.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton />  </div>
+                  <div style={{float:'right'}}> <EditButton path={path+res._id}/>  </div>
                     {fieldNames? 
                       Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
                       : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
                     }
                   </ListItem> 
-                  {++count < work.length? <Divider/>:null}
+                  {++count < tab1List.length? <Divider/>:null}
                   </div>
                 ))}
               </TabPanel>
               <TabPanel value={value} index={1}>
-                  {vol.map(res=>(
+                  {tab2List.map(res=>(
                   <div>
                   <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton />  </div>
+                  <div style={{float:'right'}}> <EditButton path={path+res._id}/>  </div>
                     {fieldNames? 
                       Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {value} </div>)) 
                       : Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {value} </div>))
                     }
                   </ListItem> 
-                  {++count < vol.length? <Divider/>:null}
+                  {++count < tab2List.length? <Divider/>:null}
                   </div>
                 ))}
               </TabPanel>

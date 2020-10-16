@@ -1,4 +1,6 @@
 import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,26 +15,31 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 import CardInfo from './CardInfo.js';
-import PopUpInfo from './PopUpInfo';
+import ExperienceInfo from './ExperienceInfo';
 import {useStyles} from './Styles.js';
-import axios from 'axios';
 
 import { history } from '../../utils/BrowserHistory';
 
 export default function Skills(){
+    const {state} = useContext(UserContext);
     const classes = useStyles();
-    const fakedata=[{
-      tech: "ho",
-      soft: "ho"
-    }];
 
-    const [fields, setFields] = React.useState({
+    const initialState = {
       category: "",
       name: "",
-      rating:4
-    })
+      rating:0
+    }
 
-    const [existingData,setExistingData] = useState([]);
+    const [fields, setFields] = React.useState(initialState);
+
+    const fieldNames={
+      "category":"Category",
+      "name":"Description",
+      "rating":"Rating"
+    }
+   
+    const [existingTech,setExistingTech] = useState([]);
+    const [existingSoft,setExistingSoft] = useState([]);
 
     function onInputChange(e){
       setFields({
@@ -40,34 +47,52 @@ export default function Skills(){
         [e.target.name]: e.target.value
       })
     }
+    
     function handleSubmit(e){
       e.preventDefault();
-      //later change to AxiosInstance & portfolioId -> username
-      axios.post('http://localhost:5000/edit/skills',{portfolioId:'sup',...fields})
+      AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> resetForm());
     }
-  
-    // function handleSubmit(e){
-    //   e.preventDefault();
-    //   AxiosInstance.post('http://localhost:5000/edit/profile',{username:state.user,...fields});
-    // }
-    // function getExistingProfile(){
-    //   AxiosInstance.get("http://localhost:5000/edit/profile/"+state.user)
-    //   .then(res=> setExistingData(res.data))
-      
-    // }
-    // useEffect(() => {
-    //   getExistingProfile();
-    // });
+    function getExistingSkills(){
+      AxiosInstance.get("/edit/skills/"+state.user)
+      .then(res=> separateType(res.data))
+    }
+
+    function resetForm(){
+      setFields({ ...initialState });
+    }
+
+    function separateType(res){
+      var tech=[];
+      var soft=[]
+      for (var i = 0, len = res.length; i < len; i++) {
+        if(res[i].category==="Technical"){
+          tech.push(res[i]);
+        }else{
+          soft.push(res[i]);
+        }
+      }
+      setExistingTech(tech);
+      setExistingSoft(soft);
+    }
+
+    useEffect(() => {
+      getExistingSkills();
+    });
 
     return (
 
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden smDown> <CardInfo title={'Soft Skills'} datalist={fakedata} fieldNames={null}/> </Hidden><br/>
-              <Hidden smDown> <CardInfo title={'Technical Skills'} datalist={fakedata} fieldNames={null}/> </Hidden>
-              <Hidden mdUp> <PopUpInfo  title={'Soft Skills'} datalist={fakedata} fieldNames={null}/> </Hidden><br/>
-              <Hidden mdUp> <PopUpInfo  title={'Technical Skills'} datalist={fakedata} fieldNames={null}/> </Hidden>
+              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={fieldNames} path={'/edit/skills/'}/> </Hidden><br/>
+              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={fieldNames} path={'/edit/skills/'}/> </Hidden>
+              <Hidden lgUp>
+                <ExperienceInfo  
+                  title={'Skills'} 
+                  type1={"Technical"} type2={"Soft"} 
+                  tab1List={existingTech} tab2List={existingSoft} 
+                  fieldNames={fieldNames}
+                  path={'/edit/skills/'}/></Hidden>
             </Container> 
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -84,8 +109,8 @@ export default function Skills(){
                           value={fields.category}
                           onChange={onInputChange}
                         >
-                          <MenuItem value={'technical'}>Technical Skill</MenuItem>
-                          <MenuItem value={'soft'}>Soft Skill</MenuItem>
+                          <MenuItem value={'Technical'}>Technical Skill</MenuItem>
+                          <MenuItem value={'Soft'}>Soft Skill</MenuItem>
                         </Select>
                           
                     </Grid>
@@ -100,6 +125,7 @@ export default function Skills(){
                         autoFocus
                         multiline
                         rows={2}
+                        value={fields.name}
                         onChange={onInputChange}                   
                         />
                     </Grid>

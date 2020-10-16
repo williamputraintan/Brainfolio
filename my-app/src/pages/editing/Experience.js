@@ -29,14 +29,16 @@ import {useStyles} from './Styles.js';
       "endDate":"End Date"
     }
 
-    const [fields, setFields] = React.useState({
+    const initialState={
       type: "",
       name:"",
       title: "",
       description:"",
       startDate:"",
       endDate:"",
-    })
+    }
+
+    const [fields, setFields] = React.useState(initialState)
 
     const [existingWorkData,setExistingWork] = useState([]);
     const [existingVolunteerData,setExistingVolunteer] = useState([]);
@@ -50,12 +52,16 @@ import {useStyles} from './Styles.js';
  
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('http://localhost:5000/edit/experience',{username:state.user,...fields});
+      AxiosInstance.post('/edit/experience',{username:state.user,...fields}).then(res=> resetForm());
     }
 
     function getExistingExperience(){
-      AxiosInstance.get("http://localhost:5000/edit/experience/"+state.user)
+      AxiosInstance.get("/edit/experience/"+state.user)
       .then(res=> separateType(res.data));
+    }
+
+    function resetForm(){
+      setFields({ ...initialState });
     }
 
     function separateType(res){
@@ -81,9 +87,15 @@ import {useStyles} from './Styles.js';
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}/> </Hidden><br/>
-              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}/> </Hidden>
-              <Hidden lgUp><ExperienceInfo  title={'Experiences'}  worklist={existingWorkData} vollist={existingVolunteerData} fieldNames={fieldNames}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}  path={'edit/experience/'}/> </Hidden><br/>
+              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'}/> </Hidden>
+              <Hidden lgUp>
+                <ExperienceInfo  
+                  title={'Experiences'} 
+                  type1={"Work"} type2={"Volunteer"} 
+                  tab1List={existingWorkData} tab2List={existingVolunteerData} 
+                  fieldNames={fieldNames}
+                  path={'/edit/experience/'}/></Hidden>
             </Container> 
       
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -114,6 +126,7 @@ import {useStyles} from './Styles.js';
                             id="name"
                             placeholder="University of Melbourne"
                             autoFocus
+                            value={fields.name}
                             onChange={onInputChange}                   
                             />
                         </Grid>
@@ -126,6 +139,7 @@ import {useStyles} from './Styles.js';
                             id="title"
                             placeholder="Tutor for COMP30022"
                             name="title"
+                            value={fields.title}
                             onChange={onInputChange}                   
                             />
                         </Grid>
@@ -140,6 +154,7 @@ import {useStyles} from './Styles.js';
                             name="description"
                             multiline
                             row={4}
+                            value={fields.description}
                             onChange={onInputChange}                   
                             />
                         </Grid>
@@ -153,6 +168,7 @@ import {useStyles} from './Styles.js';
                               type="date"
                               name="startDate"
                               defaultValue="2017-05-24"
+                              value={fields.startDate}
                               onChange={onInputChange} 
                               
                             />
@@ -166,6 +182,7 @@ import {useStyles} from './Styles.js';
                               fullWidth
                               type="date"
                               name="endDate"
+                              value={fields.endDate}
                               defaultValue="2019-05-24"
                               onChange={onInputChange} 
                               
