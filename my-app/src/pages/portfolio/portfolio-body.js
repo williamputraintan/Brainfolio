@@ -21,6 +21,10 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 import './new-pf.css'
+import PF_Experience from './experience';
+import PF_Education from './education';
+import PF_Skill from './skill';
+import PF_Project from './project';
 
 const useStyles = makeStyles(() => ({
     pf_container:{
@@ -62,40 +66,38 @@ const useStyles = makeStyles(() => ({
         // textAlign: 'center',
         color: theme.palette.text.secondary,
         backgroundColor: "white"
-      },
-    indent: {
-        padding: theme.spacing(2),
-    }
+      }
     
   }));
 
-export default function PF_Experience(){
+export default function PF_Body(){
     var classes = useStyles();
     return(
-        <div>
+        <div class="pf">
+
             <Container className={classes.paper}>
-                <Typography variant="h4"> Experience</Typography>
+                <Typography variant="h4"> Description</Typography>
                 <br/>
 
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
-                    </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
-                    </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
-                    <Typography variant="h3" class="desc">
-                        Job Description:
-                        <Typography>
-                            - bam bam bam
-                        </Typography>
-                    </Typography>
-                </div>
-
+                <Typography theme="theme">
+                    I'm diligent, love to connect with new people and do teamwork. 
+                    cool right? Lets meet up and talk!
+                    <br/>
+                    Looking forward to see you soon!
+                </Typography>
             </Container>
+            <hr class="solid"/>
+
+            <PF_Experience/>
+            <hr class="solid"/>
+
+            <PF_Education/>
+            <hr class="solid"/>
+
+            <PF_Skill/>
+            <hr class="solid"/>
+
+            <PF_Project/>
 
         </div>
     );

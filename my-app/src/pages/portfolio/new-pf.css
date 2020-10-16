@@ -1,0 +1,274 @@
+.grid-container{
+    display: grid;
+    grid-template-rows: repeat(3, 0.4fr) ;
+    grid-template-columns: 0.6fr 2fr 1fr ;
+    grid-template-areas: 
+    'picture profile edit1'
+    'picture profile edit2'
+    'picture profile edit3';
+    padding:1%;
+}
+
+div.picture {
+    grid-area: picture;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    padding-right: 10%;
+}
+
+div.profile {
+    grid-area: profile;
+    /* background-color: aqua; */
+    padding-top: 4%;
+    padding-left: 7%;
+}
+
+div.edit1 {
+    grid-area: edit1;
+    text-align: left;
+    overflow: scroll;
+    padding-top: 7%;
+}
+div.edit2 {
+    grid-area: edit2;
+    text-align: left;
+    overflow: scroll;
+    padding-top: 7%;
+    position: relative;
+}
+
+/* Solid border */
+hr.solid {
+    border-top: 6px solid #bbb;
+  }
+
+.portfolio-template{
+    background-image: url('../../images/portfolio-jumbotron/blue-diamond-bg.png')!important;
+    background-position: center center;
+    background-size: cover;                      /* <------ */
+    background-repeat: no-repeat;
+    min-width:100%;
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+}
+
+.grid-body {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: 
+        "timeline pf";
+}
+
+div.timeline {
+    padding-top: 15%;
+    /* background-color: azure; */
+}
+
+div.pf {
+    /* height: 100vh; */
+    /* padding-top: 5%; */
+    /* padding-left: 5%; */
+    /* background-color: aquamarine; */
+}
+
+.grid-exp {
+    display: grid;
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: 1fr 0.5fr auto;
+    grid-template-areas: 
+        "role year"
+        "company year"
+        "desc year";
+}
+
+.role {
+    display: grid;
+    grid-area: role;
+}
+.year {
+    display: grid;
+    grid-area: year;
+}
+.company {
+    display: grid;
+    grid-area: company;
+    padding-left: 2%;
+    margin-top: -2.6%;
+    
+}
+.desc {
+    display: grid;
+    grid-area: desc;
+    margin-top: -1%;
+    padding-left: 2%;
+}
+
+.grid-edu {
+    display: grid;
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: 1fr 0.5fr auto;
+    grid-template-areas: 
+        "school year"
+        "degree year"
+        "desc year";
+}
+
+.school {
+    display: grid;
+    grid-area: school;
+}
+.year {
+    display: grid;
+    grid-area: year;
+}
+.degree {
+    display: grid;
+    grid-area: degree;
+    padding-left: 2%;
+    margin-top: -2.6%;
+    
+}
+.desc {
+    display: grid;
+    grid-area: desc;
+    margin-top: -1%;
+    padding-left: 2%;
+}
+
+@media only screen and (max-width: 680px) {
+    .grid-container {
+      grid-template-columns: 1fr 0.6fr;
+      grid-template-rows: 1fr 0.3fr 0.3fr 0.4fr;
+      grid-template-areas:
+        "picture picture"
+        "profile edit1"
+        "profile edit2"
+        "profile edit2";
+    }
+
+    div.picture {
+        grid-area: picture;
+        padding: 5%;
+        text-align: center;
+    }
+    
+    div.profile {
+        grid-area: profile;
+        /* text-align: center; */
+        /* background-color: aqua; */
+        padding-top: 4%;
+        padding-left: 7%;
+    }
+    
+    div.edit1 {
+        grid-area: edit1;
+        text-align: left;
+        overflow: scroll;
+        /* padding-top: 20%; */
+    }
+    div.edit2 {
+        grid-area: edit2;
+        text-align: left;
+        overflow: scroll;
+        /* padding-top: 20%; */
+    }
+
+    .grid-body {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "pf";
+    }
+    
+    div.timeline {
+        display: none;
+        grid-area: timeline;
+    }
+    
+    div.pf {
+        grid-area: pf;
+    }
+  }
+  
+  @media only screen and (max-width: 440px) {
+    .grid-container {
+      grid-template-columns: 0.5fr 0.5fr; 
+      grid-template-rows: 0.5fr 0.5fr 0.3fr;
+      grid-template-areas:
+        "picture picture"
+        "profile profile"
+        "edit1 edit2";
+    }
+
+    div.picture {
+        grid-area: picture;
+        padding-top: 20%;
+        padding-left: 20%;
+        /* padding-right: 20%; */
+        /* text-align: center; */
+    }
+    
+    div.profile {
+        /* display: none; */
+        grid-area: profile;
+        padding-bottom: 5%;
+        /* text-align: center; */
+        /* background-color: white; */
+        /* padding-top: 4%; */
+        padding-left: 10%;
+    }
+
+    div.edit1 {
+        grid-area: edit1;
+        text-align: left;
+        overflow: scroll;
+        padding-left: 10%;
+        /* padding-top: 20%; */
+    }
+    div.edit2 {
+        grid-area: edit2;
+        text-align: left;
+        overflow: scroll;
+        /* padding-top: 20%; */
+    }
+
+    .avatar {
+        width: 110px;
+        height: 110px;
+    }
+
+    .role {
+        display: grid;
+        grid-area: role;
+    }
+    .year {
+        display: grid;
+        grid-area: year;
+    }
+    .company {
+        display: grid;
+        grid-area: company;
+        padding-left: 2%;
+        margin-top: -6.7%;
+        
+    }
+    .desc {
+        display: grid;
+        grid-area: desc;
+        margin-top: -1%;
+        padding-left: 2%;
+    }
+
+    .degree {
+        display: grid;
+        grid-area: degree;
+        padding-left: 2%;
+        margin-top: -5%;
+    }
+
+  }
