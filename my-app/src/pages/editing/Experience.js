@@ -3,12 +3,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import Hidden from '@material-ui/core/Hidden';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
-import { history } from '../../utils/BrowserHistory';
 import AxiosInstance  from "../../utils/axios";
 import { UserContext } from '../../context/user.context';
 
@@ -16,89 +16,95 @@ import CardInfo from './CardInfo.js';
 import ExperienceInfo from './ExperienceInfo';
 import {useStyles} from './Styles.js';
 
-  export default function Experience() {
-    const {state} = useContext(UserContext);
-    const classes = useStyles();
+export default function Experience() {
+  const {state} = useContext(UserContext);
+  const classes = useStyles();
 
-    const fieldNames={
-      "type":"Type",
-      "name":"Company Name",
-      "title":"Job title",
-      "description":"Job Description",
-      "startDate":"Start Date",
-      "endDate":"End Date"
+  const fieldNames={
+    "type":"Type",
+    "name":"Company Name",
+    "title":"Job title",
+    "description":"Job Description",
+    "startDate":"Start Date",
+    "endDate":"End Date"
+  }
+
+  const initialState={
+    type: "",
+    name:"",
+    title: "",
+    description:"",
+    startDate:"2018-10-15",
+    endDate:"2020-10-15"
+  }
+
+  const [fields, setFields] = React.useState(initialState)
+  const [onGoing, setOnGoing] = React.useState(false);
+
+  const [existingWorkData,setExistingWork] = useState([]);
+  const [existingVolunteerData,setExistingVolunteer] = useState([]);
+  const [editId, setEditId] = React.useState(null);
+
+  function onInputChange(e){
+    setFields({
+      ...fields,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  function handleOnGoing(event){
+    setOnGoing(event.target.checked);
+  };
+
+  function handleSubmit(e){
+    e.preventDefault();
+    //when user edits an entry
+    if(editId!=null){
+      AxiosInstance.put('edit/experience/'+editId,{...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("edit failure"));
+    }//when user submits a new entry
+    else{
+      AxiosInstance.post('/edit/experience',{username:state.user,...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
     }
+  }
 
-    const initialState={
-      type: "",
-      name:"",
-      title: "",
-      description:"",
-      startDate:"",
-      endDate:"",
-    }
+  function isOkay(status){
+    return (status>=200 && status<300)
+  }
 
-    const [fields, setFields] = React.useState(initialState)
+  function getWorkExperience(){
+    AxiosInstance.get("/edit/experience/uname/work/"+state.user)
+    .then(res=> setExistingWork(res.data));
+  }
+  
+  async function getVolunteerExperience(){
+    AxiosInstance.get("/edit/experience/uname/volunteer/"+state.user)
+    .then(res=> setExistingVolunteer(res.data));
+  }
+  function resetForm(){
+    setFields({ ...initialState });
+    setEditId(null);
+  }
 
-    const [existingWorkData,setExistingWork] = useState([]);
-    const [existingVolunteerData,setExistingVolunteer] = useState([]);
+  const myCallback = (dataFromChild) => {
+    setFields({
+      type: dataFromChild.type,
+      name: dataFromChild.name,
+      title: dataFromChild.title,
+      description: dataFromChild.description
+    })
+    setEditId(dataFromChild._id);
+  }
 
-    function onInputChange(e){
-      setFields({
-        ...fields,
-        [e.target.name]: e.target.value
-      })
-    }
- 
-    function handleSubmit(e){
-      e.preventDefault();
-      AxiosInstance.post('/edit/experience',{username:state.user,...fields}).then(res=> resetForm());
-    }
-
-    function getExistingExperience(){
-      AxiosInstance.get("/edit/experience/uname/"+state.user)
-      .then(res=> separateType(res.data));
-    }
-
-    function resetForm(){
-      setFields({ ...initialState });
-    }
-
-    function separateType(res){
-      var workRes=[];
-      var volRes=[]
-      for (var i = 0, len = res.length; i < len; i++) {
-        if(res[i].type==="Work"){
-          workRes.push(res[i]);
-        }else{
-          volRes.push(res[i]);
-        }
-      }
-      setExistingWork(workRes);
-      setExistingVolunteer(volRes);
-    }
-
-    const myCallback = (dataFromChild) => {
-      setFields({
-        type: dataFromChild.type,
-        name: dataFromChild.name,
-        title: dataFromChild.title,
-        description: dataFromChild.description,
-        startDate: dataFromChild.startDate,
-        endDate: dataFromChild.endDate
-      })
-    }
-
-    useEffect(() => {
-      getExistingExperience();
-    });
+  useEffect(() => {
+    getWorkExperience();
+    getVolunteerExperience();
+  });
   
     return (
-   
-          <Container component="main" maxWidth="lg">
-
+     
+          <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> </Hidden><br/>
+              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> </Hidden><br/>
               <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> </Hidden>
               <Hidden lgUp>
                 <ExperienceInfo  
@@ -109,25 +115,16 @@ import {useStyles} from './Styles.js';
                   path={'/edit/experience/'}
                   toEdit={myCallback}/></Hidden>
             </Container> 
-      
+
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
                   <form className={classes.form} noValidate>
-
-                    <Grid container spacing={3}> 
+                  <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                            <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                              <Select
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              className={classes.select}
-                              name='type'
-                              value={fields.type}
-                              onChange={onInputChange}
-                              >
-                                <MenuItem value={'Work'}>Work</MenuItem>
-                                <MenuItem value={'Volunteer'}>Volunteer</MenuItem>
-                              </Select>
+                          <RadioGroup aria-label="type" name="type" value={fields.type} onChange={onInputChange}>
+                            <FormControlLabel value="Work" control={<Radio />} label="Work" />
+                            <FormControlLabel value="Volunteer" control={<Radio />} label="Volunteer" />
+                          </RadioGroup>  
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Enter Company name </div>
@@ -169,33 +166,47 @@ import {useStyles} from './Styles.js';
                             onChange={onInputChange}                   
                             />
                         </Grid>
+                        
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
                             <TextField
                               variant="outlined"
                               id="startDate"
+                              required
                               fullWidth
                               type="date"
-                              name="startDate"
                               value={fields.startDate}
+                              name="startDate"
                               onChange={onInputChange} 
-                              
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
                             <TextField
+                              disabled={onGoing}
                               variant="outlined"
                               id="endDate"
                               required
                               fullWidth
                               type="date"
-                              name="endDate"
                               value={fields.endDate}
+                              name="endDate"
                               onChange={onInputChange} 
-                              
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={onGoing}
+                                onChange={handleOnGoing}
+                                color="primary"
+                              />
+                            }
+                            label="On Going"
+                          />
+                        </Grid>
+                        
                     </Grid>
                     <Grid xs={12} sm={12}>
                         <Button
@@ -204,16 +215,16 @@ import {useStyles} from './Styles.js';
                         className={classes.submit}
                         fullWidth
                         color='primary'
-                        onClick={event=>handleSubmit(event) }
+                        onClick={event=>handleSubmit(event)}                
                         >
-                          Save to my Experiences
+                        Save to my Experience
                         </Button>
                     </Grid>
                   </form>
-                </div>      
+                  </div>      
               </Container>
-          </Container >
-   
+            </Container >
+          
 
     );
   }

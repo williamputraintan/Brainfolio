@@ -79,7 +79,7 @@ export default function PopupInfo(props) {
   };
 
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
   const myCallback = (dataFromChild) => {
@@ -101,6 +101,8 @@ export default function PopupInfo(props) {
           <Typography gutterBottom>
             {data.map(res=>(
               <div>
+              <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+
               <ListItem style={{ display:'inline'}}>
               <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
                 {fieldNames? 

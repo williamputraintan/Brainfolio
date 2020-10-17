@@ -136,12 +136,12 @@ export default function ExperienceInfo(props) {
   };
   
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
   const myCallback = (dataFromChild) => {
-    props.toEdit(dataFromChild)
-    handleClose();
+    props.toEdit(dataFromChild);
+    setOpen(false);
   }
 
   return (
@@ -165,6 +165,7 @@ export default function ExperienceInfo(props) {
               <TabPanel value={value} index={0}>
                   {tab1List.map(res=>(
                   <div>
+                    <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                   <ListItem style={{ display:'inline'}}>
                   <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
                     {fieldNames? 
@@ -179,6 +180,7 @@ export default function ExperienceInfo(props) {
               <TabPanel value={value} index={1}>
                   {tab2List.map(res=>(
                   <div>
+                    {res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}
                   <ListItem style={{ display:'inline'}}>
                   <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
                     {fieldNames? 

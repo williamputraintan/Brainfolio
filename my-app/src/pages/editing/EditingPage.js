@@ -23,7 +23,6 @@ import editbackground from '../../images/editbackground.png';
 
 const buttonStyles = makeStyles(() => ({
     container:{
-        
         padding:'5% 0% 5% 5%',
         height:'100%',
         display: 'flex',
@@ -35,8 +34,6 @@ const buttonStyles = makeStyles(() => ({
             padding:'3%',
             height:'fit-content'
         },
-        
-
     },
     buttonContainerDesk:{
         height:'12%',
@@ -54,8 +51,7 @@ const buttonStyles = makeStyles(() => ({
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
             color: '#4C516D'
-        },
-
+        }
     },
     buttonOn:{
         backgroundColor:theme.palette.secondary.main,
@@ -64,8 +60,7 @@ const buttonStyles = makeStyles(() => ({
         fontFamily:theme.typography.fontFamily,
         "&:hover": {
             backgroundColor: "transparent"
-          }
-
+        }
     }
 }));
 
@@ -107,7 +102,6 @@ export default function EditingPage(props){
     const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
 
     function handleChange (newValue) {
-        console.log('button clicked')
       history.push(`/home/edit/${tabNameToIndex[newValue]}/${state.user}`);
       setSelectedTab(newValue);
     };
@@ -117,7 +111,6 @@ export default function EditingPage(props){
         handleCloseMenu();
     }
   
-
     return (
         <Grid container justify = "center"  alignItems="center" style={{backgroundImage: `url(${editbackground})`,}}>
         <div className={classes.container}> 

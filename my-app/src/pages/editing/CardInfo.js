@@ -20,7 +20,7 @@ export default function cardInfo(props){
     var count = 0;
     
     function checkUnwanted(key,value){
-        return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+        return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
     }
 
     const myCallback = (dataFromChild) => {
@@ -36,15 +36,15 @@ export default function cardInfo(props){
             <List>
                 {data.map(res=>(
                 <div>
-                <ListItem style={{ display:'inline'}}>
-                <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
-               
-                    {fieldNames? 
-                    Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
-                    : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
-                    }
-                </ListItem> 
-                {++count < data.length? <Divider/>:null}
+                    <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+                    <ListItem style={{ display:'inline'}}>
+                    <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
+                        {fieldNames? 
+                        Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
+                        : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
+                        }
+                    </ListItem> 
+                    {++count < data.length? <Divider/>:null}
                 </div>
                 ))}
             </List>

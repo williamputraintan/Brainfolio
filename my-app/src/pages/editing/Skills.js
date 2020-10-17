@@ -7,9 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -25,21 +25,23 @@ export default function Skills(){
     const classes = useStyles();
 
     const initialState = {
-      category: "",
+      category: "Technical",
       name: "",
       rating:0
     }
-
-    const [fields, setFields] = React.useState(initialState);
-
+    
     const fieldNames={
       "category":"Category",
       "name":"Description",
       "rating":"Rating"
     }
-   
+
+    const [fields, setFields] = React.useState(initialState);
+
     const [existingTech,setExistingTech] = useState([]);
     const [existingSoft,setExistingSoft] = useState([]);
+
+    const [editId, setEditId] = React.useState(null);
 
     function onInputChange(e){
       setFields({
@@ -50,29 +52,29 @@ export default function Skills(){
     
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> resetForm());
+      // when user edits an entry
+      if(editId!=null){
+        AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> isOkay(res.status)? resetForm(): console.log('edit failute'));
+      }//when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
     }
-    function getExistingSkills(){
-      AxiosInstance.get("/edit/skills/uname/"+state.user)
-      .then(res=> separateType(res.data))
+    function isOkay(status){
+      return (status>=200 && status<300)
+    }
+
+    function getExistingSoftSkills(){
+      AxiosInstance.get("/edit/skills/uname/soft/"+state.user).then(res=> setExistingSoft(res.data))
+    }
+
+    function getExistingTechSkills(){
+      AxiosInstance.get("/edit/skills/uname/tech/"+state.user).then(res=> setExistingTech(res.data))
     }
 
     function resetForm(){
-      setFields({ ...initialState });
-    }
-
-    function separateType(res){
-      var tech=[];
-      var soft=[]
-      for (var i = 0, len = res.length; i < len; i++) {
-        if(res[i].category==="Technical"){
-          tech.push(res[i]);
-        }else{
-          soft.push(res[i]);
-        }
-      }
-      setExistingTech(tech);
-      setExistingSoft(soft);
+      setFields({ name:"", rating:0});
+      setEditId(null);
     }
 
     const myCallback = (dataFromChild) => {
@@ -81,11 +83,13 @@ export default function Skills(){
         name: dataFromChild.name,
         rating: dataFromChild.rating
       })
+      setEditId(dataFromChild._id);
     }
 
     useEffect(() => {
-      getExistingSkills();
-    });
+      getExistingSoftSkills();
+      getExistingTechSkills();
+    },[{...fields}]);
 
     return (
 
@@ -108,20 +112,11 @@ export default function Skills(){
               <form className={classes.form} noValidate>
                 <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
-                      <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          className={classes.select}
-                          name='category'
-                          value={fields.category}
-                          onChange={onInputChange}
-                        >
-                          <MenuItem value={'Technical'}>Technical Skill</MenuItem>
-                          <MenuItem value={'Soft'}>Soft Skill</MenuItem>
-                        </Select>
-                          
-                    </Grid>
+                    <RadioGroup aria-label="category" name="category" value={fields.category} onChange={onInputChange}>
+                      <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
+                      <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
+                    </RadioGroup>      
+                  </Grid>
                     <Grid item xs={12} sm={12}>
                         <div className={classes.field}> Enter your Skills</div>
                         <TextField

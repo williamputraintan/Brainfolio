@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -39,17 +41,35 @@ export default function Education() {
 
     const [existingData,setExistingData] = useState([]);
 
+    const [editId, setEditId] = React.useState(null);
+
+    const [onGoing, setOnGoing] = React.useState(false);
+
     function onInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
     }
+
+    function handleOnGoing(event){
+      setOnGoing(event.target.checked);
+    };
   
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/education',{username:state.user,...fields}).then(res=> resetForm());
+      //when user edits an entry
+      if(editId!=null){
+        AxiosInstance.put('/edit/education/'+editId,{...fields,onGoing:onGoing}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+      }// when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/education',{username:state.user,...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
     }
+
+    function isOkay(status){
+      return (status>=200 && status<300)
+    } 
 
     function getExistingEducation(){
       AxiosInstance.get("/edit/education/uname/"+state.user)
@@ -58,6 +78,7 @@ export default function Education() {
 
     function resetForm(){
       setFields({ ...initialState });
+      setEditId(null);
     }
 
     const myCallback = (dataFromChild) => {
@@ -66,9 +87,10 @@ export default function Education() {
         institution: dataFromChild.institution,
         location: dataFromChild.location,
         score: dataFromChild.score,
-        startDate: dataFromChild.startDate,
-        endDate: dataFromChild.endDate
+        startDate:dataFromChild.startDate,
+        endDate:dataFromChild.endDate
       })
+      setEditId(dataFromChild._id);
     }
     
     useEffect(() => {
@@ -141,7 +163,6 @@ export default function Education() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
-                      
                             <TextField
                               variant="outlined"
                               id="startDate"
@@ -150,14 +171,13 @@ export default function Education() {
                               type="date"
                               value={fields.startDate}
                               name="startDate"
-                              defaultValue="2017-05-24"
-                              onChange={onInputChange}  
-                              
+                              onChange={onInputChange} 
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
                             <TextField
+                              disabled={onGoing}
                               variant="outlined"
                               id="endDate"
                               required
@@ -166,12 +186,20 @@ export default function Education() {
                               value={fields.endDate}
                               name="endDate"
                               onChange={onInputChange} 
-                              
                             />
                         </Grid>
-                        
-                        
-                    </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={onGoing}
+                                onChange={handleOnGoing}
+                                color="primary"
+                              />
+                            }
+                            label="On Going"
+                          />
+                        </Grid>
                     <Grid xs={12} sm={12}>
                         <Button
                         type="submit"
@@ -184,6 +212,7 @@ export default function Education() {
                         Save to my Education
                         </Button>
                     </Grid>
+                    </Grid>
                   </form>
                   </div>      
               </Container>
@@ -192,3 +221,5 @@ export default function Education() {
 
     );
   }
+
+

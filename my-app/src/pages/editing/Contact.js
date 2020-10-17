@@ -19,6 +19,17 @@ export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
 
+    const fieldNames = {
+      "title": "Title",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "address": "Address", 
+      "relevantLink": "Relevant Link",
+      "linkedIn": "LinkedIn",
+      "description": "Description"
+    }
+
     const initialState = {
       title: "",
       fullName: "",
@@ -34,17 +45,8 @@ export default function Contact(props) {
 
     const [existingData,setExistingData] = useState([]);
 
-    const fieldNames = {
-      "title": "Title",
-      "fullName": "Full Name",
-      "email": "Email",
-      "phone": "Phone Number",
-      "address": "Address", 
-      "relevantLink": "Relevant Link",
-      "linkedIn": "LinkedIn",
-      "description": "Description"
-    }
-   
+    const [editId, setEditId] = React.useState(null);
+
     function onInputChange(e){
       setFields({
         ...fields,
@@ -54,8 +56,20 @@ export default function Contact(props) {
 
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=> resetForm());
+      //when user edits an entry
+      if(editId!=null){
+        AxiosInstance.put('edit/profile/'+editId,{...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+
+      }//when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
     }
+
+    function isOkay(status){
+      return (status>=200 && status<300)
+    } 
+
     function getExistingProfile(){
       AxiosInstance.get("/edit/profile/uname/"+state.user)
       .then(res=> setExistingData(res.data))
@@ -63,6 +77,7 @@ export default function Contact(props) {
 
     function resetForm(){
       setFields({ ...initialState });
+      setEditId(null);
     }
 
     const myCallback = (dataFromChild) => {
@@ -75,8 +90,8 @@ export default function Contact(props) {
         relevantLink:dataFromChild.relevantLink,
         linkedIn:dataFromChild.linkedIn,
         description:dataFromChild.description
-      })
-      console.log(fields)
+      });
+      setEditId(dataFromChild._id);
     }
 
     useEffect(() => {
