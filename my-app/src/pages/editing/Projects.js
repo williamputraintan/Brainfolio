@@ -21,6 +21,7 @@ import {useStyles} from './Styles.js';
 import axios from 'axios';
 
 export default function Projects() {
+  
     const classes = useStyles();
 
     var existingFiles = new FormData();
@@ -34,47 +35,130 @@ export default function Projects() {
 
     const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributor"]
 
+    const [allProjects, setAllProjects] =  React.useState([]);
+    const [filesToUpload, setFilesToUpload] = React.useState([])
+    const [filesToDelete, setFilesToDelete] = React.useState([])
+
+    useEffect(() => {
+
+      axios.get("http://localhost:5000/projects/")
+      .then((response) => {
+        console.log('how many');
+        const responseData = response.data;
+        // console.log(responseData);
+        setAllProjects(responseData);
+        // console.log(allProjects);
+      })
+    },[]);
+
     // fields form
     const [fields, setFields] = React.useState({
+      _id:"",
       visibility:"",
       title: "",
       startDate:"",
       endDate:"",
       description:"",
-      contributor:[]
+      contributor:[],
+      projectFileName:[[]],
     })
+  
+    // file
+    const [filesToDisplay, setFilesToDisplay] =  React.useState([]);
 
 
     function onFormInputChange(e){
+
+
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
+
+      console.log('delte = ', filesToDelete);
+      console.log('allproj = ', allProjects);
+      console.log('fields = ', fields);
+      console.log('filesToDisplay = ',filesToDisplay);
     }
 
-    
-    // file
-    // const [selectedFiles,setFiles] =  React.useState([]);
-    // const [selectedFiles, setSelectedFiles] = React.useState(undefined); 
 
     function onFileChangeUpload(e){
-      const formData = new FormData()
-      for(var i = 0; i<(e.target.files).length; i++) {
-          formData.append('file', (e.target.files)[i])
-      }
-      console.log(formData.getAll('file'))
-      axios.post("http://localhost:5000/projects/files", formData)
+      setFilesToUpload(e.target.files)
+      // setFields({...fields, files: e.target.files})
+      // // setFilesToUpload(e.target.files);
+      // const filesToUpload = e.target.files
+
+      // console.log('savefiles');
+      // const formData = new FormData();
+      // for(let eachFile of filesToUpload){
+      //   formData.append('files', eachFile)
+      // }
+      // formData.append('_id', fields._id)
+      // console.log(formData.getAll('files'));
+      // axios.post("http://localhost:5000/projects/files", formData)
+      // .then((response) => {
+        
+      //   const project_id= response.data._id;
+      //   setFields({...fields , _id : project_id})
+
+      //   setFilesToDisplay(filesToDisplay.concat(response.data.projectFileName))
+      //   document.getElementById('inputFile').value = ''
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // })
+     
+    }
+    function onDeleteFile(e, fileName){
+      e.preventDefault();
+
+      setFilesToDelete(filesToDelete.concat(fileName))
     }
   
     function displayProjects(){
-      // console.log(existingFiles.getAll('files'));
+
     }
 
     function handleFormSubmit(e){
-          e.preventDefault();
-          const formData = new FormData(); 
+      e.preventDefault();
+      console.log(fields);
+      
+      const formData = new FormData();
+
+
+      for(let eachFile of filesToUpload){
+        console.log(eachFile);
+        formData.append('filesToUpload', eachFile)
+      }
+
+
+      for ( var key in fields ) {
+        formData.append(key, fields[key]);
+      }
+
+      for(let eachFile of filesToDelete){
+        formData.append('filesToDelete',eachFile)
+      }
+      formData.append('filesToDelete', '')
+      formData.append('filesToDelete', '')
+      console.log('DELTE = ', formData.get('filesToDelete'));
+      // for(let eachFile of filesToDelete){
+      //   formData.append('filesToDelete', eachFile)
+      // }
+      axios.post("http://localhost:5000/projects/save/", formData)
+      .then((response) => {
+        console.log(response);
+        const data = response.data
         
-          // send axios here
+        setFields(data)
+        setFilesToDelete([])
+        setFilesToUpload([])
+
+        document.getElementById('inputFile').value = ''
+      })
+      .catch(err =>{
+        console.log(err);
+      })
     }
 
     //contributor
@@ -115,7 +199,7 @@ export default function Projects() {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames}/> </Hidden>
             <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
           </Container> 
 
@@ -233,9 +317,9 @@ export default function Projects() {
                           variant="outlined"
                           required
                           fullWidth
-                          id="desc"
+                          id="description"
                           placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
-                          name="desc"
+                          name="description"
                           autoComplete="desc"
                           multiline
                           row={3}
@@ -244,19 +328,24 @@ export default function Projects() {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <div>
-                          <input type="file" multiple name="file" onChange={onFileChangeUpload}/>
+                          <input id="inputFile" type="file" multiple name="files" onChange={onFileChangeUpload}/>
                         </div>
                         <Card className={classes.cardContributor}>
                           <CardContent>
                             <Typography color="textSecondary" gutterBottom>
                               Uploaded Files   
                             </Typography>
-                            {displayProjects()}
-                              {/* {displayProjects().map(res=>(
-                                <div>
-                                  {res?res:null} <br/>
-                                </div>
-                              ))} */}
+
+                              {fields.projectFileName.map((res,index)=>(
+                                <React.Fragment key={index}>
+                                  <a href={res[1]}>{res[0]} </a>
+                                  {/* <input type="button" value={res[0]} onClick={onDeleteFile} /> */}
+                                  <button onClick={(e) => onDeleteFile(e, res[0])}>X</button>
+                                  {/* <input type="button" onClick={onDeleteFile(res[0])} /> */}
+                                  <br/>
+                                </React.Fragment>
+                                
+                              ))}
                           </CardContent>
                         </Card>
                       </Grid> 
