@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-import EditingPage from './pages/editing/EditingPage'
+// import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
 const useStyles = makeStyles((theme) => ({

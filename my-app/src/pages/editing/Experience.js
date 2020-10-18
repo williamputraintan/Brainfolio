@@ -1,4 +1,7 @@
 import React, { useState, useContext ,useEffect} from 'react';
+import AxiosInstance  from "../../utils/axios";
+import { UserContext } from '../../context/user.context';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -8,12 +11,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Hidden from '@material-ui/core/Hidden';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
-import AxiosInstance  from "../../utils/axios";
-import { UserContext } from '../../context/user.context';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DateFnsUtils from '@date-io/date-fns';
 
 import CardInfo from './CardInfo.js';
-import ExperienceInfo from './ExperienceInfo';
+import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 
 export default function Experience() {
@@ -33,17 +36,19 @@ export default function Experience() {
     type: "",
     name:"",
     title: "",
-    description:"",
-    startDate:"2018-10-15",
-    endDate:"2020-10-15"
+    description:""
   }
 
-  const [fields, setFields] = React.useState(initialState)
+  const [fields, setFields] = React.useState(initialState);
+  const [startDate,setStartDate] =  React.useState(new Date());
+  const [endDate,setEndDate] =  React.useState(new Date());
   const [onGoing, setOnGoing] = React.useState(false);
 
   const [existingWorkData,setExistingWork] = useState([]);
   const [existingVolunteerData,setExistingVolunteer] = useState([]);
   const [editId, setEditId] = React.useState(null);
+
+  const [formDisable,setFormDisable]= React.useState(false);
 
   function onInputChange(e){
     setFields({
@@ -52,18 +57,47 @@ export default function Experience() {
     })
   }
 
+  function handleStartDate(date){
+    var month = date.getMonth().toString();
+    var day = date.getDate().toString();
+    if(month.length===1) month="0"+month;
+    if(day.length===1) day = "0"+day;
+
+    var formatDate=date.getFullYear()+"-"+month+"-"+day
+    setStartDate(formatDate);
+  }
+
+  function handleEndDate(date){
+    var month = date.getMonth().toString();
+    var day = date.getDate().toString();
+    if(month.length===1) month="0"+month;
+    if(day.length===1) day = "0"+day;
+    
+    var formatDate=date.getFullYear()+"-"+month+"-"+day;
+    setEndDate(formatDate);
+  }
+
   function handleOnGoing(event){
     setOnGoing(event.target.checked);
   };
 
   function handleSubmit(e){
     e.preventDefault();
+    //disables form for request
+    setFormDisable(true);
+    var finalFields = {
+      username:state.user,
+      ...fields,
+      startDate:startDate, 
+      endDate:endDate, 
+      onGoing:onGoing
+    }
     //when user edits an entry
     if(editId!=null){
-      AxiosInstance.put('edit/experience/'+editId,{...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("edit failure"));
+      AxiosInstance.put('edit/experience/'+editId,finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("edit failure"));
     }//when user submits a new entry
     else{
-      AxiosInstance.post('/edit/experience',{username:state.user,...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      AxiosInstance.post('/edit/experience',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
     }
   }
 
@@ -81,6 +115,7 @@ export default function Experience() {
     .then(res=> setExistingVolunteer(res.data));
   }
   function resetForm(){
+    setFormDisable(false)
     setFields({ ...initialState });
     setEditId(null);
   }
@@ -92,6 +127,9 @@ export default function Experience() {
       title: dataFromChild.title,
       description: dataFromChild.description
     })
+    setStartDate(dataFromChild.startDate);
+    setEndDate(dataFromChild.endDate);
+    setFormDisable(false)
     setEditId(dataFromChild._id);
   }
 
@@ -104,10 +142,14 @@ export default function Experience() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> </Hidden><br/>
-              <Hidden mdDown><CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> </Hidden>
+              <Hidden mdDown>
+                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> 
+              </Hidden><br/>
+              <Hidden mdDown>
+                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> 
+              </Hidden>
               <Hidden lgUp>
-                <ExperienceInfo  
+                <DoubleTypeInfo  
                   title={'Experiences'} 
                   type1={"Work"} type2={"Volunteer"} 
                   tab1List={existingWorkData} tab2List={existingVolunteerData} 
@@ -121,14 +163,15 @@ export default function Experience() {
                   <form className={classes.form} noValidate>
                   <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                          <RadioGroup aria-label="type" name="type" value={fields.type} onChange={onInputChange}>
+                          <RadioGroup aria-label="type" name="type" value={fields.type} disabled={formDisable} onChange={onInputChange}>
                             <FormControlLabel value="Work" control={<Radio />} label="Work" />
                             <FormControlLabel value="Volunteer" control={<Radio />} label="Volunteer" />
                           </RadioGroup>  
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter Company name </div>
+                            <div className={classes.field}> Company/Organisation Name</div>
                             <TextField
+                            disabled={formDisable}
                             name="name"
                             variant="outlined"
                             fullWidth
@@ -142,6 +185,7 @@ export default function Experience() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Job title</div>
                             <TextField
+                            disabled={formDisable}
                             name="title"   
                             variant="outlined"
                             required
@@ -155,6 +199,7 @@ export default function Experience() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Job description </div>
                             <TextField
+                            disabled={formDisable}
                             variant="outlined"
                             fullWidth
                             id="description"
@@ -169,33 +214,37 @@ export default function Experience() {
                         
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
-                            <TextField
-                              variant="outlined"
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              disabled={formDisable}
+                              autoOk
                               id="startDate"
-                              required
-                              fullWidth
-                              type="date"
-                              value={fields.startDate}
-                              name="startDate"
-                              onChange={onInputChange} 
+                              variant="inline"
+                              inputVariant="outlined"
+                              format="dd/MM/yyyy"
+                              value={startDate}
+                              onChange={date=>handleStartDate(date)}
                             />
+                            </MuiPickersUtilsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
-                            <TextField
-                              disabled={onGoing}
-                              variant="outlined"
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              disabled={formDisable}
+                              autoOk
+                              variant="inline"
+                              inputVariant="outlined"
+                              format="dd/MM/yyyy"
                               id="endDate"
-                              required
-                              fullWidth
-                              type="date"
-                              value={fields.endDate}
-                              name="endDate"
-                              onChange={onInputChange} 
+                              value={endDate}
+                              onChange={date=>handleEndDate(date)}
                             />
+                            </MuiPickersUtilsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <FormControlLabel
+                          <FormControlLabel 
+                            disabled={formDisable}
                             control={
                               <Checkbox
                                 checked={onGoing}
@@ -210,6 +259,7 @@ export default function Experience() {
                     </Grid>
                     <Grid xs={12} sm={12}>
                         <Button
+                        disabled={formDisable}
                         type="submit"
                         variant="contained"
                         className={classes.submit}
@@ -218,6 +268,7 @@ export default function Experience() {
                         onClick={event=>handleSubmit(event)}                
                         >
                         Save to my Experience
+                        {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
                     </Grid>
                   </form>

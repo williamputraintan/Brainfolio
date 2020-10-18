@@ -1,7 +1,6 @@
 import React, { useState, useContext ,useEffect} from 'react';
 import { UserContext } from '../../context/user.context';
 import AxiosInstance  from "../../utils/axios";
-import { history } from '../../utils/BrowserHistory';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +9,9 @@ import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -32,23 +34,43 @@ export default function Education() {
       degree: "",
       institution: "",
       location:"",
-      score:"",
-      startDate:"",
-      endDate:""
+      score:""
     }
     
     const [fields, setFields] = React.useState(initialState);
-
     const [existingData,setExistingData] = useState([]);
-
     const [editId, setEditId] = React.useState(null);
-
     const [onGoing, setOnGoing] = React.useState(false);
+    const [formDisable,setFormDisable]= React.useState(false);
+
+    //date changes
+    const [startDate,setStartDate] =  React.useState(new Date());
+    const [endDate,setEndDate] =  React.useState(new Date());
+
+    function handleStartDate(date){
+      var month = date.getMonth().toString();
+      var day = date.getDate().toString();
+      if(month.length===1) month="0"+month;
+      if(day.length===1) day = "0"+day;
+
+      var formatDate=date.getFullYear()+"-"+month+"-"+day
+      setStartDate(formatDate);
+    }
+
+    function handleEndDate(date){
+      var month = date.getMonth().toString();
+      var day = date.getDate().toString();
+      if(month.length===1) month="0"+month;
+      if(day.length===1) day = "0"+day;
+
+      var formatDate=date.getFullYear()+"-"+month+"-"+day;
+      setEndDate(formatDate);
+    }
 
     function onInputChange(e){
       setFields({
         ...fields,
-        [e.target.name]: e.target.value
+        [e.target.id]: e.target.value
       })
     }
 
@@ -58,12 +80,22 @@ export default function Education() {
   
     function handleSubmit(e){
       e.preventDefault();
-      //when user edits an entry
+      //disable form for request
+      setFormDisable(true);
+
+      var finalFields=
+      {username:state.user,
+        ...fields,
+        startDate:startDate, 
+        endDate:endDate, 
+        onGoing:onGoing}
+
+      //when user edits an existing entry
       if(editId!=null){
-        AxiosInstance.put('/edit/education/'+editId,{...fields,onGoing:onGoing}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+        AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
       }// when user submits a new entry
       else{
-        AxiosInstance.post('/edit/education',{username:state.user,...fields,onGoing:onGoing}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+        AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
       }
     }
 
@@ -77,19 +109,22 @@ export default function Education() {
     }
 
     function resetForm(){
+      setFormDisable(false)
       setFields({ ...initialState });
       setEditId(null);
     }
 
+    //props from children
     const myCallback = (dataFromChild) => {
       setFields({
         degree: dataFromChild.degree,
         institution: dataFromChild.institution,
         location: dataFromChild.location,
-        score: dataFromChild.score,
-        startDate:dataFromChild.startDate,
-        endDate:dataFromChild.endDate
-      })
+        score: dataFromChild.score
+      });
+      setStartDate(dataFromChild.startDate);
+      setEndDate(dataFromChild.endDate);
+      setFormDisable(false);
       setEditId(dataFromChild._id);
     }
     
@@ -107,11 +142,12 @@ export default function Education() {
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
-                  <form className={classes.form} noValidate>
+                  <form className={classes.form} disabled={formDisable} noValidate>
                     <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Enter your Degree </div>
                             <TextField
+                            disabled={formDisable}
                             name="degree"
                             variant="outlined"
                             fullWidth
@@ -125,6 +161,7 @@ export default function Education() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}> Enter your institution name </div>
                             <TextField
+                            disabled={formDisable}
                             name="institution"
                             variant="outlined"
                             fullWidth
@@ -138,6 +175,7 @@ export default function Education() {
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Location</div>
                             <TextField
+                            disabled={formDisable}
                             variant="outlined"
                             required
                             fullWidth
@@ -151,6 +189,7 @@ export default function Education() {
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Score </div>
                             <TextField
+                            disabled={formDisable}
                             variant="outlined"
                             required
                             fullWidth
@@ -163,30 +202,31 @@ export default function Education() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> Start Date </div>
-                            <TextField
-                              variant="outlined"
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              autoOk
                               id="startDate"
-                              required
-                              fullWidth
-                              type="date"
-                              value={fields.startDate}
-                              name="startDate"
-                              onChange={onInputChange} 
+                              variant="inline"
+                              inputVariant="outlined"
+                              format="dd/MM/yyyy"
+                              value={startDate}
+                              onChange={date=>handleStartDate(date)}
                             />
+                            </MuiPickersUtilsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classes.field}> End Date </div>
-                            <TextField
-                              disabled={onGoing}
-                              variant="outlined"
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              autoOk
+                              variant="inline"
+                              inputVariant="outlined"
+                              format="dd/MM/yyyy"
                               id="endDate"
-                              required
-                              fullWidth
-                              type="date"
-                              value={fields.endDate}
-                              name="endDate"
-                              onChange={onInputChange} 
+                              value={endDate}
+                              onChange={date=>handleEndDate(date)}
                             />
+                            </MuiPickersUtilsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControlLabel
@@ -202,6 +242,7 @@ export default function Education() {
                         </Grid>
                     <Grid xs={12} sm={12}>
                         <Button
+                        disabled={formDisable}
                         type="submit"
                         variant="contained"
                         className={classes.submit}
@@ -209,16 +250,15 @@ export default function Education() {
                         color='primary'
                         onClick={event=>handleSubmit(event)}                
                         >
-                        Save to my Education
+                        Save to my Education     
+                        {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
                     </Grid>
                     </Grid>
                   </form>
                   </div>      
               </Container>
-            </Container >
-          
-
+            </Container>
     );
   }
 
