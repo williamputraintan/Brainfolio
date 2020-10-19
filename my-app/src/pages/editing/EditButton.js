@@ -22,6 +22,7 @@ export default function EditButton(props) {
 
   const handleDelete = ()=>{
     AxiosInstance.delete(path+id)
+    console.log(""+path+id);
     handleClose();
   }
 

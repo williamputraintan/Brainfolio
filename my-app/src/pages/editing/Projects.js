@@ -41,6 +41,7 @@ export default function Projects() {
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
+    const [buttonClick, setButtonClick] = React.useState(false)
     // fields form
     const [fields, setFields] = React.useState({
       _id:"",
@@ -50,19 +51,19 @@ export default function Projects() {
       endDate:"",
       description:"",
       contributor:[],
-      projectFileName:[[]],
+      projectFileName:[],
     })
 
 
     useEffect(() => {
-
+      console.log('woi');
       axios.get("http://localhost:5000/projects/")
       .then((response) => {
         const responseData = response.data;
         setAllProjects(responseData);
-
+        setButtonClick(false)
       })
-    },[fields]);
+    },[buttonClick]);
 
 
     function onFormInputChange(e){
@@ -85,10 +86,12 @@ export default function Projects() {
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
     }
-  
-    function displayProjects(){
-
+    
+    //props from children
+    const myCallback = (dataFromChild) => {
+      setFields(dataFromChild);
     }
+
 
     function handleFormSubmit(e){
       e.preventDefault();
@@ -121,7 +124,7 @@ export default function Projects() {
         setFields(data)
         setFilesToDelete([])
         setFilesToUpload([])
-
+        setButtonClick(true)
         document.getElementById('inputFile').value = ''
       })
       .catch(err =>{
@@ -169,8 +172,8 @@ export default function Projects() {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames}/> </Hidden>
-            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/> </Hidden>
+            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/></Hidden>
           </Container> 
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -201,7 +204,8 @@ export default function Projects() {
                           id="title"
                           placeholder="Brainfolio"
                           autoFocus
-                          onChange={onFormInputChange}                   
+                          onChange={onFormInputChange}
+                          value={fields.title}          
                           />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -215,7 +219,7 @@ export default function Projects() {
                               name="startDate"
                               defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
-                              
+                              value={fields.startDate}        
                             />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -229,6 +233,7 @@ export default function Projects() {
                               name="endDate"
                               defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
+                              value={fields.endDate}        
                             />
                       </Grid>
                       <Grid item xs={12} sm={12}>  
@@ -259,7 +264,7 @@ export default function Projects() {
                               type="name"
                               style={{paddingRight:'5%'}}
                               fullWidth
-                              onChange={event=>setOneName(event.target.value)}                   
+                              onChange={event=>setOneName(event.target.value)}
                             />
                             <TextField
                               autoFocus
@@ -293,7 +298,8 @@ export default function Projects() {
                           autoComplete="desc"
                           multiline
                           row={3}
-                          onChange={onFormInputChange}                   
+                          onChange={onFormInputChange}         
+                          value={fields.description}               
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
