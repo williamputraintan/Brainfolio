@@ -6,6 +6,7 @@ const path = "/auth"
 
 //Pass in dispatch from  Context
 export const logUserIn = (dispatch, fields) => {
+  console.log(fields)
   AxiosInstance
     .post(path + "/signin", {
       ...fields

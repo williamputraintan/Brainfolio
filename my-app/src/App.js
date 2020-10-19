@@ -11,6 +11,10 @@ import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
 // import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
+
+
+import Page404 from "./common/404";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     background: 'linear-gradient(90deg, #041e42,#5C788F)',
@@ -24,10 +28,10 @@ function App() {
 
   return (
       <>
-          <Navbar/>
+         
   
           <Switch>
-            
+
               <Route path="/signIn" component={SignIn}/> 
               <Route path="/signUp" component={SignUp}/>
               <Route path="/project" component={ProjectPage}/>
@@ -38,7 +42,8 @@ function App() {
               {/* for unauthenticated project page uncomment below*/}
               {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
              
-           
+              <Route path="/404" component={Page404}/>
+              
               <Route path="/home" component={AuthenticatedRoute}/>
               <Route path="/" component={Timeline} className={classes.root} /> 
               
