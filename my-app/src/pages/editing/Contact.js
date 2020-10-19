@@ -7,17 +7,26 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 
-import { history } from '../../utils/BrowserHistory';
-import { reset } from 'chalk';
-
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
+
+    const fieldNames = {
+      "title": "Title",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "address": "Address", 
+      "relevantLink": "Relevant Link",
+      "linkedIn": "LinkedIn",
+      "description": "Description"
+    }
 
     const initialState = {
       title: "",
@@ -31,20 +40,10 @@ export default function Contact(props) {
     };
     
     const [fields, setFields] = React.useState(initialState);
-
     const [existingData,setExistingData] = useState([]);
+    const [editId, setEditId] = React.useState(null);
+    const [formDisable,setFormDisable]= React.useState(false);
 
-    const fieldNames = {
-      "title": "Title",
-      "fullName": "Full Name",
-      "email": "Email",
-      "phone": "Phone Number",
-      "address": "Address", 
-      "relevantLink": "Relevant Link",
-      "linkedIn": "LinkedIn",
-      "description": "Description"
-    }
-   
     function onInputChange(e){
       setFields({
         ...fields,
@@ -54,17 +53,34 @@ export default function Contact(props) {
 
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=> resetForm());
+      //disable form until request completed
+      setFormDisable(true);
+      //when user edits an entry ,later handle rejections
+      if(editId!=null){
+        AxiosInstance.put('edit/profile/'+editId,{...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+      }//when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
     }
+
+    function isOkay(status){
+      return (status>=200 && status<300)
+    } 
+
     function getExistingProfile(){
       AxiosInstance.get("/edit/profile/uname/"+state.user)
       .then(res=> setExistingData(res.data))
     }
 
     function resetForm(){
+      //enable form once request complete
+      setFormDisable(false);
       setFields({ ...initialState });
+      setEditId(null);
     }
 
+    //props from children
     const myCallback = (dataFromChild) => {
       setFields({
         title:dataFromChild.title,
@@ -75,8 +91,9 @@ export default function Contact(props) {
         relevantLink:dataFromChild.relevantLink,
         linkedIn:dataFromChild.linkedIn,
         description:dataFromChild.description
-      })
-      console.log(fields)
+      });
+      setFormDisable(false)
+      setEditId(dataFromChild._id);
     }
 
     useEffect(() => {
@@ -95,11 +112,11 @@ export default function Contact(props) {
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
             <div className={classes.paper}>
               <form className={classes.form} noValidate>
-              
                 <Grid container spacing={3} > 
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Title </div>
                         <TextField
+                        disabled={formDisable}
                         name="title"
                         variant="outlined"
                         fullWidth
@@ -112,6 +129,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Full Name </div>
                         <TextField
+                        disabled={formDisable}
                         name="fullName"
                         variant="outlined"
                         fullWidth
@@ -125,6 +143,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Email Address </div>
                         <TextField
+                        disabled={formDisable}
                         variant="outlined"
                         required
                         fullWidth
@@ -139,6 +158,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Phone Number</div>
                         <TextField
+                        disabled={formDisable}
                         variant="outlined"
                         required
                         fullWidth
@@ -153,6 +173,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Link</div>
                         <TextField
+                        disabled={formDisable}
                         variant="outlined"
                         required
                         fullWidth
@@ -166,6 +187,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> LinkedIn</div>
                         <TextField
+                        disabled={formDisable}
                         variant="outlined"
                         required
                         fullWidth
@@ -179,6 +201,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                         <div className={classes.field}> Address </div>
                         <TextField
+                        disabled={formDisable}
                         name="address"
                         variant="outlined"
                         fullWidth
@@ -192,6 +215,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                         <div className={classes.field}> Describe yourself </div>
                         <TextField
+                        disabled={formDisable}
                         name="description"
                         variant="outlined"
                         fullWidth
@@ -208,6 +232,7 @@ export default function Contact(props) {
 
                 <Grid>
                     <Button
+                    disabled={formDisable}
                     type="submit"
                     variant="contained"
                     className={classes.submit}
@@ -216,8 +241,10 @@ export default function Contact(props) {
                     onClick={event=>handleSubmit(event)}
                     >
                     Save my details
+                    {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                     </Button>
                 </Grid>
+          
               </form>
             </div>
           </Container>

@@ -1,6 +1,7 @@
 import theme from '../../utils/theme';
 import { makeStyles } from '@material-ui/core/styles';
 
+//styles for editing page main components
 const useStyles = makeStyles(() => ({
     paper: {
       display: 'flex',

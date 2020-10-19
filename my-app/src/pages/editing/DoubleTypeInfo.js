@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+
 import EditButton from './EditButton.js'
 
 const styles = (theme) => ({
@@ -108,7 +110,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function ExperienceInfo(props) {
+export default function DoubleTypeInfo(props) {
   const title = props.title
   const fieldNames = props.fieldNames;
   var tab1List = props.tab1List;
@@ -116,32 +118,33 @@ export default function ExperienceInfo(props) {
   const tab1= props.type1;
   const tab2 =  props.type2;
   var path =  props.path;
-  var count=0;
+  //used in Divider usage
+  var count = 0;
     
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
-  
   };
+
   const handleClose = () => {
     setOpen(false);
-    
   };
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
   
+  //disregard unwanted props
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
+  //send props to parent and receive from child
   const myCallback = (dataFromChild) => {
-    props.toEdit(dataFromChild)
-    handleClose();
+    props.toEdit(dataFromChild);
+    setOpen(false);
   }
 
   return (
@@ -165,36 +168,36 @@ export default function ExperienceInfo(props) {
               <TabPanel value={value} index={0}>
                   {tab1List.map(res=>(
                   <div>
-                  <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
-                    {fieldNames? 
-                      Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
-                      : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
-                    }
-                  </ListItem> 
-                  {++count < tab1List.length? <Divider/>:null}
-                  </div>
-                ))}
+                    {/* endDate value is onGoing when ongoing is checked */}
+                    <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+                    <ListItem style={{ display:'inline'}}>
+                    <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
+                      {fieldNames? 
+                        Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
+                        : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
+                      }
+                    </ListItem> 
+                    {++count < tab1List.length? <Divider/>:null}
+                    </div>
+                  ))}
               </TabPanel>
               <TabPanel value={value} index={1}>
                   {tab2List.map(res=>(
                   <div>
-                  <ListItem style={{ display:'inline'}}>
-                  <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
-                    {fieldNames? 
-                      Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {value} </div>)) 
-                      : Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {value} </div>))
-                    }
-                  </ListItem> 
-                  {++count < tab2List.length? <Divider/>:null}
-                  </div>
-                ))}
+                    {/* endDate value is onGoing when ongoing is checked */}
+                    <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+                    <ListItem style={{ display:'inline'}}>
+                    <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myCallback} /> </div>
+                      {fieldNames? 
+                        Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {value} </div>)) 
+                        : Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {value} </div>))
+                      }
+                    </ListItem> 
+                    {++count < tab2List.length? <Divider/>:null}
+                    </div>
+                  ))}
               </TabPanel>
-            </div>
-
-            
-            
-            
+            </div>            
           </Typography>
         </DialogContent>
         <DialogActions>

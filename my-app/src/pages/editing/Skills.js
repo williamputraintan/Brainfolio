@@ -7,39 +7,39 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardInfo from './CardInfo.js';
-import ExperienceInfo from './ExperienceInfo';
+import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
-
-import { history } from '../../utils/BrowserHistory';
 
 export default function Skills(){
     const {state} = useContext(UserContext);
     const classes = useStyles();
 
     const initialState = {
-      category: "",
+      category: "Technical",
       name: "",
       rating:0
     }
-
-    const [fields, setFields] = React.useState(initialState);
-
+    
     const fieldNames={
       "category":"Category",
       "name":"Description",
       "rating":"Rating"
     }
-   
+
+    const [fields, setFields] = React.useState(initialState);
     const [existingTech,setExistingTech] = useState([]);
     const [existingSoft,setExistingSoft] = useState([]);
+    const [editId, setEditId] = React.useState(null);
+    const [formDisable,setFormDisable]= React.useState(false);
 
     function onInputChange(e){
       setFields({
@@ -50,41 +50,48 @@ export default function Skills(){
     
     function handleSubmit(e){
       e.preventDefault();
-      AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> resetForm());
+      //disables form until request complete
+      setFormDisable(true);
+      // when user edits an entry
+      if(editId!=null){
+        AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> isOkay(res.status)? resetForm(): console.log('edit failute'));
+      }//when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
     }
-    function getExistingSkills(){
-      AxiosInstance.get("/edit/skills/uname/"+state.user)
-      .then(res=> separateType(res.data))
+    function isOkay(status){
+      return (status>=200 && status<300)
+    }
+
+    function getExistingSoftSkills(){
+      AxiosInstance.get("/edit/skills/uname/soft/"+state.user).then(res=> setExistingSoft(res.data))
+    }
+
+    function getExistingTechSkills(){
+      AxiosInstance.get("/edit/skills/uname/tech/"+state.user).then(res=> setExistingTech(res.data))
     }
 
     function resetForm(){
-      setFields({ ...initialState });
+      setFormDisable(false);
+      setFields({ name:"", rating:0});
+      setEditId(null);
     }
 
-    function separateType(res){
-      var tech=[];
-      var soft=[]
-      for (var i = 0, len = res.length; i < len; i++) {
-        if(res[i].category==="Technical"){
-          tech.push(res[i]);
-        }else{
-          soft.push(res[i]);
-        }
-      }
-      setExistingTech(tech);
-      setExistingSoft(soft);
-    }
-
+    //props from children
     const myCallback = (dataFromChild) => {
       setFields({
         category: dataFromChild.category,
         name: dataFromChild.name,
         rating: dataFromChild.rating
       })
+      setFormDisable(false)
+      setEditId(dataFromChild._id);
     }
 
     useEffect(() => {
-      getExistingSkills();
+      getExistingSoftSkills();
+      getExistingTechSkills();
     });
 
     return (
@@ -95,7 +102,7 @@ export default function Skills(){
               <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden><br/>
               <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden>
               <Hidden lgUp>
-                <ExperienceInfo  
+                <DoubleTypeInfo  
                   title={'Skills'} 
                   type1={"Technical"} type2={"Soft"} 
                   tab1List={existingTech} tab2List={existingSoft} 
@@ -108,23 +115,15 @@ export default function Skills(){
               <form className={classes.form} noValidate>
                 <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
-                      <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          className={classes.select}
-                          name='category'
-                          value={fields.category}
-                          onChange={onInputChange}
-                        >
-                          <MenuItem value={'Technical'}>Technical Skill</MenuItem>
-                          <MenuItem value={'Soft'}>Soft Skill</MenuItem>
-                        </Select>
-                          
-                    </Grid>
+                    <RadioGroup aria-label="category" name="category" disabled={formDisable} value={fields.category} onChange={onInputChange}>
+                      <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
+                      <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
+                    </RadioGroup>      
+                  </Grid>
                     <Grid item xs={12} sm={12}>
                         <div className={classes.field}> Enter your Skills</div>
                         <TextField
+                        disabled={formDisable}
                         name="name"
                         variant="outlined"
                         fullWidth
@@ -138,9 +137,10 @@ export default function Skills(){
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
-                      <Box   borderColor="transparent">
+                      <Box borderColor="transparent">
                         <Typography component="legend">Rating</Typography>
                         <Rating
+                          disabled={formDisable}
                           name="rating"
                           value={fields.rating}
                           onChange={onInputChange}
@@ -149,6 +149,7 @@ export default function Skills(){
                     </Grid>
                     <Grid style={{marginLeft:'2%'}} >
                         <Button
+                        disabled={formDisable}
                         type="submit"
                         variant="contained"
                         className={classes.submit}
@@ -157,6 +158,7 @@ export default function Skills(){
                         onClick={event=>handleSubmit(event) }
                         >
                         Save to my Skills
+                        {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
                     </Grid>
                   </Grid>

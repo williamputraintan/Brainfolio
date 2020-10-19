@@ -7,8 +7,6 @@ import EditingPage from '../pages/editing/EditingPage.js';
 
 function AuthenticatedRoute(props) {
   const {state} = useContext(UserContext);
-  // state.user = props.location.state.user;
-  console.log(state)
   return (
     <div>
       {((!state.token) || !(state.user))&& <Redirect to="/signin"/>}

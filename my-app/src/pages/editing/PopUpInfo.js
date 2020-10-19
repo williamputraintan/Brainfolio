@@ -64,29 +64,27 @@ export default function PopupInfo(props) {
   const fieldNames = props.fieldNames;
   var data = props.datalist;
   var path =  props.path;
-
+  //for Divider usage
   var count=0;
     
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
-  
   };
   const handleClose = () => {
     setOpen(false);
-    
   };
 
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
+  //props from child and to parent
   const myCallback = (dataFromChild) => {
     props.toEdit(dataFromChild)
     handleClose();
   }
-
 
   return (
     <div>
@@ -101,15 +99,17 @@ export default function PopupInfo(props) {
           <Typography gutterBottom>
             {data.map(res=>(
               <div>
-              <ListItem style={{ display:'inline'}}>
-              <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
-                {fieldNames? 
-                  Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
-                  : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
-                }
-              </ListItem> 
-              {++count < data.length? <Divider/>:null}
-              </div>
+                {/* end date is on going if on going is checked */}
+                <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+                <ListItem style={{ display:'inline'}}>
+                <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
+                  {fieldNames? 
+                    Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
+                    : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
+                  }
+                </ListItem> 
+                {++count < data.length? <Divider/>:null}
+                </div>
             ))}
           </Typography>
         </DialogContent>
