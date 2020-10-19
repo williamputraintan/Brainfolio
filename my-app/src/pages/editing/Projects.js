@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -15,23 +15,35 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Hidden from '@material-ui/core/Hidden';
 
+import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
-import { history } from '../../utils/BrowserHistory';
-import theme from '../../utils/theme';
+import axios from 'axios';
 
 export default function Projects() {
     const classes = useStyles();
 
+    var existingFiles = new FormData();
+
+    const fakedata=[{
+      visibility: "ho",
+      title: "ho",
+      startDate:"ho",
+      endDate:"ho",
+      contributor:[["dksjbksdbd","jhdbajbjs"]]}]
+
+    const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributor"]
+
     // fields form
     const [fields, setFields] = React.useState({
       visibility:"",
-      projectTitle: "",
+      title: "",
       startDate:"",
       endDate:"",
-      contributors:[]
+      description:"",
+      contributor:[]
     })
+
 
     function onFormInputChange(e){
       setFields({
@@ -40,27 +52,32 @@ export default function Projects() {
       })
     }
 
-    function handleFormSubmit(e){
-      e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/projects')
-    }
-
+    
     // file
-    const [selectedFile,setFile] =  React.useState(null);
+    // const [selectedFiles,setFiles] =  React.useState([]);
+    // const [selectedFiles, setSelectedFiles] = React.useState(undefined); 
 
-    function onFileChangeHandler(event){
-      setFile({selectedFile: event.target.files[0],
-        loaded: 0,})
-      console.log(event.target.files[0])
+    function onFileChangeUpload(e){
+      const formData = new FormData()
+      for(var i = 0; i<(e.target.files).length; i++) {
+          formData.append('file', (e.target.files)[i])
+      }
+      console.log(formData.getAll('file'))
+      axios.post("http://localhost:5000/projects/files", formData)
     }
-    function onFileClickHandler ()  {
-      const data = new FormData() 
-      data.append('file', selectedFile)
-      console.log(data)
+  
+    function displayProjects(){
+      // console.log(existingFiles.getAll('files'));
     }
 
-    //contributors
+    function handleFormSubmit(e){
+          e.preventDefault();
+          const formData = new FormData(); 
+        
+          // send axios here
+    }
+
+    //contributor
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -74,184 +91,192 @@ export default function Projects() {
     const[oneEmail,setOneEmail]= React.useState("");
 
     const AddContributor = ()=>{
-      fields.contributors.push([oneName,oneEmail]);
-      console.log(fields.contributors)
+      fields.contributor.push([oneName,oneEmail]);
+      console.log(fields.contributor)
     }
     const confirmAdd = ()=>{
       AddContributor();
       handleClose();
     }
-    function displayContributors(){
+    function displayContributor(){
       var res=[];
       var i;
-      for(i=0;i<fields.contributors.length;i++){
-        res[i]= (i+1).toString()+". "+fields.contributors[i][0]+", "+fields.contributors[i][1]
+      for(i=0;i<fields.contributor.length;i++){
+        console.log(fields.contributor[i]);
+        res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
       }
+      
       return res;
+
     }
 
     return (
-    <Container component="main" maxWidth="lg">
 
-      <Container component="main" maxWidth="lg" className={classes.listContainer}>
-        <Card className={classes.cardRoot}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Your Projects
-            </Typography>
-          </CardContent>
-        </Card>
-        <Hidden smUp><PopUpInfo title={'Project'} className={classes.popUp}/></Hidden>  
-      </Container>  
+        <Container component="main" maxWidth="lg">
 
-      <Container component="main" maxWidth="lg" className={classes.formContainer}>
-          <div className={classes.paper}>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={3}> 
+          <Container component="main" maxWidth="lg" className={classes.listContainer}>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
+            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+          </Container> 
 
-                  <Grid item xs={12} sm={12}>
-                      <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        className={classes.select}
-                        value={fields.visibility}
-                        // onChange={handleChange}
-                        >
-                        <MenuItem value={'public'}>Public</MenuItem>
-                        <MenuItem value={'semiPrivate'}>Semi-Private</MenuItem>
-                        <MenuItem value={'private'}>Private</MenuItem>
-                        </Select>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Enter Project Title </div>
-                      <TextField
-                      name="projectTitle"
-                      variant="outlined"
-                      fullWidth
-                      id="projectTitle"
-                      placeholder="Brainfolio"
-                      autoFocus
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                      <div className={classes.field}> Start Date </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="startDate"
-                      placeholder="July 2018"
-                      name="startDate"
-                      autoComplete="startDate"
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                      <div className={classes.field}> End Date </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="endDate"
-                      placeholder="October 2018"
-                      name="endDate"
-                      autoComplete="endDate"
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>  
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                      Add Contributor
-                    </Button>
-                    <Card className={classes.cardContributors}>
-                      <CardContent>
-                        <Typography color="textSecondary" gutterBottom>
-                          Contributors    
-                        </Typography>
-                          {displayContributors().map(res=>(
-                            <div>
-                              {res} <br/>
-                            </div>
-                          ))}
-                      </CardContent>
-                    </Card>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                      <DialogTitle id="form-dialog-title">Add contributor</DialogTitle>
-                      <DialogContent>
-                        <TextField
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          label="Name"
-                          type="name"
-                          style={{paddingRight:'5%'}}
+          <Container component="main" maxWidth="lg" className={classes.formContainer}>
+              <div className={classes.paper}>
+                <form className={classes.form} noValidate>
+                  <Grid container spacing={3}> 
+
+                      <Grid item xs={12} sm={12}>
+                          <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-helper-label"
+                              id="demo-simple-select-helper"
+                              value={fields.visibility}
+                              className={classes.select}
+                              name='visibility'
+                              onChange={onFormInputChange}
+                            >
+                              <MenuItem value={'public'}>Public</MenuItem>
+                              <MenuItem value={'private'}>Private</MenuItem>
+                            </Select>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                          <div className={classes.field}> Enter Project Title </div>
+                          <TextField
+                          name="title"
+                          variant="outlined"
                           fullWidth
-                          onChange={event=>setOneName(event.target.value)}                   
-                        />
-                        <TextField
+                          id="title"
+                          placeholder="Brainfolio"
                           autoFocus
-                          margin="dense"
-                          id="name"
-                          label="Email Address"
-                          type="email"
-                          fullWidth                       
-                          onChange={event=>setOneEmail(event.target.value)}
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                          Cancel
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <div className={classes.field}> Start Date </div>
+                          <TextField
+                              variant="outlined"
+                              id="startDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="startDate"
+                              defaultValue="2019-05-24"
+                              onChange={onFormInputChange} 
+                              
+                            />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <div className={classes.field}> End Date </div>
+                          <TextField
+                              variant="outlined"
+                              id="endDate"
+                              required
+                              fullWidth
+                              type="date"
+                              name="endDate"
+                              defaultValue="2019-05-24"
+                              onChange={onFormInputChange} 
+                            />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>  
+                        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                          Add Contributor
                         </Button>
-                        <Button onClick={confirmAdd} color="primary">
-                          Add
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                      <div className={classes.field}> Project Description </div>
-                      <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="desc"
-                      placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
-                      name="desc"
-                      autoComplete="desc"
-                      multiline
-                      row={3}
-                      onChange={onFormInputChange}                   
-                      />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <div>
-                      <input type="file" name="file" onChange={(event)=> onFileChangeHandler(event)}/>
-                        <label htmlFor="contained-button-file">
-                          <Button variant="contained" color="primary" component="span" onClick={onFileClickHandler}>
-                            Upload File
+            
+                        <Card className={classes.cardContributor}>
+                          <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                              Contributor    
+                            </Typography>
+                              {displayContributor().map(res=>(
+                                <div>
+                                  {res?res:null} <br/>
+                                </div>
+                              ))}
+                          </CardContent>
+                        </Card>
+                        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                          <DialogTitle id="form-dialog-title">Add contributor</DialogTitle>
+                          <DialogContent>
+                            <TextField
+                              autoFocus
+                              margin="dense"
+                              id="name"
+                              label="Name"
+                              type="name"
+                              style={{paddingRight:'5%'}}
+                              fullWidth
+                              onChange={event=>setOneName(event.target.value)}                   
+                            />
+                            <TextField
+                              autoFocus
+                              margin="dense"
+                              id="name"
+                              label="Email Address"
+                              type="email"
+                              fullWidth                       
+                              onChange={event=>setOneEmail(event.target.value)}
+                            />
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                              Cancel
                             </Button>
-                        </label>
-                      </div>
-                  </Grid> 
-              </Grid>
-              <Grid xs={12} sm={12}>
-                  <Button
-                  type="submit"
-                  variant="contained"
-                  className={classes.submit}
-                  fullWidth
-                  color='primary'
-                  onClick={event=>handleFormSubmit(event)}
-                  >
-                  Save to my Projects
-                  </Button>
-              </Grid>
-            </form>
-          </div>      
+                            <Button onClick={confirmAdd} color="primary">
+                              Add
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                          <div className={classes.field}> Project Description </div>
+                          <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="desc"
+                          placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
+                          name="desc"
+                          autoComplete="desc"
+                          multiline
+                          row={3}
+                          onChange={onFormInputChange}                   
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <div>
+                          <input type="file" multiple name="file" onChange={onFileChangeUpload}/>
+                        </div>
+                        <Card className={classes.cardContributor}>
+                          <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                              Uploaded Files   
+                            </Typography>
+                            {displayProjects()}
+                              {/* {displayProjects().map(res=>(
+                                <div>
+                                  {res?res:null} <br/>
+                                </div>
+                              ))} */}
+                          </CardContent>
+                        </Card>
+                      </Grid> 
+                  </Grid>
+                  <Grid xs={12} sm={12}>
+                      <Button
+                      type="submit"
+                      variant="contained"
+                      className={classes.submit}
+                      fullWidth
+                      color='primary'
+                      onClick={event=>handleFormSubmit(event) }
+                      >
+                      Save to my Projects
+                      </Button>
+                  </Grid>
+                </form>
+              </div>      
+            </Container>
         </Container>
-    </Container>
 
     );
   }

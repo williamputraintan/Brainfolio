@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch,  Route, Redirect} from 'react-router-dom';
+import { Switch,  Route} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SignIn from './pages/SignIn.js'
 import SignUp from './pages/SignUp.js'
@@ -7,10 +7,8 @@ import AboutUs from './pages/AboutUs.js';
 import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
-import EditingPage from './pages/editing/EditingPage.js';
-
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-
+// import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
 const useStyles = makeStyles((theme) => ({
@@ -36,15 +34,12 @@ function App() {
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
 
-              {/* later changed to authenticed routes */}
-              <Redirect exact from="/edit" to="/edit/contact" />
-              <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
-              
-
-        
+              {/* the other pages are authenticated already except the project page 'edit/projects' */}
+              {/* for unauthenticated project page uncomment below*/}
+              {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
+             
+           
               <Route path="/home" component={AuthenticatedRoute}/>
-
-
               <Route path="/" component={Timeline} className={classes.root} /> 
               
           </Switch>

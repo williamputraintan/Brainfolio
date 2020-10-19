@@ -117,7 +117,7 @@ function Navbar(props) {
             </Button>
           </div>
           <div className={classes.rightContent}>
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -129,7 +129,7 @@ function Navbar(props) {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
-            </div>
+            </div> */}
 
             {
               state.token? 

@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
-import { UserContext, } from '../context/user.context';
+import { UserContext } from '../context/user.context';
 import { logUserIn } from '../context/actions/auth.actions';
 
 // based on sign in template material ui
