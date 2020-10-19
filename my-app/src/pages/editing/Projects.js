@@ -26,14 +26,17 @@ export default function Projects() {
 
     var existingFiles = new FormData();
 
-    const fakedata=[{
-      visibility: "ho",
-      title: "ho",
-      startDate:"ho",
-      endDate:"ho",
-      contributor:[["dksjbksdbd","jhdbajbjs"]]}]
+    const fieldNames={
+      "contributor":"Contributors",
+      "projectFileName":"Project File",
+      "title":"Location",
+      "description":"Description",
+      "startDate":"Start Date",
+      "endDate":"End Date",
+      "title":"Title",
+      "visibility":"Visibility"
+    }
 
-    const fieldNames=["Visibility", "Title", "Start Date","End Date", "Contributor"]
 
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
