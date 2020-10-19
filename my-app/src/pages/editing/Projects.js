@@ -43,13 +43,11 @@ export default function Projects() {
 
       axios.get("http://localhost:5000/projects/")
       .then((response) => {
-        console.log('how many');
         const responseData = response.data;
-        // console.log(responseData);
         setAllProjects(responseData);
-        // console.log(allProjects);
+
       })
-    },[]);
+    },[fields]);
 
     // fields form
     const [fields, setFields] = React.useState({
