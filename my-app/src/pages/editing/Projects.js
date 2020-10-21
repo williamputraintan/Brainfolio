@@ -41,17 +41,7 @@ export default function Projects() {
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
-
-    useEffect(() => {
-
-      axios.get("http://localhost:5000/projects/")
-      .then((response) => {
-        const responseData = response.data;
-        setAllProjects(responseData);
-
-      })
-    },[fields]);
-
+    const [buttonClick, setButtonClick] = React.useState(false)
     // fields form
     const [fields, setFields] = React.useState({
       _id:"",
@@ -61,16 +51,22 @@ export default function Projects() {
       endDate:"",
       description:"",
       contributor:[],
-      projectFileName:[[]],
+      projectFileName:[],
     })
-  
-    // file
-    const [filesToDisplay, setFilesToDisplay] =  React.useState([]);
+
+
+    useEffect(() => {
+      console.log('woi');
+      axios.get("http://localhost:5000/projects/")
+      .then((response) => {
+        const responseData = response.data;
+        setAllProjects(responseData);
+        setButtonClick(false)
+      })
+    },[buttonClick]);
 
 
     function onFormInputChange(e){
-
-
       setFields({
         ...fields,
         [e.target.name]: e.target.value
@@ -79,46 +75,23 @@ export default function Projects() {
       console.log('delte = ', filesToDelete);
       console.log('allproj = ', allProjects);
       console.log('fields = ', fields);
-      console.log('filesToDisplay = ',filesToDisplay);
     }
 
 
     function onFileChangeUpload(e){
-      setFilesToUpload(e.target.files)
-      // setFields({...fields, files: e.target.files})
-      // // setFilesToUpload(e.target.files);
-      // const filesToUpload = e.target.files
-
-      // console.log('savefiles');
-      // const formData = new FormData();
-      // for(let eachFile of filesToUpload){
-      //   formData.append('files', eachFile)
-      // }
-      // formData.append('_id', fields._id)
-      // console.log(formData.getAll('files'));
-      // axios.post("http://localhost:5000/projects/files", formData)
-      // .then((response) => {
-        
-      //   const project_id= response.data._id;
-      //   setFields({...fields , _id : project_id})
-
-      //   setFilesToDisplay(filesToDisplay.concat(response.data.projectFileName))
-      //   document.getElementById('inputFile').value = ''
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // })
-     
+      setFilesToUpload(e.target.files)    
     }
+
     function onDeleteFile(e, fileName){
       e.preventDefault();
-
       setFilesToDelete(filesToDelete.concat(fileName))
     }
-  
-    function displayProjects(){
-
+    
+    //props from children
+    const myCallback = (dataFromChild) => {
+      setFields(dataFromChild);
     }
+
 
     function handleFormSubmit(e){
       e.preventDefault();
@@ -132,7 +105,6 @@ export default function Projects() {
         formData.append('filesToUpload', eachFile)
       }
 
-
       for ( var key in fields ) {
         formData.append(key, fields[key]);
       }
@@ -143,9 +115,7 @@ export default function Projects() {
       formData.append('filesToDelete', '')
       formData.append('filesToDelete', '')
       console.log('DELTE = ', formData.get('filesToDelete'));
-      // for(let eachFile of filesToDelete){
-      //   formData.append('filesToDelete', eachFile)
-      // }
+
       axios.post("http://localhost:5000/projects/save/", formData)
       .then((response) => {
         console.log(response);
@@ -154,7 +124,7 @@ export default function Projects() {
         setFields(data)
         setFilesToDelete([])
         setFilesToUpload([])
-
+        setButtonClick(true)
         document.getElementById('inputFile').value = ''
       })
       .catch(err =>{
@@ -172,6 +142,8 @@ export default function Projects() {
     const handleClose = () => {
       setOpen(false);
     };
+
+    
     const[oneName,setOneName] = React.useState("");
     const[oneEmail,setOneEmail]= React.useState("");
 
@@ -200,8 +172,8 @@ export default function Projects() {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames}/> </Hidden>
-            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/> </Hidden>
+            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/></Hidden>
           </Container> 
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -232,7 +204,8 @@ export default function Projects() {
                           id="title"
                           placeholder="Brainfolio"
                           autoFocus
-                          onChange={onFormInputChange}                   
+                          onChange={onFormInputChange}
+                          value={fields.title}          
                           />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -246,7 +219,7 @@ export default function Projects() {
                               name="startDate"
                               defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
-                              
+                              value={fields.startDate}        
                             />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -260,6 +233,7 @@ export default function Projects() {
                               name="endDate"
                               defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
+                              value={fields.endDate}        
                             />
                       </Grid>
                       <Grid item xs={12} sm={12}>  
@@ -290,7 +264,7 @@ export default function Projects() {
                               type="name"
                               style={{paddingRight:'5%'}}
                               fullWidth
-                              onChange={event=>setOneName(event.target.value)}                   
+                              onChange={event=>setOneName(event.target.value)}
                             />
                             <TextField
                               autoFocus
@@ -324,7 +298,8 @@ export default function Projects() {
                           autoComplete="desc"
                           multiline
                           row={3}
-                          onChange={onFormInputChange}                   
+                          onChange={onFormInputChange}         
+                          value={fields.description}               
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
