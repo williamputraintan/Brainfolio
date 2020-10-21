@@ -1,6 +1,7 @@
 import theme from '../../utils/theme';
 import { makeStyles } from '@material-ui/core/styles';
 
+//styles for editing page main components
 const useStyles = makeStyles(() => ({
     paper: {
       display: 'flex',
@@ -27,16 +28,10 @@ const useStyles = makeStyles(() => ({
         
     },
     cardRoot: {
-      [theme.breakpoints.up('sm')]:{
         minWidth: 235,
         maxHeight:400,
         padding:'2%',
-        marginBottom:'3%',
         overflowY:'scroll'
-      },
-      [theme.breakpoints.down('sm')]:{
-        display:'none'
-      }
     },
     formContainer:{
       [theme.breakpoints.up('sm')]:{
@@ -54,7 +49,7 @@ const useStyles = makeStyles(() => ({
         width:'40%',
         float:'right',
       },
-      padding:"5%",
+      padding:"5% 5% 5% 4%",
       [theme.breakpoints.down('sm')]:{
         width:'100%'
       }
@@ -67,7 +62,7 @@ const useStyles = makeStyles(() => ({
       justifyContent:'center'
     },
     select:{
-      width:'30%'
+      width:'auto'
     },
     contributor:{
       width:'48%'
@@ -75,9 +70,6 @@ const useStyles = makeStyles(() => ({
     itemBtn:{
       marginTop:'2%',
       marginBottom:'2%'
-    },
-    contributor:{
-      width:'48%'
     },
     input: {
       display: 'none',
@@ -89,8 +81,34 @@ const useStyles = makeStyles(() => ({
       width:'auto'
     },
     popUp:{
-      margin:'2%'
-    }
+      [theme.breakpoints.down('md')]:{
+        margin:'2%'
+      },
+      [theme.breakpoints.up('md')]:{
+        display:'none'
+      }
+    },
+    editBtn:{
+      width:'20%',
+      float:'right'
+    },
+    oneEntry:{
+      width:'80%', 
+      paddingTop:"2%"
+    },
+    listItem:{
+      width:'100%', 
+      display:'inline'
+    },
+    paperRoot:{
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(1),
+        width: "90%"
+      },
+    },
+   
 }));
   
 export { useStyles };
