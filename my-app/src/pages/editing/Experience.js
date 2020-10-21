@@ -106,12 +106,12 @@ export default function Experience() {
   }
 
   function getWorkExperience(){
-    AxiosInstance.get("/edit/experience/uname/work/"+state.user)
+    AxiosInstance.get("/edit/experience/user/work/"+state.user)
     .then(res=> setExistingWork(res.data));
   }
   
   async function getVolunteerExperience(){
-    AxiosInstance.get("/edit/experience/uname/volunteer/"+state.user)
+    AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
     .then(res=> setExistingVolunteer(res.data));
   }
   function resetForm(){

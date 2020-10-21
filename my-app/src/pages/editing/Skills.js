@@ -29,7 +29,7 @@ export default function Skills(){
       rating:0
     }
     
-    const fieldNames={
+    const fieldNames = {
       "category":"Category",
       "name":"Description",
       "rating":"Rating"
@@ -65,11 +65,11 @@ export default function Skills(){
     }
 
     function getExistingSoftSkills(){
-      AxiosInstance.get("/edit/skills/uname/soft/"+state.user).then(res=> setExistingSoft(res.data))
+      AxiosInstance.get("/edit/skills/user/soft/"+state.user).then(res=> setExistingSoft(res.data))
     }
 
     function getExistingTechSkills(){
-      AxiosInstance.get("/edit/skills/uname/tech/"+state.user).then(res=> setExistingTech(res.data))
+      AxiosInstance.get("/edit/skills/user/tech/"+state.user).then(res=> setExistingTech(res.data))
     }
 
     function resetForm(){

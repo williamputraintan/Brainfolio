@@ -69,9 +69,10 @@ export default function Contact(props) {
     } 
 
     function getExistingProfile(){
-      AxiosInstance.get("/edit/profile/uname/"+state.user)
-      .then(res=> setExistingData(res.data))
+      AxiosInstance.get("/edit/profile/user/"+state.user)
+      .then(res=> res? setExistingData(res.data):null);
     }
+
 
     function resetForm(){
       //enable form once request complete

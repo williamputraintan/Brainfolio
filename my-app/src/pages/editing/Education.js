@@ -104,7 +104,7 @@ export default function Education() {
     } 
 
     function getExistingEducation(){
-      AxiosInstance.get("/edit/education/uname/"+state.user)
+      AxiosInstance.get("/edit/education/user/"+state.user)
       .then(res => setExistingData(res.data))
     }
 
