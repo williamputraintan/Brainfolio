@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(5),
   },
   card: {
     height: '100%',
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     // padding: theme.spacing(2, 0, 2),
   },
   title: {
-    padding: theme.spacing(3),
+    padding: "2",
   },
   // Comment's
   paper: {

@@ -4,9 +4,10 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { Container } from '@material-ui/core';
 import image from '../../images/logo-filled.png';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
+    cellHeight: '300px'
   },
   title: {
     color: 'white',
@@ -35,51 +37,34 @@ const tileData = [
         title: 'Title',
         author: 'Author'
     },
-    {
-        img: image,
-        title: 'Picture Title',
-        author: 'Author'
-    },
-    {
-        img: image,
-        title: 'Title',
-        author: 'Author'
-    },
-    {
-        img: image,
-        title: 'Title',
-        author: 'Author'
-    },
-    {
-        img: image,
-        title: 'Title',
-        author: 'Author'
-    },
+    // {
+    //     img: image,
+    //     title: 'Picture Title',
+    //     author: 'Author'
+    // },
+    // {
+    //     img: image,
+    //     title: 'Title',
+    //     author: 'Author'
+    // },
+    // {
+    //     img: image,
+    //     title: 'Title',
+    //     author: 'Author'
+    // },
+    // {
+    //     img: image,
+    //     title: 'Title',
+    //     author: 'Author'
+    // },
     
 ]
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
 export default function SingleLineGridList() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth='md'>
-      <GridList className={classes.gridList} cols={2.5}>
+    <Container>
+      <GridList className={classes.gridList} cellHeight='250'>
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>
             <img src={tile.img} alt={tile.title} />
@@ -91,7 +76,7 @@ export default function SingleLineGridList() {
               }}
               actionIcon={
                 <IconButton aria-label={`star ${tile.title}`}>
-                  <ExpandLessIcon className={classes.title} />
+                  <GetAppIcon className={classes.title} />
                 </IconButton>
               }
             />
