@@ -48,28 +48,37 @@ export default function Skills(){
       })
     }
     
+    function validInputs(){
+      return (fields.name!="" && fields.rating!=0)
+    }
     function handleSubmit(e){
       e.preventDefault();
-      //disables form until request complete
-      setFormDisable(true);
-      // when user edits an entry
-      if(editId!=null){
-        AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> isOkay(res.status)? resetForm(): console.log('edit failute'));
-      }//when user submits a new entry
-      else{
-        AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      
+      if(validInputs()){
+        //disables form until request complete
+        setFormDisable(true);
+        // when user edits an entry
+        if(editId!=null){
+          AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log('edit failute'));
+        }//when user submits a new entry
+        else{
+          AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log("post failure"));
+        }
+      }else{
+        //alert invalid fields here
       }
+      
     }
     function isOkay(status){
       return (status>=200 && status<300)
     }
 
     function getExistingSoftSkills(){
-      AxiosInstance.get("/edit/skills/user/soft/"+state.user).then(res=> setExistingSoft(res.data))
+      AxiosInstance.get("/edit/skills/user/soft/"+state.user).then(res=> res? setExistingSoft(res.data):null)
     }
 
     function getExistingTechSkills(){
-      AxiosInstance.get("/edit/skills/user/tech/"+state.user).then(res=> setExistingTech(res.data))
+      AxiosInstance.get("/edit/skills/user/tech/"+state.user).then(res=> res? setExistingTech(res.data):null)
     }
 
     function resetForm(){
@@ -115,35 +124,46 @@ export default function Skills(){
               <form className={classes.form} noValidate>
                 <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
-                    <RadioGroup aria-label="category" name="category" disabled={formDisable} value={fields.category} onChange={onInputChange}>
-                      <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
-                      <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
+                    <div className={classes.field}> Category *</div>
+                    <RadioGroup 
+                      name="category" 
+                      error = {(fields.category)===""}  
+                      helperText={(fields.category)!==""?null:"Choice Required"}  
+                      disabled={formDisable} 
+                      value={fields.category} 
+                      onChange={onInputChange}
+                      >
+                        <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
+                        <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
                     </RadioGroup>      
                   </Grid>
                     <Grid item xs={12} sm={12}>
-                        <div className={classes.field}> Enter your Skills</div>
+                        <div className={classes.field}> Enter your Skill *</div>
                         <TextField
                         disabled={formDisable}
                         name="name"
                         variant="outlined"
                         fullWidth
-                        id="name"
                         placeholder="Cooperative Team member"
                         autoFocus
                         multiline
                         rows={2}
                         value={fields.name}
-                        onChange={onInputChange}                   
+                        onChange={onInputChange}    
+                        error = {(fields.name)===""}  
+                        helperText={(fields.name)!==""?null:"Incomplete entry"}                
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
                       <Box borderColor="transparent">
-                        <Typography component="legend">Rating</Typography>
+                        <Typography component="legend">Rating *</Typography>
                         <Rating
                           disabled={formDisable}
                           name="rating"
                           value={fields.rating}
                           onChange={onInputChange}
+                          error = {(fields.rating)===0}  
+                          helperText={(fields.rating)!==0?null:"Incomplete entry"} 
                         />
                       </Box>
                     </Grid>

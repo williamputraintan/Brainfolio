@@ -12,7 +12,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
@@ -25,7 +28,9 @@ export default function Contact(props) {
       "address": "Address", 
       "relevantLink": "Relevant Link",
       "linkedIn": "LinkedIn",
-      "description": "Description"
+      "description": "Description",
+      "backgroundImageName":"Background Image",
+      "profileImageName":"Profile Image"
     }
 
     const initialState = {
@@ -36,37 +41,90 @@ export default function Contact(props) {
       address:"",
       relevantLink: "",
       linkedIn:"",
-      description: ""
+      description: "",
+      backgroundImageName:[],
+      profileImageName:[]
     };
     
     const [fields, setFields] = React.useState(initialState);
     const [existingData,setExistingData] = useState([]);
     const [editId, setEditId] = React.useState(null);
     const [formDisable,setFormDisable]= React.useState(false);
+    const [backgroundImg, setBackgroundImg] = React.useState([]);
+    const [profileImg, setProfileImg] = React.useState([]);
 
     function onInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
+      console.log("background: "+backgroundImg[0])
+      console.log("profile: "+profileImg[0])
+
+    }
+
+    function validInputs(){
+      return (fields.fullName!=="" && emailIsValid(fields.email))
+    }
+
+    function onBackgroundUpload(e){
+      setBackgroundImg(e.target.files)    
+    }
+
+    function onProfileImgUpload(e){
+      setProfileImg(e.target.files)    
     }
 
     function handleSubmit(e){
       e.preventDefault();
-      //disable form until request completed
-      setFormDisable(true);
-      //when user edits an entry ,later handle rejections
-      if(editId!=null){
-        AxiosInstance.put('edit/profile/'+editId,{...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
-      }//when user submits a new entry
-      else{
-        AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("post failure"));
+
+      const formData = new FormData();
+
+      formData.append('profileImage', profileImg[0]);
+      formData.append('backgroundImage', backgroundImg[0]);
+      
+      for ( var key in fields) {
+        formData.append(key, fields[key]);
       }
+
+      formData.append('filesToDelete',profileImg[0])
+      formData.append('filesToDelete',backgroundImg[0])
+
+      setFields({backgroundImageName:[formData.get('profileImage').name],
+                  profileImageName:[formData.get('profileImage').name]})
+  
+      console.log('DELTE = ', formData.getAll('filesToDelete'));
+      console.log('profile = ', formData.get('profileImage'));
+      console.log('backg = ', formData.get('backgroundImage'));
+
+      // only this not working , files & fields are all captured 
+      // axios.post("http://localhost:5000/edit/profile/save/", formData)
+      // .then(res=>res? console.log(res):console.log("dang")
+      // );
+
+      //when user edits an entry ,later handle rejections
+      if(validInputs()){
+        //disable form for request
+        setFormDisable(true);
+        if(editId!=null){
+          AxiosInstance.put('edit/profile/'+editId,{...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+        }//when user submits a new entry
+        else{
+          AxiosInstance.post('/edit/profile/',{username:state.user,...fields}).then(res=>isOkay(res.status)? resetForm(): console.log("post failure"));
+        }
+      } else{
+        // alert here incomplete fields
+      }
+      
     }
 
     function isOkay(status){
       return (status>=200 && status<300)
     } 
+
+    function emailIsValid (email) {
+      return /\S+@\S+\.\S+/.test(email)
+    }
 
     function getExistingProfile(){
       AxiosInstance.get("/edit/profile/user/"+state.user)
@@ -121,39 +179,41 @@ export default function Contact(props) {
                         name="title"
                         variant="outlined"
                         fullWidth
-                        id="title"
                         placeholder="Ms"
                         value={fields.title}
                         onChange={onInputChange}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <div className={classes.field}> Full Name </div>
+                        <div className={classes.field}> Full Name *</div>
                         <TextField
                         disabled={formDisable}
                         name="fullName"
                         variant="outlined"
                         fullWidth
-                        id="fullName"
+                        required
                         placeholder="Patricia Angelica"
                         value={fields.fullName}
                         onChange={onInputChange}                   
-                        autoComplete='name'                 
+                        autoComplete='name' 
+                        error = {(fields.fullName)===""}  
+                        helperText={(fields.fullName)!==""?null:"Incomplete entry"}                     
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <div className={classes.field}> Email Address </div>
+                        <div className={classes.field}> Email Address *</div>
                         <TextField
+                        error={!emailIsValid(fields.email)}
                         disabled={formDisable}
                         variant="outlined"
                         required
                         fullWidth
-                        id="email"
                         placeholder="patriciaangelica@email.com"
                         name="email"
                         value={fields.email}
                         autoComplete="email"
-                        onChange={onInputChange}              
+                        onChange={onInputChange}    
+                        helperText={emailIsValid(fields.email)?null:"Invalid entry"}         
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -161,9 +221,7 @@ export default function Contact(props) {
                         <TextField
                         disabled={formDisable}
                         variant="outlined"
-                        required
                         fullWidth
-                        id="phone"
                         placeholder="(61) 400123123"
                         name="phone"
                         value={fields.phone}
@@ -176,9 +234,7 @@ export default function Contact(props) {
                         <TextField
                         disabled={formDisable}
                         variant="outlined"
-                        required
                         fullWidth
-                        id="relevantLink"
                         placeholder="github.com/yourname"
                         value={fields.relevantLink}
                         name="relevantLink"
@@ -190,9 +246,7 @@ export default function Contact(props) {
                         <TextField
                         disabled={formDisable}
                         variant="outlined"
-                        required
                         fullWidth
-                        id="linkedIn"
                         placeholder="linkedIn.com/yourname"
                         name="linkedIn"
                         value={fields.linkedIn}
@@ -206,7 +260,6 @@ export default function Contact(props) {
                         name="address"
                         variant="outlined"
                         fullWidth
-                        id="address"
                         placeholder="100 Elizabeth Street"
                         onChange={onInputChange}
                         value={fields.address}
@@ -220,7 +273,6 @@ export default function Contact(props) {
                         name="description"
                         variant="outlined"
                         fullWidth
-                        id="description"
                         value={fields.description}
                         placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems."
                         autoFocus
@@ -229,8 +281,59 @@ export default function Contact(props) {
                         onChange={onInputChange}
                         />
                     </Grid>
-                </Grid>
 
+      {/* PROFILE IMAGE */}
+                    <Grid item xs={12} sm={12}>
+                      <div className={classes.field}> Your Profile Picture </div>
+                      <div>
+                        <input id="inputFile" type="file"  name="files" onChange={onProfileImgUpload}/>
+                      </div>
+                      <Card className={classes.cardContributor}>
+                        <CardContent>
+                          <Typography color="textSecondary" gutterBottom>
+                            Uploaded Background Image   
+                          </Typography>
+
+                            {fields.profileImageName.map((res,index)=>(
+                                    <React.Fragment key={index}>
+                                      <a href={res[1]}>{res[0]} </a>
+                                      {/* <input type="button" value={res[0]} onClick={onDeleteFile} /> */}
+                                      {/* <button onClick={(e) => onDeleteFile(e, res[0])}>X</button> */}
+                                      {/* <input type="button" onClick={onDeleteFile(res[0])} /> */}
+                                      <br/>
+                                    </React.Fragment> 
+                            ))}
+                          </CardContent>
+                        </Card>
+                      </Grid> 
+       {/* BACKGROUND IMAGE */}
+                    <Grid item xs={12} sm={12}>
+                      <div className={classes.field}> Your Background image </div>
+                      <div>
+                        <input id="inputFile" type="file"  name="files" onChange={onBackgroundUpload}/>
+                      </div>
+                      <Card className={classes.cardContributor}>
+                        <CardContent>
+                          <Typography color="textSecondary" gutterBottom>
+                            Uploaded Background Image   
+                          </Typography>
+
+                            {fields.backgroundImageName.map((res,index)=>(
+                                    <React.Fragment key={index}>
+                                      <a href={res[1]}>{res[0]} </a>
+                                      {/* <input type="button" value={res[0]} onClick={onDeleteFile} /> */}
+                                      {/* <button onClick={(e) => onDeleteFile(e, res[0])}>X</button> */}
+                                      {/* <input type="button" onClick={onDeleteFile(res[0])} /> */}
+                                      <br/>
+                                    </React.Fragment>
+                                    
+                            ))}
+                          </CardContent>
+                        </Card>
+                      </Grid> 
+                  
+                 
+                  </Grid>
                 <Grid>
                     <Button
                     disabled={formDisable}

@@ -20,7 +20,7 @@ export default function cardInfo(props){
 
     //disregard unwanted props
     function checkUnwanted(key,value){
-        return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
+        return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="" && value!==[]);
     }
 
     //pass to parent component
@@ -36,6 +36,7 @@ export default function cardInfo(props){
             </Typography>
             <List>
                 {data.map(res=>(
+                    
                 <div>
                     {/* EndDate value onGoing when onGoing is checked */}
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>

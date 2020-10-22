@@ -70,19 +70,21 @@ export default function Education() {
     function onInputChange(e){
       setFields({
         ...fields,
-        [e.target.id]: e.target.value
+        [e.target.name]: e.target.value
       })
     }
 
     function handleOnGoing(event){
       setOnGoing(event.target.checked);
     };
+
+    function validInputs(){
+      return (fields.degree!="" && fields.name!=="" && startDate!==null)
+    }
   
     function handleSubmit(e){
       e.preventDefault();
-      //disable form for request
-      setFormDisable(true);
-
+  
       var finalFields=
       {username:state.user,
         ...fields,
@@ -90,13 +92,20 @@ export default function Education() {
         endDate:endDate, 
         onGoing:onGoing}
 
-      //when user edits an existing entry
-      if(editId!=null){
-        AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
-      }// when user submits a new entry
-      else{
-        AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      if(validInputs()){
+        //disable form for request
+        setFormDisable(true);
+        //when user edits an existing entry
+        if(editId!=null){
+          AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+        }// when user submits a new entry
+        else{
+          AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+        }
+      }else{
+        //alert here incomplete fields
       }
+      
     }
 
     function isOkay(status){
@@ -145,31 +154,33 @@ export default function Education() {
                   <form className={classes.form} disabled={formDisable} noValidate>
                     <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter your Degree </div>
+                            <div className={classes.field}>Degree * </div>
                             <TextField
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"
                             fullWidth
-                            id="degree"
                             value={fields.degree}
                             placeholder="Bachelor of Science (Chemical Systems)"
                             autoFocus
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}   
+                            error = {(fields.degree)===""}  
+                            helperText={(fields.degree)!==""?null:"Incomplete entry"}                
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter your institution name </div>
+                            <div className={classes.field}> Institution Name *</div>
                             <TextField
                             disabled={formDisable}
                             name="institution"
                             variant="outlined"
                             fullWidth
-                            id="institution"
                             value={fields.institution}
                             placeholder="University of Melbourne"
                             autoFocus
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}  
+                            error = {(fields.institution)===""}  
+                            helperText={(fields.institution)!==""?null:"Incomplete entry"}                 
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -183,7 +194,7 @@ export default function Education() {
                             value={fields.location}
                             placeholder="Melbourne, Australia"
                             name="location"
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}                      
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -201,7 +212,7 @@ export default function Education() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <div className={classes.field}> Start Date </div>
+                            <div className={classes.field}> Start Date *</div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               autoOk
@@ -211,6 +222,8 @@ export default function Education() {
                               format="dd/MM/yyyy"
                               value={startDate}
                               onChange={date=>handleStartDate(date)}
+                              error = {(startDate)===null}  
+                              helperText={startDate!==null?null:"Incomplete entry"}
                             />
                             </MuiPickersUtilsProvider>
                         </Grid>
@@ -218,6 +231,7 @@ export default function Education() {
                             <div className={classes.field}> End Date </div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
+                              disabled={onGoing||formDisable}
                               autoOk
                               variant="inline"
                               inputVariant="outlined"
