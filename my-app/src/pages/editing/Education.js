@@ -10,6 +10,7 @@ import Hidden from '@material-ui/core/Hidden';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
@@ -42,10 +43,11 @@ export default function Education() {
     const [editId, setEditId] = React.useState(null);
     const [onGoing, setOnGoing] = React.useState(false);
     const [formDisable,setFormDisable]= React.useState(false);
+    const [warning,setWarning] = React.useState(false);
 
     //date changes
-    const [startDate,setStartDate] =  React.useState(new Date());
-    const [endDate,setEndDate] =  React.useState(new Date());
+    const [startDate,setStartDate] =  React.useState(new Date(null));
+    const [endDate,setEndDate] =  React.useState(new Date(null));
 
     function handleStartDate(date){
       var month = date.getMonth().toString();
@@ -79,7 +81,7 @@ export default function Education() {
     };
 
     function validInputs(){
-      return (fields.degree!="" && fields.name!=="" && startDate!==null)
+      return (fields.degree!=="" && fields.institution!=="" && startDate!==new Date(null))
     }
   
     function handleSubmit(e){
@@ -92,7 +94,7 @@ export default function Education() {
         endDate:endDate, 
         onGoing:onGoing}
 
-      if(validInputs()){
+      if(validInputs()===true){
         //disable form for request
         setFormDisable(true);
         //when user edits an existing entry
@@ -104,6 +106,7 @@ export default function Education() {
         }
       }else{
         //alert here incomplete fields
+        setWarning(true);
       }
       
     }
@@ -121,6 +124,7 @@ export default function Education() {
       setFormDisable(false)
       setFields({ ...initialState });
       setEditId(null);
+      setWarning(false);
     }
 
     //props from children
@@ -145,12 +149,13 @@ export default function Education() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
+              <CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> 
               <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
+                {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
                   <form className={classes.form} disabled={formDisable} noValidate>
                     <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>

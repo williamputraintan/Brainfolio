@@ -29,7 +29,7 @@ export default function cardInfo(props){
     }
 
     return(
-    <Card className={useStyles.cardRoot}>
+    <Card className={useStyles.cardRoot} style={{maxHeight:'600px', overflowY:'scroll'}}>
         <CardContent>
             <Typography className={useStyles.title} color="textSecondary" gutterBottom>
                 Your {title}
@@ -50,6 +50,7 @@ export default function cardInfo(props){
                     {++count < data.length? <Divider/>:null}
                 </div>
                 ))}
+                
             </List>
         </CardContent>
     </Card>)

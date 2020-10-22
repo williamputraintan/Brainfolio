@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -15,7 +16,8 @@ import {useStyles} from './Styles.js';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+
+
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
@@ -52,6 +54,7 @@ export default function Contact(props) {
     const [formDisable,setFormDisable]= React.useState(false);
     const [backgroundImg, setBackgroundImg] = React.useState([]);
     const [profileImg, setProfileImg] = React.useState([]);
+    const [warning,setWarning] = React.useState(false);
 
     function onInputChange(e){
       setFields({
@@ -114,6 +117,7 @@ export default function Contact(props) {
         }
       } else{
         // alert here incomplete fields
+        setWarning(true);
       }
       
     }
@@ -137,6 +141,7 @@ export default function Contact(props) {
       setFormDisable(false);
       setFields({ ...initialState });
       setEditId(null);
+      setWarning(false);
     }
 
     //props from children
@@ -170,6 +175,7 @@ export default function Contact(props) {
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
             <div className={classes.paper}>
+            {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
               <form className={classes.form} noValidate>
                 <Grid container spacing={3} > 
                     <Grid item xs={12} sm={6}>

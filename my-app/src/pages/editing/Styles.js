@@ -29,9 +29,7 @@ const useStyles = makeStyles(() => ({
     },
     cardRoot: {
         minWidth: 235,
-        maxHeight:400,
         padding:'2%',
-        overflowY:'scroll'
     },
     formContainer:{
       [theme.breakpoints.up('sm')]:{

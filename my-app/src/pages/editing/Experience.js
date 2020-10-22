@@ -14,6 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DateFnsUtils from '@date-io/date-fns';
+import Alert from '@material-ui/lab/Alert';
 
 import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
@@ -40,8 +41,8 @@ export default function Experience() {
   }
 
   const [fields, setFields] = React.useState(initialState);
-  const [startDate,setStartDate] =  React.useState(new Date());
-  const [endDate,setEndDate] =  React.useState(new Date());
+  const [startDate,setStartDate] =  React.useState(new Date(null));
+  const [endDate,setEndDate] =  React.useState(new Date(null));
   const [onGoing, setOnGoing] = React.useState(false);
 
   const [existingWorkData,setExistingWork] = useState([]);
@@ -49,6 +50,7 @@ export default function Experience() {
   const [editId, setEditId] = React.useState(null);
 
   const [formDisable,setFormDisable]= React.useState(false);
+  const [warning,setWarning] = React.useState(false);
 
   function onInputChange(e){
     setFields({
@@ -82,7 +84,7 @@ export default function Experience() {
   };
 
   function validInputs(){
-    return (fields.type!=="" && fields.name!=="" && fields.title!=="" && fields.description!=="" && startDate!==null)
+    return (fields.type!=="" && fields.name!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
   }
 
   function handleSubmit(e){
@@ -107,6 +109,7 @@ export default function Experience() {
       }
     }else{
       //alert here incomplete fields
+      setWarning(true);
     }
     
   }
@@ -128,6 +131,7 @@ export default function Experience() {
     setFormDisable(false)
     setFields({ ...initialState });
     setEditId(null);
+    setWarning(false);
   }
 
   const myCallback = (dataFromChild) => {
@@ -153,7 +157,7 @@ export default function Experience() {
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
-                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> 
+                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/experience/'} toEdit={myCallback}/> 
               </Hidden><br/>
               <Hidden mdDown>
                 <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> 
@@ -170,6 +174,7 @@ export default function Experience() {
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
+                  {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
                   <form className={classes.form} noValidate>
                   <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>

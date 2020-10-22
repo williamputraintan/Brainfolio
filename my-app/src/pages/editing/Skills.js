@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardInfo from './CardInfo.js';
@@ -40,6 +41,7 @@ export default function Skills(){
     const [existingSoft,setExistingSoft] = useState([]);
     const [editId, setEditId] = React.useState(null);
     const [formDisable,setFormDisable]= React.useState(false);
+    const [warning,setWarning] = React.useState(false);
 
     function onInputChange(e){
       setFields({
@@ -65,7 +67,7 @@ export default function Skills(){
           AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log("post failure"));
         }
       }else{
-        //alert invalid fields here
+        setWarning(true);
       }
       
     }
@@ -85,6 +87,7 @@ export default function Skills(){
       setFormDisable(false);
       setFields({ name:"", rating:0});
       setEditId(null);
+      setWarning(false);
     }
 
     //props from children
@@ -121,6 +124,7 @@ export default function Skills(){
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
             <div className={classes.paper}>
+              {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
               <form className={classes.form} noValidate>
                 <Grid container spacing={3}> 
                   <Grid item xs={12} sm={12}>
