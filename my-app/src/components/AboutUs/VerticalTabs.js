@@ -186,15 +186,6 @@ export default function VerticalTabs() {
                   <img src={step2} alt="edit your profile"/>
                 </div>
             </TabPanel>
-            {/* <TabPanel value={value} index={2}>
-              <div className={classes.step}>               
-                  <div className={classes.writingL}>
-                    <h1>Add your Education history, Experiences and upload your previous projects</h1>
-                    <h4> Add your precious educations and experiences and showcase your skills by uploading your previous projects with description</h4>
-                  </div>
-                  <img src={step3}  alt="connection"/>
-                  </div>  
-            </TabPanel> */}
              <TabPanel value={value} index={2}>
               <div className={classes.step}>               
                   <div className={classes.writingL}>

@@ -1,5 +1,6 @@
 import theme from '../../utils/theme';
 import { makeStyles } from '@material-ui/core/styles';
+import { black } from 'chalk';
 
 //styles for editing page main components
 const useStyles = makeStyles(() => ({
@@ -106,12 +107,17 @@ const useStyles = makeStyles(() => ({
         width: "90%"
       },
     },
-    fieldTitle:{
+    fieldTitleCont:{
+      color:'#FFFFFF',
       fontWeight:800 ,
+      backgroundColor:theme.palette.primary.main,
+      height:'40px',
+      padding:'5px 5px 5px 15px',
       [theme.breakpoints.up('sm')]:{
         fontSize: 22
       }
     },
+    
     fieldSubtitle:{
         marginTop:'1%',
         paddingLeft:'2%',
@@ -138,7 +144,8 @@ const useStyles = makeStyles(() => ({
         width :'65%', 
         float:"right"
       }
-    }
+    },
+
    
 }));
   

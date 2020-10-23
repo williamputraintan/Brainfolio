@@ -14,6 +14,7 @@ import OverviewInfo from './OverviewInfo.js';
 import { history } from '../../utils/BrowserHistory';
 import AxiosInstance from '../../utils/axios';
 import { UserContext } from '../../context/user.context';
+import { Paper } from '@material-ui/core';
 
 export default function Overview(){
     const {state} = useContext(UserContext);
@@ -26,7 +27,8 @@ export default function Overview(){
     const [softSkillData, setSoftSkillData] = React.useState([]);
     const [techSkillData, setTechSkillData] = React.useState([]);
     // const [projectData, setProjectData] = React.useState([]);
-    // const [customData, setCustomData] = React.useState([]);
+    // const [custom1Data, setCustom1Data] = React.useState([]);
+    // const [custom2Data, setCustom2Data] = React.useState([]);
 
     function getExistingProfile(){
         AxiosInstance.get("/edit/profile/user/"+state.user)
@@ -75,55 +77,53 @@ export default function Overview(){
               
                 <Grid container spacing={3}> 
                     <List component="list" style={{width:'100%'}}>
-                        <ListItem >
+                        <ListItem>
                             <Grid item xs={12} sm={12}>
-                            <div className={classes.fieldTitle}> Your Contact Details</div>
+                                <Paper className={classes.fieldTitleCont}>Your Contact Details</Paper>
                                 <OverviewInfo data={profileData} fieldNames={profileFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider /> 
 
-                        <ListItem >
+                        <ListItem>
                             <Grid item xs={12} sm={12}>
-                            <div className={classes.fieldTitle}> Your Educations</div>
+                                <Paper className={classes.fieldTitleCont}>Your Education History</Paper>
+                                
                                 <OverviewInfo data={educationData} fieldNames={educationFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider /> 
 
-                        <ListItem >
+                        <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.fieldTitle}> Your Experiences</div>
+                                <Paper className={classes.fieldTitleCont}>Your Experiences</Paper>
                                 <div className={classes.fieldSubtitle}> Work Experiences</div>
                                 <OverviewInfo data={workData} fieldNames={experienceFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider /> 
+                        <Divider/>
 
-                        <ListItem >
+                        <ListItem>
                             <Grid item xs={12} sm={12}>
                                 <div className={classes.fieldSubtitle}>Volunteer Experiences</div>
                                 <OverviewInfo data={volunteerData} fieldNames={experienceFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider /> 
-
-                        <ListItem >
-                            <Grid item xs={12} sm={12}>
-                                <div className={classes.fieldTitle}> Your Projects</div>
-                                display projects from database here
-                            </Grid>
-                        </ListItem>
-                        <Divider />
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.fieldTitle}> Your Skills</div>
+                                <Paper className={classes.fieldTitleCont}>Your Projects</Paper>
+
+                                display projects from database here
+                            </Grid>
+                        </ListItem>
+                     
+                        <ListItem>
+                            <Grid item xs={12} sm={12}>
+                                <Paper className={classes.fieldTitleCont}>Your Skills List</Paper>
                                 <div className={classes.fieldSubtitle}> <tab/> Soft Skills</div>
                                 <OverviewInfo data={softSkillData} fieldNames={skillsFields}/>
                             </Grid>
-                        </ListItem>
-                        <Divider />
+                        </ListItem>    
+                        <Divider/>  
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
@@ -131,15 +131,23 @@ export default function Overview(){
                                 <OverviewInfo data={techSkillData} fieldNames={skillsFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider />
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.fieldTitle}> Your Custom Section</div>
+                                <Paper className={classes.fieldTitleCont}>Your Custom 1 Section</Paper>
                                 display custom section from database here
                             </Grid>
                         </ListItem>
+
+                        <ListItem>
+                            <Grid item xs={12} sm={12}>
+                                <Paper className={classes.fieldTitleCont}>Your Custom 2 Section</Paper>
+                                display custom section from database here
+                            </Grid>
+                        </ListItem>
+
                     </List>
+
                     <Grid  style={{width:'100%'}}>
                         <Button
                         type="submit"

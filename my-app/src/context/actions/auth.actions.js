@@ -36,38 +36,6 @@ export const logUserIn = (dispatch, fields) => {
     })
 }
 
-export const signUserUp = (dispatch, fields) => {
-  console.log(fields)
-  AxiosInstance
-    .post(path + "/signup", {
-      ...fields
-    })
-    .then(res => {
-        console.log(res)
-        const token = res.data.accessToken;
-        
-        if(token){
-          sessionStorage.setItem("token", token);
-          setTimeout(() => {
-            sessionStorage.removeItem("token")
-          }, 24*3600)
-  
-          dispatch({
-            type: USER_LOG_IN,
-            payload: {token: token}
-          })
-          history.push("/home");
-        }
-       
-      })
-      .catch(err => {
-        dispatch({
-          type: USER_LOG_IN,
-          payload: {token: null}
-        })
-      })
-}
-
 export const logUserOff = () => {
   return {
     type: USER_LOG_OFF,

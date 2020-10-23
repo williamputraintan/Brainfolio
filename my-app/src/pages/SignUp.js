@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
 import { UserContext } from '../context/user.context';
-import { signUserUp } from '../context/actions/auth.actions';
+// import { signUserUp } from '../context/actions/auth.actions';
 
 
 //based on sign up template material ui
@@ -77,7 +77,7 @@ export default function SignUp() {
     fullname:"",
     password: ""
   })
-  const {state, dispatch} = React.useContext(UserContext);
+  // const {state, dispatch} = React.useContext(UserContext);
 
   function onSubmitForm(e){
     e.preventDefault();
@@ -86,9 +86,9 @@ export default function SignUp() {
       return;
     }
     //visibility? visibilitylist?
-    let dataa={...fields, visibility:"p", visibilitylist:[""]}
-    console.log('here');
-    signUserUp(dispatch, dataa);
+    // let dataa={...fields, visibility:"p", visibilitylist:[""]}
+    // console.log('here');
+    // signUserUp(dispatch, dataa);
   }
 
   function onInputChange(e){

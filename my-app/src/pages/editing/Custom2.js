@@ -12,7 +12,7 @@ import {useStyles} from './Styles.js';
 import { history } from '../../utils/BrowserHistory';
 
   
-export default function Custom() {
+export default function Custom2() {
     const classes = useStyles();
 
     //later use data from database
