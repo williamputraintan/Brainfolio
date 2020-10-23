@@ -52,28 +52,30 @@ const useStyles = makeStyles(() => ({
             color: '#4C516D'
         },
     },
-
-    // paper: {
-    //     textAlign: 'center',
-    //     color: theme.palette.text.paper,
-    // },
-    paper: {
+    lightPaper: {
         padding: theme.spacing(2),
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
         backgroundColor: "white"
-      },
+    },
+    darkPaper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.primary,
+        backgroundColor: "#353535"
+    },
     indent: {
         padding: theme.spacing(2),
     }
     
   }));
 
-export default function PF_Experience(){
+export default function PF_Experience(preference){
+    const darkmode = preference.darkMode;
     var classes = useStyles();
     return(
         <div>
-            <Container className={classes.paper}>
+            <hr class="solid"/>
+            {/* <Container className={classes.paper}> */}
+            <Card id="experience" className={darkmode ? classes.darkPaper : classes.lightPaper}>
                 <Typography variant="h4"> Experience</Typography>
                 <br/>
 
@@ -94,8 +96,8 @@ export default function PF_Experience(){
                         </Typography>
                     </Typography>
                 </div>
-
-            </Container>
+            </Card>
+            {/* </Container> */}
 
         </div>
     );

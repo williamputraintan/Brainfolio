@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect, useState} from 'react-dom';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -7,19 +9,20 @@ import { Slide, Container } from '@material-ui/core';
 import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-
+import bgDefaultDark from '../../images/portfolio-jumbotron/grey-diamond.jpg';
+import bgDefaultLight from '../../images/portfolio-jumbotron/blue-diamond-bg.png'
+import profileImage from '../../images/portfolio-profilepic/arthursetiawan.jpg';
 import './new-pf.css'
 
 import PF_Timeline from './portfolio-timeline';
 import PF_Body from './portfolio-body';
+
 const useStyles = makeStyles(() => ({
-    pf_container:{
-        maxWidth: "xl",
-        backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-    },
+    // pf_container:{
+    //     width:"100%",
+    //     backgroundImage: `url(${bgDefaultDark})`,
+    // },
     large: {
-        // width: "10em",
-        // height: "10em",
         width: "180px",
         height: "180px",
         // alignItems: "center"
@@ -28,13 +31,23 @@ const useStyles = makeStyles(() => ({
         alignItems: "center", 
         justifyItems: "center",
     },
-    button:{
+    lightButton:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,
         margin:'2%',
         fontFamily:theme.typography.fontFamily,
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
+            color: '#4C516D'
+        },
+    },
+    darkButton:{
+        backgroundColor:"#353535",
+        color:theme.overrides.MuiButton.containedPrimary.color,
+        margin:'2%',
+        fontFamily:theme.typography.fontFamily,
+        '&:hover': {
+            backgroundColor: "#CDCDCD",
             color: '#4C516D'
         },
     },
@@ -47,28 +60,49 @@ const useStyles = makeStyles(() => ({
         padding: theme.spacing(2),
         // textAlign: 'center',
         color: theme.palette.text.secondary,
-        backgroundColor: "white"
+        // backgroundColor: "white"
       }
     
-  }));
+  })); 
 
 export default function New(){
+
+    // const [portfolio, setPortfolio] = useState([]);
+
+    // useEffect(() => {
+    //     axios.get("/user/"+username)
+    //         .then(res => {
+    //             setPortfolio(res.data);
+    //         })
+    // });
+
+    // const portfolio = {
+    //     backgroundImage: url('../../images/portfolio-jumbotron/grey-diamond.jpg'),
+    //     backgroundPosition: center center,
+    //     backgroundSize: cover,                     /* <------ */
+    //     backgroundRepeat: no-repeat,
+    //     minWidth:100%
+    // }
+
+    // image from website
+    const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
+    const darkmode = true;
+
     var classes = useStyles();
     return(
         <div>
-
-            <Container className="portfolio-template">
+            
+            <Container src={bgDefaultLight}>
 
                 <div class="grid-container">
                     <div class='left'>
-                        
                     </div>
+
                     <div class="picture">
-                        <Avatar src={require('../../images/portfolio-profilepic/arthursetiawan.jpg')} className = {classes.large} />
+                        <Avatar src={img} className = {classes.large} />
                     </div>
 
                     <div class="right">
-                        
                     </div>
 
                     <div class="profile">
@@ -85,7 +119,7 @@ export default function New(){
                     <div class="edit">
                         <IconButton 
                             color="default"
-                            className={classes.button} 
+                            className={darkmode ? classes.darkButton : classes.lightButton} 
                             href="../edit/contact"
                         >
                             <EditIcon/>
@@ -95,8 +129,6 @@ export default function New(){
                 </div>
                 
             </Container>
-            {/* <hr class="solid"/> */}
-
             <div class='grid-body'>
                 <PF_Timeline/>
                 <PF_Body/>

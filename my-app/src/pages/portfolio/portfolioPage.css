@@ -1,4 +1,4 @@
-.portfolio-container{
+/* .portfolio-container{
     min-width: 100% !important;
     object-fit: cover;
     margin: auto !important;
@@ -13,7 +13,7 @@
 .portfolio-template{
     background-image: url('../../images/portfolio-jumbotron/The-Spot.jpg')!important;
     background-position: center center;
-    background-size:     cover;                      /* <------ */
+    background-size:     cover;                 
     background-repeat:   no-repeat;
     min-width:100%;
 }
@@ -35,4 +35,4 @@
 }
 .profile-picture {
     border-radius: 50%;
-}
+} */

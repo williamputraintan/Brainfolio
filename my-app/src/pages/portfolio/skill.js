@@ -23,25 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import './new-pf.css'
 
 const useStyles = makeStyles(() => ({
-    pf_container:{
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        maxWidth: "xl",
-        // height: 1234,
-        backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-        
-        
-    },
-    large: {
-        // width: "10em",
-        // height: "10em",
-        width: "180px",
-        height: "180px",
-        // alignItems: "center"
-    },
-    profilePicRoot: {
-        alignItems: "center", 
-        justifyItems: "center",
-    },
+
     button:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,
@@ -62,27 +44,29 @@ const useStyles = makeStyles(() => ({
             color: '#4C516D'
         },
     },
-    // paper: {
-    //     textAlign: 'center',
-    //     color: theme.palette.text.paper,
-    // },
-    paper: {
+    lightPaper: {
         padding: theme.spacing(2),
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
         backgroundColor: "white"
-      },
+    },
+    darkPaper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.primary,
+        backgroundColor: "#353535"
+    },
     indent: {
         padding: theme.spacing(2),
     }
     
   }));
 
-export default function PF_Skill(){
+export default function PF_Skill(preference){
+    const darkmode = preference.darkMode;
     var classes = useStyles();
     return(
         <div>
-            <Container className={classes.paper}>
+            <hr class="solid"/>
+            <Card id="skill" className={darkmode ? classes.darkPaper : classes.lightPaper}>
                 <Typography variant="h4"> Skill</Typography>
                 <br/>
 
@@ -117,7 +101,7 @@ export default function PF_Skill(){
                     <Button className={classes.button2}>Leadership</Button>
                 </div>
 
-            </Container>
+            </Card>
 
         </div>
     );

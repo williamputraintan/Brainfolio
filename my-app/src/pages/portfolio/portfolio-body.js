@@ -27,14 +27,6 @@ import PF_Skill from './skill';
 import PF_Project from './project';
 
 const useStyles = makeStyles(() => ({
-    pf_container:{
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        maxWidth: "xl",
-        // height: 1234,
-        backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-        
-        
-    },
     large: {
         // width: "10em",
         // height: "10em",
@@ -56,48 +48,92 @@ const useStyles = makeStyles(() => ({
             color: '#4C516D'
         },
     },
+    segment: {
+        margin: theme.spacing(3, 0, 0),
+        padding: theme.spacing(2)
+    },
 
-    // paper: {
-    //     textAlign: 'center',
-    //     color: theme.palette.text.paper,
-    // },
-    paper: {
+    lightPaper: {
         padding: theme.spacing(2),
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
         backgroundColor: "white"
-      }
-    
+    },
+    darkPaper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.primary,
+        backgroundColor: "#353535"
+    },
   }));
+
+
+// function showDesc() {
+//   if (true) {
+//     return()
+//   }
+// }
+
+function showExp(darkmode){
+  if (true) {
+    return (<PF_Experience darkMode={darkmode}/>);
+  }
+}
+
+function showEducation(darkmode){
+  if (true) {
+    return (<PF_Education darkMode={darkmode}/>);
+  }
+}
+
+function showSkill(darkmode){
+  if (true) {
+    return(<PF_Skill darkMode={darkmode}/>);
+  }
+}
+
+function showProject(darkmode){
+  if (true) {
+    return (<PF_Project darkMode={darkmode}/>);
+  }
+}
+
+// function showCustom1(darkmode){
+//   if (false) {
+//     return(<PF_Custom1/>);
+//   }
+// }
+
+// function showCustom2(darkmode){
+//   if (false) {
+//     return (<PF_Custom2/>);
+//   }
+// }
 
 export default function PF_Body(){
     var classes = useStyles();
+    const darkmode = false;
     return(
         <div class="pf">
 
-            <Container className={classes.paper}>
-                <Typography variant="h4"> Description</Typography>
+            <hr class="solid"/>
+            <Card id="description" className={ darkmode ? classes.darkPaper :classes.lightPaper }>
+            
+            <Typography variant="h4"> Description</Typography>
+            <br/>
+
+            <Typography theme="theme">
+                I'm diligent, love to connect with new people and do teamwork. 
+                cool right? Lets meet up and talk!
                 <br/>
+                Looking forward to see you soon!
+            </Typography>
+            </Card>
 
-                <Typography theme="theme">
-                    I'm diligent, love to connect with new people and do teamwork. 
-                    cool right? Lets meet up and talk!
-                    <br/>
-                    Looking forward to see you soon!
-                </Typography>
-            </Container>
-            <hr class="solid"/>
-
-            <PF_Experience/>
-            <hr class="solid"/>
-
-            <PF_Education/>
-            <hr class="solid"/>
-
-            <PF_Skill/>
-            <hr class="solid"/>
-
-            <PF_Project/>
+            {showExp(darkmode)}
+            {showEducation(darkmode)}
+            {showSkill(darkmode)}
+            {showProject(darkmode)}
+            {/* {showCustom1()}
+            {showCustom2()} */}
 
         </div>
     );

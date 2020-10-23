@@ -52,51 +52,102 @@ const useStyles = makeStyles(() => ({
             color: '#4C516D'
         },
     },
-
-    // paper: {
-    //     textAlign: 'center',
-    //     color: theme.palette.text.paper,
-    // },
-    paper: {
+    lightPaper: {
         padding: theme.spacing(2),
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
         backgroundColor: "white"
-      },
+    },
+    darkPaper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.primary,
+        backgroundColor: "#353535"
+    },
     indent: {
         padding: theme.spacing(2),
     }
     
   }));
 
-export default function PF_Education(){
+const education = [
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+]
+export default function PF_Education(preference){
+    const darkmode = preference.darkMode;
     var classes = useStyles();
     return(
         <div>
-            <Container className={classes.paper}>
+            <hr class="solid"/>
+            <Card id="education" className={darkmode ? classes.darkPaper : classes.lightPaper}>
                 <Typography variant="h4"> Education</Typography>
                 <br/>
-
-                <div class="grid-edu">
+                {education.map((data) => (
+                    <div class="grid-edu">
                     <Typography variant="h2" class="school">
-                        The University of Melbourne
+                        {data.institution}
                     </Typography>
                     <Typography variant="h2" class="degree">
-                        Master of Information Technology
-                    </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
-                    </Typography>
-                    
-                    <Typography variant="h3" class="desc">
-                        Course description:
+                        {data.degree}
                         <Typography>
-                            - bam bam bam
+                        {data.location}
                         </Typography>
                     </Typography>
+                    <Typography variant="h3" class="year">
+                            {data.startDate}  -  {data.endDate}
+                    </Typography>
+                    
+                    
+                    <Typography variant="h3" class="desc">
+                        Score: {data.score}
+                    </Typography>
                 </div>
+                ))}
+                
+                
 
-            </Container>
+            </Card>
 
         </div>
     );
