@@ -15,7 +15,7 @@ import SignUpForm from "../controllers/SignUpFlow/SignUpForm";
 import SignUpNext from "../controllers/SignUpFlow/SignUpNext";
 
 // React-router
-import { Switch,  Route,  useHistory, Redirect, useLocation } from 'react-router-dom';
+import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
 import Paths from '../utils/path';
 import SignUpFinal from '../controllers/SignUpFlow/SignUpFinal';
 

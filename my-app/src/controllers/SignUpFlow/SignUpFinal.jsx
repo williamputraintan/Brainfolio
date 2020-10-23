@@ -9,6 +9,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import BackgroundFiller from "../../images/backgroundFiller.jpeg"
 import { uploadProfileImages } from "../../utils/http"
+import { NavLink as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Paths from "../../utils/path";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,10 +64,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EDEDED"
   },
   image:{
-    borderRadius: "50%",
     height: 48,
     width: 48,
-    backgroundColor: "#EDEDED"
+    backgroundColor: "#EDEDED",
+    boxShadow: " 8px 8px 20px #f7f7f7,-8px -8px 20px #fff 8px 8px 35px #fafafa, -8px -8px 35px #fffffffff",
+    borderRadius: "50%",
+    border: "1px solid #EDEDEDAA",
+    "& > img": {
+      borderRadius: "50%",
+      width: "100%",
+      height: "100%",
+      display:"none",
+
+    }
   },
   skip:{
     maxWidth: 400
@@ -110,11 +122,14 @@ function SignUpFinal(props) {
       avatar: e.target.files[0]
     })
     if(avatarEl){
-      console.log(avatarEl.current.style)
-      avatarEl.current.style.backgroundImage = URL.createObjectURL(e.target.files[0]);
-      avatarEl.current.onload = function(){
-        URL.revokeObjectURL(avatarEl.style.backgroundImage)
-      }
+
+      console.log(avatarEl.current.src)
+      avatarEl.current.style.display = "block";
+      console.log(URL.createObjectURL(e.target.files[0]))
+      avatarEl.current.src = URL.createObjectURL(e.target.files[0]);
+      // avatarEl.current.onload = function(){
+      //   URL.revokeObjectURL(avatarEl.src)
+      // }
     }
   }
 
@@ -158,9 +173,8 @@ function SignUpFinal(props) {
               ref={avatarEl}/> */}
 
               <div 
-                alt="Profile"
                 className={classes.image}>
-                 {/* { fields.avatar && <img ref={avatarEl}}  */}
+                 <img ref={avatarEl} alt="avatar"/>
               </div>
           </div>  
             <>
@@ -229,15 +243,18 @@ function SignUpFinal(props) {
           or
       </Typography>
       
-
-      <Button
+      <Link component={RouterLink} to={Paths.HOME} variant="body2">
+        <Button
         type="submit"
         fullWidth
         color="primary"
         className={classes.skip}
-      >
-      Skip
-    </Button>
+          >
+          Skip
+        </Button>
+      </Link>
+
+    
 
     </div>
   )

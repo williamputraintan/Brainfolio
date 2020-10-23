@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getLastPath(pathname){
-  return pathname.split("/").slice(-1)[0]
+  return pathname? pathname.split("/").slice(-1)[0] : ""
 }
 
 
