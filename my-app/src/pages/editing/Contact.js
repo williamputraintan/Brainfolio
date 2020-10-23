@@ -16,24 +16,12 @@ import {useStyles} from './Styles.js';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import {profileFields} from './FieldNames';
 
 
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-
-    const fieldNames = {
-      "title": "Title",
-      "fullName": "Full Name",
-      "email": "Email",
-      "phone": "Phone Number",
-      "address": "Address", 
-      "relevantLink": "Relevant Link",
-      "linkedIn": "LinkedIn",
-      "description": "Description",
-      "backgroundImageName":"Background Image",
-      "profileImageName":"Profile Image"
-    }
 
     const initialState = {
       title: "",
@@ -169,8 +157,8 @@ export default function Contact(props) {
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
-            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={fieldNames} path={'/edit/profile/'} toEdit={myCallback}/></Hidden>
+            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/></Hidden>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>

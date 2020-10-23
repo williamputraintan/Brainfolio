@@ -106,6 +106,39 @@ const useStyles = makeStyles(() => ({
         width: "90%"
       },
     },
+    fieldTitle:{
+      fontWeight:800 ,
+      [theme.breakpoints.up('sm')]:{
+        fontSize: 22
+      }
+    },
+    fieldSubtitle:{
+        marginTop:'1%',
+        paddingLeft:'2%',
+        fontWeight:600 ,
+        [theme.breakpoints.up('sm')]:{
+          fontSize: 18
+        }
+    },
+    fieldInfo:{
+      display:'inline',
+      [theme.breakpoints.up('sm')]:{
+        fontSize: 16
+      }
+    },
+    fieldKey:{
+      [theme.breakpoints.up('sm')]:{
+        width :'35%', 
+        paddingLeft:'5%',
+        float:"left"
+      }
+    },
+    fieldValue:{
+      [theme.breakpoints.up('sm')]:{
+        width :'65%', 
+        float:"right"
+      }
+    }
    
 }));
   

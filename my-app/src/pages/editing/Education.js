@@ -13,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {educationFields} from './FieldNames';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -21,15 +22,6 @@ import {useStyles} from './Styles.js';
 export default function Education() {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-    
-    const fieldNames = {
-      "degree":"Degree",
-      "institution":"Institution",
-      "location":"Location",
-      "score":"Score",
-      "startDate":"Start Date",
-      "endDate":"End Date"
-    }
 
     const initialState = {
       degree: "",
@@ -149,8 +141,8 @@ export default function Education() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> 
-              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>

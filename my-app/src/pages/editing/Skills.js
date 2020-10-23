@@ -19,6 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
+import {skillsFields} from './FieldNames';
 
 export default function Skills(){
     const {state} = useContext(UserContext);
@@ -29,12 +30,7 @@ export default function Skills(){
       name: "",
       rating:0
     }
-    
-    const fieldNames = {
-      "category":"Category",
-      "name":"Description",
-      "rating":"Rating"
-    }
+  
 
     const [fields, setFields] = React.useState(initialState);
     const [existingTech,setExistingTech] = useState([]);
@@ -51,7 +47,7 @@ export default function Skills(){
     }
     
     function validInputs(){
-      return (fields.name!="" && fields.rating!=0)
+      return (fields.name!=="" && fields.rating!==0)
     }
     function handleSubmit(e){
       e.preventDefault();
@@ -111,14 +107,14 @@ export default function Skills(){
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden><br/>
-              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={fieldNames} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden>
+              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={skillsFields} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden><br/>
+              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={skillsFields} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden>
               <Hidden lgUp>
                 <DoubleTypeInfo  
                   title={'Skills'} 
                   type1={"Technical"} type2={"Soft"} 
                   tab1List={existingTech} tab2List={existingSoft} 
-                  fieldNames={fieldNames}
+                  fieldNames={skillsFields}
                   path={'/edit/skills/'}/></Hidden>
             </Container> 
 

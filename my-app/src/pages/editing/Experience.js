@@ -19,19 +19,11 @@ import Alert from '@material-ui/lab/Alert';
 import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
+import {experienceFields} from './FieldNames';
 
 export default function Experience() {
   const {state} = useContext(UserContext);
   const classes = useStyles();
-
-  const fieldNames={
-    "type":"Type",
-    "name":"Company Name",
-    "title":"Job title",
-    "description":"Job Description",
-    "startDate":"Start Date",
-    "endDate":"End Date"
-  }
 
   const initialState={
     type: "Work",
@@ -123,7 +115,7 @@ export default function Experience() {
     .then(res=> setExistingWork(res.data));
   }
   
-  async function getVolunteerExperience(){
+  function getVolunteerExperience(){
     AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
     .then(res=> setExistingVolunteer(res.data));
   }
@@ -135,6 +127,7 @@ export default function Experience() {
   }
 
   const myCallback = (dataFromChild) => {
+    setFormDisable(true);
     setFields({
       type: dataFromChild.type,
       name: dataFromChild.name,
@@ -143,8 +136,8 @@ export default function Experience() {
     })
     setStartDate(dataFromChild.startDate);
     setEndDate(dataFromChild.endDate);
-    setFormDisable(false)
     setEditId(dataFromChild._id);
+    setFormDisable(false)
   }
 
   useEffect(() => {
@@ -157,17 +150,17 @@ export default function Experience() {
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
-                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/experience/'} toEdit={myCallback}/> 
+                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} path={'/edit/experience/'} toEdit={myCallback}/> 
               </Hidden><br/>
               <Hidden mdDown>
-                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> 
+                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={experienceFields}  path={'edit/experience/'} toEdit={myCallback}/> 
               </Hidden>
               <Hidden lgUp>
                 <DoubleTypeInfo  
                   title={'Experiences'} 
                   type1={"Work"} type2={"Volunteer"} 
                   tab1List={existingWorkData} tab2List={existingVolunteerData} 
-                  fieldNames={fieldNames}
+                  fieldNames={experienceFields}
                   path={'/edit/experience/'}
                   toEdit={myCallback}/></Hidden>
             </Container> 
