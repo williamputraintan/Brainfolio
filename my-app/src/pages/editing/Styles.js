@@ -1,6 +1,8 @@
 import theme from '../../utils/theme';
 import { makeStyles } from '@material-ui/core/styles';
+import { black } from 'chalk';
 
+//styles for editing page main components
 const useStyles = makeStyles(() => ({
     paper: {
       display: 'flex',
@@ -27,16 +29,8 @@ const useStyles = makeStyles(() => ({
         
     },
     cardRoot: {
-      [theme.breakpoints.up('sm')]:{
         minWidth: 235,
-        maxHeight:400,
         padding:'2%',
-        marginBottom:'3%',
-        overflowY:'scroll'
-      },
-      [theme.breakpoints.down('sm')]:{
-        display:'none'
-      }
     },
     formContainer:{
       [theme.breakpoints.up('sm')]:{
@@ -54,7 +48,7 @@ const useStyles = makeStyles(() => ({
         width:'40%',
         float:'right',
       },
-      padding:"5%",
+      padding:"5% 5% 5% 4%",
       [theme.breakpoints.down('sm')]:{
         width:'100%'
       }
@@ -67,7 +61,7 @@ const useStyles = makeStyles(() => ({
       justifyContent:'center'
     },
     select:{
-      width:'30%'
+      width:'auto'
     },
     contributor:{
       width:'48%'
@@ -75,9 +69,6 @@ const useStyles = makeStyles(() => ({
     itemBtn:{
       marginTop:'2%',
       marginBottom:'2%'
-    },
-    contributor:{
-      width:'48%'
     },
     input: {
       display: 'none',
@@ -89,8 +80,73 @@ const useStyles = makeStyles(() => ({
       width:'auto'
     },
     popUp:{
-      margin:'2%'
-    }
+      [theme.breakpoints.down('md')]:{
+        margin:'2%'
+      },
+      [theme.breakpoints.up('md')]:{
+        display:'none'
+      }
+    },
+    editBtn:{
+      width:'20%',
+      float:'right'
+    },
+    oneEntry:{
+      width:'80%', 
+      paddingTop:"2%"
+    },
+    listItem:{
+      width:'100%', 
+      display:'inline'
+    },
+    paperRoot:{
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(1),
+        width: "90%"
+      },
+    },
+    fieldTitleCont:{
+      color:'#FFFFFF',
+      fontWeight:800 ,
+      backgroundColor:theme.palette.primary.main,
+      height:'40px',
+      padding:'5px 5px 5px 15px',
+      [theme.breakpoints.up('sm')]:{
+        fontSize: 22
+      }
+    },
+    
+    fieldSubtitle:{
+        marginTop:'1%',
+        paddingLeft:'2%',
+        fontWeight:600 ,
+        [theme.breakpoints.up('sm')]:{
+          fontSize: 18
+        }
+    },
+    fieldInfo:{
+      display:'inline',
+      [theme.breakpoints.up('sm')]:{
+        fontSize: 16
+      }
+    },
+    fieldKey:{
+      [theme.breakpoints.up('sm')]:{
+        width :'35%', 
+        paddingLeft:'5%',
+        float:"left"
+      }
+    },
+    fieldValue:{
+      [theme.breakpoints.up('sm')]:{
+        width :'65%', 
+        float:"right"
+      }
+    },
+
+   
 }));
   
 export { useStyles };

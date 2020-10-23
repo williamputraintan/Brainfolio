@@ -4,7 +4,7 @@ export const USER_LOG_OFF = "USER_LOG_OFF";
 const userReducer = (state, {type, payload}) => {
   switch (type) {
     case USER_LOG_IN:
-      return { ...state, token: payload };
+      return { ...state, token: payload, user:payload.user };
     case USER_LOG_OFF: {
       return { ...state, token: null };
     }

@@ -11,6 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
+import { UserContext } from '../context/user.context';
+// import { signUserUp } from '../context/actions/auth.actions';
+
 
 //based on sign up template material ui
 function Copyright() {
@@ -67,7 +70,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  
+
+  const [fields, setFields] = React.useState({
+    email: "",
+    username:"",
+    fullname:"",
+    password: ""
+  })
+  // const {state, dispatch} = React.useContext(UserContext);
+
+  function onSubmitForm(e){
+    e.preventDefault();
+    console.log(fields);
+    if(fields.email === "" || fields.username === "" || fields.fullname === "" || fields.password === ""){
+      return;
+    }
+    //visibility? visibilitylist?
+    // let dataa={...fields, visibility:"p", visibilitylist:[""]}
+    // console.log('here');
+    // signUserUp(dispatch, dataa);
+  }
+
+  function onInputChange(e){
+    setFields({
+      ...fields,
+      [e.target.name]: e.target.value
+    })
+  }
 
   WelcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   const classes = useStyles();
@@ -87,7 +116,8 @@ export default function SignUp() {
                     Sign Up
                 </div>
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} 
+          onSubmit={onSubmitForm} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -97,6 +127,7 @@ export default function SignUp() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={onInputChange}
               autoFocus
             />
             <TextField
@@ -104,20 +135,23 @@ export default function SignUp() {
               margin="normal"
               required
               fullWidth
-              name="first name"
-              label="First Name"
-              type="first name"
-              id="first name"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              onChange={onInputChange}
+              autoFocus
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="last name"
-              label="Last Name"
-              type="last name"
-              id="last name"
+              name="fullname"
+              label="Full Name"
+              type="full name"
+              id="full name"
+              onChange={onInputChange}
             />
             <TextField
               variant="outlined"
@@ -129,6 +163,7 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={onInputChange}
             />
             <Button
               type="submit"

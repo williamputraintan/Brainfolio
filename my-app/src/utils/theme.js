@@ -1,12 +1,14 @@
 
 import { createMuiTheme }  from '@material-ui/core/styles'
+const dark = true;
 
 const theme = createMuiTheme({
   palette: {
+    type: "light",
     gradient: {
       background: 'linear-gradient(to right, #da22ff, #9733ee)'
     },
-    primary: { 
+    primary: {
       main: '#1D3B64'
     },
     secondary: {
@@ -27,6 +29,13 @@ const theme = createMuiTheme({
         fontWeight:700,
         color: 'white',
       },
+    },
+    MuiTooltip: {
+      tooltip: {
+        fontSize: "1.1em",
+        // color: "yellow",
+        // backgroundColor: "red"
+      }
     },
   },
   typography: {

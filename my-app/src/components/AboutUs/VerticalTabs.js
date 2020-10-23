@@ -180,37 +180,37 @@ export default function VerticalTabs() {
             <TabPanel value={value} index={1} >
               <div className={classes.step}> 
                   <div className={classes.writingL}>
-                      <h1> Edit your portfolio and showcase your skills </h1>
-                      <h4 > Upload your profile picture and your previous projects </h4>
+                      <h1> Edit your Portfolio Profile</h1>
+                      <h4> Add your contact details and your profile picture along with a background image of choice </h4>
                   </div>
                   <img src={step2} alt="edit your profile"/>
                 </div>
             </TabPanel>
-            <TabPanel value={value} index={2}>
+             <TabPanel value={value} index={2}>
               <div className={classes.step}>               
                   <div className={classes.writingL}>
-                    <h1>Connect with your friends</h1>
-                    <h4>Find your friends and connect to see what they have been up to</h4>
+                    <h1>Add your Education history, Experiences and Projects</h1>
+                    <h4>Showcase your education history, experiences and skills by uploading your previous projects with description</h4>
                   </div>
-                  <img src={step3}  style={{float:'right'}} alt="connection"/>
-                  </div>  
+                  <img src={step3} alt="reaction"/>
+              </div>
             </TabPanel>
             <TabPanel value={value} index={3}>
               <div className={classes.step}>               
                 <div className={classes.writingL} >
-                  <h1>Create your own post to let your friends know</h1>
-                  <h4 >Post your projects and experiencs to let your colleagues know</h4>
+                  <h1>Add a custom section of choice</h1>
+                  <h4 >You can showcase more of your other achievements in the custom section </h4>
                 </div>
-                <img src={step4} style={{float:"right"}} alt="posting"/>
+                <img src={step4} alt="posting"/>
               </div>
             </TabPanel>
             <TabPanel value={value} index={4}>
               <div className={classes.step}>               
                   <div className={classes.writingL}>
-                    <h1>Comment and like on other's posts</h1>
-                    <h4>Leave comments and reactions on your connections' posts to encourage them </h4>
+                    <h1>Review and Share!</h1>
+                    <h4>Share your portfolio to the public or your circle of trusted connections</h4>
                   </div>
-                  <img src={step5} style={{float:'right'}} alt="reaction"/>
+                  <img src={step5} alt="reaction"/>
               </div>
             </TabPanel>
            </div>

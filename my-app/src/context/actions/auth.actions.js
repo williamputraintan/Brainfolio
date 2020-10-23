@@ -6,14 +6,14 @@ const path = "/auth"
 
 //Pass in dispatch from  Context
 export const logUserIn = (dispatch, fields) => {
-  console.log(fields)
   AxiosInstance
     .post(path + "/signin", {
       ...fields
     })
     .then(res => {
       const token = res.data.accessToken;
-      console.log(res)
+      const user = res.data.username;
+      
       if(token){
         sessionStorage.setItem("token", token);
         setTimeout(() => {
@@ -22,8 +22,8 @@ export const logUserIn = (dispatch, fields) => {
 
         dispatch({
           type: USER_LOG_IN,
-          payload: {token: token}
-        })
+          payload: {token: token, user:user}, 
+        });
         history.push("/home");
       }
      
