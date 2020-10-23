@@ -100,7 +100,7 @@ export default function Overview(){
                             </Grid>
                         </ListItem>
                         <Divider/>
-                        
+
                         <ListItem>
                             <Grid item xs={12} sm={12}>
                                 <div className={classes.fieldSubtitle}>Volunteer Experiences</div>
@@ -122,7 +122,8 @@ export default function Overview(){
                                 <div className={classes.fieldSubtitle}> <tab/> Soft Skills</div>
                                 <OverviewInfo data={softSkillData} fieldNames={skillsFields}/>
                             </Grid>
-                        </ListItem>      
+                        </ListItem>    
+                        <Divider/>  
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>

@@ -110,7 +110,7 @@ const useStyles = makeStyles(() => ({
     fieldTitleCont:{
       color:'#FFFFFF',
       fontWeight:800 ,
-      backgroundColor:theme.palette.secondary.main,
+      backgroundColor:theme.palette.primary.main,
       height:'40px',
       padding:'5px 5px 5px 15px',
       [theme.breakpoints.up('sm')]:{
