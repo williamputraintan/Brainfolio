@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card:{
     display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(2)
     
   },
   avatar: {
@@ -63,6 +65,15 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     width: 48,
     backgroundColor: "#EDEDED"
+  },
+  skip:{
+    maxWidth: 400
+  },
+  altTitle:{
+    textAlign: "center"
+  },
+  uploadAction:{
+    justifyContent: "center"
   }
 }));
 
@@ -88,7 +99,6 @@ function SignUpFinal(props) {
     const formData = new FormData();
     formData.append("avatar", fields.avatar);
     formData.append("background", fields.background);
-    console.log(formData)
     
     uploadProfileImages(formData);
   }
@@ -100,9 +110,10 @@ function SignUpFinal(props) {
       avatar: e.target.files[0]
     })
     if(avatarEl){
-      avatarEl.current.src = URL.createObjectURL(e.target.files[0]);
+      console.log(avatarEl.current.style)
+      avatarEl.current.style.backgroundImage = URL.createObjectURL(e.target.files[0]);
       avatarEl.current.onload = function(){
-        URL.revokeObjectURL(avatarEl.src)
+        URL.revokeObjectURL(avatarEl.style.backgroundImage)
       }
     }
   }
@@ -127,7 +138,7 @@ function SignUpFinal(props) {
 
   return (
     <div className={classes.root}>
-    <Typography variant="h4" class={classes.title} gutterBottom>
+    <Typography variant="h4" className={classes.title} gutterBottom>
       Last step: Add profile picture
     </Typography>
      <form 
@@ -139,11 +150,18 @@ function SignUpFinal(props) {
           Profile Image
         </Typography>
 
-        <Card class={classes.card}>
-          <div class={classes.avatar}>
-            <img 
+        <Card className={classes.card}>
+          <div className={classes.avatar}>
+            {/* <img 
+              alt="avatar"
               className={classes.image}
-              ref={avatarEl}/>
+              ref={avatarEl}/> */}
+
+              <div 
+                alt="Profile"
+                className={classes.image}>
+                 {/* { fields.avatar && <img ref={avatarEl}}  */}
+              </div>
           </div>  
             <>
               <input
@@ -164,7 +182,7 @@ function SignUpFinal(props) {
           </Card>
 
 
-        <Typography class={classes.backgroundLabel} component="h5" variant="caption" display="block" gutterBottom>
+        <Typography className={classes.backgroundLabel} component="h5" variant="caption" display="block" gutterBottom>
           Background Image
         </Typography>
 
@@ -177,7 +195,7 @@ function SignUpFinal(props) {
             image={BackgroundFiller}
             title="Contemplative Reptile"
           />
-          <CardActions>
+          <CardActions className={classes.uploadAction}>
             <input
                 accept="image/*"
                 style={{ display: 'none' }}
@@ -195,7 +213,6 @@ function SignUpFinal(props) {
           </CardActions>
         </Card>
 
-          
       
           <Button
             type="submit"
@@ -207,6 +224,20 @@ function SignUpFinal(props) {
           Confirm
         </Button>
       </form>
+
+      <Typography className={classes.altTitle} component="h6" variant="caption" display="block" gutterBottom>
+          or
+      </Typography>
+      
+
+      <Button
+        type="submit"
+        fullWidth
+        color="primary"
+        className={classes.skip}
+      >
+      Skip
+    </Button>
 
     </div>
   )

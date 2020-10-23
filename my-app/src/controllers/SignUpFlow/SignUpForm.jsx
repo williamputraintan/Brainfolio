@@ -82,9 +82,9 @@ function SignUpForm() {
         <LockOutlinedIcon />
       </Avatar>
       <Typography >
-          <div className={classes.title}>
-              Sign Up
-          </div>
+        <div className={classes.title}>
+          Sign Up
+        </div>
       </Typography>
       
 

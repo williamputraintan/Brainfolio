@@ -3,6 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useDebouncedCallback  } from 'use-debounce';
+import { setUsername, setUserLoading } from "../../context/actions/auth.actions";
+import { UserContext } from '../../context/user.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,23 +50,30 @@ const useStyles = makeStyles((theme) => ({
 function SignUpNext(props) {
   const classes = useStyles();
   const [fields, setFields] = React.useState({
-    username:"",
-    fullname: ""
+    username:""
   })
+
+  const {dispatch} = React.useContext(UserContext);
 
   function onSubmitForm(e){
     e.preventDefault();
-    if(fields.email === "" || fields.password === "" || fields.confirmPassword !== fields.password){
+    if(fields.username === "" ){
       return;
     }
+    const { username } = fields;
+    setUsername(dispatch, username);
   }
 
-  function onInputChange(e){
-    setFields({
-      ...fields,
-      [e.target.name]: e.target.value
-    })
-  }
+  const onInputChange = (e) => debounced.callback(e.target.name,e.target.value)
+  const debounced = useDebouncedCallback(
+    (name,value) => {
+      setFields({
+        ...fields,
+        [name]: value
+      });
+    },400
+  );
+
 
   return (
     <div className={classes.root}>
@@ -87,20 +97,6 @@ function SignUpNext(props) {
             autoFocus
             variant="filled"
           />
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="fullname"
-            label="Full Name"
-            name="fullname"
-            autoComplete="fullname"
-            onChange={onInputChange}
-            autoFocus
-            variant="filled"
-          />
-        
 
           <Button
             type="submit"

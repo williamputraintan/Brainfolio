@@ -17,7 +17,7 @@ export const setUserLoading = (dispatch, bool) => {
 export const getUserFromDb = async (dispatch, idToken) => {
 
   try{
-    const user = await AxiosInstance
+    const response = await AxiosInstance
     .post("/v2/auth/validate",
       {},{
       headers: {
@@ -25,17 +25,21 @@ export const getUserFromDb = async (dispatch, idToken) => {
       }
     })
   
+
+
+    const { data } = response;
+
     dispatch({
       type:  SET_USER,
-      payload: {...user, token: idToken}
-    })
-    
-    console.log(user)
+      payload: {...data, token: idToken}
+    })  
 
-    if(user.username === "" || !user.username){
+    if(data.username === "" || !data.username){
       history.push(Paths.SIGN_UP_2);
+    }else{
+      history.push(Paths.HOME);
     }
-   
+
     setUserLoading(dispatch, false)
   }
   catch(e){
@@ -50,6 +54,7 @@ export const signInUser = async (dispatch, email, password) => {
     const user = await firebase.auth().signInWithEmailAndPassword(email, password);
     if(user){
       const idToken = await firebase.auth().currentUser.getIdToken(true);
+
       console.log(idToken);
       getUserFromDb(dispatch, idToken);
     }
@@ -78,20 +83,27 @@ export const signUpUser = async (dispatch, email, password) => {
   }
 }
 
-export const setUpUsername = async (dispatch,username) => {
+export const setUsername = async (dispatch,username) => {
   try{
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
-    const setUsername = await AxiosInstance
+    const response = await AxiosInstance
       .post("/v2/auth/set/username", 
         {username: username},{headers: 
         { 'Authorization': `Bearer ${idToken}`}})
 
-    console.log(setUsername)
-    history.push(Paths.SIGN_UP_2);
+    const { data } = response;
+
+    dispatch({
+      type:  SET_USER,
+      payload: {...data, token: idToken}
+    })  
+
+
+    history.push(Paths.SIGN_UP_3);
   }
   catch(e){
-    history.goBack();
+    console.log(e)
     setUserLoading(dispatch, false);
   }
 }

@@ -36,7 +36,6 @@ function StepperController(props) {
 
   const { pathname } = useLocation();
 
-  console.log(pathname)
 
 
   React.useEffect(() => {
