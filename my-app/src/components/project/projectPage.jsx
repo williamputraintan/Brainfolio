@@ -1,29 +1,20 @@
 import React from 'react';
 import ReactPlayer from 'react-player/youtube'
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import Card from '@material-ui/core/Card';
+import axios from 'axios';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-
-
 import useStyles from './useStyles'
-
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
+import {  useTheme } from '@material-ui/styles';
 
 import ProjectDisplay from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
-import { TextField } from '@material-ui/core';
 
 import './project.css';
-import {  useTheme } from '@material-ui/styles';
-
+import { useEffect } from 'react';
 
 function Copyright() {
   return (
@@ -46,8 +37,22 @@ export default function ProjectPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
                     defaultMatches: true
                   });
-
   const classes = useStyles();
+
+  const [projects, setProjects] = React.useState([]);
+  const [dataNotRecieved, setDataNotRecieved] = React.useState(true);
+
+  useEffect(() => {
+    if (dataNotRecieved) {
+      console.log("data in");
+      axios.get("http://localhost:5000/projects/")
+      .then((res) => {
+        const resData = res.data;
+        setProjects(resData);
+      })
+      setDataNotRecieved(false);
+    };
+  });
 
   return (
     <div>
@@ -95,7 +100,7 @@ export default function ProjectPage() {
                   Project Display
               </Typography>
               </div>
-              
+
               <div class="project-display">
                 <ProjectDisplay/>
               </div>
