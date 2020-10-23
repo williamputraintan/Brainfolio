@@ -1,19 +1,21 @@
 import React from 'react';
-import { Switch,  Route} from 'react-router-dom';
+import { Switch,  Route, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import SignIn from './pages/SignIn.js'
-import SignUp from './pages/SignUp.js'
 import AboutUs from './pages/AboutUs.js';
-import Navbar from './components/Navbar';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-// import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
 
 
+//Pages
 import Page404 from "./common/404";
+import AuthenticationPage from "./pages/AuthenticationPage";
+
+//Helpers
+import firebase from "./utils/firebase.js";
+import Paths from "./utils/path.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,14 +28,18 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
 
+
+
   return (
       <>
          
-  
+          <Redirect to={Paths.SIGN_IN}/>
           <Switch>
+              <Route path="/auth" component={AuthenticationPage} />
 
-              <Route path="/signIn" component={SignIn}/> 
-              <Route path="/signUp" component={SignUp}/>
+              <Route path="/home" component={AuthenticatedRoute}/>
+
+            
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
@@ -42,10 +48,10 @@ function App() {
               {/* for unauthenticated project page uncomment below*/}
               {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
              
-              <Route path="/404" component={Page404}/>
+              <Route exact path="/404" component={Page404}/>
               
               <Route path="/home" component={AuthenticatedRoute}/>
-              <Route path="/" component={Timeline} className={classes.root} /> 
+              {/* <Route path="/" component={Timeline} className={classes.root} />  */}
               
           </Switch>
     </>

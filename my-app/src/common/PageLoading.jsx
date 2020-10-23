@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Spinner from "react-spinkit";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     top:"0",
     left: "0",
     padding: theme.spacing(4),
-    background: theme.palette.gradient.background
+    background: theme.palette.gradient.background,
+    zIndex: 999
   },
   paper: {
     margin: "auto",
@@ -24,12 +25,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
    
   },
-  content: {
-
-  },
+  content: {},
   spinner: {
     height: 42,
-    width: 42
+    width: 42,
+    zIndex: 1000
   }
   
 }));
@@ -41,11 +41,11 @@ function PageLoading() {
     <section className={classes.root}>
       <div className={classes.paper} elevation={0}>
         <div classes={classes.content}>
-          <Spinner className={classes.spinner} name="folding-cube" color="#EDEDED"/>
+          <Spinner className={classes.spinner} name="folding-cube" color="#EDEDED" fadeIn={0}/>
         </div>
       </div>
     </section>
   )
 }
 
-export default PageLoading;
+export default React.memo(PageLoading);

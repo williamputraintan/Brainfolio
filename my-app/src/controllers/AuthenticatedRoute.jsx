@@ -9,7 +9,7 @@ function AuthenticatedRoute(props) {
   const {state} = useContext(UserContext);
   return (
     <div>
-      {((!state.token) || !(state.user))&& <Redirect to="/signin"/>}
+      {/* {((!state.token) || !(state.user))&& <Redirect to="/signin"/>}
       <h1>User: {state.user}</h1>
       <Link to="/home/portfolio">Portfolio</Link>
       <Link to={"/home/edit/contact/"+state.token.user}>Edit Portfolio</Link>
@@ -18,7 +18,7 @@ function AuthenticatedRoute(props) {
         <Redirect from={"/home/edit"+state.token.user} to={"/home/edit/contact/"+state.token.user}  />
         <Route path={"/home/edit/:page?/"+state.token.user} component={props => <EditingPage {...props}  />}  />
         
-      </Switch>
+      </Switch> */}
     </div>
   )
 }

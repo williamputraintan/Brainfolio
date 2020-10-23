@@ -6,7 +6,8 @@ const UserContext = createContext();
 
 const initialState = {
   user: null,
-  token: null
+  token: null,
+  isLoading: false
 };
 
 function UserContextProvider(props) {

@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import logo from "../../images/logo-transparent.png"
 import NavAvatar from "../NavbarAvatar";
+import Paths from "../../utils/path";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -136,7 +137,7 @@ function Navbar(props) {
               user?.token? 
               <NavAvatar />
               : <Button>
-                  <Link component={RouterLink} to="/signin">Sign In</Link>
+                  <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
                 </Button>
             }
            
