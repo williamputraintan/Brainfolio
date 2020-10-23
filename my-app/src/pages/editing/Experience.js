@@ -33,8 +33,8 @@ export default function Experience() {
   }
 
   const [fields, setFields] = React.useState(initialState);
-  const [startDate,setStartDate] =  React.useState(new Date(null));
-  const [endDate,setEndDate] =  React.useState(new Date(null));
+  const [startDate,setStartDate] =  React.useState(new Date());
+  const [endDate,setEndDate] =  React.useState(new Date());
   const [onGoing, setOnGoing] = React.useState(false);
 
   const [existingWorkData,setExistingWork] = useState([]);
@@ -52,23 +52,11 @@ export default function Experience() {
   }
 
   function handleStartDate(date){
-    var month = date.getMonth().toString();
-    var day = date.getDate().toString();
-    if(month.length===1) month="0"+month;
-    if(day.length===1) day = "0"+day;
-
-    var formatDate=date.getFullYear()+"-"+month+"-"+day
-    setStartDate(formatDate);
+    setStartDate(date);
   }
 
   function handleEndDate(date){
-    var month = date.getMonth().toString();
-    var day = date.getDate().toString();
-    if(month.length===1) month="0"+month;
-    if(day.length===1) day = "0"+day;
-    
-    var formatDate=date.getFullYear()+"-"+month+"-"+day;
-    setEndDate(formatDate);
+    setEndDate(date);
   }
 
   function handleOnGoing(event){
@@ -94,10 +82,14 @@ export default function Experience() {
       setFormDisable(true);
       //when user edits an entry
       if(editId!=null){
-        AxiosInstance.put('edit/experience/'+editId,finalFields).then(res=> res && isOkay(res.status)? resetForm(): console.log("edit failure"));
+        AxiosInstance.put('/edit/experience/'+editId,finalFields)
+        .then(res=>  resetForm())
+        .catch(error=>console.log(error));
       }//when user submits a new entry
       else{
-        AxiosInstance.post('/edit/experience',finalFields).then(res=> res & isOkay(res.status)? resetForm(): console.log("post failure"));
+        AxiosInstance.post('/edit/experience',finalFields)
+        .then(res=> resetForm())
+        .catch(error=>console.log(error));
       }
     }else{
       //alert here incomplete fields
@@ -120,40 +112,48 @@ export default function Experience() {
     .then(res=> setExistingVolunteer(res.data));
   }
   function resetForm(){
-    setFormDisable(false)
+    setFormDisable(false);
     setFields({ ...initialState });
     setEditId(null);
     setWarning(false);
   }
 
-  const myCallback = (dataFromChild) => {
-    setFormDisable(true);
-    setFields({
-      type: dataFromChild.type,
-      name: dataFromChild.name,
-      title: dataFromChild.title,
-      description: dataFromChild.description
-    })
-    setStartDate(dataFromChild.startDate);
-    setEndDate(dataFromChild.endDate);
-    setEditId(dataFromChild._id);
-    setFormDisable(false)
+  //props from children
+  const myEditCallback = (idReceived) => {
+    setFormDisable(false);
+    AxiosInstance.get("/edit/experience/item/"+idReceived)
+    .then(res=> 
+      setFields(res.data) && 
+      setStartDate(new Date(res.data.startDate)) && 
+      setEndDate(new Date(res.data.endDate)) && 
+      setOnGoing(res.data.onGoing))
+    .catch(error=>
+      console.log(error));
+    setEditId(idReceived);
+  }
+
+  const myDeleteCallback = (idReceived) => {
+    setFormDisable(false);
+    AxiosInstance.delete("/edit/experience/"+idReceived)
+    .then(res=> res.data.type==="Work"? getWorkExperience() :getVolunteerExperience())
+    .catch(error=>
+      console.log(error));
   }
 
   useEffect(() => {
     getWorkExperience();
     getVolunteerExperience();
-  });
+  },[formDisable,editId]);
   
     return (
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
-                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} path={'/edit/experience/'} toEdit={myCallback}/> 
+                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> 
               </Hidden><br/>
               <Hidden mdDown>
-                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={experienceFields}  path={'edit/experience/'} toEdit={myCallback}/> 
+                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={experienceFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> 
               </Hidden>
               <Hidden lgUp>
                 <DoubleTypeInfo  
@@ -161,8 +161,7 @@ export default function Experience() {
                   type1={"Work"} type2={"Volunteer"} 
                   tab1List={existingWorkData} tab2List={existingVolunteerData} 
                   fieldNames={experienceFields}
-                  path={'/edit/experience/'}
-                  toEdit={myCallback}/></Hidden>
+                  toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -237,8 +236,8 @@ export default function Experience() {
                             <div className={classes.field}> Start Date *</div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
-                              disabled={formDisable}
                               autoOk
+                              disabled={formDisable}
                               variant="inline"
                               inputVariant="outlined"
                               format="dd/MM/yyyy"

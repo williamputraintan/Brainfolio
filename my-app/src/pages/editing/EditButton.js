@@ -15,13 +15,13 @@ export default function EditButton(props) {
   };
 
   //get entry to be edited & send to parent
-  function getToEdit(){
-    AxiosInstance.get(path+'item/'+id).then(res=>(res?props.toEdit(res.data) :null));
+  const handleEdit = ()=>{
+    props.toEdit(id)
     handleClose();
   }
 
   const handleDelete = ()=>{
-    AxiosInstance.delete(path+id)
+    props.toDelete(id)
     handleClose();
   }
 
@@ -43,7 +43,7 @@ export default function EditButton(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <MenuItem onClick={getToEdit}>Edit</MenuItem>
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
     </div>

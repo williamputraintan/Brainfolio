@@ -38,27 +38,15 @@ export default function Education() {
     const [warning,setWarning] = React.useState(false);
 
     //date changes
-    const [startDate,setStartDate] =  React.useState(new Date(null));
-    const [endDate,setEndDate] =  React.useState(new Date(null));
+    const [startDate,setStartDate] =  React.useState(new Date());
+    const [endDate,setEndDate] =  React.useState(new Date());
 
     function handleStartDate(date){
-      var month = date.getMonth().toString();
-      var day = date.getDate().toString();
-      if(month.length===1) month="0"+month;
-      if(day.length===1) day = "0"+day;
-
-      var formatDate=date.getFullYear()+"-"+month+"-"+day
-      setStartDate(formatDate);
+      setStartDate(date);
     }
 
     function handleEndDate(date){
-      var month = date.getMonth().toString();
-      var day = date.getDate().toString();
-      if(month.length===1) month="0"+month;
-      if(day.length===1) day = "0"+day;
-
-      var formatDate=date.getFullYear()+"-"+month+"-"+day;
-      setEndDate(formatDate);
+      setEndDate(date);
     }
 
     function onInputChange(e){
@@ -79,8 +67,8 @@ export default function Education() {
     function handleSubmit(e){
       e.preventDefault();
   
-      var finalFields=
-      {username:state.user,
+      var finalFields={ 
+        username:state.user,
         ...fields,
         startDate:startDate, 
         endDate:endDate, 
@@ -120,29 +108,40 @@ export default function Education() {
     }
 
     //props from children
-    const myCallback = (dataFromChild) => {
-      setFields({
-        degree: dataFromChild.degree,
-        institution: dataFromChild.institution,
-        location: dataFromChild.location,
-        score: dataFromChild.score
-      });
-      setStartDate(dataFromChild.startDate);
-      setEndDate(dataFromChild.endDate);
+    const myEditCallback = (idReceived) => {
       setFormDisable(false);
-      setEditId(dataFromChild._id);
+      AxiosInstance.get("/edit/education/item/"+idReceived)
+      .then(res=> 
+        setFields(res.data) && 
+        setStartDate(new Date(res.data.startDate)) && 
+        setEndDate(new Date(res.data.endDate)))
+      .catch(error=>
+        console.log(error));
+      setEditId(idReceived);
     }
-    
+
+    const myDeleteCallback = (idReceived) => {
+      setFormDisable(false);
+      console.log(idReceived);
+      AxiosInstance.delete("/edit/education/"+idReceived)
+      .then(res=> 
+         getExistingEducation())
+      .catch(error=>
+        console.log(error));
+     
+    }
+
+
     useEffect(() => {
       getExistingEducation();
-    });
+    },[formDisable,editId]);
   
     return (
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
-              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
