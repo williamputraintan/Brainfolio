@@ -80,11 +80,31 @@ export default function PopupInfo(props) {
     return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
-  //props from child and to parent
-  const myCallback = (dataFromChild) => {
-    props.toEdit(dataFromChild)
+  //pass to parent component
+  const myEditCallback = (idReceived) => {
+    props.toEdit(idReceived)
     handleClose();
   }
+
+  const myDeleteCallback = (idReceived) => {
+      props.toDelete(idReceived)
+      handleClose();
+  }
+
+  function handleDate(date){
+    var formatDate = date.substring(0,10);
+    return formatDate;
+  }
+  function handleValue(key,value,res){
+    if(key==="startDate"){
+      return handleDate(value);
+    } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
+      return handleDate(value);
+    } else{
+      return value;
+    }
+  }
+
 
   return (
     <div>
@@ -102,11 +122,8 @@ export default function PopupInfo(props) {
                 {/* end date is on going if on going is checked */}
                 <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                 <ListItem style={{ display:'inline'}}>
-                <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myCallback} />  </div>
-                  {fieldNames? 
-                    Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {value} </div>)) 
-                    : Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {value} </div>))
-                  }
+                <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
+                  {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)}</div>)) }
                 </ListItem> 
                 {++count < data.length? <Divider/>:null}
                 </div>

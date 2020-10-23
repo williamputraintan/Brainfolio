@@ -60,7 +60,9 @@ export default function Skills(){
           AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log('edit failute'));
         }//when user submits a new entry
         else{
-          AxiosInstance.post('/edit/skills',{username:state.user,...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log("post failure"));
+          AxiosInstance.post('/edit/skills',{username:state.user,...fields})
+          .then(res=> resetForm())
+          .catch(error=>console.log(error));
         }
       }else{
         setWarning(true);
@@ -86,36 +88,45 @@ export default function Skills(){
       setWarning(false);
     }
 
-    //props from children
-    const myCallback = (dataFromChild) => {
-      setFields({
-        category: dataFromChild.category,
-        name: dataFromChild.name,
-        rating: dataFromChild.rating
-      })
-      setFormDisable(false)
-      setEditId(dataFromChild._id);
+    const myEditCallback = (idReceived) => {
+      setFormDisable(false);
+      AxiosInstance.get("/edit/skills/item/"+idReceived)
+      .then(res=> 
+        setFields(res.data))
+      .catch(error=>
+        console.log(error));
+      setEditId(idReceived);
+    }
+
+    const myDeleteCallback = (idReceived) => {
+      setFormDisable(false);
+      AxiosInstance.delete("/edit/skills/"+idReceived)
+      .then(res=> 
+        res.data.type==="Soft"?getExistingSoftSkills(): getExistingTechSkills())
+      .catch(error=>
+        console.log(error));
     }
 
     useEffect(() => {
       getExistingSoftSkills();
       getExistingTechSkills();
-    });
+    },[formDisable,editId]);
 
     return (
 
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={skillsFields} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden><br/>
-              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={skillsFields} path={'/edit/skills/'} toEdit={myCallback}/> </Hidden>
+              <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden><br/>
+              <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
               <Hidden lgUp>
                 <DoubleTypeInfo  
                   title={'Skills'} 
                   type1={"Technical"} type2={"Soft"} 
                   tab1List={existingTech} tab2List={existingSoft} 
                   fieldNames={skillsFields}
-                  path={'/edit/skills/'}/></Hidden>
+                  path={'/edit/skills/'}
+                  toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
             </Container> 
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
