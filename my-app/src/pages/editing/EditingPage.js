@@ -16,7 +16,8 @@ import Education from './Education';
 import Skills from './Skills';
 import Experience from './Experience';
 import Projects from './Projects';
-import Custom from './Custom';
+import Custom1 from './Custom1';
+import Custom2 from './Custom2';
 import Overview from './Overview';
 
 import editbackground from '../../images/editbackground.png';
@@ -85,8 +86,9 @@ export default function EditingPage(props){
       2: "experience",
       3: "skills",
       4: "projects",
-      5: "custom",
-      6: "overview"
+      5: "custom1",
+      6: "custom2",
+      7: "overview"
     };
   
     const indexToTabName = {
@@ -95,8 +97,9 @@ export default function EditingPage(props){
       experience:2,
       skills: 3,
       projects: 4,
-      custom: 5,
-      overview: 6
+      custom1: 5,
+      custom2: 6,
+      overview: 7
     };
   
     const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
@@ -132,10 +135,13 @@ export default function EditingPage(props){
                         <Button variant="contained" className={(page!=='projects')? classes.button :classes.buttonOn } onClick={()=>(handleChange(4))}>
                             Projects
                         </Button>
-                        <Button variant="contained" className={(page!=='custom')? classes.button :classes.buttonOn } onClick={()=>(handleChange(5))}>
-                            Custom
+                        <Button variant="contained" className={(page!=='custom1')? classes.button :classes.buttonOn } onClick={()=>(handleChange(5))}>
+                            Custom 1
                         </Button>
-                        <Button variant="contained" className={(page!=='overview')? classes.button :classes.buttonOn } onClick={()=>(handleChange(6))}>
+                        <Button variant="contained" className={(page!=='custom2')? classes.button :classes.buttonOn } onClick={()=>(handleChange(6))}>
+                            Custom 2
+                        </Button>
+                        <Button variant="contained" className={(page!=='overview')? classes.button :classes.buttonOn } onClick={()=>(handleChange(7))}>
                             Overview
                         </Button>
                     </Hidden>
@@ -155,19 +161,21 @@ export default function EditingPage(props){
                             <MenuItem onClick={()=>menuClick(2)}>Experience</MenuItem>
                             <MenuItem onClick={()=>menuClick(3)}>Skills</MenuItem>
                             <MenuItem onClick={()=>menuClick(4)}>Projects</MenuItem>
-                            <MenuItem onClick={()=>menuClick(5)}>Custom</MenuItem>
-                            <MenuItem onClick={()=>menuClick(6)}>Overview</MenuItem>
+                            <MenuItem onClick={()=>menuClick(5)}>Custom 1</MenuItem>
+                            <MenuItem onClick={()=>menuClick(6)}>Custom 2</MenuItem>
+                            <MenuItem onClick={()=>menuClick(7)}>Overview</MenuItem>
                         </Menu>       
                     </Hidden>
                 </div>
                 <div className={classes.formContainer}>
                     {selectedTab === 0 && <Contact/>}
-                    {selectedTab === 1 && <Education />}
-                    {selectedTab === 2 && <Experience />}
-                    {selectedTab === 3 && <Skills />}
-                    {selectedTab === 4 && <Projects />}
-                    {selectedTab === 5 && <Custom />}
-                    {selectedTab === 6 && <Overview />}
+                    {selectedTab === 1 && <Education/>}
+                    {selectedTab === 2 && <Experience/>}
+                    {selectedTab === 3 && <Skills/>}
+                    {selectedTab === 4 && <Projects/>}
+                    {selectedTab === 5 && <Custom1/>}
+                    {selectedTab === 6 && <Custom2/>}
+                    {selectedTab === 7 && <Overview/>}
                 </div>
                 </Paper>
             </div>

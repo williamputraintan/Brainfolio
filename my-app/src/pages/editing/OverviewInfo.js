@@ -21,7 +21,7 @@ export default function OverviewInfo(props){
         <div>
             <List>
                 {data.map(res=>(
-                <div>
+                    <div>
                     {/* EndDate value onGoing when onGoing is checked */}
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}} >
@@ -40,13 +40,11 @@ export default function OverviewInfo(props){
                                 <Hidden mdUp>
                                     <div> {fieldNames[key]} : {value} </div>
                                 </Hidden>
-                            </div>)) 
-                            }
+                            </div>)) }
                     </ListItem> 
                     {++count < data.length? <Divider/>:null}
-                </div>
+                    </div>
                 ))}
-                
             </List>
         </div>
     )
