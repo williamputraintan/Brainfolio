@@ -14,34 +14,27 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DateFnsUtils from '@date-io/date-fns';
+import Alert from '@material-ui/lab/Alert';
 
 import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
+import {experienceFields} from './FieldNames';
 
 export default function Experience() {
   const {state} = useContext(UserContext);
   const classes = useStyles();
 
-  const fieldNames={
-    "type":"Type",
-    "name":"Company Name",
-    "title":"Job title",
-    "description":"Job Description",
-    "startDate":"Start Date",
-    "endDate":"End Date"
-  }
-
   const initialState={
-    type: "",
+    type: "Work",
     name:"",
     title: "",
     description:""
   }
 
   const [fields, setFields] = React.useState(initialState);
-  const [startDate,setStartDate] =  React.useState(new Date());
-  const [endDate,setEndDate] =  React.useState(new Date());
+  const [startDate,setStartDate] =  React.useState(new Date(null));
+  const [endDate,setEndDate] =  React.useState(new Date(null));
   const [onGoing, setOnGoing] = React.useState(false);
 
   const [existingWorkData,setExistingWork] = useState([]);
@@ -49,6 +42,7 @@ export default function Experience() {
   const [editId, setEditId] = React.useState(null);
 
   const [formDisable,setFormDisable]= React.useState(false);
+  const [warning,setWarning] = React.useState(false);
 
   function onInputChange(e){
     setFields({
@@ -81,10 +75,13 @@ export default function Experience() {
     setOnGoing(event.target.checked);
   };
 
+  function validInputs(){
+    return (fields.type!=="" && fields.name!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
+  }
+
   function handleSubmit(e){
     e.preventDefault();
-    //disables form for request
-    setFormDisable(true);
+  
     var finalFields = {
       username:state.user,
       ...fields,
@@ -92,13 +89,21 @@ export default function Experience() {
       endDate:endDate, 
       onGoing:onGoing
     }
-    //when user edits an entry
-    if(editId!=null){
-      AxiosInstance.put('edit/experience/'+editId,finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("edit failure"));
-    }//when user submits a new entry
-    else{
-      AxiosInstance.post('/edit/experience',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+    if(validInputs()){
+      //disable form for request
+      setFormDisable(true);
+      //when user edits an entry
+      if(editId!=null){
+        AxiosInstance.put('edit/experience/'+editId,finalFields).then(res=> res && isOkay(res.status)? resetForm(): console.log("edit failure"));
+      }//when user submits a new entry
+      else{
+        AxiosInstance.post('/edit/experience',finalFields).then(res=> res & isOkay(res.status)? resetForm(): console.log("post failure"));
+      }
+    }else{
+      //alert here incomplete fields
+      setWarning(true);
     }
+    
   }
 
   function isOkay(status){
@@ -106,21 +111,23 @@ export default function Experience() {
   }
 
   function getWorkExperience(){
-    AxiosInstance.get("/edit/experience/uname/work/"+state.user)
+    AxiosInstance.get("/edit/experience/user/work/"+state.user)
     .then(res=> setExistingWork(res.data));
   }
   
-  async function getVolunteerExperience(){
-    AxiosInstance.get("/edit/experience/uname/volunteer/"+state.user)
+  function getVolunteerExperience(){
+    AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
     .then(res=> setExistingVolunteer(res.data));
   }
   function resetForm(){
     setFormDisable(false)
     setFields({ ...initialState });
     setEditId(null);
+    setWarning(false);
   }
 
   const myCallback = (dataFromChild) => {
+    setFormDisable(true);
     setFields({
       type: dataFromChild.type,
       name: dataFromChild.name,
@@ -129,8 +136,8 @@ export default function Experience() {
     })
     setStartDate(dataFromChild.startDate);
     setEndDate(dataFromChild.endDate);
-    setFormDisable(false)
     setEditId(dataFromChild._id);
+    setFormDisable(false)
   }
 
   useEffect(() => {
@@ -143,87 +150,102 @@ export default function Experience() {
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
-                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> 
+                <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} path={'/edit/experience/'} toEdit={myCallback}/> 
               </Hidden><br/>
               <Hidden mdDown>
-                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={fieldNames}  path={'edit/experience/'} toEdit={myCallback}/> 
+                <CardInfo title={'Volunteer Experience'} datalist={existingVolunteerData} fieldNames={experienceFields}  path={'edit/experience/'} toEdit={myCallback}/> 
               </Hidden>
               <Hidden lgUp>
                 <DoubleTypeInfo  
                   title={'Experiences'} 
                   type1={"Work"} type2={"Volunteer"} 
                   tab1List={existingWorkData} tab2List={existingVolunteerData} 
-                  fieldNames={fieldNames}
+                  fieldNames={experienceFields}
                   path={'/edit/experience/'}
                   toEdit={myCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
+                  {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
                   <form className={classes.form} noValidate>
                   <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                          <RadioGroup aria-label="type" name="type" value={fields.type} disabled={formDisable} onChange={onInputChange}>
+                          <div className={classes.field}> Type *</div>
+                          <RadioGroup 
+                            name="type" 
+                            value={fields.type} 
+                            error = {(fields.type)===""}  
+                            helperText={(fields.type)!==""?null:"Choice Required"} 
+                            disabled={formDisable} 
+                            onChange={onInputChange}
+                          >
                             <FormControlLabel value="Work" control={<Radio />} label="Work" />
                             <FormControlLabel value="Volunteer" control={<Radio />} label="Volunteer" />
                           </RadioGroup>  
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Company/Organisation Name</div>
+                            <div className={classes.field}> Company Name *</div>
                             <TextField
                             disabled={formDisable}
                             name="name"
                             variant="outlined"
+                            required
                             fullWidth
-                            id="name"
                             value={fields.name}
                             placeholder="University of Melbourne"                 
                             autoFocus
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}    
+                            error = {(fields.name)===""}  
+                            helperText={(fields.name)!==""?null:"Incomplete entry"}                
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Job title</div>
+                            <div className={classes.field}> Job title *</div>
                             <TextField
                             disabled={formDisable}
                             name="title"   
                             variant="outlined"
                             required
                             fullWidth
-                            id="title"
                             value={fields.title}
                             placeholder="Tutor for COMP30022"                          
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}     
+                            error = {(fields.title)===""}  
+                            helperText={(fields.title)!==""?null:"Incomplete entry"}               
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Job description </div>
+                            <div className={classes.field}> Job description *</div>
                             <TextField
                             disabled={formDisable}
                             variant="outlined"
+                            required
                             fullWidth
-                            id="description"
                             placeholder="Tutors 2 tutorial classes, each consisting of 20 students and supervising their Capstone Project"
                             name="description"
                             multiline
                             row={4}
                             value={fields.description}
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}  
+                            error = {(fields.description)===""}  
+                            helperText={(fields.description)!==""?null:"Incomplete entry"}                  
                             />
                         </Grid>
                         
                         <Grid item xs={12} sm={6}>
-                            <div className={classes.field}> Start Date </div>
+                            <div className={classes.field}> Start Date *</div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               disabled={formDisable}
                               autoOk
-                              id="startDate"
                               variant="inline"
                               inputVariant="outlined"
                               format="dd/MM/yyyy"
                               value={startDate}
                               onChange={date=>handleStartDate(date)}
+                              error = {startDate===null}  
+                              helperText={startDate!==""?null:"Incomplete date"} 
                             />
                             </MuiPickersUtilsProvider>
                         </Grid>
@@ -231,12 +253,11 @@ export default function Experience() {
                             <div className={classes.field}> End Date </div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
-                              disabled={formDisable}
+                              disabled={onGoing||formDisable}
                               autoOk
                               variant="inline"
                               inputVariant="outlined"
                               format="dd/MM/yyyy"
-                              id="endDate"
                               value={endDate}
                               onChange={date=>handleEndDate(date)}
                             />

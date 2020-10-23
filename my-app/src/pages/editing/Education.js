@@ -10,8 +10,10 @@ import Hidden from '@material-ui/core/Hidden';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {educationFields} from './FieldNames';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -20,15 +22,6 @@ import {useStyles} from './Styles.js';
 export default function Education() {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-    
-    const fieldNames = {
-      "degree":"Degree",
-      "institution":"Institution",
-      "location":"Location",
-      "score":"Score",
-      "startDate":"Start Date",
-      "endDate":"End Date"
-    }
 
     const initialState = {
       degree: "",
@@ -42,10 +35,11 @@ export default function Education() {
     const [editId, setEditId] = React.useState(null);
     const [onGoing, setOnGoing] = React.useState(false);
     const [formDisable,setFormDisable]= React.useState(false);
+    const [warning,setWarning] = React.useState(false);
 
     //date changes
-    const [startDate,setStartDate] =  React.useState(new Date());
-    const [endDate,setEndDate] =  React.useState(new Date());
+    const [startDate,setStartDate] =  React.useState(new Date(null));
+    const [endDate,setEndDate] =  React.useState(new Date(null));
 
     function handleStartDate(date){
       var month = date.getMonth().toString();
@@ -70,19 +64,21 @@ export default function Education() {
     function onInputChange(e){
       setFields({
         ...fields,
-        [e.target.id]: e.target.value
+        [e.target.name]: e.target.value
       })
     }
 
     function handleOnGoing(event){
       setOnGoing(event.target.checked);
     };
+
+    function validInputs(){
+      return (fields.degree!=="" && fields.institution!=="" && startDate!==new Date(null))
+    }
   
     function handleSubmit(e){
       e.preventDefault();
-      //disable form for request
-      setFormDisable(true);
-
+  
       var finalFields=
       {username:state.user,
         ...fields,
@@ -90,13 +86,21 @@ export default function Education() {
         endDate:endDate, 
         onGoing:onGoing}
 
-      //when user edits an existing entry
-      if(editId!=null){
-        AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
-      }// when user submits a new entry
-      else{
-        AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+      if(validInputs()===true){
+        //disable form for request
+        setFormDisable(true);
+        //when user edits an existing entry
+        if(editId!=null){
+          AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+        }// when user submits a new entry
+        else{
+          AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+        }
+      }else{
+        //alert here incomplete fields
+        setWarning(true);
       }
+      
     }
 
     function isOkay(status){
@@ -104,7 +108,7 @@ export default function Education() {
     } 
 
     function getExistingEducation(){
-      AxiosInstance.get("/edit/education/uname/"+state.user)
+      AxiosInstance.get("/edit/education/user/"+state.user)
       .then(res => setExistingData(res.data))
     }
 
@@ -112,6 +116,7 @@ export default function Education() {
       setFormDisable(false)
       setFields({ ...initialState });
       setEditId(null);
+      setWarning(false);
     }
 
     //props from children
@@ -136,40 +141,43 @@ export default function Education() {
      
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
-              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
-              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={fieldNames} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
+              <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/> </Hidden>
+              <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} path={'/edit/education/'} toEdit={myCallback}/></Hidden>
             </Container> 
 
             <Container component="main" maxWidth="lg" className={classes.formContainer}>
                 <div className={classes.paper}>
+                {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
                   <form className={classes.form} disabled={formDisable} noValidate>
                     <Grid container spacing={3}> 
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter your Degree </div>
+                            <div className={classes.field}>Degree * </div>
                             <TextField
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"
                             fullWidth
-                            id="degree"
                             value={fields.degree}
                             placeholder="Bachelor of Science (Chemical Systems)"
                             autoFocus
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}   
+                            error = {(fields.degree)===""}  
+                            helperText={(fields.degree)!==""?null:"Incomplete entry"}                
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Enter your institution name </div>
+                            <div className={classes.field}> Institution Name *</div>
                             <TextField
                             disabled={formDisable}
                             name="institution"
                             variant="outlined"
                             fullWidth
-                            id="institution"
                             value={fields.institution}
                             placeholder="University of Melbourne"
                             autoFocus
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}  
+                            error = {(fields.institution)===""}  
+                            helperText={(fields.institution)!==""?null:"Incomplete entry"}                 
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -183,7 +191,7 @@ export default function Education() {
                             value={fields.location}
                             placeholder="Melbourne, Australia"
                             name="location"
-                            onChange={onInputChange}                   
+                            onChange={onInputChange}                      
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -201,7 +209,7 @@ export default function Education() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <div className={classes.field}> Start Date </div>
+                            <div className={classes.field}> Start Date *</div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               autoOk
@@ -211,6 +219,8 @@ export default function Education() {
                               format="dd/MM/yyyy"
                               value={startDate}
                               onChange={date=>handleStartDate(date)}
+                              error = {(startDate)===null}  
+                              helperText={startDate!==null?null:"Incomplete entry"}
                             />
                             </MuiPickersUtilsProvider>
                         </Grid>
@@ -218,6 +228,7 @@ export default function Education() {
                             <div className={classes.field}> End Date </div>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
+                              disabled={onGoing||formDisable}
                               autoOk
                               variant="inline"
                               inputVariant="outlined"

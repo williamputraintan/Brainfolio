@@ -39,7 +39,7 @@ function App() {
 
               {/* the other pages are authenticated already except the project page 'edit/projects' */}
               {/* for unauthenticated project page uncomment below*/}
-              <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} />
+              {/* <Route exact path="/edit/:page?" component={props => <EditingPage {...props} />} /> */}
              
            
               <Route path="/home" component={AuthenticatedRoute}/>

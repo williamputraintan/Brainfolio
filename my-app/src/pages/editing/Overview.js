@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -8,12 +8,66 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
 import {useStyles} from './Styles.js';
+import {profileFields, experienceFields, educationFields, skillsFields} from './FieldNames.js';
+import OverviewInfo from './OverviewInfo.js';
 
 import { history } from '../../utils/BrowserHistory';
+import AxiosInstance from '../../utils/axios';
+import { UserContext } from '../../context/user.context';
 
 export default function Overview(){
+    const {state} = useContext(UserContext);
     const classes = useStyles();
+
+    const [profileData, setProfileData] = React.useState([]);
+    const [educationData, setEducationData] = React.useState([]);
+    const [workData, setWorkData] = React.useState([]);
+    const [volunteerData, setVolunteerData] = React.useState([]);
+    const [softSkillData, setSoftSkillData] = React.useState([]);
+    const [techSkillData, setTechSkillData] = React.useState([]);
+    // const [projectData, setProjectData] = React.useState([]);
+    // const [customData, setCustomData] = React.useState([]);
+
+    function getExistingProfile(){
+        AxiosInstance.get("/edit/profile/user/"+state.user)
+        .then(res=> setProfileData(res.data));
+    }
+    
+    function getExistingEducation(){
+        AxiosInstance.get("/edit/education/user/"+state.user)
+        .then(res => setEducationData(res.data))
+    }
+
+    function getWorkExperience(){
+        AxiosInstance.get("/edit/experience/user/work/"+state.user)
+        .then(res=> setWorkData(res.data));
+    }
+      
+    function getVolunteerExperience(){
+        AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
+        .then(res=> setVolunteerData(res.data));
+    }
+
+    function getExistingSoftSkills(){
+        AxiosInstance.get("/edit/skills/user/soft/"+state.user)
+        .then(res=> res? setSoftSkillData(res.data):null)
+    }
   
+    function getExistingTechSkills(){
+        AxiosInstance.get("/edit/skills/user/tech/"+state.user)
+        .then(res=> res? setTechSkillData(res.data):null)
+    }
+    
+    useEffect(() => {
+        getExistingProfile();
+        getExistingEducation();
+        getWorkExperience();
+        getVolunteerExperience();
+        getExistingSoftSkills();
+        getExistingTechSkills();
+    },[]);
+
+
     return (
 
           <Container component="main" maxWidth="lg">
@@ -23,39 +77,40 @@ export default function Overview(){
                     <List component="list" style={{width:'100%'}}>
                         <ListItem >
                             <Grid item xs={12} sm={12}>
-                            <div className={classes.field}> Your Contact Details</div>
-                            display contact details from database here aakfnadnjnakjnfdsjf
+                            <div className={classes.fieldTitle}> Your Contact Details</div>
+                                <OverviewInfo data={profileData} fieldNames={profileFields}/>
                             </Grid>
                         </ListItem>
                         <Divider /> 
 
                         <ListItem >
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.field}> Your Experiences</div>
-                                display experiences from database here
+                            <div className={classes.fieldTitle}> Your Educations</div>
+                                <OverviewInfo data={educationData} fieldNames={educationFields}/>
                             </Grid>
                         </ListItem>
                         <Divider /> 
 
-                        <ListItem>
+                        <ListItem >
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.field}> Your Educations</div>
-                                display educations from database here
+                                <div className={classes.fieldTitle}> Your Experiences</div>
+                                <div className={classes.fieldSubtitle}> Work Experiences</div>
+                                <OverviewInfo data={workData} fieldNames={experienceFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider />
+                        <Divider /> 
 
                         <ListItem >
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.field}> Your Skills</div>
-                                display skills from database here
+                                <div className={classes.fieldSubtitle}>Volunteer Experiences</div>
+                                <OverviewInfo data={volunteerData} fieldNames={experienceFields}/>
                             </Grid>
                         </ListItem>
-                        <Divider />
+                        <Divider /> 
 
                         <ListItem >
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.field}> Your Projects</div>
+                                <div className={classes.fieldTitle}> Your Projects</div>
                                 display projects from database here
                             </Grid>
                         </ListItem>
@@ -63,7 +118,24 @@ export default function Overview(){
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <div className={classes.field}> Your Custom Section</div>
+                                <div className={classes.fieldTitle}> Your Skills</div>
+                                <div className={classes.fieldSubtitle}> <tab/> Soft Skills</div>
+                                <OverviewInfo data={softSkillData} fieldNames={skillsFields}/>
+                            </Grid>
+                        </ListItem>
+                        <Divider />
+
+                        <ListItem>
+                            <Grid item xs={12} sm={12}>
+                                <div className={classes.fieldSubtitle}> <tab/>Technical Skills</div>
+                                <OverviewInfo data={techSkillData} fieldNames={skillsFields}/>
+                            </Grid>
+                        </ListItem>
+                        <Divider />
+
+                        <ListItem>
+                            <Grid item xs={12} sm={12}>
+                                <div className={classes.fieldTitle}> Your Custom Section</div>
                                 display custom section from database here
                             </Grid>
                         </ListItem>
