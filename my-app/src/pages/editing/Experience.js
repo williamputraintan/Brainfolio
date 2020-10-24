@@ -99,7 +99,6 @@ export default function Experience() {
       //alert here incomplete fields
       setWarning(true);
     }
-    
   }
 
   function getExistingExperience(){

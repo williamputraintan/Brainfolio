@@ -35,4 +35,11 @@ const experienceFields={
     "rating":"Rating"
   }
 
-export {profileFields, educationFields, experienceFields,skillsFields};
+  const customFields = {
+    "sectionTitle":"Section",
+    "itemTitle":"Title",
+    "itemSubTitle":"Subtitle",
+    "description":"Description"
+  }
+
+export {profileFields, educationFields, experienceFields,skillsFields, customFields};

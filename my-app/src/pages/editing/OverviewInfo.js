@@ -11,9 +11,10 @@ export default function OverviewInfo(props){
     var count = 0;
     const classes = useStyles();
 
-    //disregard unwanted props
-    function checkUnwanted(key,value){
-        return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="" && value!==[]);
+  
+     //disregard unwanted props
+     function checkUnwanted(key,value){
+        return (key!=="_id" && key!=="username" && key!=="__v"  && (key!=="sectionTitle" && key!=="type") && key!=="onGoing" && value!=="" && value!==[]);
     }
     
     
