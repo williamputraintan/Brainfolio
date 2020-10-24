@@ -38,9 +38,9 @@ export default function Contact(props) {
       description: "",
       profileImageName: [],
       backgroundImageName: [],
-      privacy:"",
-      color_theme:""
-    };
+      privacy:false,
+      color_theme:false
+    }; 
     
     const [fields, setFields] = React.useState(initialState);
     const [existingData,setExistingData] = useState([]);
@@ -169,8 +169,8 @@ export default function Contact(props) {
                           name='privacy'
                           onChange={onInputChange}
                         >
-                          <MenuItem value={'public'}>Public</MenuItem>
-                          <MenuItem value={'private'}>Private</MenuItem>
+                          <MenuItem value={false}>Public</MenuItem>
+                          <MenuItem value={true}>Private</MenuItem>
                         </Select>
                     </Grid>
                       <Grid item xs={12} sm={6}>
@@ -182,8 +182,8 @@ export default function Contact(props) {
                               name='color_theme'
                               onChange={onInputChange}
                             >
-                              <MenuItem value={'light'}>Light</MenuItem>
-                              <MenuItem value={'dark'}>Dark</MenuItem>
+                              <MenuItem value={false}>Light</MenuItem>
+                              <MenuItem value={true}>Dark</MenuItem>
                             </Select>
                       </Grid>
                     <Grid item xs={12} sm={6}>

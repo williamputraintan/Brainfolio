@@ -58,12 +58,12 @@ export default function Skills(){
         // when user edits an entry
         if(editId!=null){
           AxiosInstance.put('edit/skills/'+editId,{...fields})
-          .then(res=> resetForm())
+          .then(res=> res? resetForm() : null)
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills/',{username:state.user,...fields})
-          .then(res=> resetForm())
+          .then(res=> res? resetForm() : null)
           .catch(error=>console.log(error));
         }
       }else{
@@ -74,7 +74,7 @@ export default function Skills(){
 
     function getExistingSkills(){
       AxiosInstance.get("/edit/skills/")
-      .then(res=> separateType(res.data))
+      .then(res=> res? separateType(res.data): null)
       .catch(error=>console.log(error))
     }
 
@@ -103,8 +103,8 @@ export default function Skills(){
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/skills/"+idReceived)
-      .then(res=> 
-        setFields(res.data))
+      .then(res=> res? 
+        setFields(res.data) : null)
       .catch(error=>
         console.log(error));
       setEditId(idReceived);
@@ -113,7 +113,7 @@ export default function Skills(){
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.delete("/edit/skills/"+idReceived)
-      .then(res=> getExistingSkills())
+      .then(res=> res? getExistingSkills(): null)
       .catch(error=>
         console.log(error));
     }

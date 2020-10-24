@@ -70,6 +70,17 @@ export default function Custom2() {
                           onChange={onInputChange}                   
                           />
                       </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          className={classes.submit}
+                          alignItems='center'
+                          color='primary'
+                        >
+                          Save Title
+                        </Button>
+                      </Grid>
                       <div><h3>Items </h3></div>
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Title </div>
