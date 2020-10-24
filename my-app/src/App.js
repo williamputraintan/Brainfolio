@@ -1,5 +1,5 @@
 import React, { Suspense }  from 'react';
-import { Switch,  Route, Redirect  } from 'react-router-dom';
+import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
 import Timeline from './pages/Timeline.jsx'
 import EditingPage from './pages/editing/EditingPage'
 import DomTreeLoader from "./common/DOMTreeLoading";
@@ -17,16 +17,15 @@ const AuthenticatedRoute = React.lazy(() => import('./controllers/AuthenticatedR
 
 
 function App() {
+  const { match } = useLocation();
 
 
   return (
       <Suspense fallback={<DomTreeLoader/>}>
           {/* <Redirect to="/new"/> */}
           <Switch>
+              <Route exact path="/" render={() => <Redirect to="/portfolio"/>}/>
               <Route path="/home" component={AuthenticatedRoute} />
-            
-            
-
               {/** Public Routes**/}
               <Route path="/auth" component={AuthenticationPage} />
               <Route path="/portfolio" component={Portfolio}/>
