@@ -116,8 +116,9 @@ export default function Contact(props) {
     }
 
     function getExistingProfile(){
-      AxiosInstance.get("/edit/profile/user/"+state.user)
-      .then(res=> res? setExistingData(res.data):null);
+      AxiosInstance.get("/edit/profile"+state.user)
+      .then(res=> setExistingData(res.data))
+      .catch(error=> console.log(error));
     }
 
     function resetForm(){
@@ -135,10 +136,6 @@ export default function Contact(props) {
       setEditId(dataFromChild._id);
     }
 
-    function onDeleteFile(e, fileName){
-      e.preventDefault();
-      setFilesToDelete(filesToDelete.concat(fileName));
-    }
 
     // useEffect(() => {
       // axios.get("http://localhost:5000/edit/profile/sa")

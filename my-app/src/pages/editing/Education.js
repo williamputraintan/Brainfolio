@@ -27,7 +27,8 @@ export default function Education() {
       degree: "",
       institution: "",
       location:"",
-      score:""
+      score:"",
+      
     }
     
     const [fields, setFields] = React.useState(initialState);
@@ -96,12 +97,10 @@ export default function Education() {
     }
 
     function getExistingEducation(){
-      AxiosInstance.get("/edit/education/user/"+state.user)
+      //using username in backend 
+      AxiosInstance.get("/edit/education")
       .then(res => setExistingData(res.data))
-      // // AuthGuard
-      // AxiosInstance.get("/edit/education")
-      // .then(res => setExistingData(res.data))
-      
+      .catch(error=>console.log(error))
     }
 
     function resetForm(){

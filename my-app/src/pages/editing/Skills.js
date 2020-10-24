@@ -62,7 +62,7 @@ export default function Skills(){
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
-          AxiosInstance.post('/edit/skills',{username:state.user,...fields})
+          AxiosInstance.post('/edit/skills/',{username:state.user,...fields})
           .then(res=> resetForm())
           .catch(error=>console.log(error));
         }
@@ -72,13 +72,26 @@ export default function Skills(){
       
     }
 
-    function getExistingSoftSkills(){
-      AxiosInstance.get("/edit/skills/user/soft/"+state.user).then(res=> res? setExistingSoft(res.data):null)
+    function getExistingSkills(){
+      AxiosInstance.get("/edit/skills/")
+      .then(res=> separateType(res.data))
+      .catch(error=>console.log(error))
     }
 
-    function getExistingTechSkills(){
-      AxiosInstance.get("/edit/skills/user/tech/"+state.user).then(res=> res? setExistingTech(res.data):null)
-    }
+    function separateType(res){
+      var softData=[];
+      var techData=[]
+      for (var i = 0, len = res.length; i < len; i++) {
+        if(res[i].type==="Soft"){
+          softData.push(res[i]);
+        }else{
+          techData.push(res[i]);
+        }
+      }
+      setExistingSoft(softData);
+      setExistingTech(techData);
+  }
+ 
 
     function resetForm(){
       setFormDisable(false);
@@ -89,7 +102,7 @@ export default function Skills(){
 
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
-      AxiosInstance.get("/edit/skills/item/"+idReceived)
+      AxiosInstance.get("/edit/skills/"+idReceived)
       .then(res=> 
         setFields(res.data))
       .catch(error=>
@@ -100,15 +113,13 @@ export default function Skills(){
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.delete("/edit/skills/"+idReceived)
-      .then(res=> 
-        res.data.type==="Soft"?getExistingSoftSkills(): getExistingTechSkills())
+      .then(res=> getExistingSkills())
       .catch(error=>
         console.log(error));
     }
 
     useEffect(() => {
-      getExistingSoftSkills();
-      getExistingTechSkills();
+     getExistingSkills();
     },[formDisable,editId]);
 
     return (

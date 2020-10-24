@@ -99,8 +99,9 @@ export default function Experience() {
   }
 
   function getExistingExperience(){
-    AxiosInstance.get("/edit/experience/user/work/"+state.user)
-    .then(res=> separateType(res.data));
+    AxiosInstance.get("/edit/experience")
+    .then(res=> separateType(res.data))
+    .catch(error=>console.log(error));
   }
 
   function separateType(res){
@@ -127,7 +128,7 @@ export default function Experience() {
   //props from children
   const myEditCallback = (idReceived) => {
     setFormDisable(false);
-    AxiosInstance.get("/edit/experience/item/"+idReceived)
+    AxiosInstance.get("/edit/experience/"+idReceived)
     .then(res=> 
       setFields(res.data) && 
       setStartDate(new Date(res.data.startDate)) && 
