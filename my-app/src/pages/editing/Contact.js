@@ -57,12 +57,12 @@ export default function Contact(props) {
     useEffect(() => {
   
       AxiosInstance.get(
-        "/profile/",
+        "edit/profile/",
         config
         )
       .then((response) => {
         const responseData = response.data;
-        setAllProjects(responseData);
+        setExistingData(responseData);
         setButtonClick(false)
       })
     },[buttonClick]);
@@ -105,7 +105,7 @@ export default function Contact(props) {
       // formData.append('filesToDelete', '');
       // formData.append('filesToDelete', '');
 
-      axios.post("http://localhost:5000/edit/profile/save/", formData, config)
+      AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
         console.log(response)
         const data = response.data
@@ -145,10 +145,19 @@ export default function Contact(props) {
     }
 
     //props from children
-    const myCallback = (dataFromChild) => {
-      setFields(dataFromChild);
-      setFormDisable(false);
-      setEditId(dataFromChild._id);
+    const myCallback = (idReceived) => {
+
+      AxiosInstance.get("edit/profile/"+idReceived, config)
+      .then(res=>{
+        const dataFromChild = res.data
+        setFields(dataFromChild);
+        setFormDisable(false);
+        setEditId(dataFromChild._id);
+        console.log(res.data)
+      })
+      .catch(error=>
+        console.log(error))
+
     }
 
 

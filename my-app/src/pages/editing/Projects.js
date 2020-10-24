@@ -169,7 +169,6 @@ export default function Projects() {
 
     const AddContributor = ()=>{
       fields.contributor.push([oneName,oneEmail]);
-      console.log(fields.contributor)
     }
     const confirmAdd = ()=>{
       AddContributor();
