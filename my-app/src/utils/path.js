@@ -7,7 +7,8 @@ const Paths = {
   SIGN_UP_2: auth + "/signup/2",
   SIGN_UP_3: auth + "/signup/3",
   SIGN_IN: auth + "/signin",
-  HOME: auth + "/home"
+  HOME: "/home",
+  PORTFOLIO: "/portfolio"
 }
 
 export default Paths

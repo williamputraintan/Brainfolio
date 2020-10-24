@@ -29,9 +29,11 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
     const { data } = response;
 
+    console.log(data)
+
     dispatch({
       type:  SET_USER,
-      payload: {...data, token: idToken}
+      payload: {user: data, token: idToken}
     })  
 
     if(data.username === "" || !data.username){
