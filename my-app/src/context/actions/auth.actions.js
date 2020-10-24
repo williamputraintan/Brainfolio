@@ -65,15 +65,6 @@ export const signInUser = async (dispatch, email, password) => {
   }
 }
 
-<<<<<<< HEAD
-export const logUserOff = () => {
-  return {
-    type: USER_LOG_OFF,
-    payload: null
-  }
-}
-=======
-
 export const signUpUser = async (dispatch, email, password) => {
   try{
     const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -194,4 +185,3 @@ export const logUserOff = (dispatch) => {
 //       })
 // }
 
->>>>>>> main

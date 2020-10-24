@@ -5,15 +5,10 @@ import AboutUs from './pages/AboutUs.js';
 import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
-<<<<<<< HEAD
 import EditingPage from './pages/editing/EditingPage'
 
 import Portfolio from './pages/portfolio/portfolioPage';
 import New from './pages/portfolio/new-portfolio.js';
-=======
-
-import Portfolio from './pages/portfolio/portfolioPage';
-
 
 //Pages
 import Page404 from "./common/404";
@@ -22,7 +17,6 @@ import AuthenticationPage from "./pages/AuthenticationPage";
 //Helpers
 import firebase from "./utils/firebase.js";
 import Paths from "./utils/path.js";
->>>>>>> main
 
 const useStyles = makeStyles((theme) => ({
   root: {
