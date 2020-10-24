@@ -6,12 +6,14 @@ import { history } from '../utils/BrowserHistory';
  *  401 = unauthorised
  * **/
 
-const URL_PATH = (process.env.NODE_ENV === "development")? 
-    "localhost:5000": 
-    ""
+// const URL_PATH = (process.env.NODE_ENV === "development")? 
+//     "localhost:5000": 
+//     ""
+
+const URL_PATH = "https://testdockerprod123.herokuapp.com/"
 
 const axios = Axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: URL_PATH,
 })
 
 // Based on HTTP status code automatically 
@@ -24,8 +26,11 @@ axios.interceptors.response.use(response => {
     case 404: 
       history.push("/404")
       break;
-    case 401: 
-      history.push("/login")
+    case 401:
+      history.push("/auth/signin/1")
+      break;
+    case 400: 
+      history.goBack()
       break;
     default:
       history.push("/support")

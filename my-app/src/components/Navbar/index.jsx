@@ -8,8 +8,8 @@ import Link from '@material-ui/core/Link';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import logo from "../../images/logo-transparent.png"
-import { UserContext, } from '../../context/user.context';
-import NavAvatar from "./navbar.avatar";
+import NavAvatar from "../NavbarAvatar";
+import Paths from "../../utils/path";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,7 +100,9 @@ function Navbar(props) {
 
   const classes = useStyles();
 
-  const {state} = React.useContext(UserContext);
+  const {user} = props;
+
+
 
 
   return (
@@ -118,11 +120,11 @@ function Navbar(props) {
           </div>
           <div className={classes.rightContent}>
             {
-              state.token? 
+              user?.token? 
               <NavAvatar />
               : <Button>
-                <Link component={RouterLink} to="/signin">Sign In</Link>
-              </Button>
+                  <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
+                </Button>
             }
            
           </div>

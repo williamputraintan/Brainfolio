@@ -6,7 +6,7 @@ const theme = createMuiTheme({
   palette: {
     type: "light",
     gradient: {
-      background: 'linear-gradient(to right, #da22ff, #9733ee)'
+      background: 'linear-gradient(90deg, #041e42,#5C788F)'
     },
     primary: {
       main: '#1D3B64'
