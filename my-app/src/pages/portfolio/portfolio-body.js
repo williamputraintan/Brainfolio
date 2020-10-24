@@ -21,16 +21,12 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 import './new-pf.css'
+import PF_Experience from './experience';
+import PF_Education from './education';
+import PF_Skill from './skill';
+import PF_Project from './project';
 
 const useStyles = makeStyles(() => ({
-    pf_container:{
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        maxWidth: "xl",
-        // height: 1234,
-        backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-        
-        
-    },
     large: {
         // width: "10em",
         // height: "10em",
@@ -52,6 +48,11 @@ const useStyles = makeStyles(() => ({
             color: '#4C516D'
         },
     },
+    segment: {
+        margin: theme.spacing(3, 0, 0),
+        padding: theme.spacing(2)
+    },
+
     lightPaper: {
         padding: theme.spacing(2),
         color: theme.palette.text.primary,
@@ -62,42 +63,77 @@ const useStyles = makeStyles(() => ({
         color: theme.palette.text.primary,
         backgroundColor: "#353535"
     },
-    indent: {
-        padding: theme.spacing(2),
-    }
-    
   }));
 
-export default function PF_Experience(preference){
-    const darkmode = preference.darkMode;
-    var classes = useStyles();
-    return(
-        <div>
-            <hr class="solid"/>
-            {/* <Container className={classes.paper}> */}
-            <Card id="experience" className={darkmode ? classes.darkPaper : classes.lightPaper}>
-                <Typography variant="h4"> Experience</Typography>
-                <br/>
 
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
-                    </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
-                    </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
-                    <Typography variant="h3" class="desc">
-                        Job Description:
-                        <Typography>
-                            - bam bam bam
-                        </Typography>
-                    </Typography>
-                </div>
+// function showDesc() {
+//   if (true) {
+//     return()
+//   }
+// }
+
+function showExp(darkmode){
+  if (true) {
+    return (<PF_Experience darkMode={darkmode}/>);
+  }
+}
+
+function showEducation(darkmode){
+  if (true) {
+    return (<PF_Education darkMode={darkmode}/>);
+  }
+}
+
+function showSkill(darkmode){
+  if (true) {
+    return(<PF_Skill darkMode={darkmode}/>);
+  }
+}
+
+function showProject(darkmode){
+  if (true) {
+    return (<PF_Project darkMode={darkmode}/>);
+  }
+}
+
+// function showCustom1(darkmode){
+//   if (false) {
+//     return(<PF_Custom1/>);
+//   }
+// }
+
+// function showCustom2(darkmode){
+//   if (false) {
+//     return (<PF_Custom2/>);
+//   }
+// }
+
+export default function PF_Body(){
+    var classes = useStyles();
+    const darkmode = false;
+    return(
+        <div class="pf">
+
+            <hr class="solid"/>
+            <Card id="description" className={ darkmode ? classes.darkPaper :classes.lightPaper }>
+            
+            <Typography variant="h4"> Description</Typography>
+            <br/>
+
+            <Typography theme="theme">
+                I'm diligent, love to connect with new people and do teamwork. 
+                cool right? Lets meet up and talk!
+                <br/>
+                Looking forward to see you soon!
+            </Typography>
             </Card>
-            {/* </Container> */}
+
+            {showExp(darkmode)}
+            {showEducation(darkmode)}
+            {showSkill(darkmode)}
+            {showProject(darkmode)}
+            {/* {showCustom1()}
+            {showCustom2()} */}
 
         </div>
     );

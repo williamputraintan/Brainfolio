@@ -23,29 +23,21 @@ import IconButton from '@material-ui/core/IconButton';
 import './new-pf.css'
 
 const useStyles = makeStyles(() => ({
-    pf_container:{
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        maxWidth: "xl",
-        // height: 1234,
-        backgroundImage: `url(${"./blue-diamond-bg.png"})`,
-        
-        
-    },
-    large: {
-        // width: "10em",
-        // height: "10em",
-        width: "180px",
-        height: "180px",
-        // alignItems: "center"
-    },
-    profilePicRoot: {
-        alignItems: "center", 
-        justifyItems: "center",
-    },
+
     button:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,
-        margin:'2%',
+        margin:'0.5%',
+        fontFamily:theme.typography.fontFamily,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.main,
+            color: '#4C516D'
+        },
+    },
+    button2:{
+        backgroundColor:theme.palette.secondary.main,
+        color: '#4C516D',
+        margin:'0.5%',
         fontFamily:theme.typography.fontFamily,
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
@@ -68,36 +60,48 @@ const useStyles = makeStyles(() => ({
     
   }));
 
-export default function PF_Experience(preference){
+export default function PF_Skill(preference){
     const darkmode = preference.darkMode;
     var classes = useStyles();
     return(
         <div>
             <hr class="solid"/>
-            {/* <Container className={classes.paper}> */}
-            <Card id="experience" className={darkmode ? classes.darkPaper : classes.lightPaper}>
-                <Typography variant="h4"> Experience</Typography>
+            <Card id="skill" className={darkmode ? classes.darkPaper : classes.lightPaper}>
+                <Typography variant="h4"> Skill</Typography>
                 <br/>
 
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
-                    </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
-                    </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
-                    <Typography variant="h3" class="desc">
-                        Job Description:
-                        <Typography>
-                            - bam bam bam
-                        </Typography>
+                <div>
+                    <Typography variant="h5">
+                        Technical Skill
                     </Typography>
                 </div>
+                <div>
+                    <Button className={classes.button}>React.js</Button>
+                    <Button className={classes.button}>Nest.js</Button>
+                    <Button className={classes.button}>Redux</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Docker</Button>
+                    <Button className={classes.button}>Python</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                    <Button className={classes.button}>Docker</Button>
+                    <Button className={classes.button}>Python</Button>
+                    <Button className={classes.button}>Kubernetes</Button>
+                </div>
+                <br/>
+                <br/>
+                <div>
+                    <Typography variant="h5">
+                        Soft Skill
+                    </Typography>
+                </div>
+                <div>
+                    <Button className={classes.button2}>Teamwork</Button>
+                    <Button className={classes.button2}>Communication</Button>
+                    <Button className={classes.button2}>Leadership</Button>
+                </div>
+
             </Card>
-            {/* </Container> */}
 
         </div>
     );

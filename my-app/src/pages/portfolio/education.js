@@ -68,36 +68,86 @@ const useStyles = makeStyles(() => ({
     
   }));
 
-export default function PF_Experience(preference){
+const education = [
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+    {
+        "_id": "5f8c0781f3b35b44b87ab545",
+        "username": "username",
+        "startDate": "27-01-2020",
+        "endDate": "27-01-2022",
+        "degree": "Bachelor in Procastination",
+        "institution": "University of Lazyness",
+        "location": "Dimana mana",
+        "score": "100",
+        "__v": 0
+    },
+]
+export default function PF_Education(preference){
     const darkmode = preference.darkMode;
     var classes = useStyles();
     return(
         <div>
             <hr class="solid"/>
-            {/* <Container className={classes.paper}> */}
-            <Card id="experience" className={darkmode ? classes.darkPaper : classes.lightPaper}>
-                <Typography variant="h4"> Experience</Typography>
+            <Card id="education" className={darkmode ? classes.darkPaper : classes.lightPaper}>
+                <Typography variant="h4"> Education</Typography>
                 <br/>
-
-                <div class="grid-exp">
-                    <Typography variant="h2" class="role">
-                        Software Engineer Intern
+                {education.map((data) => (
+                    <div class="grid-edu">
+                    <Typography variant="h2" class="school">
+                        {data.institution}
                     </Typography>
-                    <Typography variant="h3" class="year">
-                            2008-present
-                    </Typography>
-                    <Typography variant="h2" class="company">
-                        Apple Inc.
-                    </Typography>
-                    <Typography variant="h3" class="desc">
-                        Job Description:
+                    <Typography variant="h2" class="degree">
+                        {data.degree}
                         <Typography>
-                            - bam bam bam
+                        {data.location}
                         </Typography>
                     </Typography>
+                    <Typography variant="h3" class="year">
+                            {data.startDate}  -  {data.endDate}
+                    </Typography>
+                    
+                    
+                    <Typography variant="h3" class="desc">
+                        Score: {data.score}
+                    </Typography>
                 </div>
+                ))}
+                
+                
+
             </Card>
-            {/* </Container> */}
 
         </div>
     );

@@ -1,0 +1,134 @@
+.project-title {
+    background-color: #174BA8;
+    color: whitesmoke;
+    padding: 4%;
+}
+
+.project-desc{
+    /* background-color: #578DC8; */
+    background-color: #3368B6;
+    color: whitesmoke;
+    height: 100%;
+    padding: 4%;
+    border-top-right-radius: 2.5%;
+    border-bottom-right-radius: 2.5%;
+}
+
+.project-desc-body {
+    /* background-color: beige; */
+    padding-top: 2%;
+}
+
+.author{
+    background-color: #5584C2;
+    /* overflow: scroll; */
+    color: whitesmoke;
+    border-top-left-radius: 2.5%;
+    border-bottom-left-radius: 2.5%;
+}
+
+.author-word {
+    /* background-color: beige; */
+    padding-top: 4%;
+    padding-left: 7%;
+    padding-right: 4%;
+}
+
+.project-bg {
+    background-color: #7AA6D2;
+    color: whitesmoke;
+    padding: 4%;
+    border-radius: 2.5%;
+}
+
+/* .project-word {
+    background-color: beige;
+    padding: 2%;
+} */
+
+.project-display {
+    padding-top: 4%;
+    padding-bottom: 2%;
+}
+
+.video-word {
+
+    padding: 4%;
+    padding-top: 3%;
+}
+
+.video-bg {
+    background-color: #95BEDD;
+    color: whitesmoke;
+    padding: 4%;
+    border-radius: 2.5%;
+}
+
+.video {
+    padding-top: 1%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 5%;
+}
+
+.player-wrapper {
+    position: relative;
+    padding-top: 56.25%;
+    /* Player ratio: 100 / (1280 / 720) */
+}
+   
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .project-title {
+        background-color: #174BA8;
+        color: whitesmoke;
+        padding: 6%;
+    }
+
+    .video {
+        justify-items: center;
+        padding-top: 3%;
+        padding-left: 10%;
+        padding-right: 10%;
+        align-items: center;
+    }
+
+    .project-desc{
+        /* background-color: #578DC8; */
+        background-color: #3368B6;
+        color: whitesmoke;
+        height: 100%;
+        padding: 4%;
+        border-radius: 2.5%;
+    }
+
+    .author{
+        background-color: #5584C2;
+        /* overflow: scroll; */
+        color: whitesmoke;
+        border-radius: 2.5%;
+    }
+
+    .author-word {
+        /* background-color: beige; */
+        padding-top: 4%;
+        padding-left: 5%;
+        padding-right: 4%;
+    }
+    
+}
+
+@media only screen and (max-width: 960px) {
+
+    .author-word {
+        padding-top: 4%;
+        padding-left: 5%;
+        padding-right: 4%;
+    }
+    
+}

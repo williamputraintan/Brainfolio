@@ -1,33 +1,20 @@
-
-/**
- * Project page structure:
-    * header
-    * project title
-    * description
-    * files
-    * authors
-    * footer
- */
-
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import ReactPlayer from 'react-player/youtube'
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import Card from '@material-ui/core/Card';
+import axios from 'axios';
 
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './useStyles'
+import {  useTheme } from '@material-ui/styles';
 
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
-
-import SingleLineGridList from './ProjectFile';
+import ProjectDisplay from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
-import { TextField } from '@material-ui/core';
+
+import './project.css';
+import { useEffect } from 'react';
 
 function Copyright() {
   return (
@@ -46,113 +33,104 @@ function Copyright() {
 const author = [1, 2, 3];
 
 export default function ProjectPage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
+                    defaultMatches: true
+                  });
   const classes = useStyles();
 
+  const [projects, setProjects] = React.useState([]);
+  const [dataNotRecieved, setDataNotRecieved] = React.useState(true);
+
+  useEffect(() => {
+    if (dataNotRecieved) {
+      console.log("data in");
+      axios.get("http://localhost:5000/projects/")
+      .then((res) => {
+        const resData = res.data;
+        setProjects(resData);
+      })
+      setDataNotRecieved(false);
+    };
+  });
+
   return (
-    <div className={classes.bgcolor}>     
- 
-      <main>
-        <div className={classes.heroContent}>
-        
-          <Container maxWidth='md'>
-          <Button className={classes.back}>
-          <ArrowBackIcon />
-          </Button>
-          <br/>
-          <br/>
-          </Container>
-          <Container maxWidth="md">
-            <Card className={classes.title}>
-            <Typography component="h4" variant="h3" align="left" color="textPrimary" gutterBottom>
-              IT Project (COMP30022)
-                <IconButton className={classes.like}>
-                  <FavoriteBorderIcon/>
-                </IconButton>
-            </Typography>
-            <Typography variant="h6" align="left" color="textSecondary" paragraph>
-              Put the project description here. <br/>
-              can be multiple line
-            </Typography>
-            </Card>
-            
-          </Container>
-        </div>
-
-        <SingleLineGridList/>
-        <ProjectAuthor/>
-        
-        <div >
-
-          <Container className={classes.space} maxWidth="md">
-          <Card>
-            <Typography variant='h6' className={classes.space}>
-              Comments
-            </Typography>
-            
-            <div className={classes.comment}>
-                <TextField
-                      id="filled-textarea"
-                      placeholder="Comment"
-                      multiline
-                      fullWidth
-                      size='medium'
-                />
-                <Button className={classes.post} color="danger">
-                  Post
-                </Button>
+    <div>
+      <Grid container spacing={isMobile ? 1 : 3}>
+        <Grid item xs={12} sm={12}>
+          <div class="project-title">
+              <Typography variant="h3" align="center"> 
+                Project Title
+              </Typography>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={12} md={8}>
+          <div class="project-desc"> 
+            <div class="project-desc-word">
+              <Typography variant="h4">
+                Description:
+              </Typography>
+              <div class="project-desc-body">
+                <Typography>
+                  Enter the description here.
+                </Typography>
+              </div>
             </div>
-          </Card>
-            <br/>
-            <br/>
-            {/* comment section */}
+          </div>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={4}>
+          <div class="author">
+            <div class="author-word">
+            <Typography variant="h5">
+                Author:
+            </Typography>    
+            </div>
             <div>
-              <div>
-                <Paper className={classes.paper}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm container>
-                      <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
-                          <Typography gutterBottom variant="subtitle1">
-                            John
-                          </Typography>
-                          <Typography variant="body2" gutterBottom>
-                            I like your design. Keep it up!
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Paper>
+              <ProjectAuthor/>
+            </div>
+          </div>
+          
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <div class="project-bg">
+            <div>
+              <div class="project-word">
+              <Typography variant="h4">
+                  Project Display
+              </Typography>
               </div>
-              <br/>
-              <div>
-                <Paper className={classes.paper}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm container>
-                      <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
-                          <Typography gutterBottom variant="subtitle1">
-                            John
-                          </Typography>
-                          <Typography variant="body2" gutterBottom>
-                            I like your design. Keep it up!
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Paper>
+
+              <div class="project-display">
+                <ProjectDisplay/>
               </div>
             </div>
-          </Container>
-        </div>
-      </main>
-      
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Copyright />
-      </footer>
-      {/* End footer */}
+          </div>
+        </Grid>
+
+        <Grid item xs={12} sm={12}>
+          <div class="video-bg">
+            <div>
+              <div class="video-word">
+                <Typography variant="h4">
+                  <b>Video</b>
+                </Typography>
+              </div>
+              <div class="video">
+                  <div className='player-wrapper'>
+                      <ReactPlayer
+                        className='react-player'
+                        url='https://www.youtube.com/watch?v=SLsTskih7_I'
+                        width='100%'
+                        height='100%'
+                      />
+                  </div>
+                </div>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
+
     </div>
   );
 }
