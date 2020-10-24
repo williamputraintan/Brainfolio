@@ -21,6 +21,8 @@ import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {skillsFields} from './FieldNames';
 
+import axios from 'axios';
+
 export default function Skills(){
     const {state} = useContext(UserContext);
     const classes = useStyles();
@@ -51,6 +53,7 @@ export default function Skills(){
     function validInputs(){
       return (fields.name!=="" && fields.rating!=="0")
     }
+
     function handleSubmit(e){
       e.preventDefault();
       
@@ -70,7 +73,7 @@ export default function Skills(){
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills',finalFields,config)
-          .then(res=> console.log(res))
+          .then(res=>resetForm())
           .catch(error=>console.log(error));
         }
       }else{
@@ -88,7 +91,7 @@ export default function Skills(){
       var softData=[];
       var techData=[]
       for (var i = 0, len = res.length; i < len; i++) {
-        if(res[i].type==="Soft"){
+        if(res[i].category==="Soft"){
           softData.push(res[i]);
         }else{
           techData.push(res[i]);
