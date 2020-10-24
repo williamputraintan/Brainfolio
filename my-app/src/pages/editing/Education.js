@@ -22,6 +22,9 @@ import {useStyles} from './Styles.js';
 export default function Education() {
     const {state} = useContext(UserContext);
     const classes = useStyles();
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
 
     const initialState = {
       degree: "",
@@ -69,7 +72,7 @@ export default function Education() {
       e.preventDefault();
   
       var finalFields={ 
-        username:state.user,
+        username:state.user.username,
         ...fields,
         startDate:startDate, 
         endDate:endDate, 
@@ -85,7 +88,7 @@ export default function Education() {
           .catch(error=> console.log(error));
         }// when user submits a new entry
         else{
-          AxiosInstance.post('/edit/education',finalFields)
+          AxiosInstance.post('/edit/education',finalFields,config)
           .then(res=> res? resetForm():null)
           .catch(error=> console.log(error));
         }
@@ -96,9 +99,10 @@ export default function Education() {
       
     }
 
+
     function getExistingEducation(){
       //using username in backend 
-      AxiosInstance.get("/edit/education")
+      AxiosInstance.get("/edit/education",config)
       .then(res => res? setExistingData(res.data):null)
       .catch(error=>console.log(error))
     }
@@ -113,7 +117,7 @@ export default function Education() {
     //props from children
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
-      AxiosInstance.get("/edit/education/"+idReceived)
+      AxiosInstance.get("/edit/education/"+idReceived,config)
       .then(res=> res? 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
@@ -126,7 +130,7 @@ export default function Education() {
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       console.log(idReceived);
-      AxiosInstance.delete("/edit/education/"+idReceived)
+      AxiosInstance.delete("/edit/education/"+idReceived,config)
       .then(res=> res? 
          getExistingEducation():null)
       .catch(error=>
