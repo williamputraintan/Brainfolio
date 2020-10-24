@@ -38,7 +38,7 @@ export default function Contact(props) {
       description: "",
       profileImageName: [],
       backgroundImageName: [],
-      privacy:false,
+      isPublic:false,
       color_theme:false
     }; 
     
@@ -164,13 +164,13 @@ export default function Contact(props) {
                       <InputLabel id="privacylabel">Privacy</InputLabel>
                         <Select
                           labelId="privacy"
-                          value={fields.privacy}
+                          value={fields.isPublic}
                           className={classes.select}
-                          name='privacy'
+                          name='isPublic'
                           onChange={onInputChange}
                         >
-                          <MenuItem value={false}>Public</MenuItem>
-                          <MenuItem value={true}>Private</MenuItem>
+                          <MenuItem value={true}>Public</MenuItem>
+                          <MenuItem value={false}>Private</MenuItem>
                         </Select>
                     </Grid>
                       <Grid item xs={12} sm={6}>
