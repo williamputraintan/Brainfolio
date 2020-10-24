@@ -83,12 +83,12 @@ export default function Experience() {
       //when user edits an entry
       if(editId!=null){
         AxiosInstance.put('/edit/experience/'+editId,finalFields)
-        .then(res=>  resetForm())
+        .then(res=> res? resetForm() :null)
         .catch(error=>console.log(error));
       }//when user submits a new entry
       else{
         AxiosInstance.post('/edit/experience',finalFields)
-        .then(res=> resetForm())
+        .then(res=> res? resetForm(): null)
         .catch(error=>console.log(error));
       }
     }else{
@@ -100,7 +100,7 @@ export default function Experience() {
 
   function getExistingExperience(){
     AxiosInstance.get("/edit/experience")
-    .then(res=> separateType(res.data))
+    .then(res=> res? separateType(res.data) : null)
     .catch(error=>console.log(error));
   }
 
@@ -129,11 +129,11 @@ export default function Experience() {
   const myEditCallback = (idReceived) => {
     setFormDisable(false);
     AxiosInstance.get("/edit/experience/"+idReceived)
-    .then(res=> 
+    .then(res=> res? 
       setFields(res.data) && 
       setStartDate(new Date(res.data.startDate)) && 
       setEndDate(new Date(res.data.endDate)) && 
-      setOnGoing(res.data.onGoing))
+      setOnGoing(res.data.onGoing): null)
     .catch(error=>
       console.log(error));
     setEditId(idReceived);
@@ -142,7 +142,7 @@ export default function Experience() {
   const myDeleteCallback = (idReceived) => {
     setFormDisable(false);
     AxiosInstance.delete("/edit/experience/"+idReceived)
-    .then(res=> getExistingExperience())
+    .then(res=> res? getExistingExperience(): null)
     .catch(error=>
       console.log(error));
   }

@@ -81,12 +81,12 @@ export default function Education() {
         //when user edits an existing entry
         if(editId!=null){
           AxiosInstance.put('/edit/education/'+editId,finalFields)
-          .then(res=> resetForm())
+          .then(res=> res? resetForm() : null)
           .catch(error=> console.log(error));
         }// when user submits a new entry
         else{
           AxiosInstance.post('/edit/education',finalFields)
-          .then(res=> resetForm())
+          .then(res=> res? resetForm():null)
           .catch(error=> console.log(error));
         }
       }else{
@@ -99,7 +99,7 @@ export default function Education() {
     function getExistingEducation(){
       //using username in backend 
       AxiosInstance.get("/edit/education")
-      .then(res => setExistingData(res.data))
+      .then(res => res? setExistingData(res.data):null)
       .catch(error=>console.log(error))
     }
 
@@ -114,10 +114,10 @@ export default function Education() {
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/education/"+idReceived)
-      .then(res=> 
+      .then(res=> res? 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
-        setEndDate(new Date(res.data.endDate)))
+        setEndDate(new Date(res.data.endDate)): null)
       .catch(error=>
         console.log(error));
       setEditId(idReceived);
@@ -127,8 +127,8 @@ export default function Education() {
       setFormDisable(false);
       console.log(idReceived);
       AxiosInstance.delete("/edit/education/"+idReceived)
-      .then(res=> 
-         getExistingEducation())
+      .then(res=> res? 
+         getExistingEducation():null)
       .catch(error=>
         console.log(error));
      
