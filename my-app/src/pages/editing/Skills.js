@@ -24,13 +24,15 @@ import {skillsFields} from './FieldNames';
 export default function Skills(){
     const {state} = useContext(UserContext);
     const classes = useStyles();
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
 
     const initialState = {
       category: "Technical",
       name: "",
-      rating:0
+      rating:""
     }
-  
 
     const [fields, setFields] = React.useState(initialState);
     const [existingTech,setExistingTech] = useState([]);
@@ -47,33 +49,37 @@ export default function Skills(){
     }
     
     function validInputs(){
-      return (fields.name!=="" && fields.rating!==0)
+      return (fields.name!=="" && fields.rating!=="0")
     }
     function handleSubmit(e){
       e.preventDefault();
       
-      if(validInputs()){
+      var finalFields={ 
+        username:state.user.username,
+        ...fields}
+        console.log(finalFields);
+
+      if(validInputs()===true){
         //disables form until request complete
         setFormDisable(true);
         // when user edits an entry
         if(editId!=null){
-          AxiosInstance.put('edit/skills/'+editId,{...fields})
+          AxiosInstance.put('/edit/skills/'+editId,{...fields},config)
           .then(res=> res? resetForm() : null)
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
-          AxiosInstance.post('/edit/skills/',{username:state.user,...fields})
-          .then(res=> res? resetForm() : null)
+          AxiosInstance.post('/edit/skills',finalFields,config)
+          .then(res=> console.log(res))
           .catch(error=>console.log(error));
         }
       }else{
         setWarning(true);
       }
-      
     }
 
     function getExistingSkills(){
-      AxiosInstance.get("/edit/skills/")
+      AxiosInstance.get("/edit/skills/",config)
       .then(res=> res? separateType(res.data): null)
       .catch(error=>console.log(error))
     }
@@ -102,7 +108,7 @@ export default function Skills(){
 
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
-      AxiosInstance.get("/edit/skills/"+idReceived)
+      AxiosInstance.get("/edit/skills/"+idReceived,config)
       .then(res=> res? 
         setFields(res.data) : null)
       .catch(error=>
@@ -112,7 +118,7 @@ export default function Skills(){
 
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
-      AxiosInstance.delete("/edit/skills/"+idReceived)
+      AxiosInstance.delete("/edit/skills/"+idReceived,config)
       .then(res=> res? getExistingSkills(): null)
       .catch(error=>
         console.log(error));
