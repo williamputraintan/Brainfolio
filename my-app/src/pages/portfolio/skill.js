@@ -62,7 +62,7 @@ const useStyles = makeStyles(() => ({
 
 export default function PF_Skill(preference){
     const darkmode = preference.darkMode;
-    var classes = useStyles();
+    const classes = useStyles();
     return(
         <div>
             <hr class="solid"/>

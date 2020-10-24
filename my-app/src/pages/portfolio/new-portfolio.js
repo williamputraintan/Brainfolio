@@ -12,16 +12,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import bgDefaultDark from '../../images/portfolio-jumbotron/grey-diamond.jpg';
 import bgDefaultLight from '../../images/portfolio-jumbotron/blue-diamond-bg.png'
 import profileImage from '../../images/portfolio-profilepic/arthursetiawan.jpg';
+import Paper from '@material-ui/core/Paper'
 import './new-pf.css'
 
 import PF_Timeline from './portfolio-timeline';
 import PF_Body from './portfolio-body';
 
 const useStyles = makeStyles(() => ({
-    // pf_container:{
-    //     width:"100%",
-    //     backgroundImage: `url(${bgDefaultDark})`,
-    // },
+    pf_container:{
+        width:"100%",
+        backgroundImage: `url(${bgDefaultLight})`,
+    },
     large: {
         width: "180px",
         height: "180px",
@@ -87,13 +88,17 @@ export default function New(){
     // image from website
     const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
     const darkmode = true;
-
-    var classes = useStyles();
+    const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
+    const Header = {
+        backgroundImage: 'url('+ headerImg+')'
+        }
+    const classes = useStyles();
     return(
         <div>
             
-            <Container src={bgDefaultLight}>
-
+            {/* <Paper className={classes.pf_container}> */}
+            <Paper style={Header} >
+            
                 <div class="grid-container">
                     <div class='left'>
                     </div>
@@ -128,7 +133,7 @@ export default function New(){
                     {/* <div class='right'></div> */}
                 </div>
                 
-            </Container>
+            </Paper>
             <div class='grid-body'>
                 <PF_Timeline/>
                 <PF_Body/>
