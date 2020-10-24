@@ -98,15 +98,25 @@ export default function Experience() {
     
   }
 
-  function getWorkExperience(){
+  function getExistingExperience(){
     AxiosInstance.get("/edit/experience/user/work/"+state.user)
-    .then(res=> setExistingWork(res.data));
+    .then(res=> separateType(res.data));
   }
-  
-  function getVolunteerExperience(){
-    AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
-    .then(res=> setExistingVolunteer(res.data));
+
+  function separateType(res){
+      var workData=[];
+      var volData=[]
+      for (var i = 0, len = res.length; i < len; i++) {
+        if(res[i].type==="Work"){
+          workData.push(res[i]);
+        }else{
+          volData.push(res[i]);
+        }
+      }
+      setExistingWork(workData);
+      setExistingVolunteer(volData);
   }
+ 
   function resetForm(){
     setFormDisable(false);
     setFields({ ...initialState });
@@ -131,14 +141,13 @@ export default function Experience() {
   const myDeleteCallback = (idReceived) => {
     setFormDisable(false);
     AxiosInstance.delete("/edit/experience/"+idReceived)
-    .then(res=> res.data.type==="Work"? getWorkExperience() :getVolunteerExperience())
+    .then(res=> getExistingExperience())
     .catch(error=>
       console.log(error));
   }
 
   useEffect(() => {
-    getWorkExperience();
-    getVolunteerExperience();
+    getExistingExperience();
   },[formDisable,editId]);
   
     return (

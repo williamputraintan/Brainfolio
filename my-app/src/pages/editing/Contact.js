@@ -8,6 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import Alert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -34,7 +37,9 @@ export default function Contact(props) {
       linkedIn:"",
       description: "",
       profileImageName: [],
-      backgroundImageName: []
+      backgroundImageName: [],
+      privacy:"",
+      color_theme:""
     };
     
     const [fields, setFields] = React.useState(initialState);
@@ -158,6 +163,32 @@ export default function Contact(props) {
             {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
               <form className={classes.form} noValidate>
                 <Grid container spacing={3} > 
+                    <Grid item xs={12} sm={6}>
+                      <InputLabel id="privacylabel">Privacy</InputLabel>
+                        <Select
+                          labelId="privacy"
+                          value={fields.privacy}
+                          className={classes.select}
+                          name='privacy'
+                          onChange={onInputChange}
+                        >
+                          <MenuItem value={'public'}>Public</MenuItem>
+                          <MenuItem value={'private'}>Private</MenuItem>
+                        </Select>
+                    </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <InputLabel id="privacylabel">Color Theme</InputLabel>
+                            <Select
+                              labelId="color_theme"
+                              value={fields.color_theme}
+                              className={classes.select}
+                              name='color_theme'
+                              onChange={onInputChange}
+                            >
+                              <MenuItem value={'light'}>Light</MenuItem>
+                              <MenuItem value={'dark'}>Dark</MenuItem>
+                            </Select>
+                      </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.field}> Title </div>
                         <TextField
