@@ -59,7 +59,7 @@ export default function PF_Timeline(){
                 </TimelineItem>
                 
                 <TimelineItem>
-                    {/* <TimelineSeparator> */}
+                    <TimelineSeparator>
                     <Tooltip title="Education" placement="right">
                         <Link smooth to="#education">
                         <IconButton>
@@ -67,8 +67,7 @@ export default function PF_Timeline(){
                         </IconButton>
                         </Link>
                     </Tooltip>
-                        {/* <TimelineConnector /> */}
-                    {/* </TimelineSeparator> */}
+                    </TimelineSeparator>
                     {/* <TimelineContent>Education</TimelineContent> */}
                 </TimelineItem>
 

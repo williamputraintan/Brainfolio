@@ -70,7 +70,23 @@ const useStyles = makeStyles(() => ({
 
 export default function PF_Experience(preference){
     const darkmode = preference.darkMode;
-    var classes = useStyles();
+    const classes = useStyles();
+
+    const exp = [
+                    {
+                        "_id":{"$oid":"5f92f8178c708fbb53a27ec7"},
+                        "username":"pbudiman",
+                        "type":"Volunteer",
+                        "name":"Vinnies",
+                        "title":"Retail Volunteer",
+                        "description":"Helps in managing the retail store",
+                        "startDate":{"$date":{"$numberLong":"1484175600000"}},
+                        "endDate":{"$date":{"$numberLong":"1547593200000"}},
+                        "onGoing":false,
+                        "__v":{"$numberInt":"0"}
+                    }
+                ]
+
     return(
         <div>
             <hr class="solid"/>
@@ -79,12 +95,14 @@ export default function PF_Experience(preference){
                 <Typography variant="h4"> Experience</Typography>
                 <br/>
 
+                {exp.map((data) => (
                 <div class="grid-exp">
+                    
                     <Typography variant="h2" class="role">
-                        Software Engineer Intern
+                        {data.title}
                     </Typography>
                     <Typography variant="h3" class="year">
-                            2008-present
+                        {/* {formatDate(data.startDate)} - {formatDate(data.endDate)} */}
                     </Typography>
                     <Typography variant="h2" class="company">
                         Apple Inc.
@@ -96,6 +114,7 @@ export default function PF_Experience(preference){
                         </Typography>
                     </Typography>
                 </div>
+                ))}
             </Card>
             {/* </Container> */}
 
