@@ -63,7 +63,7 @@ export default function PopupInfo(props) {
   const title = props.title
   const fieldNames = props.fieldNames;
   var data = props.datalist;
-  var path =  props.path;
+
   //for Divider usage
   var count=0;
     
@@ -122,7 +122,7 @@ export default function PopupInfo(props) {
                 {/* end date is on going if on going is checked */}
                 <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                 <ListItem style={{ display:'inline'}}>
-                <div style={{float:'right'}}><EditButton path={path} id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
+                <div style={{float:'right'}}><EditButton id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
                   {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)}</div>)) }
                 </ListItem> 
                 {++count < data.length? <Divider/>:null}

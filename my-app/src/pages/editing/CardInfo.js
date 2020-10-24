@@ -13,8 +13,8 @@ import {useStyles} from './Styles';
 export default function cardInfo(props){
     const title = props.title;
     const fieldNames = props.fieldNames;
-    var path =  props.path;
     var data = props.datalist;
+
     //used in Divider usage
     var count = 0;
 
@@ -60,7 +60,7 @@ export default function cardInfo(props){
                     {/* EndDate value onGoing when onGoing is checked */}
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}}>
-                    <div style={{float:'right'}}> <EditButton path={path} id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
+                    <div style={{float:'right'}}> <EditButton id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
                         {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>))}
                     </ListItem> 
                     {++count < data.length? <Divider/>:null}

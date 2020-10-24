@@ -57,7 +57,9 @@ export default function Skills(){
         setFormDisable(true);
         // when user edits an entry
         if(editId!=null){
-          AxiosInstance.put('edit/skills/'+editId,{...fields}).then(res=> res && isOkay(res.status)? resetForm(): console.log('edit failute'));
+          AxiosInstance.put('edit/skills/'+editId,{...fields})
+          .then(res=> resetForm())
+          .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills',{username:state.user,...fields})
@@ -68,9 +70,6 @@ export default function Skills(){
         setWarning(true);
       }
       
-    }
-    function isOkay(status){
-      return (status>=200 && status<300)
     }
 
     function getExistingSoftSkills(){

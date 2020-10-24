@@ -7,7 +7,6 @@ import AxiosInstance from '../../utils/axios';
 
 export default function EditButton(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  var path =  props.path;
   var id = props.id;
 
   const handleClick = (event) => {

@@ -117,7 +117,7 @@ export default function DoubleTypeInfo(props) {
   var tab2List = props.tab2List;
   const tab1= props.type1;
   const tab2 =  props.type2;
-  var path =  props.path;
+
   //used in Divider usage
   var count = 0;
     
@@ -190,7 +190,7 @@ export default function DoubleTypeInfo(props) {
                     {/* endDate value is onGoing when ongoing is checked */}
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}}>
-                    <div style={{float:'right'}}> <EditButton path={path} id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </div>
+                    <div style={{float:'right'}}> <EditButton id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </div>
                       {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(value)} </div>))}
                     </ListItem> 
                     {++count < tab1List.length? <Divider/>:null}
@@ -203,7 +203,7 @@ export default function DoubleTypeInfo(props) {
                     {/* endDate value is onGoing when ongoing is checked */}
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}}>
-                    <div style={{float:'right'}}> <EditButton path={path} id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback} /> </div>
+                    <div style={{float:'right'}}> <EditButton id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback} /> </div>
                       {Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>)) }
                     </ListItem> 
                     {++count < tab2List.length? <Divider/>:null}

@@ -98,10 +98,6 @@ export default function Experience() {
     
   }
 
-  function isOkay(status){
-    return (status>=200 && status<300)
-  }
-
   function getWorkExperience(){
     AxiosInstance.get("/edit/experience/user/work/"+state.user)
     .then(res=> setExistingWork(res.data));

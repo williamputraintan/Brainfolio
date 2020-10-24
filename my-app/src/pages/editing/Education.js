@@ -79,10 +79,14 @@ export default function Education() {
         setFormDisable(true);
         //when user edits an existing entry
         if(editId!=null){
-          AxiosInstance.put('/edit/education/'+editId,finalFields).then(res=>isOkay(res.status)? resetForm(): console.log("edit failure"));
+          AxiosInstance.put('/edit/education/'+editId,finalFields)
+          .then(res=> resetForm())
+          .catch(error=> console.log(error));
         }// when user submits a new entry
         else{
-          AxiosInstance.post('/edit/education',finalFields).then(res=> isOkay(res.status)? resetForm(): console.log("post failure"));
+          AxiosInstance.post('/edit/education',finalFields)
+          .then(res=> resetForm())
+          .catch(error=> console.log(error));
         }
       }else{
         //alert here incomplete fields
@@ -91,13 +95,13 @@ export default function Education() {
       
     }
 
-    function isOkay(status){
-      return (status>=200 && status<300)
-    } 
-
     function getExistingEducation(){
       AxiosInstance.get("/edit/education/user/"+state.user)
       .then(res => setExistingData(res.data))
+      // // AuthGuard
+      // AxiosInstance.get("/edit/education")
+      // .then(res => setExistingData(res.data))
+      
     }
 
     function resetForm(){
@@ -110,7 +114,7 @@ export default function Education() {
     //props from children
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
-      AxiosInstance.get("/edit/education/item/"+idReceived)
+      AxiosInstance.get("/edit/education/"+idReceived)
       .then(res=> 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
