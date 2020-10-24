@@ -26,7 +26,9 @@ import axios from 'axios';
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
     const initialState = {
       title: "",
       fullName: "",
@@ -52,7 +54,20 @@ export default function Contact(props) {
     const [backgroundImg, setBackgroundImg] = React.useState([]);
     const [profileImg, setProfileImg] = React.useState([]);
     const [filesToDelete, setFilesToDelete] = React.useState([])
-    
+    useEffect(() => {
+  
+      AxiosInstance.get(
+        "/profile/",
+        config
+        )
+      .then((response) => {
+        const responseData = response.data;
+        setAllProjects(responseData);
+        setButtonClick(false)
+      })
+    },[buttonClick]);
+
+
     function onInputChange(e){
       setFields({
         ...fields,
@@ -90,7 +105,7 @@ export default function Contact(props) {
       // formData.append('filesToDelete', '');
       // formData.append('filesToDelete', '');
 
-      axios.post("http://localhost:5000/edit/profile/save/", formData)
+      axios.post("http://localhost:5000/edit/profile/save/", formData, config)
       .then((response) => {
         console.log(response)
         const data = response.data
