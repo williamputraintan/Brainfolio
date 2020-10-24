@@ -1,22 +1,21 @@
-import React from 'react';
-import { Switch,  Route, Redirect } from 'react-router-dom';
+import React, { Suspense }  from 'react';
+import { Switch,  Route, Redirect  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import AboutUs from './pages/AboutUs.js';
-import ProjectPage from './components/project/projectPage'
 import Timeline from './pages/Timeline.jsx'
 import AuthenticatedRoute from './controllers/AuthenticatedRoute.jsx';
 import EditingPage from './pages/editing/EditingPage'
-
-import Portfolio from './pages/portfolio/portfolioPage';
-import New from './pages/portfolio/new-portfolio.js';
+import DomTreeLoader from "./common/DOMTreeLoading";
 
 //Pages
 import Page404 from "./common/404";
-import AuthenticationPage from "./pages/AuthenticationPage";
 
-//Helpers
-import firebase from "./utils/firebase.js";
-import Paths from "./utils/path.js";
+//Lazy Import
+const AboutUs = React.lazy(() => import('./pages/AboutUs.js'));
+const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
+const ProjectPage = React.lazy(() => import('./components/project/projectPage'));
+const Portfolio = React.lazy(() => import('./pages/portfolio/portfolioPage'));
+const New = React.lazy(() => import('./pages/portfolio/new-portfolio.js'));
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,15 +31,12 @@ function App() {
 
 
   return (
-      <>
+      <Suspense fallback={<DomTreeLoader/>}>
          
-          <Redirect to={Paths.SIGN_IN}/>
           <Switch>
+              <Route path="/home" component={DomTreeLoader} />
               <Route path="/auth" component={AuthenticationPage} />
 
-              <Route path="/home" component={AuthenticatedRoute}/>
-
-            
               <Route path="/project" component={ProjectPage}/>
               <Route path="/aboutUs" component={AboutUs}/>
               <Route path="/portfolio" component={Portfolio}/>
@@ -56,7 +52,7 @@ function App() {
               {/* <Route path="/" component={Timeline} className={classes.root} />  */}
               
           </Switch>
-    </>
+    </Suspense>
   );
 }
 

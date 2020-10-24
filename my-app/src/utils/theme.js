@@ -8,6 +8,9 @@ const theme = createMuiTheme({
     gradient: {
       background: 'linear-gradient(90deg, #041e42,#5C788F)'
     },
+    reverseGradient: {
+      background: 'linear-gradient(270deg, #041e42,#5C788F)'
+    },
     primary: {
       main: '#1D3B64'
     },
