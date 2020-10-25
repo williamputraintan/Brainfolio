@@ -63,9 +63,11 @@ export default function Contact(props) {
         config
         )
       .then((response) => {
+        console.log(response);
         const responseData = response.data;
-        setExistingData(responseData);
+        setExistingData([responseData]);
         setButtonClick(false)
+        setFields(responseData)
       })
     },[buttonClick]);
 
@@ -114,6 +116,8 @@ export default function Contact(props) {
         setProfileToDelete([])
         setBackgroundToDelete([])
         setButtonClick(true)
+        document.getElementById('profileImage').value = ''
+        document.getElementById('backgroundImage').value = ''
       })
       .catch(err =>{
         console.log(err);
@@ -122,10 +126,14 @@ export default function Contact(props) {
   function onDeleteProfileFile(e, fileName){
     e.preventDefault();
     setProfileToDelete(profileToDelete.concat(fileName))
+    fields.profileImageName.splice(0,1)
+    console.log(fileName);
   }
   function onDeleteBackgroundFile(e, fileName){
     e.preventDefault();
     setBackgroundToDelete(backgroundToDelete.concat(fileName))
+    fields.backgroundImageName.splice(0,1)
+    console.log(fileName);
   }
 
     function isOkay(status){
@@ -330,7 +338,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Your Profile Picture </div>
                       <div>
-                        <input id="inputFile" type="file"  name="files" onChange={onProfileImgUpload}/>
+                        <input id="profileImage" type="file"  name="files" onChange={onProfileImgUpload}/>
                       </div>
                       <Card className={classes.cardContributor}>
                           <CardContent>
@@ -340,8 +348,8 @@ export default function Contact(props) {
                    
                               {fields.profileImageName.length===2?
                                   <React.Fragment>
-                                    <a href={fields.profileImageName[1]}>{fields.profileImageName[0]}</a>
-                                    <button onClick={(e) => fields.profileImageName.splice(0,1) && onDeleteProfileFile(e, fields.profileImageName[0])}>X</button>
+                                    <img src={fields.profileImageName[1]} alt='your profile image' width="500"/>
+                                    <button onClick={(e) => onDeleteProfileFile(e, fields.profileImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                               :null}
@@ -353,7 +361,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Your Background image </div>
                       <div>
-                        <input id="inputFile" type="file"  name="files" onChange={onBackgroundUpload}/>
+                        <input id="backgroundImage" type="file"  name="files" onChange={onBackgroundUpload}/>
                       </div>
                       <Card className={classes.cardContributor}>
                           <CardContent>
@@ -362,8 +370,8 @@ export default function Contact(props) {
                             </Typography>
                                   {fields.backgroundImageName.length===2?
                                   <React.Fragment>
-                                    <a href={fields.backgroundImageName[1]}>{fields.backgroundImageName[0]}</a>
-                                    <button onClick={(e) => fields.backgroundImageName.splice(0,1) && onDeleteBackgroundFile(e, fields.backgroundImageName[0])}>X</button>
+                                    <img src={fields.backgroundImageName[1]} alt='your background image' width="500"/>
+                                    <button onClick={(e) => onDeleteBackgroundFile(e, fields.backgroundImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                                     :null}
