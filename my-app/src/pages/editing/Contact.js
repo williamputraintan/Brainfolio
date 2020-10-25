@@ -26,7 +26,9 @@ import axios from 'axios';
 export default function Contact(props) {
     const {state} = useContext(UserContext);
     const classes = useStyles();
-
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
     const initialState = {
       title: "",
       fullName: "",
@@ -38,7 +40,7 @@ export default function Contact(props) {
       description: "",
       profileImageName: [],
       backgroundImageName: [],
-      privacy:false,
+      isPublic:false,
       color_theme:false
     }; 
     
@@ -52,7 +54,20 @@ export default function Contact(props) {
     const [backgroundImg, setBackgroundImg] = React.useState([]);
     const [profileImg, setProfileImg] = React.useState([]);
     const [filesToDelete, setFilesToDelete] = React.useState([])
-    
+    useEffect(() => {
+  
+      AxiosInstance.get(
+        "edit/profile/",
+        config
+        )
+      .then((response) => {
+        const responseData = response.data;
+        setExistingData(responseData);
+        setButtonClick(false)
+      })
+    },[buttonClick]);
+
+
     function onInputChange(e){
       setFields({
         ...fields,
@@ -90,7 +105,7 @@ export default function Contact(props) {
       // formData.append('filesToDelete', '');
       // formData.append('filesToDelete', '');
 
-      axios.post("http://localhost:5000/edit/profile/save/", formData)
+      AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
         console.log(response)
         const data = response.data
@@ -130,10 +145,19 @@ export default function Contact(props) {
     }
 
     //props from children
-    const myCallback = (dataFromChild) => {
-      setFields(dataFromChild);
-      setFormDisable(false);
-      setEditId(dataFromChild._id);
+    const myCallback = (idReceived) => {
+
+      AxiosInstance.get("edit/profile/"+idReceived, config)
+      .then(res=>{
+        const dataFromChild = res.data
+        setFields(dataFromChild);
+        setFormDisable(false);
+        setEditId(dataFromChild._id);
+        console.log(res.data)
+      })
+      .catch(error=>
+        console.log(error))
+
     }
 
 
@@ -164,13 +188,13 @@ export default function Contact(props) {
                       <InputLabel id="privacylabel">Privacy</InputLabel>
                         <Select
                           labelId="privacy"
-                          value={fields.privacy}
+                          value={fields.isPublic}
                           className={classes.select}
-                          name='privacy'
+                          name='isPublic'
                           onChange={onInputChange}
                         >
-                          <MenuItem value={false}>Public</MenuItem>
-                          <MenuItem value={true}>Private</MenuItem>
+                          <MenuItem value={true}>Public</MenuItem>
+                          <MenuItem value={false}>Private</MenuItem>
                         </Select>
                     </Grid>
                       <Grid item xs={12} sm={6}>

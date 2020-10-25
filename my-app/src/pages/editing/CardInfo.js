@@ -7,7 +7,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import EditButton from './EditButton.js'
-
 import {useStyles} from './Styles';
 
 export default function cardInfo(props){
@@ -20,7 +19,7 @@ export default function cardInfo(props){
 
     //disregard unwanted props
     function checkUnwanted(key,value){
-        return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="" && value!==[]);
+        return (key!=="_id" && key!=="username" && key!=="__v"  && (key!=="sectionTitle" && key!=="type") && key!=="onGoing" && value!=="" && value!==[]);
     }
 
     //pass to parent component

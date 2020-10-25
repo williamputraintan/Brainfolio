@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react';
-
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -8,7 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
 import {useStyles} from './Styles.js';
-import {profileFields, experienceFields, educationFields, skillsFields} from './FieldNames.js';
+import {profileFields, experienceFields, educationFields, skillsFields, customFields} from './FieldNames.js';
 import OverviewInfo from './OverviewInfo.js';
 
 import { history } from '../../utils/BrowserHistory';
@@ -19,54 +18,125 @@ import { Paper } from '@material-ui/core';
 export default function Overview(){
     const {state} = useContext(UserContext);
     const classes = useStyles();
+    const config = {
+        headers: { Authorization: `Bearer ${state.token}` }
+    };
 
-    const [profileData, setProfileData] = React.useState([]);
+    // const [profileData, setProfileData] = React.useState([]);
     const [educationData, setEducationData] = React.useState([]);
     const [workData, setWorkData] = React.useState([]);
     const [volunteerData, setVolunteerData] = React.useState([]);
     const [softSkillData, setSoftSkillData] = React.useState([]);
     const [techSkillData, setTechSkillData] = React.useState([]);
     // const [projectData, setProjectData] = React.useState([]);
-    // const [custom1Data, setCustom1Data] = React.useState([]);
-    // const [custom2Data, setCustom2Data] = React.useState([]);
+    const [custom1Data, setCustom1Data] = React.useState([]);
+    const [custom2Data, setCustom2Data] = React.useState([]);
+    const [custom1Section, setCustom1Section] = React.useState();
+    const [custom2Section, setCustom2Section] = React.useState();
 
-    function getExistingProfile(){
-        AxiosInstance.get("/edit/profile/user/"+state.user)
-        .then(res=> setProfileData(res.data));
-    }
+    // function getExistingProfile(){
+    //     AxiosInstance.get("/edit/profile/user/"+state.user)
+    //     .then(res=> setProfileData(res.data));
+    // }
     
     function getExistingEducation(){
-        AxiosInstance.get("/edit/education/user/"+state.user)
-        .then(res => setEducationData(res.data))
+        AxiosInstance.get("/edit/education/",config)
+        .then(res => res? setEducationData(res.data): console.log(null))
     }
 
-    function getWorkExperience(){
-        AxiosInstance.get("/edit/experience/user/work/"+state.user)
-        .then(res=> setWorkData(res.data));
+    function getExperience(){
+        AxiosInstance.get("/edit/experience/",config)
+        .then(res=> res? separateExpType(res.data):null);
     }
       
-    function getVolunteerExperience(){
-        AxiosInstance.get("/edit/experience/user/volunteer/"+state.user)
-        .then(res=> setVolunteerData(res.data));
+    function separateExpType(res){
+        var workData=[];
+        var volData=[]
+        for (var i = 0, len = res.length; i < len; i++) {
+          if(res[i].type==="Work"){
+            workData.push(res[i]);
+          }else{
+            volData.push(res[i]);
+          }
+        }
+        setWorkData(workData);
+        setVolunteerData(volData);
     }
 
-    function getExistingSoftSkills(){
-        AxiosInstance.get("/edit/skills/user/soft/"+state.user)
-        .then(res=> res? setSoftSkillData(res.data):null)
+    function getExistingSkills(){
+        AxiosInstance.get("/edit/skills/",config)
+        .then(res=> res? separateSkillsType(res.data):null)
     }
   
-    function getExistingTechSkills(){
-        AxiosInstance.get("/edit/skills/user/tech/"+state.user)
-        .then(res=> res? setTechSkillData(res.data):null)
+    function separateSkillsType(res){
+        var softData=[];
+        var techData=[]
+        for (var i = 0, len = res.length; i < len; i++) {
+          if(res[i].category==="Soft"){
+            softData.push(res[i]);
+          }else{
+            techData.push(res[i]);
+          }
+        }
+        setSoftSkillData(softData);
+        setTechSkillData(techData);
     }
-    
+
+    function getCustom1Sec(){
+        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
+            .then(res=>setCustom1Section(res.data.sectionTitle))
+            .catch(error=>console.log(error));
+    }
+
+    function getCustom2Sec(){
+        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
+            .then(res=>setCustom2Section(res.data.sectionTitle))
+            .catch(error=>console.log(error));
+    }
+
+    function getSectionItems(){
+        AxiosInstance.get('edit/custom',config)
+        .then(res=>getCustomOne(res.data))
+        .catch(error=>console.log(error));
+    }
+  
+    function getCustomOne(res){
+        var customOne=[]
+        var customTwo=[]
+
+        for (var i = 0, len = res.length; i < len; i++) {
+          if(res[i].type==="custom1"){
+            customOne.push(res[i]);
+          }else{
+            customTwo.push(res[i]);
+          }
+        }
+        setCustom1Data(customOne);
+        setCustom2Data(customTwo);
+    }
+
+
+    function getCustom1Sec(){
+        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
+            .then(res=>setCustom1Section(res.data.sectionTitle))
+            .catch(error=>console.log(error));
+    }
+
+    function getCustom2Sec(){
+        AxiosInstance.get('edit/custom/sectiontitle/custom2',config)
+            .then(res=>setCustom2Section(res.data.sectionTitle))
+            .catch(error=>console.log(error));
+    }
+
+
     useEffect(() => {
-        getExistingProfile();
+        // getExistingProfile();
         getExistingEducation();
-        getWorkExperience();
-        getVolunteerExperience();
-        getExistingSoftSkills();
-        getExistingTechSkills();
+        getExperience();
+        getExistingSkills();
+        getSectionItems();
+        getCustom1Sec();
+        getCustom2Sec();
     },[]);
 
 
@@ -80,14 +150,13 @@ export default function Overview(){
                         <ListItem>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Contact Details</Paper>
-                                <OverviewInfo data={profileData} fieldNames={profileFields}/>
+                                {/* <OverviewInfo data={profileData} fieldNames={profileFields}/> */}
                             </Grid>
                         </ListItem>
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Education History</Paper>
-                                
                                 <OverviewInfo data={educationData} fieldNames={educationFields}/>
                             </Grid>
                         </ListItem>
@@ -134,15 +203,15 @@ export default function Overview(){
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <Paper className={classes.fieldTitleCont}>Your Custom 1 Section</Paper>
-                                display custom section from database here
+                                <Paper className={classes.fieldTitleCont}>Your {custom1Section? custom1Section : "Custom 1"} Section</Paper>
+                                <OverviewInfo data={custom1Data} fieldNames={customFields}/>
                             </Grid>
                         </ListItem>
 
                         <ListItem>
                             <Grid item xs={12} sm={12}>
-                                <Paper className={classes.fieldTitleCont}>Your Custom 2 Section</Paper>
-                                display custom section from database here
+                                <Paper className={classes.fieldTitleCont}>Your {custom2Section? custom2Section : "Custom 2"}  Section</Paper>
+                                <OverviewInfo data={custom2Data} fieldNames={customFields}/>
                             </Grid>
                         </ListItem>
 

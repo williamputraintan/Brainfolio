@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
-import { history } from '../../utils/BrowserHistory';
-
+import AxiosInstance  from "../../utils/axios";
+import {customFields} from './FieldNames';
   
 export default function Custom2() {
+    const {state} = useContext(UserContext);
     const classes = useStyles();
-
-    //later use data from database
-    const fakedata=[{
-      sectionTitle: "ho",
-      itemTitle: "ho",
-      subTitle:"ho",
-      customDesc:"ho",
-    }]
-
-    const fieldNames = ["Section", "Item Title", "Sub Title","Description"]
-
-    const [fields, setFields] = React.useState({
-      sectionTitle: "",
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
+   
+    const initialState = {
+      sectionTitle:"",
+      type: "custom2",
       itemTitle: "",
-      subTitle:"",
-      customDesc:"",
-    })
+      itemSubTitle:"",
+      description:"",
+    }
+
+    const [fields, setFields] = React.useState(initialState);
+    const [formDisable,setFormDisable]= React.useState(false);
+    const [sectionTitleFinal, setSectionTitle]= React.useState("");
+    const [existingData, setExistingData]= React.useState([]);
+    const [editId, setEditId] = React.useState(null);
 
     function onInputChange(e){
       setFields({
@@ -39,19 +41,103 @@ export default function Custom2() {
       })
     }
 
+    function handleTitleSubmit(event){
+      event.preventDefault();
+      setFormDisable(true);
+      var finalFields = {
+        username: state.user.username,
+        type: fields.type,
+        sectionTitle: fields.sectionTitle
+      }
+      AxiosInstance.post('edit/custom/sectiontitle',finalFields,config)
+       .then(res=>resetSectionTitle(res.data.sectionTitle))
+       .catch(err=> console.log(err));
+    }
+
+    
+    
     function handleSubmit(e){
       e.preventDefault();
-      console.log('button clicked')
-      history.push('/edit/custom')
+
+      setFormDisable(true);
+        if(editId!=null){
+          AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
+          .then(res=>resetForm())
+          .catch(err=> console.log(err));
+        }// when user submits a new entry
+        else{
+          AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
+          .then(res=>resetForm())
+          .catch(err=> console.log(err));
+        }
+      
     }
+    
+    function resetSectionTitle(title){
+      setSectionTitle(title);
+      setFormDisable(false);
+    }
+    
+    function resetForm(){
+      setFormDisable(false);
+      setFields({ ...initialState });
+      setEditId(null);
+      // setWarning(false);
+    }
+
+    function getSectionTitle(){
+      AxiosInstance.get('edit/custom/sectiontitle/custom2',config)
+      .then(res=>setSectionTitle(res.data.sectionTitle))
+      .catch(error=>console.log(error));
+    }
+
+    function getSectionItems(){
+      AxiosInstance.get('edit/custom',config)
+      .then(res=>getCustomTwo(res.data))
+      .catch(error=>console.log(error));
+    }
+
+    function getCustomTwo(res){
+      var customTwo=[]
+      for (var i = 0, len = res.length; i < len; i++) {
+        if(res[i].type==="custom2"){
+          customTwo.push(res[i]);
+        }
+      }
+      setExistingData(customTwo);
+    }
+
+    const myEditCallback = (idReceived) => {
+      setFormDisable(false);
+      AxiosInstance.get("/edit/custom/"+idReceived,config)
+      .then(res=> res? 
+        setFields(res.data) : null)
+      .catch(error=>
+        console.log(error));
+      setEditId(idReceived);
+    }
+
+    const myDeleteCallback = (idReceived) => {
+      setFormDisable(false);
+      AxiosInstance.delete("/edit/custom/"+idReceived,config)
+      .then(res=> res? getSectionItems(): null)
+      .catch(error=>
+        console.log(error));
+    }
+
+    useEffect(() => {
+      getSectionTitle();
+      getSectionItems();
+    },[formDisable,editId]);
+
   
     return (
 
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Custom Section'} datalist={fakedata} fieldNames={fieldNames}/> </Hidden>
-            <Hidden mdUp><PopUpInfo  title={'Custom Section'} datalist={fakedata} fieldNames={fieldNames}/></Hidden>
+            <Hidden mdDown><CardInfo title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
@@ -61,13 +147,14 @@ export default function Custom2() {
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Enter Section Title </div>
                           <TextField
+                          disabled={formDisable}
                           name="sectionTitle"
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder="Awards"
+                          placeholder={sectionTitleFinal}
                           autoFocus
-                          onChange={onInputChange}                   
+                          onChange={onInputChange}                  
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -77,62 +164,64 @@ export default function Custom2() {
                           className={classes.submit}
                           alignItems='center'
                           color='primary'
+                          onClick={event=>handleTitleSubmit(event)}
                         >
                           Save Title
+                          {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
                       </Grid>
                       <div><h3>Items </h3></div>
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Title </div>
                           <TextField
+                          disabled={formDisable}
                           variant="outlined"
                           required
                           fullWidth
                           id="itemTitle"
-                          placeholder="Recognition "
+                          placeholder="Recognition"
                           name="itemTitle"
-                          onChange={onInputChange}                   
+                          onChange={onInputChange}  
+                          value={fields.itemTitle}               
+
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Sub-Title </div>
                           <TextField
+                          disabled={formDisable}
                           variant="outlined"
                           required
                           fullWidth
-                          id="subTitle"
+                          id="itemSubTitle"
                           placeholder="a web app"
-                          name="subTitle"
-                          onChange={onInputChange}                   
+                          name="itemSubTitle"
+                          onChange={onInputChange}    
+                          value={fields.itemSubTitle}               
+
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
                           <div className={classes.field}> Description </div>
                           <TextField
+                          disabled={formDisable}
                           variant="outlined"
                           required
                           fullWidth
-                          id="customDesc"
+                          id="description"
                           placeholder="E-portfolio web application as a part of Capstone Project for COMP30022. The web app aims to enable users to showcase their skills and projects in one platform easily."
-                          name="customDesc"
+                          name="description"
                           onChange={onInputChange}                   
                           multiline
                           row={3}
+                          value={fields.description}               
+
                           />
                       </Grid>              
                     </Grid>
-                    <Grid xs={12} sm={12}>
-                      <Button
-                      type="submit"
-                      variant="outlined"
-                      alignItems='center'
-                      color='primary'
-                      className={classes.itemBtn}
-                      >
-                        Add to my Items List
-                      </Button>
-                    </Grid>
+              
                   <Button
+                    disabled={formDisable}
                     type="submit"
                     variant="contained"
                     className={classes.submit}
@@ -141,7 +230,8 @@ export default function Custom2() {
                     fullWidth
                     onClick={event=>handleSubmit(event)}
                   >
-                    Save my Custom Section
+                    Save to my {sectionTitleFinal? sectionTitleFinal: "Custom"} Section
+                    {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                   </Button>
                 </form>
               </div>      

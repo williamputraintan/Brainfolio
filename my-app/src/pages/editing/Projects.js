@@ -1,4 +1,5 @@
 import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +20,8 @@ import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import axios from 'axios';
+import AxiosInstance from '../../utils/axios';
+import Axios from 'axios';
 
 export default function Projects() {
   
@@ -34,9 +37,10 @@ export default function Projects() {
       "startDate":"Start Date",
       "endDate":"End Date",
       "title":"Title",
-      "visibility":"Visibility"
+      "isPublic":"Visibility"
     }
 
+    const {state} = useContext(UserContext);
 
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
@@ -45,7 +49,7 @@ export default function Projects() {
     // fields form
     const [fields, setFields] = React.useState({
       _id:"",
-      visibility:"",
+      isPublic:true,
       title: "",
       startDate:"",
       endDate:"",
@@ -54,10 +58,15 @@ export default function Projects() {
       projectFileName:[],
     })
 
-
+    const config = {
+      headers: { Authorization: `Bearer ${state.token}` }
+    };
     useEffect(() => {
-      console.log('woi');
-      axios.get("http://localhost:5000/projects/")
+  
+      AxiosInstance.get(
+        "/projects/",
+        config
+        )
       .then((response) => {
         const responseData = response.data;
         setAllProjects(responseData);
@@ -85,11 +94,22 @@ export default function Projects() {
     function onDeleteFile(e, fileName){
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
+      for(let i in fields.projectFileName){
+        if(fileName == fields.projectFileName[1][0]){
+          fields.projectFileName.splice(i,1)
+        }
+      }
     }
     
     //props from children
-    const myCallback = (dataFromChild) => {
-      setFields(dataFromChild);
+    const myCallback = (idReceived) => {
+      AxiosInstance.get("projects/item/"+idReceived, config)
+      .then(res=>{
+        setFields(res.data)
+        }
+      )
+      .catch(error=>
+        console.log(error))
     }
 
 
@@ -115,8 +135,8 @@ export default function Projects() {
       formData.append('filesToDelete', '')
       formData.append('filesToDelete', '')
       console.log('DELTE = ', formData.get('filesToDelete'));
-
-      axios.post("http://localhost:5000/projects/save/", formData)
+      console.log('contributor = ', formData.getAll('contributor'));
+      AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
         console.log(response);
         const data = response.data
@@ -149,7 +169,6 @@ export default function Projects() {
 
     const AddContributor = ()=>{
       fields.contributor.push([oneName,oneEmail]);
-      console.log(fields.contributor)
     }
     const confirmAdd = ()=>{
       AddContributor();
@@ -187,13 +206,13 @@ export default function Projects() {
                             <Select
                               labelId="demo-simple-select-helper-label"
                               id="demo-simple-select-helper"
-                              value={fields.visibility}
+                              value={fields.isPublic}
                               className={classes.select}
-                              name='visibility'
+                              name='isPublic'
                               onChange={onFormInputChange}
                             >
-                              <MenuItem value={'public'}>Public</MenuItem>
-                              <MenuItem value={'private'}>Private</MenuItem>
+                              <MenuItem value={true}>Public</MenuItem>
+                              <MenuItem value={false}>Private</MenuItem>
                             </Select>
                       </Grid>
                       <Grid item xs={12} sm={12}>

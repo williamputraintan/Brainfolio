@@ -25,6 +25,10 @@ export default function Experience() {
   const {state} = useContext(UserContext);
   const classes = useStyles();
 
+  const config = {
+    headers: { Authorization: `Bearer ${state.token}` }
+  };
+
   const initialState={
     type: "Work",
     name:"",
@@ -71,7 +75,7 @@ export default function Experience() {
     e.preventDefault();
   
     var finalFields = {
-      username:state.user,
+      username:state.user.username,
       ...fields,
       startDate:startDate, 
       endDate:endDate, 
@@ -82,12 +86,12 @@ export default function Experience() {
       setFormDisable(true);
       //when user edits an entry
       if(editId!=null){
-        AxiosInstance.put('/edit/experience/'+editId,finalFields)
+        AxiosInstance.put('/edit/experience/'+editId,finalFields,config)
         .then(res=> res? resetForm() :null)
         .catch(error=>console.log(error));
       }//when user submits a new entry
       else{
-        AxiosInstance.post('/edit/experience',finalFields)
+        AxiosInstance.post('/edit/experience',finalFields,config)
         .then(res=> res? resetForm(): null)
         .catch(error=>console.log(error));
       }
@@ -95,11 +99,10 @@ export default function Experience() {
       //alert here incomplete fields
       setWarning(true);
     }
-    
   }
 
   function getExistingExperience(){
-    AxiosInstance.get("/edit/experience")
+    AxiosInstance.get("/edit/experience",config)
     .then(res=> res? separateType(res.data) : null)
     .catch(error=>console.log(error));
   }
@@ -128,7 +131,7 @@ export default function Experience() {
   //props from children
   const myEditCallback = (idReceived) => {
     setFormDisable(false);
-    AxiosInstance.get("/edit/experience/"+idReceived)
+    AxiosInstance.get("/edit/experience/"+idReceived,config)
     .then(res=> res? 
       setFields(res.data) && 
       setStartDate(new Date(res.data.startDate)) && 
@@ -141,7 +144,7 @@ export default function Experience() {
 
   const myDeleteCallback = (idReceived) => {
     setFormDisable(false);
-    AxiosInstance.delete("/edit/experience/"+idReceived)
+    AxiosInstance.delete("/edit/experience/"+idReceived,config)
     .then(res=> res? getExistingExperience(): null)
     .catch(error=>
       console.log(error));
