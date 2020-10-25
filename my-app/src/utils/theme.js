@@ -1,10 +1,17 @@
 
 import { createMuiTheme }  from '@material-ui/core/styles'
-const dark = true;
+
+const bool = false;
+function isDarkMode(bool){
+  if (bool){
+    return "dark"
+  }
+  return "light"
+}
 
 const theme = createMuiTheme({
   palette: {
-    type: "light",
+    type: isDarkMode(bool),
     gradient: {
       background: 'linear-gradient(90deg, #041e42,#5C788F)'
     },

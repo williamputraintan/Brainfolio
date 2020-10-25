@@ -1,6 +1,7 @@
-import React from 'react';
-import { useEffect, useState} from 'react-dom';
-import axios from 'axios';
+import React, {useState, useContext}from 'react';
+import { useEffect} from 'react-dom';
+import AxiosInstance  from "../../utils/axios";
+import { UserContext } from '../../context/user.context';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -68,41 +69,69 @@ const useStyles = makeStyles(() => ({
 
 export default function New(){
 
-    // const [portfolio, setPortfolio] = useState([]);
-
-    // useEffect(() => {
-    //     axios.get("/user/"+username)
-    //         .then(res => {
-    //             setPortfolio(res.data);
-    //         })
-    // });
-
-    // const portfolio = {
-    //     backgroundImage: url('../../images/portfolio-jumbotron/grey-diamond.jpg'),
-    //     backgroundPosition: center center,
-    //     backgroundSize: cover,                     /* <------ */
-    //     backgroundRepeat: no-repeat,
-    //     minWidth:100%
-    // }
-
+    // const [portfolio, setPortfolio] = useState(Object);
+    const {state} = useContext(UserContext);
+    // const [profile,setProfile] = useState([]);
+    
+    // console.log(portfolio);
     // image from website
-    const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
-    const darkmode = true;
-    const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
+    
+    const [pf, setPf] = React.useState([]);
+    let flag = true;
+    let loc = window.location.pathname;
+
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
+    
+    function getPrivacyLevel(path) {
+        const res = path.split("/");
+        return res[0];
+    }
+
+    function showEditButton(path) {
+        // if (getPrivacyLevel(path)==="Public"){
+            if (true){
+        } else {
+        return (<IconButton 
+            color="default"
+            className={darkmode ? classes.darkButton : classes.lightButton} 
+            href="../edit/contact"
+        >
+            <EditIcon/>
+        </IconButton>
+        )
+    }};
+    if (flag){
+        AxiosInstance.get("public/profile/"+getUsername(loc))
+        .then(res => {
+        setPf(res.data);
+        })
+        flag = false;
+    }
+    const darkmode = false;
+
+    let headerImg = bgDefaultLight;
+    if (darkmode) {
+        headerImg = bgDefaultDark;
+    }
+    const img = profileImage;
+    // const img = (pf.profileImageName)[0];
+    
+    // const headerImg = (pf.backgroundImageName)[0]
     const Header = {
         backgroundImage: 'url('+ headerImg+')'
         }
     const classes = useStyles();
+
     return(
         <div>
-            
-            {/* <Paper className={classes.pf_container}> */}
             <Paper style={Header} >
             
                 <div class="grid-container">
                     <div class='left'>
                     </div>
-
                     <div class="picture">
                         <Avatar src={img} className = {classes.large} />
                     </div>
@@ -111,24 +140,19 @@ export default function New(){
                     </div>
 
                     <div class="profile">
-                        <Typography variant="h3"> <b> John Doe </b></Typography>
-                        <Typography variant="h5"> <b> Machine Learning Enthusiast </b></Typography>
+                        <Typography variant="h3"> <b> {pf.fullName} </b></Typography>
+                        <Typography variant="h5"> <b> {pf.title} </b></Typography>
                         <br/>
-                        <Typography> Location: Melbourne, Australia </Typography>
-                        <Typography> Ph.: 048592847 </Typography>
-                        <Typography> Links: <a href="github.com">github.com</a> </Typography>
+                        <Typography> Location: {pf.address} </Typography>
+                        <Typography> email: {pf.email} </Typography>
+                        <Typography> Ph.: {pf.phone} </Typography>
+                        <Typography> Links: <a href={pf.relevantLink}>{pf.relevantLink}</a> </Typography>
+                        <Typography> LinkedIn: <a href={pf.linkedIn}>{pf.linkedIn}</a> </Typography>
 
                     </div>
 
-                    {/* <div class='left'></div> */}
                     <div class="edit">
-                        <IconButton 
-                            color="default"
-                            className={darkmode ? classes.darkButton : classes.lightButton} 
-                            href="../edit/contact"
-                        >
-                            <EditIcon/>
-                        </IconButton>
+                        {showEditButton(loc)}
                     </div>
                     {/* <div class='right'></div> */}
                 </div>
@@ -136,8 +160,29 @@ export default function New(){
             </Paper>
             <div class='grid-body'>
                 <PF_Timeline/>
-                <PF_Body/>
+                <PF_Body darkMode={darkmode}/>
             </div>   
         </div>
     );
 }
+
+// for authenticated route
+// const config = {
+    //     headers: { Authorization: `Bearer ${state.token}` }
+    //   };
+
+    // useEffect(() => {
+    //     AxiosInstance.get("edit/portfolio/"+state.user.username,config)
+    //         .then(res => {
+    //             setPortfolio(res.data);
+    //         })
+    //     console.log(portfolio);
+    // });
+
+    // useEffect(() => {
+    //     AxiosInstance.get("public/profile/username")
+    //     .then(res => {
+    //         console.log(res);
+    //         // setPortfolio(res.data);
+    //     })  
+    // });

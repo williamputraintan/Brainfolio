@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import AxiosInstance  from "../../utils/axios";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -68,55 +69,32 @@ const useStyles = makeStyles(() => ({
     
   }));
 
-const education = [
-    {
-        "_id": "5f8c0781f3b35b44b87ab545",
-        "username": "username",
-        "startDate": "27-01-2020",
-        "endDate": "27-01-2022",
-        "degree": "Bachelor in Procastination",
-        "institution": "University of Lazyness",
-        "location": "Dimana mana",
-        "score": "100",
-        "__v": 0
-    },
-    {
-        "_id": "5f8c0781f3b35b44b87ab545",
-        "username": "username",
-        "startDate": "27-01-2020",
-        "endDate": "27-01-2022",
-        "degree": "Bachelor in Procastination",
-        "institution": "University of Lazyness",
-        "location": "Dimana mana",
-        "score": "100",
-        "__v": 0
-    },
-    {
-        "_id": "5f8c0781f3b35b44b87ab545",
-        "username": "username",
-        "startDate": "27-01-2020",
-        "endDate": "27-01-2022",
-        "degree": "Bachelor in Procastination",
-        "institution": "University of Lazyness",
-        "location": "Dimana mana",
-        "score": "100",
-        "__v": 0
-    },
-    {
-        "_id": "5f8c0781f3b35b44b87ab545",
-        "username": "username",
-        "startDate": "27-01-2020",
-        "endDate": "27-01-2022",
-        "degree": "Bachelor in Procastination",
-        "institution": "University of Lazyness",
-        "location": "Dimana mana",
-        "score": "100",
-        "__v": 0
-    },
-]
 export default function PF_Education(preference){
     const darkmode = preference.darkMode;
-    var classes = useStyles();
+    const classes = useStyles();
+    const [education,setEducation] = useState([]);
+    let flag = true;
+    let loc = window.location.pathname;
+
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
+
+    if (flag){
+        AxiosInstance.get("public/education/"+getUsername(loc))
+        .then(res => {
+        setEducation(res.data);
+        // setPortfolio(res.data);
+        })
+        flag = false;
+    }
+
+    // convert from full date and time to month/year
+    function monthYear(date) {
+        const res = date.split("-");
+        return res[1]+"/"+res[0];
+      }
     return(
         <div>
             <hr class="solid"/>
@@ -135,7 +113,7 @@ export default function PF_Education(preference){
                         </Typography>
                     </Typography>
                     <Typography variant="h3" class="year">
-                            {data.startDate}  -  {data.endDate}
+                            {monthYear(data.startDate)}  -  {monthYear(data.endDate)}
                     </Typography>
                     
                     

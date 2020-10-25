@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -108,23 +110,35 @@ function showProject(darkmode){
 //   }
 // }
 
-export default function PF_Body(){
+export default function PF_Body(preference){
     var classes = useStyles();
-    const darkmode = false;
+    const darkmode = preference.darkMode;
+    let flag = true
+    let loc = window.location.pathname;
+    const [pf,setPf] = React.useState([])
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
+
+    if (flag){
+        AxiosInstance.get("public/profile/"+getUsername(loc))
+        .then(res => {
+        setPf(res.data);
+        })
+        flag = false;
+    }
     return(
         <div class="pf">
 
             <hr class="solid"/>
             <Card id="description" className={ darkmode ? classes.darkPaper :classes.lightPaper }>
             
-            <Typography variant="h4"> Description</Typography>
+    <Typography variant="h4"> Descrption</Typography>
             <br/>
 
             <Typography theme="theme">
-                I'm diligent, love to connect with new people and do teamwork. 
-                cool right? Lets meet up and talk!
-                <br/>
-                Looking forward to see you soon!
+            {pf.description}
             </Typography>
             </Card>
 
