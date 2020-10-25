@@ -53,7 +53,9 @@ export default function Contact(props) {
 
     const [backgroundImg, setBackgroundImg] = React.useState([]);
     const [profileImg, setProfileImg] = React.useState([]);
-    const [filesToDelete, setFilesToDelete] = React.useState([])
+    const [profileToDelete, setProfileToDelete] = React.useState([])
+    const [backgroundToDelete, setBackgroundToDelete] = React.useState([])
+
     useEffect(() => {
   
       AxiosInstance.get(
@@ -91,7 +93,6 @@ export default function Contact(props) {
       e.preventDefault();
 
       const formData = new FormData();
-
       formData.append('profileImage', profileImg[0]);
       formData.append('backgroundImage', backgroundImg[0]);
       
@@ -102,24 +103,29 @@ export default function Contact(props) {
       // formData.append('filesToDelete', profileImg[0]);
       // formData.append('filesToDelete', backgroundImg[0]);
 
-      // formData.append('filesToDelete', '');
-      // formData.append('filesToDelete', '');
+      formData.append('profileToDelete', profileToDelete);
+      formData.append('backgroundToDelete', backgroundToDelete);
 
       AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
         console.log(response)
         const data = response.data
         setFields(data)
-        setFilesToDelete([])
+        setProfileToDelete([])
+        setBackgroundToDelete([])
         setButtonClick(true)
       })
       .catch(err =>{
         console.log(err);
       })
   }
-  function onDeleteFile(e, fileName){
+  function onDeleteProfileFile(e, fileName){
     e.preventDefault();
-    setFilesToDelete(filesToDelete.concat(fileName))
+    setProfileToDelete(profileToDelete.concat(fileName))
+  }
+  function onDeleteBackgroundFile(e, fileName){
+    e.preventDefault();
+    setBackgroundToDelete(backgroundToDelete.concat(fileName))
   }
 
     function isOkay(status){
@@ -335,7 +341,7 @@ export default function Contact(props) {
                               {fields.profileImageName.length===2?
                                   <React.Fragment>
                                     <a href={fields.profileImageName[1]}>{fields.profileImageName[0]}</a>
-                                    <button onClick={(e) => fields.profileImageName.splice(0,1) && onDeleteFile(e, fields.profileImageName[0])}>X</button>
+                                    <button onClick={(e) => fields.profileImageName.splice(0,1) && onDeleteProfileFile(e, fields.profileImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                               :null}
@@ -357,7 +363,7 @@ export default function Contact(props) {
                                   {fields.backgroundImageName.length===2?
                                   <React.Fragment>
                                     <a href={fields.backgroundImageName[1]}>{fields.backgroundImageName[0]}</a>
-                                    <button onClick={(e) => fields.backgroundImageName.splice(0,1) && onDeleteFile(e, fields.backgroundImageName[0])}>X</button>
+                                    <button onClick={(e) => fields.backgroundImageName.splice(0,1) && onDeleteBackgroundFile(e, fields.backgroundImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                                     :null}
