@@ -112,11 +112,6 @@ function showProject(darkmode){
 //   }
 // }
 
-<<<<<<< HEAD
-export default function PF_Body(){
-    const classes = useStyles();
-    const darkmode = false;
-=======
 export default function PF_Body(preference){
     var classes = useStyles();
     const darkmode = preference.darkMode;
@@ -135,7 +130,6 @@ export default function PF_Body(preference){
         })
         flag = false;
     }
->>>>>>> 1ea8a8dc726cd7db40d4d494f226b86723520c3d
     return(
         <div class="pf">
             <Divider />

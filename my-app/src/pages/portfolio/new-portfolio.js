@@ -134,8 +134,8 @@ export default function New(){
     const classes = useStyles();
 
     return(
-        <div>
-            <Paper style={Header} >
+        <>
+            <Box style={Header} >
             
                 <div class="grid-container">
                     <div class='left'>

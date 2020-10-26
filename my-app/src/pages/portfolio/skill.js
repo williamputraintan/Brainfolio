@@ -19,7 +19,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip'
-import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 
 
