@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -45,69 +47,54 @@ const useStyles = makeStyles((theme) => ({
 export default function PF_Project(preference){
 
     const darkmode = preference.darkMode;
+    const classes = useStyles();
+    const [project,setProject] = useState([]);
+    let flag = true;
+    let loc = window.location.pathname;
 
-    const projectData = [
-        {
-            name: "sb",
-            startdate: "August 2019",
-            end: "November 2019",
-            desc: "cool proejct"
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
 
-        },
-        {
-            name: "sb",
-            startdate: "August 2019",
-            end: "November 2019",
-            desc: "cool proejct"
+    if (flag){
+        AxiosInstance.get("public/allproject/"+getUsername(loc))
+        .then(res => {
+        setProject(res.data);
+        })
+        flag = false;
+    }
 
-        }
-    ]
-    var classes = useStyles();
+    function projectLink(username, id){
+        return "../project/"+username+"/"+id;
+    }
     return(
         <div>
             <hr class="solid"/>
             <Card id="project" className={darkmode ? classes.darkPaper : classes.lightPaper}>
                 <Typography variant="h4"> Project</Typography>
                 <br/>
-                {projectData.map((project) => (
+                {project.map((project) => (
                 <Card className={classes.project}>
                     <CardContent>
                         <Typography variant="h5" component="h2">
-                        {project.name}
+                        {project.title}
                         </Typography>
                         <Typography className={classes.pos} color="textSecondary">
-                        {project.startdate} - {project.end}
+                        {project.startDate} - {project.endDate}
                         </Typography>
                         <br></br>
                         <Typography variant="body1" component="p">
-                            {project.desc}
+                            {project.description}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Learn More</Button>
+                        <Button size="small" href={projectLink(project.username, project._id)}>Learn More</Button>
                     </CardActions>
                 </Card>
                 ))}
 
-                <Card className={classes.project}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                        Shadow Bounce
-                        </Typography>
-                        <Typography className={classes.pos} color="textSecondary">
-                        August 2019 - November 2019
-                        </Typography>
-                        <br></br>
-                        <Typography variant="body1" component="p">
-                            A game that aims to pop all of the bubbles in the screen using a peg.
-                        <br />
-                            This project is under SWEN20003.
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small" href="../project">Learn More</Button>
-                    </CardActions>
-                </Card>
+
             </Card>
 
         </div>

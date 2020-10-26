@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import AxiosInstance  from "../../utils/axios";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -70,22 +71,29 @@ const useStyles = makeStyles((theme) => ({
 export default function PF_Experience(preference){
     const darkmode = preference.darkMode;
     const classes = useStyles();
+    const [exp,setExp] = useState([]);
+    let flag = true;
+    let loc = window.location.pathname;
 
-    const exp = [
-                    {
-                        "_id":{"$oid":"5f92f8178c708fbb53a27ec7"},
-                        "username":"pbudiman",
-                        "type":"Volunteer",
-                        "name":"Vinnies",
-                        "title":"Retail Volunteer",
-                        "description":"Helps in managing the retail store",
-                        "startDate":{"$date":{"$numberLong":"1484175600000"}},
-                        "endDate":{"$date":{"$numberLong":"1547593200000"}},
-                        "onGoing":false,
-                        "__v":{"$numberInt":"0"}
-                    }
-                ]
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
 
+    if (flag){
+        AxiosInstance.get("public/experience/"+getUsername(loc))
+        .then(res => {
+        setExp(res.data);
+        })
+        flag = false;
+    }
+
+    // convert from full date and time to month/year
+    function monthYear(date) {
+        const res = date.split("-");
+        return res[1]+"/"+res[0];
+      }
+    
     return(
         <div>
             <hr class="solid"/>
@@ -98,18 +106,18 @@ export default function PF_Experience(preference){
                 <div class="grid-exp">
                     
                     <Typography variant="h2" class="role">
-                        {data.title}
+                        {data.title} ({data.type})
                     </Typography>
                     <Typography variant="h3" class="year">
-                        {/* {formatDate(data.startDate)} - {formatDate(data.endDate)} */}
+                        {monthYear(data.startDate)} - {monthYear(data.endDate)}
                     </Typography>
                     <Typography variant="h2" class="company">
-                        Apple Inc.
+                        {data.name} 
                     </Typography>
                     <Typography variant="h3" class="desc">
                         Job Description:
                         <Typography>
-                            - bam bam bam
+                            {data.description}
                         </Typography>
                     </Typography>
                 </div>

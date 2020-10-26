@@ -37,21 +37,21 @@ const tileData = [
         title: 'Title',
         author: 'Author'
     },
-    // {
-    //     img: image,
-    //     title: 'Picture Title',
-    //     author: 'Author'
-    // },
-    // {
-    //     img: image,
-    //     title: 'Title',
-    //     author: 'Author'
-    // },
-    // {
-    //     img: image,
-    //     title: 'Title',
-    //     author: 'Author'
-    // },
+    {
+        img: image,
+        title: 'Picture Title',
+        author: 'Author'
+    },
+    {
+        img: image,
+        title: 'Title',
+        author: 'Author'
+    },
+    {
+        img: image,
+        title: 'Title',
+        author: 'Author'
+    },
     // {
     //     img: image,
     //     title: 'Title',
@@ -59,9 +59,9 @@ const tileData = [
     // },
     
 ]
-export default function SingleLineGridList() {
+export default function SingleLineGridList(projectDisplay) {
   const classes = useStyles();
-
+  const files = projectDisplay.files;
   return (
     <Container>
       <GridList className={classes.gridList} cellHeight='250'>

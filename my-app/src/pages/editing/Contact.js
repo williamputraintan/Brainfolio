@@ -53,7 +53,9 @@ export default function Contact(props) {
 
     const [backgroundImg, setBackgroundImg] = React.useState([]);
     const [profileImg, setProfileImg] = React.useState([]);
-    const [filesToDelete, setFilesToDelete] = React.useState([])
+    const [profileToDelete, setProfileToDelete] = React.useState([])
+    const [backgroundToDelete, setBackgroundToDelete] = React.useState([])
+
     useEffect(() => {
   
       AxiosInstance.get(
@@ -61,9 +63,11 @@ export default function Contact(props) {
         config
         )
       .then((response) => {
+        console.log(response);
         const responseData = response.data;
-        setExistingData(responseData);
+        setExistingData([responseData]);
         setButtonClick(false)
+        setFields(responseData)
       })
     },[buttonClick]);
 
@@ -91,7 +95,6 @@ export default function Contact(props) {
       e.preventDefault();
 
       const formData = new FormData();
-
       formData.append('profileImage', profileImg[0]);
       formData.append('backgroundImage', backgroundImg[0]);
       
@@ -102,24 +105,35 @@ export default function Contact(props) {
       // formData.append('filesToDelete', profileImg[0]);
       // formData.append('filesToDelete', backgroundImg[0]);
 
-      // formData.append('filesToDelete', '');
-      // formData.append('filesToDelete', '');
+      formData.append('profileToDelete', profileToDelete);
+      formData.append('backgroundToDelete', backgroundToDelete);
 
       AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
         console.log(response)
         const data = response.data
         setFields(data)
-        setFilesToDelete([])
+        setProfileToDelete([])
+        setBackgroundToDelete([])
         setButtonClick(true)
+        document.getElementById('profileImage').value = ''
+        document.getElementById('backgroundImage').value = ''
       })
       .catch(err =>{
         console.log(err);
       })
   }
-  function onDeleteFile(e, fileName){
+  function onDeleteProfileFile(e, fileName){
     e.preventDefault();
-    setFilesToDelete(filesToDelete.concat(fileName))
+    setProfileToDelete(profileToDelete.concat(fileName))
+    fields.profileImageName.splice(0,1)
+    console.log(fileName);
+  }
+  function onDeleteBackgroundFile(e, fileName){
+    e.preventDefault();
+    setBackgroundToDelete(backgroundToDelete.concat(fileName))
+    fields.backgroundImageName.splice(0,1)
+    console.log(fileName);
   }
 
     function isOkay(status){
@@ -324,7 +338,7 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Your Profile Picture </div>
                       <div>
-                        <input id="inputFile" type="file"  name="files" onChange={onProfileImgUpload}/>
+                        <input id="profileImage" type="file"  name="files" onChange={onProfileImgUpload}/>
                       </div>
                       <Card className={classes.cardContributor}>
                           <CardContent>
@@ -332,10 +346,10 @@ export default function Contact(props) {
                               Uploaded Files   
                             </Typography>
                    
-                              {fields.profileImageName.length===2?
+                              {Array.isArray(fields.profileImageName)?
                                   <React.Fragment>
-                                    <a href={fields.profileImageName[1]}>{fields.profileImageName[0]}</a>
-                                    <button onClick={(e) => fields.profileImageName.splice(0,1) && onDeleteFile(e, fields.profileImageName[0])}>X</button>
+                                    <img src={fields.profileImageName[1]} alt='your profile image' width="500"/>
+                                    <button onClick={(e) => onDeleteProfileFile(e, fields.profileImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                               :null}
@@ -347,17 +361,17 @@ export default function Contact(props) {
                     <Grid item xs={12} sm={12}>
                       <div className={classes.field}> Your Background image </div>
                       <div>
-                        <input id="inputFile" type="file"  name="files" onChange={onBackgroundUpload}/>
+                        <input id="backgroundImage" type="file"  name="files" onChange={onBackgroundUpload}/>
                       </div>
                       <Card className={classes.cardContributor}>
                           <CardContent>
                             <Typography color="textSecondary" gutterBottom>
                               Uploaded Files   
                             </Typography>
-                                  {fields.backgroundImageName.length===2?
+                                  {Array.isArray(fields.backgroundImageName)?
                                   <React.Fragment>
-                                    <a href={fields.backgroundImageName[1]}>{fields.backgroundImageName[0]}</a>
-                                    <button onClick={(e) => fields.backgroundImageName.splice(0,1) && onDeleteFile(e, fields.backgroundImageName[0])}>X</button>
+                                    <img src={fields.backgroundImageName[1]} alt='your background image' width="500"/>
+                                    <button onClick={(e) => onDeleteBackgroundFile(e, fields.backgroundImageName[0])}>X</button>
                                     <br/>
                                     </React.Fragment>
                                     :null}

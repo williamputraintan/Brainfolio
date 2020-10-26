@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +18,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Chip from '@material-ui/core/Chip'
+import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 
 
@@ -62,6 +66,40 @@ const useStyles = makeStyles((theme) => ({
 export default function PF_Skill(preference){
     const darkmode = preference.darkMode;
     const classes = useStyles();
+    const [skill,setSkill] = useState([]);
+    let flag = true;
+    let loc = window.location.pathname;
+
+    function getUsername(path) {
+        const res = path.split("/");
+        return res[2];
+    }
+
+    if (flag){
+        AxiosInstance.get("public/skills/"+getUsername(loc))
+        .then(res => {
+        setSkill(res.data);
+        })
+
+        flag = false;
+    }
+
+    function softSkill(data){
+        if (data.category==="Soft"){
+            return(
+                <Chip className={classes.button} label={data.name}/>
+                )
+            }
+    }
+
+    function techSkill(data){
+        if (data.category==="Technical"){
+            return(
+            <Chip className={classes.button} label={data.name}/>
+            )
+        }
+    }
+
     return(
         <div>
             <hr class="solid"/>
@@ -75,17 +113,10 @@ export default function PF_Skill(preference){
                     </Typography>
                 </div>
                 <div>
-                    <Button className={classes.button}>React.js</Button>
-                    <Button className={classes.button}>Nest.js</Button>
-                    <Button className={classes.button}>Redux</Button>
-                    <Button className={classes.button}>Kubernetes</Button>
-                    <Button className={classes.button}>Docker</Button>
-                    <Button className={classes.button}>Python</Button>
-                    <Button className={classes.button}>Kubernetes</Button>
-                    <Button className={classes.button}>Kubernetes</Button>
-                    <Button className={classes.button}>Docker</Button>
-                    <Button className={classes.button}>Python</Button>
-                    <Button className={classes.button}>Kubernetes</Button>
+                    {skill.map((data)=> (
+                        techSkill(data)
+                        ))}
+                    
                 </div>
                 <br/>
                 <br/>
@@ -95,9 +126,9 @@ export default function PF_Skill(preference){
                     </Typography>
                 </div>
                 <div>
-                    <Button className={classes.button2}>Teamwork</Button>
-                    <Button className={classes.button2}>Communication</Button>
-                    <Button className={classes.button2}>Leadership</Button>
+                {skill.map((data)=> (
+                        softSkill(data)
+                ))}
                 </div>
 
             </Card>

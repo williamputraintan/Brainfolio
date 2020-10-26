@@ -5,7 +5,6 @@ import { createMuiTheme }  from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
-    type: "light",
     gradient: {
       background: 'linear-gradient(90deg, #041e42,#5C788F)'
     },

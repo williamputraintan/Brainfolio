@@ -8,16 +8,30 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import useStyles from './useStyles';
 
-const author = [
-                {},{},{}
-              ]
 
-function ProjectAuthor() {
+
+function ProjectAuthor(data) {
     const classes = useStyles();
+    const author = data.ProjectAuthor;
+    
+    function authorArray(authors){
+      let nameEmailAuthors = [];
+      if (authors!==undefined){
+        let author = authors.split(',');
+        for (let i=0; i<(author.length)/2;i++){
+          nameEmailAuthors.push(author.splice(0,2));
+        }
+      } else {
+        nameEmailAuthors.push(["Personal Project", ""]);
+      }
+      return nameEmailAuthors;
+    }
+    const authorDetails = authorArray(author);
+    console.log("ARRRRR"+authorArray(author));
     return (
         <Container className={classes.cardGrid} >
           <Grid container spacing={2}>
-            {author.map((card) => (
+            {authorDetails.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={12}>
                 <Card>
                     <CardHeader
@@ -27,8 +41,8 @@ function ProjectAuthor() {
                         </Avatar>
                       </CardActionArea>
                     }
-                    title= {"Name | Author"}
-                    subheader="Email: author@email.com"
+                    title= {"Name: "+ "Andrew Tjen"}
+                    subheader= {"Email: "+ "andrewt@gmail.com"}
                     />
                 </Card>
               </Grid>

@@ -177,10 +177,11 @@ export default function Projects() {
     function displayContributor(){
       var res=[];
       var i;
-      for(i=0;i<fields.contributor.length;i++){
-        console.log(fields.contributor[i]);
-        res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
-      }
+      console.log(fields);
+      // for(i=0;i<fields.contributor.length;i++){
+      //   console.log(fields.contributor[i]);
+      //   res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
+      // }
       
       return res;
 

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
+import { UserContext } from '../../context/user.context';
+import AxiosInstance  from "../../utils/axios";
 import ReactPlayer from 'react-player/youtube'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import axios from 'axios';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './useStyles'
 import {  useTheme } from '@material-ui/styles';
@@ -14,7 +14,6 @@ import ProjectDisplay from './ProjectFile';
 import ProjectAuthor from './ProjectAuthor';
 
 import './project.css';
-import { useEffect } from 'react';
 
 function Copyright() {
   return (
@@ -30,29 +29,26 @@ function Copyright() {
 }
 
 // gather it from backend
-const author = [1, 2, 3];
 
-export default function ProjectPage() {
+export default function ProjectPage(preference) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
                     defaultMatches: true
                   });
   const classes = useStyles();
-
-  const [projects, setProjects] = React.useState([]);
-  const [dataNotRecieved, setDataNotRecieved] = React.useState(true);
-
-  useEffect(() => {
-    if (dataNotRecieved) {
-      console.log("data in");
-      axios.get("http://localhost:5000/projects/")
-      .then((res) => {
-        const resData = res.data;
-        setProjects(resData);
-      })
-      setDataNotRecieved(false);
-    };
-  });
+  // const projectId = project.id;
+  const [project, setProject] = React.useState([]);
+  const darkmode = preference.darkMode;
+  const name = preference;
+    let flag = true;
+    let loc = window.location.pathname;
+    if (flag){
+        AxiosInstance.get("public"+loc)
+        .then(res => {
+        setProject(res.data);
+        })
+        flag = false;
+    }
 
   return (
     <div>
@@ -60,7 +56,10 @@ export default function ProjectPage() {
         <Grid item xs={12} sm={12}>
           <div class="project-title">
               <Typography variant="h3" align="center"> 
-                Project Title
+                {project.title}
+              </Typography>
+              <Typography variant="h5" align="center"> 
+                {project.startDate} - {project.endDate}
               </Typography>
           </div>
         </Grid>
@@ -72,7 +71,7 @@ export default function ProjectPage() {
               </Typography>
               <div class="project-desc-body">
                 <Typography>
-                  Enter the description here.
+                  {project.description}
                 </Typography>
               </div>
             </div>
@@ -83,11 +82,11 @@ export default function ProjectPage() {
           <div class="author">
             <div class="author-word">
             <Typography variant="h5">
-                Author:
+                Contributor:
             </Typography>    
             </div>
             <div>
-              <ProjectAuthor/>
+              <ProjectAuthor author={project.contributor}/>
             </div>
           </div>
           
@@ -102,7 +101,7 @@ export default function ProjectPage() {
               </div>
 
               <div class="project-display">
-                <ProjectDisplay/>
+                <ProjectDisplay files={project.projectFileName}/>
               </div>
             </div>
           </div>
