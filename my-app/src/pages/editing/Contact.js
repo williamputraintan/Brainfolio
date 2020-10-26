@@ -346,7 +346,7 @@ export default function Contact(props) {
                               Uploaded Files   
                             </Typography>
                    
-                              {fields.profileImageName.length===2?
+                              {Array.isArray(fields.profileImageName)?
                                   <React.Fragment>
                                     <img src={fields.profileImageName[1]} alt='your profile image' width="500"/>
                                     <button onClick={(e) => onDeleteProfileFile(e, fields.profileImageName[0])}>X</button>
@@ -368,7 +368,7 @@ export default function Contact(props) {
                             <Typography color="textSecondary" gutterBottom>
                               Uploaded Files   
                             </Typography>
-                                  {fields.backgroundImageName.length===2?
+                                  {Array.isArray(fields.backgroundImageName)?
                                   <React.Fragment>
                                     <img src={fields.backgroundImageName[1]} alt='your background image' width="500"/>
                                     <button onClick={(e) => onDeleteBackgroundFile(e, fields.backgroundImageName[0])}>X</button>
