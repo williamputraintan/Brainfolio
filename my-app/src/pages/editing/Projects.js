@@ -37,7 +37,8 @@ export default function Projects() {
       "startDate":"Start Date",
       "endDate":"End Date",
       "title":"Title",
-      "isPublic":"Visibility"
+      "isPublic":"Visibility",
+      "youtubeLink": "youtubeLink" 
     }
 
     const {state} = useContext(UserContext);
@@ -48,12 +49,13 @@ export default function Projects() {
     const [buttonClick, setButtonClick] = React.useState(false)
     // fields form
     const [fields, setFields] = React.useState({
-      _id:"",
+      // _id:"",
       isPublic:true,
-      title: "",
-      startDate:"",
-      endDate:"",
-      description:"",
+      // title: "",
+      // startDate:"",
+      // endDate:"",
+      // description:"",
+      // youtubeLink: "",
       contributor:[],
       projectFileName:[],
     })
@@ -95,7 +97,7 @@ export default function Projects() {
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
       for(let i in fields.projectFileName){
-        if(fileName == fields.projectFileName[1][0]){
+        if(fileName == fields.projectFileName[i][0]){
           fields.projectFileName.splice(i,1)
         }
       }
@@ -110,6 +112,14 @@ export default function Projects() {
       )
       .catch(error=>
         console.log(error))
+    }
+    function isYoutubeUrl (url) {
+      if(url){
+        let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
+        console.log(youtubeRegex.test(url));
+        return youtubeRegex.test(url)
+      }
+      return true
     }
 
 
@@ -134,8 +144,9 @@ export default function Projects() {
       }
       formData.append('filesToDelete', '')
       formData.append('filesToDelete', '')
-      console.log('DELTE = ', formData.get('filesToDelete'));
-      console.log('contributor = ', formData.getAll('contributor'));
+
+
+
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
         console.log(response);
@@ -344,10 +355,26 @@ export default function Projects() {
                               ))}
                           </CardContent>
                         </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <div className={classes.field}> YouTube Link </div>
+                        <TextField
+                          error={(!isYoutubeUrl(fields.youtubeLink))}
+                          helperText={(!isYoutubeUrl(fields.youtubeLink)) ? "Must be a YouTube Link" : null}
+                          name="youtubeLink"
+                          variant="outlined"
+                          fullWidth
+                          id="youtubeLink"
+                          placeholder="https://www.youtube.com/"
+                          autoFocus
+                          onChange={onFormInputChange}
+                          value={fields.youtubeLink}          
+                          />
                       </Grid> 
                   </Grid>
                   <Grid xs={12} sm={12}>
                       <Button
+                      disabled={(!isYoutubeUrl(fields.youtubeLink))}
                       type="submit"
                       variant="contained"
                       className={classes.submit}
