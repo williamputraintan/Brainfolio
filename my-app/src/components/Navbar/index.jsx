@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   activeLink:{
     backgroundColor: {...theme.palette.primary.main},
-
   },
   navActions:{
     flexGrow: 1,

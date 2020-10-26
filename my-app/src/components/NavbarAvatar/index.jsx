@@ -9,19 +9,35 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+
+
+import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { Link } from "react-router-dom";
+import Menu from '@material-ui/core/Menu'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import { NavLink as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
+
+import { logUserOff } from "../../context/actions/auth.actions";
+import { UserContext } from "../../context/user.context.jsx";
+import Paths from "../../utils/path";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  links: {
+    fontWeight: 700
+  }
 }));
 
 function NavAvatar(props) {
   const classes = useStyles();
 
+  const { dispatch } = React.useContext(UserContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -38,6 +54,11 @@ function NavAvatar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const signOut = () => {
+    logUserOff(dispatch)
+    setAnchorEl(null);
+  }
 
   return (
     <div>
@@ -68,7 +89,16 @@ function NavAvatar(props) {
         <MenuItem onClick={handleClose}>
           <Link to="/edit/contact">Portfolio</Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+
+
+        <Divider />
+
+        <MenuItem onClick={signOut}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <Link className={classes.links} component={RouterLink} to={Paths.ABOUT_US}>Sign Out</Link>
+        </MenuItem>
       </Menu>
     </div>
   )

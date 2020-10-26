@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import PageLoader from '../common/PageLoading';
 import { useWindowWidth,} from '@react-hook/window-size';
-import { UserContext, } from '../context/user.context';
+import { UserContext } from '../context/user.context';
 
 
 //Lazy-Load Imports

@@ -1,8 +1,5 @@
 import React, { Suspense, useMemo }  from 'react';
 import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
-import Timeline from './pages/Timeline.jsx'
-import EditingPage from './pages/editing/EditingPage'
-import DomTreeLoader from "./common/DOMTreeLoading";
 
 import NavbarController from "./controllers/NavbarController";
 
@@ -11,6 +8,10 @@ import Page404 from "./common/404";
 
 // Imports
 import { ThemeProvider } from '@material-ui/core/styles';
+import { UserContext } from './context/user.context';
+import firebase from './utils/firebase';
+import { persistUser,setUserLoading } from "./context/actions/auth.actions";
+import DomTreeLoader from "./common/DOMTreeLoading";
 
 //Lazy Import
 const AboutUs = React.lazy(() => import('./pages/AboutUs.js'));
@@ -22,15 +23,29 @@ const AuthenticatedRoute = React.lazy(() => import('./controllers/AuthenticatedR
 const newPortfolio = React.lazy(() => import('./pages/portfolio/new-portfolio.js'));
 
 
+
 function App() {
 
+  const {state, dispatch} = React.useContext(UserContext);
+  
+ 
+  React.useEffect(() => {
+    setUserLoading(dispatch, true)
+    firebase.auth().onAuthStateChanged(function(user) {
+      persistUser(dispatch, user)
+    });
+  }, [])
+
+ 
+
   return (
-    <>
-      {/* <Redirect to="/new"/> */}
+    <Suspense fallback={<DomTreeLoader/>}>
+      
       <NavbarController />
       <Switch>
           <Route exact path="/" render={() => <Redirect to="/aboutUs"/>}/>
           <Route path="/home" component={AuthenticatedRoute} />
+          
           {/** Public Routes**/}
           <Route path="/auth" component={AuthenticationPage} />
           <Route path="/portfolio/:username" component={Portfolio}/>
@@ -43,7 +58,7 @@ function App() {
           {/* <Route path="/" component={Timeline} className={classes.root} />  */}
           
       </Switch>
-    </>
+    </Suspense>
   );
 }
 

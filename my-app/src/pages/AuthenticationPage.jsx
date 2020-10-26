@@ -17,16 +17,18 @@ function AuthenticationPage() {
 
   React.useEffect(() => {
     setUserLoading(dispatch, true)
-
-    firebase.auth().getRedirectResult()
+    if(!state.user){
+      firebase.auth().getRedirectResult()
       .then(async res => {
 
         if(res.user != null){
           const idToken = await firebase.auth().currentUser.getIdToken(true)
-          getUserFromDb(dispatch, idToken)
-        }else{
-          setUserLoading(dispatch, false)
+          await getUserFromDb(dispatch, idToken)
         }
+        firebase.auth().onAuthStateChanged(user => {
+          console.log(user)
+          setUserLoading(dispatch, false)
+        })
 
       })
       .catch(err => {
@@ -34,19 +36,19 @@ function AuthenticationPage() {
         setUserLoading(dispatch, false)
         history.push("/404")
       })
-
+    }   
   }, [dispatch,history]);
 
 
   return (
     <>
-    {
-      state.isLoading ? <LoadingPage />:
-        <Switch>
-          <Route exact path={Paths.SIGN_IN} component={SignIn}/> 
-          <Route path={Paths.SIGN_UP} component={SignUp}/>
-        </Switch>
-    }
+    {state.isLoading && <LoadingPage /> }
+
+      <Switch>
+        <Route exact path={Paths.SIGN_IN} component={SignIn}/> 
+        <Route path={Paths.SIGN_UP} component={SignUp}/>
+      </Switch>
+   
     </>
   )
 }

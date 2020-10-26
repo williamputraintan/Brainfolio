@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -10,7 +10,7 @@ import { history } from "./utils/BrowserHistory";
 import theme from "./utils/theme/MinimalTheme";
 
 import { UserContextProvider } from './context/user.context';
-import DomTreeLoader from "./common/DOMTreeLoading";
+
 
 
 /** Router History -> ability to pass history to props (Global history) 
@@ -23,15 +23,15 @@ import DomTreeLoader from "./common/DOMTreeLoading";
 ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
-      <Suspense fallback={<DomTreeLoader/>}>
         <ThemeProvider theme={theme}>
-          <UserContextProvider>
-              <CssBaseline>
-                <App />
-              </CssBaseline>
-            </UserContextProvider>
+          <CssBaseline>
+            <UserContextProvider>
+                
+                  <App />
+              
+              </UserContextProvider>
+          </CssBaseline>
         </ThemeProvider>
-      </Suspense>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

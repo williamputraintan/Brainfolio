@@ -13,6 +13,13 @@ export const setUserLoading = (dispatch, bool) => {
   })
 }
 
+export const persistUser = async (dispatch, user) =>{
+  
+  if(user){
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    getUserFromDb(dispatch, idToken)
+  }
+}
 
 export const getUserFromDb = async (dispatch, idToken) => {
 
@@ -51,12 +58,30 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
 
 export const signInUser = async (dispatch, email, password) => {
+
+  const user = firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(function() {
+      // Existing and future Auth states are now persisted in the current
+      // session only. Closing the window would clear any existing state even
+      // if a user forgets to sign out.
+      // ...
+      // New sign-in will be persisted with session persistence.
+      return firebase.auth().signInWithEmailAndPassword(email, password);
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+    });
+
+    console.log(user)
   try{
-    const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+   
+    // const user = await firebase.auth().signInWithEmailAndPassword(email, password);
     if(user){
       const idToken = await firebase.auth().currentUser.getIdToken(true);
 
-      console.log(idToken);
+      
       getUserFromDb(dispatch, idToken);
     }
   }
@@ -115,14 +140,15 @@ export const setUsername = async (dispatch,username) => {
   }
 }
 
-export const logUserOff = (dispatch) => {
-  firebase.auth().signOut().then(function() {
+export const logUserOff = async (dispatch) => {
+  await firebase.auth().signOut().then(function() {
     // Sign-out successful.
     dispatch({
       type: USER_LOG_OFF,
       payload: null
     })
   }).catch(function(error) {
+    console.log(error)
     history.push("/404")
   });
 }

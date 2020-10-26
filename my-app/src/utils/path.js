@@ -8,7 +8,8 @@ const Paths = {
   SIGN_UP_3: auth + "/signup/3",
   SIGN_IN: auth + "/signin",
   HOME: "/home",
-  PORTFOLIO: "/portfolio"
+  PORTFOLIO: "/portfolio",
+  ABOUT_US: "/aboutUs"
 }
 
 export default Paths
