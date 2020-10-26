@@ -1,24 +1,11 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide, Container } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 
-
-import './portfolioPage.css';
 import VerticalTabs from './verticalTab.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function Portfolio(){
-    var classes = useStyles();
+    const classes = useStyles();
     return(
           <Container className = 'portfolio-container'>
              <Container className = 'portfolio-template'>

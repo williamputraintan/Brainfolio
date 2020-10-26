@@ -21,6 +21,10 @@ axios.interceptors.response.use(response => {
   return response
 }, 
 ({response}) => {
+  console.log(response)
+  if(Axios.isCancel()){
+    return;
+  }
   // console.log(response);
   switch(response.status){
     case 404: 

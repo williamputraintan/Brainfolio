@@ -56,7 +56,7 @@ export default function SignUp() {
 
   return (
     <>
-    {(getLastPath(pathname) === 'signup') && <Redirect to={Paths.SIGN_UP_3}/>}
+    {(getLastPath(pathname) === 'signup') && <Redirect to={Paths.SIGN_UP_1}/>}
 
       <Grid container component="main" className={classes.root}>
         

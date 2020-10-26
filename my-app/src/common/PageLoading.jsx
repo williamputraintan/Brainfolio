@@ -41,7 +41,7 @@ function PageLoading() {
     <section className={classes.root}>
       <div className={classes.paper} elevation={0}>
         <div classes={classes.content}>
-          <Spinner className={classes.spinner} name="folding-cube" color="#EDEDED" fadeIn={0}/>
+          <Spinner className={classes.spinner} name="folding-cube" color="#EDEDED" fadeIn="full"/>
         </div>
       </div>
     </section>

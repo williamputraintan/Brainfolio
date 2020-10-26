@@ -1,9 +1,8 @@
-import theme from '../../utils/theme';
 import { makeStyles } from '@material-ui/core/styles';
 import { black } from 'chalk';
 
 //styles for editing page main components
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     paper: {
       display: 'flex',
       flexDirection: 'column',

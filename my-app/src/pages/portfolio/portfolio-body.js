@@ -16,8 +16,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import theme from '../../utils/theme';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+
+
 
 
 import './new-pf.css'
@@ -26,7 +28,7 @@ import PF_Education from './education';
 import PF_Skill from './skill';
 import PF_Project from './project';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     large: {
         // width: "10em",
         // height: "10em",
@@ -109,12 +111,12 @@ function showProject(darkmode){
 // }
 
 export default function PF_Body(){
-    var classes = useStyles();
+    const classes = useStyles();
     const darkmode = false;
     return(
         <div class="pf">
+            <Divider />
 
-            <hr class="solid"/>
             <Card id="description" className={ darkmode ? classes.darkPaper :classes.lightPaper }>
             
             <Typography variant="h4"> Description</Typography>

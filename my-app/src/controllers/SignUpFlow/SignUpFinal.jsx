@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, Suspense} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,9 @@ import { uploadProfileImages } from "../../utils/http"
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Paths from "../../utils/path";
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,7 +97,6 @@ function SignUpFinal(props) {
   const backgroundEl = useRef();
   const avatarEl = useRef();
 
-
   const classes = useStyles();
   const [fields, setFields] = React.useState({
     background:null,
@@ -127,9 +129,9 @@ function SignUpFinal(props) {
       avatarEl.current.style.display = "block";
       console.log(URL.createObjectURL(e.target.files[0]))
       avatarEl.current.src = URL.createObjectURL(e.target.files[0]);
-      // avatarEl.current.onload = function(){
-      //   URL.revokeObjectURL(avatarEl.src)
-      // }
+      avatarEl.current.onload = function(){
+        URL.revokeObjectURL(avatarEl.src)
+      }
     }
   }
 
@@ -140,7 +142,7 @@ function SignUpFinal(props) {
     backgroundEl.current.src = URL.createObjectURL(e.target.files[0]);
 
     backgroundEl.current.onload = function(){
-      URL.revokeObjectURL(avatarEl.src)
+      URL.revokeObjectURL(backgroundEl.src)
     }
 
     setFields({

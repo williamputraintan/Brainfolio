@@ -29,7 +29,6 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
     const { data } = response;
 
-    console.log(data)
 
     dispatch({
       type:  SET_USER,
@@ -87,11 +86,18 @@ export const signUpUser = async (dispatch, email, password) => {
 export const setUsername = async (dispatch,username) => {
   try{
     const idToken = await firebase.auth().currentUser.getIdToken(true);
+    console.log(idToken)
 
+    
     const response = await AxiosInstance
       .post("/v2/auth/set/username", 
-        {username: username},{headers: 
-        { 'Authorization': `Bearer ${idToken}`}})
+        {username: username},
+        {
+          headers: 
+          { 'Authorization': `Bearer ${idToken}`}
+        })
+
+    console.log(response)
 
     const { data } = response;
 

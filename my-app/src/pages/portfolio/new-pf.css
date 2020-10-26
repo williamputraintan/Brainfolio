@@ -29,6 +29,7 @@ div.edit {
     overflow: scroll;
     padding-top: 7%;
     opacity: 90%;
+    overflow: hidden;
 }
 
 /* Solid border */

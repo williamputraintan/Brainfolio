@@ -7,13 +7,12 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 
 
 import './new-pf.css'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     button:{
         backgroundColor:theme.palette.primary.main,
         color:theme.overrides.MuiButton.containedPrimary.color,

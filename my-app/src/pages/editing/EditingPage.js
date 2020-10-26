@@ -10,7 +10,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import theme from '../../utils/theme'
 import Contact from './Contact';
 import Education from './Education';
 import Skills from './Skills';
@@ -22,7 +21,7 @@ import Overview from './Overview';
 
 import editbackground from '../../images/editbackground.png';
 
-const buttonStyles = makeStyles(() => ({
+const buttonStyles = makeStyles((theme) => ({
     container:{
         padding:'5% 0% 5% 5%',
         height:'100%',

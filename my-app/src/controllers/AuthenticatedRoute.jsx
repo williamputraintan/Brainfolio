@@ -8,7 +8,7 @@ import Paths from "../utils/path";
 
 function AuthenticatedRoute(props) {
   const {state} = useContext(UserContext);
-  const username = state.user.username
+  const username = state.user?.username
 
   return (
     <div>

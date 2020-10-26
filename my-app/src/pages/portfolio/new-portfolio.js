@@ -6,19 +6,22 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Slide, Container } from '@material-ui/core';
-import theme from '../../utils/theme';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import bgDefaultDark from '../../images/portfolio-jumbotron/grey-diamond.jpg';
 import bgDefaultLight from '../../images/portfolio-jumbotron/blue-diamond-bg.png'
 import profileImage from '../../images/portfolio-profilepic/arthursetiawan.jpg';
 import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box';
 import './new-pf.css'
 
 import PF_Timeline from './portfolio-timeline';
 import PF_Body from './portfolio-body';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundImage: `url(${headerImg})`
+    },
     pf_container:{
         width:"100%",
         backgroundImage: `url(${bgDefaultLight})`,
@@ -66,6 +69,11 @@ const useStyles = makeStyles(() => ({
     
   })); 
 
+
+const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
+const darkmode = true;
+const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
+
 export default function New(){
 
     // const [portfolio, setPortfolio] = useState([]);
@@ -86,18 +94,15 @@ export default function New(){
     // }
 
     // image from website
-    const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
-    const darkmode = true;
-    const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
-    const Header = {
-        backgroundImage: 'url('+ headerImg+')'
-        }
+  
     const classes = useStyles();
+
+
     return(
-        <div>
+        <>
             
             {/* <Paper className={classes.pf_container}> */}
-            <Paper style={Header} >
+            <Box className={classes.root}>
             
                 <div class="grid-container">
                     <div class='left'>
@@ -133,11 +138,11 @@ export default function New(){
                     {/* <div class='right'></div> */}
                 </div>
                 
-            </Paper>
+            </Box>
             <div class='grid-body'>
                 <PF_Timeline/>
                 <PF_Body/>
             </div>   
-        </div>
+        </>
     );
 }
