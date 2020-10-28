@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 
 // Dark Mode imports
 import DarkTheme from "../utils/theme/DarkTheme";
-import { makeStyles ,createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import { makeStyles, lighten } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Container from '@material-ui/core/Container';
@@ -19,6 +19,8 @@ import Link from '@material-ui/core/Link';
 import axios from 'axios'
 
 import SkeletonCard from "../common/SkeletonCard";
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import { setUserLoading } from '../context/actions/auth.actions';
 
 
 
@@ -46,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "100vh",
     }
   },
+  wrapper:{
+    padding: 0
+  },
   large: {
     width: 256,
     height: 256,
@@ -62,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize:" cover",
     backgroundBlendMode: "overlay",
-    backgroundColor: "#34343477",
+    backgroundColor: theme.palette.text.divider,
     width:"100%",
     display: "flex",
     
@@ -81,15 +86,15 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     fontWeight: 700,
-    color: "#FCFCFC",
+    color: theme.palette.text.primary,
     textTransform: "Capitalize"
   },
   caption: {
-    color: "#FCFCFC"
+    color: theme.palette.text.secondary
   },
   details: {
     fontWeight: 700,
-    color: "#FCFCFC"
+    color: theme.palette.text.secondary
   },
   textWrapper:{
     [theme.breakpoints.down('sm')]: {
@@ -107,9 +112,9 @@ const useStyles = makeStyles((theme) => ({
   portfolioItems:{
     flexGrow: 1,
     [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing(4),
-      marginLeft: theme.spacing(4),
-      marginRight: theme.spacing(4),
+      paddingTop: theme.spacing(4),
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
       "& > div": {
         margin: 0
       },
@@ -119,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       "& > div > *": {
-        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(4),
       } 
     },
     
@@ -134,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function PortfolioController() {
-
+  
   const classes = useStyles();
   const backgroundRef = useRef(null);
 
@@ -159,28 +164,28 @@ function PortfolioController() {
     const source = axios.CancelToken.source();
    
 
-    AxiosInstance
-      .get(`/public/profile/${lastPath}`)
-      .then(response => {
-        const data = response?.data;
-        if(data){
-          setProfile({
-            username: data?.username,
-            title: data?.title,
-            address: data?.address,
-            phone:data?.phone,
-            email:data?.email,
-            linkedIn: data?.linkedIn,
-            backgroundImageName: data?.backgroundImageName,
-            profileImageName: data?.profileImageName
-          })
-        }
+    // AxiosInstance
+    //   .get(`/public/profile/${lastPath}`)
+    //   .then(response => {
+    //     const data = response?.data;
+    //     if(data){
+    //       setProfile({
+    //         username: data?.username,
+    //         title: data?.title,
+    //         address: data?.address,
+    //         phone:data?.phone,
+    //         email:data?.email,
+    //         linkedIn: data?.linkedIn,
+    //         backgroundImageName: data?.backgroundImageName,
+    //         profileImageName: data?.profileImageName
+    //       })
+    //     }
         
 
-        if(backgroundRef.current){
-          backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
-        }
-      })
+    //     if(backgroundRef.current){
+    //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
+    //     }
+    //   })
     
     return () => {
       source.cancel(
@@ -192,9 +197,10 @@ function PortfolioController() {
   
   // Use ThemeProvider and CSSbaseline for darkmode
   return (
-      <Suspense fallback={SkeletonCard}>
+      <Suspense fallback={<SkeletonCard/>}>
         <div className={classes.root}>
           <Grid container>
+          <Container className={classes.wrapper} maxWidth="lg">
             <Grid 
               ref={backgroundRef}
               container item xs={12} 
@@ -213,28 +219,31 @@ function PortfolioController() {
                 </div>
               </Grid>
             </Grid>
-            <Paper className={classes.actionCenter} elevation={1}>
-              <a
-                href="LinkedIn.com">
-                  linkedIn
-              </a>
+            <Paper className={classes.actionCenter} elevation={1} square>
+            <Button
+              color="secondary"
+              className={classes.button}
+              startIcon={<LinkedInIcon />}
+            >
+              LinkedIn
+            </Button>
+
             </Paper>
             <Grid container item xs={12}>
               {matches && <SectionMenu />}
               <section className={classes.portfolioItems}>
-                <Container maxWidth="md">
+                <Container maxWidth="lg">
                   <DescriptionController user={lastPath}/>
-                  <ExperienceController user={lastPath}/>
+                  {/* <ExperienceController user={lastPath}/> */}
                   <EducationController user={lastPath}/>
-                  <SkillController user={lastPath}/>
-                  <ProjectController user={lastPath}/>
+                  {/* <SkillController user={lastPath}/>
+                  <ProjectController user={lastPath}/> */}
                 </Container>
               </section>
             </Grid>
+            </Container>
           </Grid>
-      
-
-        </div>
+      </div>
     </Suspense>
   )
   

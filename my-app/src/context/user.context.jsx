@@ -7,7 +7,8 @@ const UserContext = createContext();
 const initialState = {
   user: null,
   token: null,
-  isLoading: true
+  isLoading: true,
+  darkMode: true
 };
 
 function UserContextProvider(props) {

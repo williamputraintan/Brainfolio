@@ -2,29 +2,36 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FolderIcon from '@material-ui/icons/Folder';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import NavbarAvatar from "../NavbarAvatar";
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink, useHistory } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import Paths from "../../utils/path";
+
+
+// Icons
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+
 
 const useStyles = makeStyles( theme => ({
   bottomNav: {
-    position: "absolute",
+    position: "fixed",
     bottom: "0",
     flexGrow: 1,
-    width: "100%"
+    width: "100%",
+    zIndex: 800,
+    maxHeight: 56
   },
   title: {
     color: theme.palette.primary.main,
     fontWeight: 700,
+    flexGrow: 1,
   },
   brand: {
     height: 18
@@ -32,21 +39,33 @@ const useStyles = makeStyles( theme => ({
   appbar:{
     height: 56,
     width: "100%",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: theme.palette.background.default
   },
-  toolbar: {
-    paddingLeft: 0
-  }
 }));
 
 function BottomNavigationbar(props) {
   
   const classes = useStyles();
-  const [value, setValue] = React.useState('recents');
+  const [value, setValue] = React.useState('portfolio');
+  const history = useHistory();
 
   const {user} = props;
+  console.log(user)
 
   const handleChange = (event, newValue) => {
+    switch(newValue){
+      case "portfolio":
+        history.push(`${Paths.PORTFOLIO}/${user.username}`)
+        break;
+      case "projects":
+        history.push(`${Paths.PROJECT}/${user.username}`)
+        break;
+      case "account":
+        history.push(`${Paths.EDIT_PORTFOLIO}/${user.username}`)
+        break;
+      default: 
+        break;
+    }
     setValue(newValue);
   };
 
@@ -55,30 +74,30 @@ function BottomNavigationbar(props) {
       <AppBar position="static" class={classes.appbar}>
         <Box boxShadow={2}>
           <Toolbar className={classes.toolbar}>
-           
-
+            <Typography variant="h6" className={classes.title}>
+              Logo
+            </Typography>
             {
               user?.token? 
               <>
                 <NavbarAvatar/>
-                <Typography variant="h6" className={classes.title}>
-                  User
-                </Typography>
               </>
               : <Button>
-                  <Link component={RouterLink} to="/signin">Sign In</Link>
+                  <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
                 </Button>
             }
           </Toolbar>
         </Box>
       </AppBar>
-
-      <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav}>
-        <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
-      </BottomNavigation>
+      
+      <div className={classes.navContainer}>
+        <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav}>
+          <BottomNavigationAction label="Portfolio" value="portfolio" icon={<BusinessCenterIcon />} />
+          <BottomNavigationAction label="Projects" value="projects" icon={<GroupWorkIcon />} />
+          <BottomNavigationAction label="Account" value="account" icon={<AssignmentIndIcon />} />
+        </BottomNavigation>
+      </div>
+     
     </>
   )
 }
