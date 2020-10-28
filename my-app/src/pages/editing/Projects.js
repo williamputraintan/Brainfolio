@@ -37,7 +37,8 @@ export default function Projects() {
       "startDate":"Start Date",
       "endDate":"End Date",
       "title":"Title",
-      "isPublic":"Visibility"
+      "isPublic":"Visibility",
+      "youtubeLink": "youtubeLink" 
     }
 
     const {state} = useContext(UserContext);
@@ -48,12 +49,13 @@ export default function Projects() {
     const [buttonClick, setButtonClick] = React.useState(false)
     // fields form
     const [fields, setFields] = React.useState({
-      _id:"",
+      // _id:"",
       isPublic:true,
-      title: "",
-      startDate:"",
-      endDate:"",
-      description:"",
+      // title: "",
+      // startDate:"",
+      // endDate:"",
+      // description:"",
+      // youtubeLink: "",
       contributor:[],
       projectFileName:[],
     })
@@ -61,14 +63,15 @@ export default function Projects() {
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }
     };
+
     useEffect(() => {
-  
       AxiosInstance.get(
         "/projects/",
         config
         )
       .then((response) => {
         const responseData = response.data;
+        // setContributors(responseData.contributor)
         setAllProjects(responseData);
         setButtonClick(false)
       })
@@ -80,10 +83,6 @@ export default function Projects() {
         ...fields,
         [e.target.name]: e.target.value
       })
-
-      console.log('delte = ', filesToDelete);
-      console.log('allproj = ', allProjects);
-      console.log('fields = ', fields);
     }
 
 
@@ -95,7 +94,7 @@ export default function Projects() {
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
       for(let i in fields.projectFileName){
-        if(fileName == fields.projectFileName[1][0]){
+        if(fileName == fields.projectFileName[i][0]){
           fields.projectFileName.splice(i,1)
         }
       }
@@ -111,6 +110,14 @@ export default function Projects() {
       .catch(error=>
         console.log(error))
     }
+    function isYoutubeUrl (url) {
+      if(url){
+        let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
+        console.log(youtubeRegex.test(url));
+        return youtubeRegex.test(url)
+      }
+      return true
+    }
 
 
     function handleFormSubmit(e){
@@ -124,18 +131,21 @@ export default function Projects() {
         console.log(eachFile);
         formData.append('filesToUpload', eachFile)
       }
-
-      for ( var key in fields ) {
+      for (let eachContributor of contributors){
+        formData.append('contributor', eachContributor)
+      }
+      for ( let key in fields ) {
+        if(key == 'contributor'){
+          continue
+        }
         formData.append(key, fields[key]);
       }
 
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
       }
-      formData.append('filesToDelete', '')
-      formData.append('filesToDelete', '')
-      console.log('DELTE = ', formData.get('filesToDelete'));
-      console.log('contributor = ', formData.getAll('contributor'));
+
+
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
         console.log(response);
@@ -144,6 +154,7 @@ export default function Projects() {
         setFields(data)
         setFilesToDelete([])
         setFilesToUpload([])
+        setContributors(data.contributor)
         setButtonClick(true)
         document.getElementById('inputFile').value = ''
       })
@@ -166,25 +177,24 @@ export default function Projects() {
     
     const[oneName,setOneName] = React.useState("");
     const[oneEmail,setOneEmail]= React.useState("");
+    const[contributors, setContributors] = React.useState([])
 
     const AddContributor = ()=>{
-      fields.contributor.push([oneName,oneEmail]);
+      setContributors(contributors.concat([[oneName,oneEmail]]));
     }
     const confirmAdd = ()=>{
       AddContributor();
       handleClose();
     }
     function displayContributor(){
+      console.log(contributors);
       var res=[];
       var i;
-      console.log(fields);
-      // for(i=0;i<fields.contributor.length;i++){
-      //   console.log(fields.contributor[i]);
-      //   res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
-      // }
-      
+      for(i=0;i<contributors.length;i++){
+        res[i]= (i+1).toString()+". "+contributors[i][0]+", "+contributors[i][1]
+        console.log(res);
+      }
       return res;
-
     }
 
     return (
@@ -344,10 +354,26 @@ export default function Projects() {
                               ))}
                           </CardContent>
                         </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <div className={classes.field}> YouTube Link </div>
+                        <TextField
+                          error={(!isYoutubeUrl(fields.youtubeLink))}
+                          helperText={(!isYoutubeUrl(fields.youtubeLink)) ? "Must be a YouTube Link" : null}
+                          name="youtubeLink"
+                          variant="outlined"
+                          fullWidth
+                          id="youtubeLink"
+                          placeholder="https://www.youtube.com/"
+                          autoFocus
+                          onChange={onFormInputChange}
+                          value={fields.youtubeLink}          
+                          />
                       </Grid> 
                   </Grid>
                   <Grid xs={12} sm={12}>
                       <Button
+                      disabled={(!isYoutubeUrl(fields.youtubeLink))}
                       type="submit"
                       variant="contained"
                       className={classes.submit}

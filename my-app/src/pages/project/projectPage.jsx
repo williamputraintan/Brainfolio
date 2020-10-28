@@ -7,11 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useStyles from './useStyles'
+import useStyles from '../../components/Project/useStyles'
 import {  useTheme } from '@material-ui/styles';
 
-import ProjectDisplay from './ProjectFile';
-import ProjectAuthor from './ProjectAuthor';
+import ProjectDisplay from '../../controllers/Project/FileController';
+import AuthorController from '../../controllers/Project/AuthorController';
 
 import './project.css';
 
@@ -86,7 +86,7 @@ export default function ProjectPage(preference) {
             </Typography>    
             </div>
             <div>
-              <ProjectAuthor author={project.contributor}/>
+              <AuthorController author={project.contributor}/>
             </div>
           </div>
           
