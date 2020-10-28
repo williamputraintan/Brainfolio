@@ -63,14 +63,15 @@ export default function Projects() {
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }
     };
+
     useEffect(() => {
-  
       AxiosInstance.get(
         "/projects/",
         config
         )
       .then((response) => {
         const responseData = response.data;
+        // setContributors(responseData.contributor)
         setAllProjects(responseData);
         setButtonClick(false)
       })
@@ -82,10 +83,6 @@ export default function Projects() {
         ...fields,
         [e.target.name]: e.target.value
       })
-
-      console.log('delte = ', filesToDelete);
-      console.log('allproj = ', allProjects);
-      console.log('fields = ', fields);
     }
 
 
@@ -134,17 +131,19 @@ export default function Projects() {
         console.log(eachFile);
         formData.append('filesToUpload', eachFile)
       }
-
-      for ( var key in fields ) {
+      for (let eachContributor of contributors){
+        formData.append('contributor', eachContributor)
+      }
+      for ( let key in fields ) {
+        if(key == 'contributor'){
+          continue
+        }
         formData.append(key, fields[key]);
       }
 
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
       }
-      formData.append('filesToDelete', '')
-      formData.append('filesToDelete', '')
-
 
 
       AxiosInstance.post("/projects/save/", formData, config)
@@ -155,6 +154,7 @@ export default function Projects() {
         setFields(data)
         setFilesToDelete([])
         setFilesToUpload([])
+        setContributors(data.contributor)
         setButtonClick(true)
         document.getElementById('inputFile').value = ''
       })
@@ -177,25 +177,24 @@ export default function Projects() {
     
     const[oneName,setOneName] = React.useState("");
     const[oneEmail,setOneEmail]= React.useState("");
+    const[contributors, setContributors] = React.useState([])
 
     const AddContributor = ()=>{
-      fields.contributor.push([oneName,oneEmail]);
+      setContributors(contributors.concat([[oneName,oneEmail]]));
     }
     const confirmAdd = ()=>{
       AddContributor();
       handleClose();
     }
     function displayContributor(){
+      console.log(contributors);
       var res=[];
       var i;
-      console.log(fields);
-      // for(i=0;i<fields.contributor.length;i++){
-      //   console.log(fields.contributor[i]);
-      //   res[i]= (i+1).toString()+". "+fields.contributor[i][0]+", "+fields.contributor[i][1]
-      // }
-      
+      for(i=0;i<contributors.length;i++){
+        res[i]= (i+1).toString()+". "+contributors[i][0]+", "+contributors[i][1]
+        console.log(res);
+      }
       return res;
-
     }
 
     return (
