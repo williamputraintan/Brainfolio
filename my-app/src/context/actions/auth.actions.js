@@ -1,10 +1,18 @@
-import { USER_LOG_IN, USER_LOG_OFF, SET_USER_LOADING, SET_USER } from "../reducers/user.reducer";
+import { USER_LOG_IN, USER_LOG_OFF, SET_USER_LOADING, SET_USER, SET_MODE } from "../reducers/user.reducer";
 import AxiosInstance from "../../utils/axios";
 import { history } from '../../utils/BrowserHistory';
 import Paths from "../../utils/path";
 import firebase from '../../utils/firebase';
 
 const path = "/auth"
+
+
+export const setDarkMode = (dispatch, bool) => {
+  dispatch({
+    type:  SET_MODE,
+    payload: bool
+  })
+}
 
 export const setUserLoading = (dispatch, bool) => {
   dispatch({
@@ -14,15 +22,18 @@ export const setUserLoading = (dispatch, bool) => {
 }
 
 export const persistUser = async (dispatch, user) =>{
-  
+  setUserLoading(dispatch,true);
+  console.log(user)
   if(user){
     const idToken = await firebase.auth().currentUser.getIdToken(true);
-    getUserFromDb(dispatch, idToken)
+    await getUserFromDb(dispatch, idToken)
+  }else{
+    setUserLoading(dispatch,false)
   }
 }
 
 export const getUserFromDb = async (dispatch, idToken) => {
-
+  console.log(idToken)
   try{
     const response = await AxiosInstance
     .post("/v2/auth/validate",
@@ -45,7 +56,7 @@ export const getUserFromDb = async (dispatch, idToken) => {
     if(data.username === "" || !data.username){
       history.push(Paths.SIGN_UP_2);
     }else{
-      history.push(Paths.HOME);
+      history.push(`${Paths.PORTFOLIO}/${data.username}`);
     }
 
     setUserLoading(dispatch, false)
@@ -58,35 +69,33 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
 
 export const signInUser = async (dispatch, email, password) => {
+  setUserLoading(dispatch, true)
+    /** Trigger on Auth Change 
+     * onAuthChange will handle getting user from our Database
+     * **/
 
-  const user = firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    .then(function() {
-      // Existing and future Auth states are now persisted in the current
-      // session only. Closing the window would clear any existing state even
-      // if a user forgets to sign out.
-      // ...
-      // New sign-in will be persisted with session persistence.
-      return firebase.auth().signInWithEmailAndPassword(email, password);
-    })
-    .catch(function(error) {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-    });
-
-    console.log(user)
   try{
-   
-    // const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-    if(user){
-      const idToken = await firebase.auth().currentUser.getIdToken(true);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => firebase.auth().signInWithEmailAndPassword(email, password));
+    
+    // if(instance){
+    //   // const idToken = await firebase.auth().currentUser.getIdToken(true);
+    //   console.log(instance)
+    // }
 
-      
-      getUserFromDb(dispatch, idToken);
-    }
+    // // const user = await instance.auth().signInWithEmailAndPassword(email,password);
+    
+    // // if(user){
+    // //   const idToken = await firebase.auth().currentUser.getIdToken(true);
+
+    // //   console.log(idToken)
+    // //   // await getUserFromDb(dispatch, idToken);
+    // // }
   }
-  catch(e){
-    history.goBack();
+  catch(error){
+    let errorCode = error.code;
+    let errorMessage = error.message;
+    console.log(errorCode,errorMessage)
     setUserLoading(dispatch, false);
   }
 }

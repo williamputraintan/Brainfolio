@@ -6,10 +6,14 @@ import EditingPage from '../pages/editing/EditingPage.js';
 import Paths from "../utils/path";
 
 
+import firebase from "../utils/firebase.js";
+
+
 function AuthenticatedRoute(props) {
   const {state} = useContext(UserContext);
   const username = state.user?.username
 
+ 
   return (
     <div>
 
@@ -24,7 +28,7 @@ function AuthenticatedRoute(props) {
 
               <Route exact path="/home/portfolio" component={Portfolio} />
               <Redirect from={"/home/edit"+state.token.user} to={"/home/edit/contact/"+state.token.user}  />
-              <Route path={"/home/edit/:page?/:username"+state.token.user} component={props => <EditingPage {...props}  />}  />
+              <Route path={"/home/edit/:page?/:username/"+state.user} component={props => <EditingPage {...props}  />}  />
 
             </Switch>
         </>

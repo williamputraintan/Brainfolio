@@ -5,8 +5,6 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import logo from "../../images/logo-transparent.png"
 import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
@@ -16,27 +14,29 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appBar: {
-    color: "#333333",
-    backgroundColor: "#FFF",
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.paper,
   },
   brand: {
-    height: 50,
-    margin: theme.spacing(2)
+    height: 48
   },
   activeLink:{
-    backgroundColor: {...theme.palette.primary.main},
+    color: `${theme.palette.secondary.main}!important`
   },
   navActions:{
     flexGrow: 1,
+    fontSize: '1rem',
+
     margin: `0px ${theme.spacing(3)}px`,
     "& > button":{
       padding: `2px ${theme.spacing(2)}px`,
     },
     "& > button > span > a": {
+      textTransform: "Capitalize" ,
       padding: 4,
       fontSize: "1rem",
       fontWeight: 600,
-      color: "#676767",
+      color: theme.palette.text.secondary,
       height:"fit-content",
       "&:hover":{
         textDecoration: "none",
@@ -108,13 +108,27 @@ function Navbar(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <img className={classes.brand} src={logo} alt="logo"/>
+           <Link component={RouterLink} to={Paths.ABOUT_US}>
+              <img className={classes.brand} src={logo} alt="logo"/>
+            </Link>
           <div className={classes.navActions}>
             <Button>
-              <Link component={RouterLink} to="/">Home</Link>
+              <Link 
+                component={RouterLink} 
+                activeClassName={classes.activeLink} 
+                to={`${Paths.PORTFOLIO}/${user.username}`}>Portfolio</Link>
             </Button>
             <Button>
-              <Link component={RouterLink} to="/aboutUs">About Us</Link>
+              <Link 
+                component={RouterLink} 
+                activeClassName={classes.activeLink} 
+                to={`${Paths.PROJECT}/${user.username}`}>Projects</Link>
+            </Button>
+            <Button>
+              <Link 
+                component={RouterLink} 
+                activeClassName={classes.activeLink} 
+                to={`${Paths.EDIT_PORTFOLIO}/${user.username}`}>Customize</Link>
             </Button>
           </div>
           <div className={classes.rightContent}>

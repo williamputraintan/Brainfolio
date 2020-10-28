@@ -27,21 +27,25 @@ axios.interceptors.response.use(response => {
     return;
   }
   console.log(response);
-  switch(response.status){
-    case 404: 
-      history.push("/404")
-      break;
-    case 401:
-      history.push("/auth/signin/1")
-      break;
-    case 400: 
-      history.goBack()
-      break;
-    default:
-      history.push("/support")
-      break;
+  if(response.status){
+    switch(response.status){
+      case 404: 
+        history.push("/404")
+        break;
+      case 401:
+        history.push("/auth/signin/1")
+        break;
+      case 400: 
+        history.goBack()
+        break;
+      default:
+        history.push("/404")
+        break;
+    }
+  }else{
+    history.push("/404")
   }
-  
+
 })
 
 

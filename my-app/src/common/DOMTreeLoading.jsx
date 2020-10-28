@@ -7,16 +7,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "absolute",
     width: "100%",
-    height: 8,
+    height: 5,
     top: 0,
     boxShadow: "0px 8px 12px rgba(0,0,0,0.16)",
     backgroundColor: lighten(theme.palette.primary.main, 0.8)
   },
   bar: {
-    height: 8,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    ...theme.palette.reverseGradient,
+    height: 5,
+    backgroundColor: theme.palette.primary.main
   },
 }));
 

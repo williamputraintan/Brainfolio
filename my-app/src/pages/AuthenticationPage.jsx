@@ -17,26 +17,18 @@ function AuthenticationPage() {
 
   React.useEffect(() => {
     setUserLoading(dispatch, true)
-    if(!state.user){
-      firebase.auth().getRedirectResult()
-      .then(async res => {
 
-        if(res.user != null){
-          const idToken = await firebase.auth().currentUser.getIdToken(true)
-          await getUserFromDb(dispatch, idToken)
-        }
-        firebase.auth().onAuthStateChanged(user => {
-          console.log(user)
-          setUserLoading(dispatch, false)
-        })
-
-      })
-      .catch(err => {
-        console.log(err)
+    /** We let onAuth Change handle the logic. 
+     * This redirect function handles in a redirect event occurred. 
+     * If it does not, user will need to signin and set loading to false
+     * **/
+    firebase.auth().getRedirectResult()
+    .then(res => {
+      if(res.user == null){
         setUserLoading(dispatch, false)
-        history.push("/404")
-      })
-    }   
+      }
+
+    })
   }, [dispatch,history]);
 
 

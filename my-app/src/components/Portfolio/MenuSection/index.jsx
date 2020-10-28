@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   paper: {
-    color: "#FFF",
+    color: theme.palette.primary.text,
     backgroundColor: theme.palette.primary.main,
     
     padding: theme.spacing(1)
