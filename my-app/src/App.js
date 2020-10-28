@@ -16,7 +16,7 @@ import DomTreeLoader from "./common/DOMTreeLoading";
 //Lazy Import
 const AboutUs = React.lazy(() => import('./pages/AboutUs.js'));
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
-const ProjectPage = React.lazy(() => import('./components/project/projectPage'));
+const ProjectPage = React.lazy(() => import('./pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('./pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('./controllers/AuthenticatedRoute.jsx'));
 
