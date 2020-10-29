@@ -82,18 +82,6 @@ export default function Overview(){
         setTechSkillData(techData);
     }
 
-    function getCustom1Sec(){
-        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
-            .then(res=>setCustom1Section(res.data.sectionTitle))
-            .catch(error=>console.log(error));
-    }
-
-    function getCustom2Sec(){
-        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
-            .then(res=>setCustom2Section(res.data.sectionTitle))
-            .catch(error=>console.log(error));
-    }
-
     function getSectionItems(){
         AxiosInstance.get('edit/custom',config)
         .then(res=>getCustomOne(res.data))

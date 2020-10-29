@@ -18,7 +18,7 @@ const cardTheme = createMuiTheme({
           }
         },   
       },
-
+      
     });
   
   const cardStyles = makeStyles((theme) => ({

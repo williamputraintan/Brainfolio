@@ -1,28 +1,28 @@
-.about-container{
+/* .about-container{
     min-width: 100%;
     margin:0;
     padding-right: 0px;
     padding-left: 0px;
-}
+} */
 
-.meettheteam{
+/* .meettheteam{
     background-color: white;
     height:140vh;
     padding:5%;
     
-}
-.meettheteam>h2{
+} */
+/* .meettheteam>h2{
     font-size:40px;
     color:black;
     text-align: center;
-}
+} */
 
 /*mobile*/
-@media only screen and (max-width: 600px){
-    :root{
+/* @media only screen and (max-width: 600px){ */
+    /* :root{
         max-width: 100%;
-    }
-    .whatwedo>h1{
+    } */
+    /* .whatwedo>h1{
         color:white;
         position: absolute;
         text-align: center;
@@ -37,23 +37,23 @@
         top:52%;
         left: 10%; 
         font-size: 20px; 
-    }
-    .content>h1{
+    } */
+    /* .content>h1{
         color:white;
         font-size: 35px;
-    }
-    .content>h3{
+    } */
+    /* .content>h3{
         font-size: 20px; 
         color:white;
-    }
-    .content{
+    } */
+    /* .content{
         position: absolute;
         left: 10%;
         width: 70%;
         top:27%;
         text-align: left;
-    }
-    .instructions{
+    } */
+    /* .instructions{
         background-color:white;
         height:110vh;
         width:100%;
@@ -61,53 +61,53 @@
         padding: 4% 7% 4% 7%;
         overflow: hidden;
     
-    }
-    .instructions img{
+    } */
+    /* .instructions img{
         padding-top: 20px;
         max-width: 100%;
         max-height: 100%;
-    }
-    .whatwedo{
+    } */
+    /* .whatwedo{
         background: url('../images/aboutUs/missions/mobile-mission.png') center center/cover no-repeat;
         height: 80vh;  
-    }
-}
+    } */
+/* } */
 
 /* desktop */
-@media only screen and (min-width: 501px) {
-    .content>h1{
+/* @media only screen and (min-width: 501px) { */
+    /* .content>h1{
         color:white;
         font-size: 40px;
-    }
-    .content>h3{
+    } */
+    /* .content>h3{
         font-size: 25px; 
         color:white;
-    }
-    .content{
+    } */
+    /* .content{
         position: absolute;
         left: 10%;
         width: 50%;
         top:27%;
         text-align: left;
-    }
+    } */
     
-    .whatwedo{
+    /* .whatwedo{
         background: url('../images/aboutUs/missions/mission.png') center center/cover no-repeat;
         height: 80vh;  
     }
-        
-    .instructions{
+         */
+    /* .instructions{
         background-color:white;
         height:80vh;
         width:100%;
         text-align: center;
         padding: 3% 7% 3% 7%;
         overflow: hidden;
-    }
+    } */
 
-    .instructions img{
+    /* .instructions img{
         max-width: 40%;
         overflow: visible;
     } 
-}
+} */
 

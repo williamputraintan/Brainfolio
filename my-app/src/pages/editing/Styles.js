@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { black } from 'chalk';
 
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({
