@@ -31,7 +31,7 @@ function GoogleButton(props) {
     e.preventDefault();
     setUserLoading(dispatch,true);
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.session)
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(function() {
       var provider = new firebase.auth.GoogleAuthProvider();
       return firebase.auth().signInWithRedirect(provider);

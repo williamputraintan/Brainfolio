@@ -50,7 +50,7 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
     dispatch({
       type:  SET_USER,
-      payload: {user: data, token: idToken}
+      payload: {user: {...data}, token: idToken}
     })  
 
     if(data.username === "" || !data.username){

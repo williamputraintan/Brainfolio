@@ -20,7 +20,6 @@ import firebase from './utils/firebase';
 import { persistUser,setUserLoading } from "./context/actions/auth.actions";
 
 
-
 //Lazy Import
 const AboutUs = React.lazy(() => import('./pages/AboutUs.js'));
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));

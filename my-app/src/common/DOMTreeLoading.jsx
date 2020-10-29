@@ -1,6 +1,6 @@
 import React from 'react';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {useTransition, animated} from 'react-spring';
+import { motion, AnimatePresence } from "framer-motion"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,22 +20,18 @@ const useStyles = makeStyles((theme) => ({
 
 function DOMTreeLoading() {
   const classes = useStyles();
-  const loaderTransition = useTransition(true, null, {
-    from: { width: "0%" },
-    enter: { width: "60%" },
-    leave: { width: "100%" },
-  })
 
   return (
-    <div className={classes.root}>
-      {
-        loaderTransition.map(({_, key, props})=>{
-          return(
-            <animated.div key={key} className={classes.bar} style={props}></animated.div>
-          )
-        })
-      }
-    </div>
+    <AnimatePresence exitBeforeEnter>
+      <div className={classes.root}>
+        <motion.div 
+          initial={{ width: "0%" }}
+          animate={{ width: "60%" }}
+          exit={{ width: "100%" }}
+          className={classes.bar}
+            />
+      </div>
+    </AnimatePresence>
   )
 }
 

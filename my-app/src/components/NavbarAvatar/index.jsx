@@ -37,23 +37,30 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     '& > div > ul':{
       padding: 0
-    }
+    },
+    marginRight: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   links: {
-    fontWeight: 700
+    fontWeight: 700,
+    fontSize: "0.875rem"
   },
   menuDetails: {
     padding: theme.spacing(1),
-    display: "flex",
     color: theme.palette.background.default,
     backgroundColor: theme.palette.primary.main,
     alignItems: "center",
     '& > *:not(:first-child)': {
-      padding: `0px ${theme.spacing(2)}px`
+      padding: `0px ${theme.spacing(2)}px`,
+    },
+    '& > div > div:first-child': {
+      marginRight: theme.spacing(3)
     }
+  },
+  row: {
+    display: "flex"
   }
 }));
 
@@ -122,14 +129,20 @@ function NavAvatar(props) {
 
 
         <Paper className={classes.menuDetails} square>
-          <Avatar alt="Remy Sharp"  className={classes.large}/>
-          <Typography component="div">
-              <Box fontWeight="fontWeightBold" fontSize="h6.fontSize" m={1}>
-                Welcome, user
-              </Box>
-          </Typography>
-        </Paper>
+          <div className={classes.row}>
+            <Avatar alt="Remy Sharp"  className={classes.large}/>
+            <Typography component="div">
+              <Typography component="p">
+                { state.user.username || "user"}
+              </Typography>
+              <Typography component="p">
+                  { state.user.email || "user@email.com"}
+              </Typography>
+            </Typography>
+          </div>
         
+        </Paper>
+      
         <Divider />
         <MenuItem onClick={onSwitchChange}>
           <ListItemIcon>
@@ -145,7 +158,7 @@ function NavAvatar(props) {
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <Link className={classes.links} component={RouterLink} to={Paths.ABOUT_US}>Settings</Link>
+          <Link className={classes.links} component={RouterLink} to={Paths.EDIT_PORTFOLIO}>Settings</Link>
         </MenuItem>
 
 

@@ -39,7 +39,7 @@ const useStyles = makeStyles( theme => ({
   appbar:{
     height: 56,
     width: "100%",
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.backgroundAccent
   },
 }));
 
@@ -61,6 +61,7 @@ function BottomNavigationbar(props) {
         history.push(`${Paths.PROJECT}/${user.username}`)
         break;
       case "account":
+        console.log(`${Paths.EDIT_PORTFOLIO}/${user.username}`)
         history.push(`${Paths.EDIT_PORTFOLIO}/${user.username}`)
         break;
       default: 
@@ -91,7 +92,7 @@ function BottomNavigationbar(props) {
       </AppBar>
       
       <div className={classes.navContainer}>
-        <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav}>
+        <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav} showLabels>
           <BottomNavigationAction label="Portfolio" value="portfolio" icon={<BusinessCenterIcon />} />
           <BottomNavigationAction label="Projects" value="projects" icon={<GroupWorkIcon />} />
           <BottomNavigationAction label="Account" value="account" icon={<AssignmentIndIcon />} />

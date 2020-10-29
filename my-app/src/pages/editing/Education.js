@@ -164,7 +164,6 @@ export default function Education() {
                             fullWidth
                             value={fields.degree}
                             placeholder="Bachelor of Science (Chemical Systems)"
-                            autoFocus
                             onChange={onInputChange}   
                             error = {(fields.degree)===""}  
                             helperText={(fields.degree)!==""?null:"Incomplete entry"}                
@@ -179,7 +178,6 @@ export default function Education() {
                             fullWidth
                             value={fields.institution}
                             placeholder="University of Melbourne"
-                            autoFocus
                             onChange={onInputChange}  
                             error = {(fields.institution)===""}  
                             helperText={(fields.institution)!==""?null:"Incomplete entry"}                 

@@ -17,11 +17,8 @@ const theme = createMuiTheme({
     secondary: {
       main: '#afd1ff',
     },
-    backgroundWhite: '#ffffff',
-    fontDefault: '#323232',
-    fontGrey: {
-      color: '#565656',
-    }
+    bacgroundAccent: "#1e2f39",
+    fontAccent: "#90C5EC"
   },
   overrides: {
     MuiButton: {
@@ -33,11 +30,27 @@ const theme = createMuiTheme({
         color: 'white',
       },
     },
+    MuiBottomNavigation:{
+      root: {
+        backgroundColor: "#1e2f39",
+        color: "#90C5EC"
+      },
+    },
+    MuiToolbar: {
+      root: {
+        backgroundColor: "#1e2f39"
+      },
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: "#1e2f39"
+      },
+    },
     MuiTooltip: {
       tooltip: {
-        fontSize: "1.1em",
-        // color: "yellow",
-        backgroundColor: "#1D3B64"
+        fontSize: "1rem",
+        backgroundColor: "#1e2f39",
+        color: "#90C5EC"
       }
     },
   },

@@ -11,17 +11,7 @@ const theme = createMuiTheme({
     reverseGradient: {
       background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
-    primary: {
-      main: '#004AAF'
-    },
-    secondary: {
-      main: '#00d2ff',
-    },
-    backgroundWhite: '#ffffff',
-    fontDefault: '#323232',
-    fontGrey: {
-      color: '#565656',
-    }
+    bacgroundAccent: "#ebfcff",
   },
   overrides: {
     MuiButton: {
