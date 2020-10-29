@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 import { makeStyles ,createMuiTheme, ThemeProvider }from '@material-ui/core/styles';
 import bgDesktopImage from '../images/aboutUs/missions/mission.png';
 import bgMobileImage from  '../images/aboutUs/missions/mobile-mission.png';
+import whitewave from '../images/aboutUs/missions/whitewave.png';
 import theme from '../utils/theme/MinimalTheme';
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:'#FFFFFF',
         padding:'5%',
         textAlign:'center',
+        backgroundColor:'#E2ECF8',
+        backgroundImage: `url(${whitewave})`,
+        backgroundRepeat:'no-repeat'
     },
     whatwedo:{
         height: '100vh',
@@ -47,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             padding:'4% 7% 4% 7%',
 
-        }
+        },
+        
     },
     content:{
         position:'absolute',
@@ -56,12 +61,21 @@ const useStyles = makeStyles((theme) => ({
         color:'#FFFFFF',
         [theme.breakpoints.up('sm')]: {
             top:'35%',
-            width:'50%'
+            width:'45%'
         },
         [theme.breakpoints.down('xs')]: {
             top:'25%',
-            width: '70%'        
+            width:'70%'        
         }
+    },
+    footer:{
+        height:'20vh',
+        padding:'4% 8% 4% 8%',
+        backgroundColor:'#E2ECF8',
+        color:theme.palette.primary.main,
+        fontSize:'2vh',
+        fontWeight:700,
+        textAlign:'right'
     }
 }));
 const aboutTheme = createMuiTheme({
@@ -119,9 +133,13 @@ export default function AboutUs(){
                 <Typography variant="h3">User Guide</Typography>
                 <VerticalTabs/>
             </div>
+           
             <div className={classes.theTeam}>
                 <div style={{width:'100%',height:'20%'}}><Typography variant="h3">Meet The Team</Typography></div>
                 <MemberCards/>
+            </div>
+            <div className={classes.footer}>
+              Brainfolio 2020
             </div>
         </div>
         </ThemeProvider>

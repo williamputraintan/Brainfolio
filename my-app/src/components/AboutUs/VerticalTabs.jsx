@@ -360,6 +360,11 @@ const useStyles = makeStyles((theme) => ({
           }
         },
         
+      },
+      PrivateTabIndicator:{
+        colorSecondary:{
+          backgroundColor:theme.palette.primary.main
+        }
       }
     },
   });
@@ -400,7 +405,7 @@ export default function VerticalTabs() {
                 <Typography align='left' variant='h3'>
                   Join Brainfolio to link with your colleagues and showcase your portfolio 
                 </Typography>
-                <Button variant="contained" color={theme.palette.primary.main} className={classes.btn}  href="signUp"> 
+                <Button variant="contained" color={theme.palette.primary.main} className={classes.btn}  href="auth/signUp/1"> 
                   Get started
                 </Button>
               </div>
