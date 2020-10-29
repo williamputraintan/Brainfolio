@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import VerticalTabs from '../components/AboutUs/VerticalTabs.jsx';
 import MemberCards from '../components/AboutUs/MemberCards.jsx';
 import { Typography } from '@material-ui/core';
@@ -7,6 +7,7 @@ import bgDesktopImage from '../images/aboutUs/missions/mission.png';
 import bgMobileImage from  '../images/aboutUs/missions/mobile-mission.png';
 import whitewave from '../images/aboutUs/missions/whitewave.png';
 import theme from '../utils/theme/MinimalTheme';
+
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({
     aboutContainer:{
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
     theTeam:{
         backgroundColor:'#FFFFFF',
-        padding:'5%',
+        padding:'15% 5% 5% 5%',
         textAlign:'center',
         backgroundColor:'#E2ECF8',
         backgroundImage: `url(${whitewave})`,
@@ -117,18 +118,18 @@ const aboutTheme = createMuiTheme({
  
 export default function AboutUs(){
     const classes = useStyles();
-
     
     return(
         <ThemeProvider theme={aboutTheme}>
-       
         <div className={classes.aboutContainer}>
+            
             <div className={classes.whatwedo}>
                 <div className={classes.content}>
                 <Typography variant="h1">Our mission</Typography>
                 <Typography variant="h2">We aim to help individuals to showcase their skills by building a platform where the user can present their experiences and projects to demonstrate their abilities.</Typography>
-                </div>
+                </div> 
             </div>
+           
             <div className={classes.instructions}>
                 <Typography variant="h3">User Guide</Typography>
                 <VerticalTabs/>
@@ -146,8 +147,4 @@ export default function AboutUs(){
          
     );
 }
-
-
-
-
 
