@@ -27,8 +27,6 @@ export default function Projects() {
   
     const classes = useStyles();
 
-    var existingFiles = new FormData();
-
     const fieldNames={
       "contributor":"Contributors",
       "projectFileName":"Project File",
@@ -47,6 +45,7 @@ export default function Projects() {
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
     const [buttonClick, setButtonClick] = React.useState(false)
+    
     // fields form
     const [fields, setFields] = React.useState({
       // _id:"",
@@ -70,9 +69,9 @@ export default function Projects() {
         config
         )
       .then((response) => {
+        console.log(state.token);
         const responseData = response.data;
-        // setContributors(responseData.contributor)
-        setAllProjects(responseData);
+        // setAllProjects(responseData);
         setButtonClick(false)
       })
     },[buttonClick]);
@@ -85,16 +84,32 @@ export default function Projects() {
       })
     }
 
+    function isFileAlreadyExist(fileArray){
+      for(let eachFile of fileArray){
+        for(let currFile of fields.projectFileName){
+          console.log(eachFile.name);
+          console.log(currFile[0]);
+          if(eachFile.name == currFile[0]){
+            
+            console.log('eachFile =' , eachFile);
+            console.log('currFile = ', currFile[0]);
+            return false;
+          }
+        }
+      }
+      return true;
+    }
 
     function onFileChangeUpload(e){
-      setFilesToUpload(e.target.files)    
+      setFilesToUpload(e.target.files)       
+      console.log('filetoupload = ',e.target.files);
     }
 
     function onDeleteFile(e, fileName){
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
       for(let i in fields.projectFileName){
-        if(fileName == fields.projectFileName[i][0]){
+        if(fileName.name == fields.projectFileName[i][0]){
           fields.projectFileName.splice(i,1)
         }
       }
@@ -113,39 +128,40 @@ export default function Projects() {
     function isYoutubeUrl (url) {
       if(url){
         let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
-        console.log(youtubeRegex.test(url));
         return youtubeRegex.test(url)
       }
       return true
     }
 
-
+    //Save Project Button
     function handleFormSubmit(e){
       e.preventDefault();
-      console.log(fields);
+      console.log('onSUbmit = ',fields);
       
       const formData = new FormData();
 
-
+      //New Files to Upload
       for(let eachFile of filesToUpload){
         console.log(eachFile);
         formData.append('filesToUpload', eachFile)
       }
-      for (let eachContributor of contributors){
-        formData.append('contributor', eachContributor)
+      //Setting each contributor
+      for (let each of allContributors){
+        console.log(each);
+        formData.append('contributor', JSON.stringify(each))
       }
+      //Setting other fields
       for ( let key in fields ) {
         if(key == 'contributor'){
           continue
         }
         formData.append(key, fields[key]);
       }
-
+      //Setting files to delete
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
       }
-
-
+      //Sending data
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
         console.log(response);
@@ -154,7 +170,7 @@ export default function Projects() {
         setFields(data)
         setFilesToDelete([])
         setFilesToUpload([])
-        setContributors(data.contributor)
+        setAllContributors(data.contributor)
         setButtonClick(true)
         document.getElementById('inputFile').value = ''
       })
@@ -162,8 +178,8 @@ export default function Projects() {
         console.log(err);
       })
     }
-
-    //contributor
+    //  --- CONTIBUTORS ---
+    //contributor popup
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -174,27 +190,41 @@ export default function Projects() {
       setOpen(false);
     };
 
-    
-    const[oneName,setOneName] = React.useState("");
-    const[oneEmail,setOneEmail]= React.useState("");
-    const[contributors, setContributors] = React.useState([])
+    //Contributors Data
+    const[currentContributor,setcurrentContributor] = React.useState({});
+    const[allContributors, setAllContributors] = React.useState([])
 
+    function validateEmail(email) {
+      if(email){
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      }
+      return true
+
+    }
     const AddContributor = ()=>{
-      setContributors(contributors.concat([[oneName,oneEmail]]));
+      setAllContributors(allContributors.concat(currentContributor));
+      setcurrentContributor({})
     }
     const confirmAdd = ()=>{
       AddContributor();
       handleClose();
     }
+    function onContributorChange(e){
+      setcurrentContributor({
+        ...currentContributor,
+        [e.target.name]: e.target.value
+      })
+    }
     function displayContributor(){
-      console.log(contributors);
-      var res=[];
-      var i;
-      for(i=0;i<contributors.length;i++){
-        res[i]= (i+1).toString()+". "+contributors[i][0]+", "+contributors[i][1]
-        console.log(res);
+      console.log(allContributors);
+      var result=[];
+      let number = 1;
+      for(let each of allContributors){
+        result.push(number.toString()+". "+each.name+", "+each.email);
+        number++;
       }
-      return res;
+      return result;
     }
 
     return (
@@ -290,27 +320,29 @@ export default function Projects() {
                               autoFocus
                               margin="dense"
                               id="name"
+                              name="name"
                               label="Name"
                               type="name"
                               style={{paddingRight:'5%'}}
                               fullWidth
-                              onChange={event=>setOneName(event.target.value)}
+                              onChange={onContributorChange}
                             />
                             <TextField
-                              autoFocus
                               margin="dense"
                               id="name"
+                              name = "email"
                               label="Email Address"
                               type="email"
+                              helperText={(!validateEmail(currentContributor.email)) ? "Must be a valid email" : null}
                               fullWidth                       
-                              onChange={event=>setOneEmail(event.target.value)}
+                              onChange={onContributorChange}
                             />
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
                               Cancel
                             </Button>
-                            <Button onClick={confirmAdd} color="primary">
+                            <Button onClick={confirmAdd} color="primary" disabled={!validateEmail(currentContributor.email)}>
                               Add
                             </Button>
                           </DialogActions>
@@ -334,7 +366,15 @@ export default function Projects() {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <div>
-                          <input id="inputFile" type="file" multiple name="files" onChange={onFileChangeUpload}/>
+                          <TextField 
+                            id="inputFile" 
+                            type="file" 
+                            multiple 
+                            name="files" 
+                            onChange={onFileChangeUpload}
+                            error={(!isFileAlreadyExist(filesToUpload))}
+                            helperText={(!isFileAlreadyExist(filesToUpload)) ? "File already exist" : null}
+                            />
                         </div>
                         <Card className={classes.cardContributor}>
                           <CardContent>
@@ -365,7 +405,6 @@ export default function Projects() {
                           fullWidth
                           id="youtubeLink"
                           placeholder="https://www.youtube.com/"
-                          autoFocus
                           onChange={onFormInputChange}
                           value={fields.youtubeLink}          
                           />
@@ -373,7 +412,7 @@ export default function Projects() {
                   </Grid>
                   <Grid xs={12} sm={12}>
                       <Button
-                      disabled={(!isYoutubeUrl(fields.youtubeLink))}
+                      disabled={!(isYoutubeUrl(fields.youtubeLink)&&isFileAlreadyExist(filesToUpload))}
                       type="submit"
                       variant="contained"
                       className={classes.submit}
