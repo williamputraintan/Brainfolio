@@ -132,7 +132,7 @@ export default function Custom2() {
 
   
     return (
-
+<div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
@@ -237,6 +237,6 @@ export default function Custom2() {
               </div>      
             </Container>
         </Container>
-      
+        </div>
     );
   }

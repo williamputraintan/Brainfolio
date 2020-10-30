@@ -198,7 +198,7 @@ export default function Projects() {
     }
 
     return (
-
+      <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
@@ -365,7 +365,6 @@ export default function Projects() {
                           fullWidth
                           id="youtubeLink"
                           placeholder="https://www.youtube.com/"
-                          autoFocus
                           onChange={onFormInputChange}
                           value={fields.youtubeLink}          
                           />
@@ -388,6 +387,6 @@ export default function Projects() {
               </div>      
             </Container>
         </Container>
-
+      </div>
     );
   }

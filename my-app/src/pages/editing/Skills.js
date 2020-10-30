@@ -29,6 +29,7 @@ export default function Skills(){
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }
     };
+    console.log(state)
 
     const initialState = {
       category: "Technical",
@@ -132,7 +133,7 @@ export default function Skills(){
     },[formDisable,editId]);
 
     return (
-
+      <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
 
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
@@ -216,6 +217,6 @@ export default function Skills(){
               </div>
             </Container>
           </Container>
-  
+        </div>
     )
 }

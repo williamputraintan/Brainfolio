@@ -7,6 +7,7 @@ import bgDesktopImage from '../images/aboutUs/missions/mission.png';
 import bgMobileImage from  '../images/aboutUs/missions/mobile-mission.png';
 import whitewave from '../images/aboutUs/missions/whitewave.png';
 import theme from '../utils/theme/MinimalTheme';
+import {useSpring,animated,useTrail} from 'react-spring'
 
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({
@@ -115,36 +116,67 @@ const aboutTheme = createMuiTheme({
     
     },
 });
- 
+
+const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2]
+const trans1 = (x, y) => `translate3d(${x / 10}px,${y / 10}px,0)`
+
 export default function AboutUs(){
     const classes = useStyles();
-    
+    const [props, set] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }))
+    const [open, setopen] = useState(true)
     return(
-        <ThemeProvider theme={aboutTheme}>
-        <div className={classes.aboutContainer}>
-            
-            <div className={classes.whatwedo}>
-                <div className={classes.content}>
-                <Typography variant="h1">Our mission</Typography>
-                <Typography variant="h2">We aim to help individuals to showcase their skills by building a platform where the user can present their experiences and projects to demonstrate their abilities.</Typography>
+        <ThemeProvider theme={aboutTheme}> 
+            <div className={classes.aboutContainer}>
+                <div className={classes.whatwedo} onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}>
+                    <animated.div className={classes.content} style={{ transform: props.xy.interpolate(trans1) }}>
+                        <Trail open={open} >
+                            <Typography variant="h1">
+                                Our mission  
+                            </Typography >
+                            <Typography variant="h2">
+                                We aim to help individuals to showcase their skills by building a platform where the user can present their experiences and projects to demonstrate their abilities.
+                            </Typography>
+                        </Trail>
+                    </animated.div>  
+                </div>
+                <div className={classes.instructions}>
+                    <Typography variant="h3">User Guide</Typography>
+                    <VerticalTabs/>
                 </div> 
+                <div className={classes.theTeam}>
+                    <div style={{width:'100%',height:'20%'}}><Typography variant="h3">Meet The Team</Typography></div>
+                    <MemberCards/>
+                </div>
+                <div className={classes.footer}>
+                    Brainfolio 2020
+                </div>
             </div>
-           
-            <div className={classes.instructions}>
-                <Typography variant="h3">User Guide</Typography>
-                <VerticalTabs/>
-            </div>
-           
-            <div className={classes.theTeam}>
-                <div style={{width:'100%',height:'20%'}}><Typography variant="h3">Meet The Team</Typography></div>
-                <MemberCards/>
-            </div>
-            <div className={classes.footer}>
-              Brainfolio 2020
-            </div>
-        </div>
-        </ThemeProvider>
-         
+        </ThemeProvider>  
     );
+}
+
+function Trail({ open, children, ...props }) {
+  const items = React.Children.toArray(children)
+  const trail = useTrail(items.length, {
+    config: { mass: 5, tension: 2000, friction: 600 },
+    opacity: open ? 1 : 0,
+    x: open ? 0 : 20,
+    height: open ? 110 : 0,
+    from: { opacity: 0, x: 20, height: 0 },
+  })
+  return (
+    <div className="trails-main" {...props}>
+      <div>
+        {trail.map(({ x, height, ...rest }, index) => (
+          <animated.div
+            key={items[index]}
+            className="trails-text"
+            style={{ ...rest, transform: x.interpolate((x) => `translate3d(0,${x}px,0)`) }}>
+            <animated.div style={{ height }}>{items[index]}</animated.div>
+          </animated.div>
+        ))}
+      </div>
+    </div>
+  )
 }
 

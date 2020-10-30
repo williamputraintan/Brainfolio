@@ -143,7 +143,7 @@ export default function Education() {
     },[formDisable,editId]);
   
     return (
-     
+      <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
@@ -158,6 +158,7 @@ export default function Education() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}>Degree * </div>
                             <TextField
+                            autoFocus
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"
@@ -179,7 +180,6 @@ export default function Education() {
                             fullWidth
                             value={fields.institution}
                             placeholder="University of Melbourne"
-                            autoFocus
                             onChange={onInputChange}  
                             error = {(fields.institution)===""}  
                             helperText={(fields.institution)!==""?null:"Incomplete entry"}                 
@@ -275,6 +275,7 @@ export default function Education() {
                   </div>      
               </Container>
             </Container>
+          </div>
     );
   }
 

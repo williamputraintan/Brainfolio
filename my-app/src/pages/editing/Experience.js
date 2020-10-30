@@ -155,7 +155,7 @@ export default function Experience() {
   },[formDisable,editId]);
   
     return (
-     
+      <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
@@ -304,7 +304,7 @@ export default function Experience() {
                   </div>      
               </Container>
             </Container >
-          
+          </div>
 
     );
   }

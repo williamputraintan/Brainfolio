@@ -129,7 +129,7 @@ export default function Overview(){
 
 
     return (
-
+        <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
             <div className={classes.paper}>
               
@@ -216,9 +216,10 @@ export default function Overview(){
                             Save my Portfolio
                         </Button>
                     </Grid>
-                  </Grid>
+                </Grid>
     
-              </div>
-            </Container>
+            </div>
+        </Container>
+    </div>
     )
 }

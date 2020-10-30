@@ -1,7 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { UserContext } from '../../context/user.context';
+import React, { useState, useContext,useCallback, useEffect } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,6 +8,9 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { Typography } from '@material-ui/core';
 
 import Contact from './Contact';
 import Education from './Education';
@@ -18,59 +20,62 @@ import Projects from './Projects';
 import Custom1 from './Custom1';
 import Custom2 from './Custom2';
 import Overview from './Overview';
+import theme from '../../utils/theme/MinimalTheme'
+import { useTrail, animated } from 'react-spring'
 
-import editbackground from '../../images/editbackground.png';
 
-const buttonStyles = makeStyles((theme) => ({
+const pageStyles = makeStyles((theme) => ({
     container:{
-        padding:'5% 0% 5% 5%',
-        height:'100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-        width:'90%',
-        '& > *': {
-            margin: theme.spacing(1),
-            width: "90%",
-            padding:'3%',
-            height:'fit-content'
-        },
+      minHeight:'100vh',
+      height:'auto'
     },
-    buttonContainerDesk:{
-        height:'12%',
-        marginBottom:'5%'
+    tabContainer:{
+      // backgroundColor:"#E2ECF8",
+      backgroundColor:theme.palette.primary.main,
+      width:'100vw', 
+      [theme.breakpoints.up('sm')]: {
+        height:'18vh'
+      },
+      [theme.breakpoints.down('xs')]: {
+        height:'20vh'
+      }
+    },
+    upperWords:{
+      height:'68%', 
+      padding:'2%'
+    },
+    title:{
+      fontWeight:'600',
+      color:'#ffffff',
+      fontFamily:theme.typography.alternative,
+    },
+    subtitle:{
+      color:'#ffffff',
+      fontFamily:theme.typography.alternative,
+    },
+    paperContainer:{
+      minHeight:'100vh'
     },
     formContainer:{
-        height:'85%',
-        padding:'1% 3% 3% 3%'
+      padding:'5%'
     },
     button:{
-        backgroundColor:theme.palette.primary.main,
-        color:theme.overrides.MuiButton.containedPrimary.color,
-        margin:'1%',
-        fontFamily:theme.typography.fontFamily,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-            color: '#4C516D'
-        }
-    },
-    buttonOn:{
-        backgroundColor:theme.palette.secondary.main,
-        color:'#4C516D',
-        margin:'2%',
-        fontFamily:theme.typography.fontFamily,
-        "&:hover": {
-            backgroundColor: "transparent"
-        }
-    }
+      backgroundColor:theme.palette.secondary.main,
+      color:'#000000',
+      margin:'2%',
+      fontFamily:theme.typography.fontFamily,
+      '&:hover': {
+          backgroundColor: theme.palette.secondary.main,
+          color: '#4C516D'
+      }
+    } 
 }));
 
 export default function EditingPage(props){
-    const {state} = useContext(UserContext);
-    const classes = buttonStyles();
-    const { match, history } = props;
-    const { params } = match;
-    const { page } = params;
+    const classes = pageStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [value, setValue] = React.useState(0);
+    const [open, set] = useState(true);
 
     const handleClickMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -79,6 +84,7 @@ export default function EditingPage(props){
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };
+    
     const tabNameToIndex = {
       0: "contact",
       1: "education",
@@ -90,63 +96,75 @@ export default function EditingPage(props){
       7: "overview"
     };
   
-    const indexToTabName = {
-      contact: 0,
-      education: 1,
-      experience:2,
-      skills: 3,
-      projects: 4,
-      custom1: 5,
-      custom2: 6,
-      overview: 7
-    };
-  
-    const [selectedTab, setSelectedTab] = useState(indexToTabName[page]);
+    function a11yProps(index) {
+      return {
+        id: `scrollable-auto-tab-${index}`,
+        'aria-controls': `scrollable-auto-tabpanel-${index}`,
+      };
+    }
 
-    function handleChange (newValue) {
-      history.push(`/home/edit/${tabNameToIndex[newValue]}/${state.user}`);
-      setSelectedTab(newValue);
+    function handleChange (event,newValue) {
+        setValue(newValue)
+        // history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
     };
 
     function menuClick(num){
-        handleChange(num);
+        setValue(num);
         handleCloseMenu();
     }
-  
+
+    const tabsTheme=createMuiTheme({
+      ...theme,
+      overrides:{
+          MuiTab:{
+              wrapper:{
+                  fontWeight:900
+              }
+          }
+      }
+    })
+   
     return (
-        <Grid container justify = "center"  alignItems="center" style={{backgroundImage: `url(${editbackground})`,}}>
-            <div className={classes.container}> 
-                <Paper elevation={5} >
-                <div className={classes.buttonContainerDesk}>
+      <ThemeProvider theme={tabsTheme}>
+        <Grid container direction="column" alignItems="center" className={classes.container}>
+          <Paper elevation={5} className={classes.paperContainer}>
+            <div> 
+              <div className={classes.tabContainer}>
+                <div className={classes.upperWords}>
+                    <Trail open={true} onClick={() => set((state) => !state)}>
+                      <div>
+                        <Typography variant="h5" className={classes.title} >Complete your Portfolio</Typography>
+                        <Typography variant="h7" className={classes.subtitle} >Fill your experiences and achievements to be diplayed on your Portfolio </Typography>
+                      </div>
+                    </Trail>
+                    
+
+                </div>
+                <div >
                     <Hidden smDown>
-                        <Button variant="contained" className={(page!=='contact')? classes.button :classes.buttonOn } onClick={()=>( handleChange(0))}>
-                            Contact
-                        </Button>
-                        <Button variant="contained" className={(page!=='education')? classes.button :classes.buttonOn }  onClick={()=>(handleChange(1))}>
-                            Education
-                        </Button>
-                        <Button variant="contained" className={(page!=='experience')? classes.button :classes.buttonOn }onClick={()=>(handleChange(2))}>
-                            Experience
-                        </Button>
-                        <Button variant="contained" className={(page!=='skills')? classes.button :classes.buttonOn } onClick={()=>(handleChange(3))}>
-                            Skills
-                        </Button>
-                        <Button variant="contained" className={(page!=='projects')? classes.button :classes.buttonOn } onClick={()=>(handleChange(4))}>
-                            Projects
-                        </Button>
-                        <Button variant="contained" className={(page!=='custom1')? classes.button :classes.buttonOn } onClick={()=>(handleChange(5))}>
-                            Custom 1
-                        </Button>
-                        <Button variant="contained" className={(page!=='custom2')? classes.button :classes.buttonOn } onClick={()=>(handleChange(6))}>
-                            Custom 2
-                        </Button>
-                        <Button variant="contained" className={(page!=='overview')? classes.button :classes.buttonOn } onClick={()=>(handleChange(7))}>
-                            Overview
-                        </Button>
+                        <Paper style={{height:'100%'}}>
+                            <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            indicatorColor="primary"
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            >
+                            <Tab label="Profile" {...a11yProps(0)} />
+                            <Tab label="Education" {...a11yProps(1)} />
+                            <Tab label="Experience" {...a11yProps(2)} />
+                            <Tab label="Skills" {...a11yProps(3)} />
+                            <Tab label="Projects" {...a11yProps(4)} />
+                            <Tab label="Custom 1" {...a11yProps(5)} />
+                            <Tab label="Custom 2" {...a11yProps(6)} />
+                            <Tab label="Overview" {...a11yProps(7)} />
+                            </Tabs>
+                        </Paper>
                     </Hidden>
-                    <Hidden mdUp> 
+                    
+                    <Hidden mdUp>
                         <Button className={classes.button} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                            <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[selectedTab]}
+                            <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[value]}
                         </Button>
                         <Menu
                         id="simple-menu"
@@ -163,21 +181,53 @@ export default function EditingPage(props){
                             <MenuItem onClick={()=>menuClick(5)}>Custom 1</MenuItem>
                             <MenuItem onClick={()=>menuClick(6)}>Custom 2</MenuItem>
                             <MenuItem onClick={()=>menuClick(7)}>Overview</MenuItem>
-                        </Menu>       
+                        </Menu>      
                     </Hidden>
-                </div>
+                    </div>
+                  </div>
                 <div className={classes.formContainer}>
-                    {selectedTab === 0 && <Contact/>}
-                    {selectedTab === 1 && <Education/>}
-                    {selectedTab === 2 && <Experience/>}
-                    {selectedTab === 3 && <Skills/>}
-                    {selectedTab === 4 && <Projects/>}
-                    {selectedTab === 5 && <Custom1/>}
-                    {selectedTab === 6 && <Custom2/>}
-                    {selectedTab === 7 && <Overview/>}
+                  {value === 0 && <Contact/>}
+                  {value === 1 && <Education/>}
+                  {value === 2 && <Experience/>}
+                  {value === 3 && <Skills/>}
+                  {value === 4 && <Projects/>}
+                  {value === 5 && <Custom1/>}
+                  {value === 6 && <Custom2/>}
+                  {value === 7 && <Overview/>}
                 </div>
-                </Paper>
             </div>
+          </Paper> 
         </Grid>
+      </ThemeProvider>
     );
 }
+
+
+
+function Trail({ open, children, ...props }) {
+  const items = React.Children.toArray(children)
+  const trail = useTrail(items.length, {
+    config: { mass: 10, tension: 2000, friction: 400 },
+    opacity: open ? 1 : 0,
+    x: open ? 0 : 20,
+    height: open ? 110 : 0,
+    from: { opacity: 0, x: 20, height: 0 },
+  })
+  return (
+    <div className="trails-main" {...props}>
+      <div>
+        {trail.map(({ x, height, ...rest }, index) => (
+          <animated.div
+            key={items[index]}
+            className="trails-text"
+            style={{ ...rest, transform: x.interpolate((x) => `translate3d(0,${x}px,0)`) }}>
+            <animated.div style={{ height }}>{items[index]}</animated.div>
+          </animated.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+
+

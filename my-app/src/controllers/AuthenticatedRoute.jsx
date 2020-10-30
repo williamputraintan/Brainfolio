@@ -17,14 +17,13 @@ function AuthenticatedRoute(props) {
         state.user ?
         <>
            <Link to="/home/portfolio">Portfolio</Link>
-            <Link to={"/home/edit/contact/"+username}>Edit Portfolio</Link>
+            <Link to={"/home/edit/"+username}>Edit Portfolio</Link>
 
             <Switch>
 
 
               <Route exact path="/home/portfolio" component={Portfolio} />
-              <Redirect from={"/home/edit"+state.token.user} to={"/home/edit/contact/"+state.token.user}  />
-              <Route path={"/home/edit/:page?/:username"+state.token.user} component={props => <EditingPage {...props}  />}  />
+              <Route path={"/home/edit/"+username} component={EditingPage}  />
 
             </Switch>
         </>

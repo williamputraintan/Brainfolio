@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles ,createMuiTheme,ThemeProvider} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import theme from '../../utils/theme/MinimalTheme';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
-import { useTrail, a } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 
 import step1 from '../../images/aboutUs/instructions/register-t.png';
 import step2 from '../../images/aboutUs/instructions/profile-t.png';
@@ -130,10 +130,13 @@ const useStyles = makeStyles((theme) => ({
     },
   });
 
+const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2]
+const trans1 = (x, y) => `translate3d(${x / 10}px,${y / 10}px,0)`
+
 export default function VerticalTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [open, set] = useState(true)
+  const [props, set] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }))
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -141,7 +144,7 @@ export default function VerticalTabs() {
 
   return (
     <ThemeProvider theme={vTabs}>
-      <div className={classes.root}>
+      <div className={classes.root} >
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -157,11 +160,11 @@ export default function VerticalTabs() {
           <Tab label="5" {...a11yProps(4)} />
        
         </Tabs>
-        <div style={{width:'100%',height:'100%'}}>
+        <div style={{width:'100%',height:'100%'}} onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}>
           
             <TabPanel value={value} index={0} >
               <div className={classes.tabBody}>
-                <div className={classes.description}> 
+                <animated.div className={classes.description} style={{ transform: props.xy.interpolate(trans1) }}> 
                   <Typography align='left' variant='h1'>
                     Create your account
                   </Typography>
@@ -171,8 +174,8 @@ export default function VerticalTabs() {
                   <Button variant="contained" color={theme.palette.primary.main} className={classes.btn}  href="auth/signUp/1"> 
                     Get started
                   </Button>
-                </div>
-                <div className={classes.imgdesc}> 
+                </animated.div>
+                <div className={classes.imgdesc} > 
                   <img style={{maxWidth:'100%',maxHeight:'90%'}} src={step1} alt="create your account"/> 
                 </div>
               </div>
@@ -180,14 +183,14 @@ export default function VerticalTabs() {
           
             <TabPanel value={value} index={1}>
               <div className={classes.tabBody}>
-                <div className={classes.description}> 
+                <animated.div className={classes.description} style={{ transform: props.xy.interpolate(trans1) }} > 
                   <Typography align='left' variant='h1'>
                     Edit your Portfolio Profile
                   </Typography>
                   <Typography align='left' variant='h3'>
                     Add your contact details and your profile picture along with a background image of choice
                   </Typography>     
-                </div>
+                </animated.div>
                 <div className={classes.imgdesc}> 
                   <img style={{maxWidth:'100%',maxHeight:'90%'}} src={step2} alt="edit your portfolio"/> 
                 </div>
@@ -196,14 +199,14 @@ export default function VerticalTabs() {
         
           <TabPanel value={value} index={2}>
             <div className={classes.tabBody}>
-              <div className={classes.description}> 
+              <animated.div className={classes.description} style={{ transform: props.xy.interpolate(trans1) }}> 
                 <Typography align='left' variant='h1'>
                   Add your Education history, Experiences and Projects
                 </Typography>
                 <Typography align='left' variant='h3'>
                   Showcase your education history, experiences and skills by uploading your previous projects with description
                 </Typography>     
-              </div>
+              </animated.div>
               <div className={classes.imgdesc}> 
                 <img style={{maxWidth:'100%',maxHeight:'90%'}}  src={step3} alt="add your history"/> 
               </div>
@@ -211,14 +214,14 @@ export default function VerticalTabs() {
           </TabPanel>
           <TabPanel value={value} index={3}>
             <div className={classes.tabBody}>
-              <div className={classes.description}> 
+              <animated.div className={classes.description} style={{ transform: props.xy.interpolate(trans1) }}> 
                 <Typography align='left' variant='h1'>
                   Add a custom section of choice
                 </Typography>
                 <Typography align='left' variant='h3'>
                   You can showcase more of your other achievements in the custom section
                 </Typography>     
-              </div>
+              </animated.div>
               <div className={classes.imgdesc}> 
                 <img style={{maxWidth:'100%',maxHeight:'90%'}}  src={step4} alt="add your history"/> 
               </div>
@@ -226,14 +229,14 @@ export default function VerticalTabs() {
           </TabPanel>
           <TabPanel value={value} index={4}>
             <div className={classes.tabBody}>
-              <div className={classes.description}> 
+              <animated.div className={classes.description} style={{ transform: props.xy.interpolate(trans1) }}> 
                 <Typography align='left' variant='h1'>
                   Review and Share!
                 </Typography>
                 <Typography align='left' variant='h3'>
                   Share your portfolio to the public or your circle of trusted connections
                 </Typography>     
-              </div>
+              </animated.div>
               <div className={classes.imgdesc}> 
                 <img style={{maxWidth:'100%',maxHeight:'90%'}} src={step5} alt="share your portfolio"/> 
               </div>
@@ -244,28 +247,5 @@ export default function VerticalTabs() {
     </ThemeProvider>
   );
 }
-function Trail({ open, children, ...props }) {
-  const items = React.Children.toArray(children)
-  const trail = useTrail(items.length, {
-    config: { mass: 5, tension: 2000, friction: 200 },
-    opacity: open ? 1 : 0,
-    x: open ? 0 : 20,
-    height: open ? 110 : 0,
-    from: { opacity: 0, x: 20, height: 0 },
-  })
-  return (
-    <div className="trails-main" {...props}>
-      <div>
-        {trail.map(({ x, height, ...rest }, index) => (
-          <a.div
-            key={items[index]}
-            className="trails-text"
-            style={{ ...rest, transform: x.interpolate((x) => `translate3d(0,${x}px,0)`) }}>
-            <a.div style={{ height }}>{items[index]}</a.div>
-          </a.div>
-        ))}
-      </div>
-    </div>
-  )
-}
+
 
