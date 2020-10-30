@@ -21,7 +21,7 @@ import { persistUser,setUserLoading } from "./context/actions/auth.actions";
 
 
 //Lazy Import
-const AboutUs = React.lazy(() => import('./pages/AboutUs.js'));
+const AboutUs = React.lazy(() => import('./pages/AboutUs.jsx'));
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
 const ProjectPage = React.lazy(() => import('./pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('./pages/PortfolioPage.jsx'));

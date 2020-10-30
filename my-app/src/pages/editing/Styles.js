@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import theme from '../../utils/theme/MinimalTheme';
 
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({

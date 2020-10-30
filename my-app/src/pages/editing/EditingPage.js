@@ -46,11 +46,11 @@ const pageStyles = makeStyles((theme) => ({
     },
     title:{
       fontWeight:'600',
-      color:'#ffffff',
+      color:theme.palette.fontDefault,
       fontFamily:theme.typography.alternative,
     },
     subtitle:{
-      color:'#ffffff',
+      color:theme.palette.fontDefault,
       fontFamily:theme.typography.alternative,
     },
     paperContainer:{
@@ -61,7 +61,7 @@ const pageStyles = makeStyles((theme) => ({
     },
     button:{
       backgroundColor:theme.palette.secondary.main,
-      color:'#000000',
+      color:theme.palette.fontDefault,
       margin:'2%',
       fontFamily:theme.typography.fontFamily,
       '&:hover': {
