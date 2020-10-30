@@ -57,7 +57,7 @@ const pageStyles = makeStyles((theme) => ({
       minHeight:'100vh'
     },
     formContainer:{
-      padding:'5%'
+      padding:'3%'
     },
     button:{
       backgroundColor:theme.palette.secondary.main,
@@ -131,7 +131,7 @@ export default function EditingPage(props){
             <div> 
               <div className={classes.tabContainer}>
                 <div className={classes.upperWords}>
-                    <Trail open={true} onClick={() => set((state) => !state)}>
+                    <Trail open={open}>
                       <div>
                         <Typography variant="h5" className={classes.title} >Complete your Portfolio</Typography>
                         <Typography variant="h7" className={classes.subtitle} >Fill your experiences and achievements to be diplayed on your Portfolio </Typography>
