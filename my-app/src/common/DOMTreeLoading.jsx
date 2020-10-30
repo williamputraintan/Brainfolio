@@ -1,43 +1,37 @@
 import React from 'react';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {useTransition, animated} from 'react-spring';
+import { motion, AnimatePresence } from "framer-motion"
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "absolute",
     width: "100%",
-    height: 8,
+    height: 5,
     top: 0,
     boxShadow: "0px 8px 12px rgba(0,0,0,0.16)",
     backgroundColor: lighten(theme.palette.primary.main, 0.8)
   },
   bar: {
-    height: 8,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    ...theme.palette.reverseGradient,
+    height: 5,
+    backgroundColor: theme.palette.primary.main
   },
 }));
 
 function DOMTreeLoading() {
   const classes = useStyles();
-  const loaderTransition = useTransition(true, null, {
-    from: { width: "0%" },
-    enter: { width: "60%" },
-    leave: { width: "100%" },
-  })
 
   return (
-    <div className={classes.root}>
-      {
-        loaderTransition.map(({_, key, props})=>{
-          return(
-            <animated.div key={key} className={classes.bar} style={props}></animated.div>
-          )
-        })
-      }
-    </div>
+    <AnimatePresence exitBeforeEnter>
+      <div className={classes.root}>
+        <motion.div 
+          initial={{ width: "0%" }}
+          animate={{ width: "60%" }}
+          exit={{ width: "100%" }}
+          className={classes.bar}
+            />
+      </div>
+    </AnimatePresence>
   )
 }
 

@@ -1,5 +1,10 @@
-const auth = "/auth"
+/** Urls
+ *  /app -> renders navigation bar
+ *  /home -> Authenticated route
+ * **/
 
+const auth = "/auth"
+const baseUrl = ""
 
 const Paths = {
   SIGN_UP: auth + "/signup",
@@ -7,9 +12,11 @@ const Paths = {
   SIGN_UP_2: auth + "/signup/2",
   SIGN_UP_3: auth + "/signup/3",
   SIGN_IN: auth + "/signin",
-  HOME: "/home",
+  HOME: "home",
   PORTFOLIO: "/portfolio",
-  ABOUT_US: "/aboutUs"
+  ABOUT_US: "/aboutUs",
+  PROJECT: "/project",
+  EDIT_PORTFOLIO: "/home/edit",
 }
 
 export default Paths

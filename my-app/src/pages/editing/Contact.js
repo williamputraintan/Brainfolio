@@ -1,6 +1,7 @@
 import React, { useState, useContext ,useEffect} from 'react';
 import { UserContext } from '../../context/user.context';
 import AxiosInstance  from "../../utils/axios";
+import Paper from '@material-ui/core/Paper';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -57,7 +58,6 @@ export default function Contact(props) {
     const [backgroundToDelete, setBackgroundToDelete] = React.useState([])
 
     useEffect(() => {
-  
       AxiosInstance.get(
         "edit/profile/",
         config
@@ -65,9 +65,11 @@ export default function Contact(props) {
       .then((response) => {
         console.log(response);
         const responseData = response.data;
-        setExistingData([responseData]);
-        setButtonClick(false)
-        setFields(responseData)
+        if(responseData)
+        {
+          setExistingData([responseData]);
+          setButtonClick(false)
+          setFields(responseData)}
       })
     },[buttonClick]);
 
@@ -185,8 +187,8 @@ export default function Contact(props) {
     // },[buttonClick]);
 
     return (
-     
-        <Container component="main" maxWidth="lg">
+     <div style={{padding:'0 5%'}}>
+        <Container component="main" maxWidth="lg" style={{backgroundColor:'#fffff'}}>
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
@@ -234,6 +236,7 @@ export default function Contact(props) {
                         placeholder="Ms"
                         value={fields.title}
                         onChange={onInputChange}
+                        autoFocus
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -327,7 +330,6 @@ export default function Contact(props) {
                         fullWidth
                         value={fields.description}
                         placeholder="A recent graduate from the University of Melbourne with a Bachelor of Science majoring in Chemical Systems."
-                        autoFocus
                         multiline
                         rows={5}
                         onChange={onInputChange}
@@ -400,6 +402,7 @@ export default function Contact(props) {
             </div>
           </Container>
       </Container>
+    </div>
      
     );
   }

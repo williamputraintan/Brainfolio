@@ -4,12 +4,17 @@ import { Switch,Route, Redirect, Link } from 'react-router-dom';
 import Portfolio from '../pages/portfolio/portfolioPage.js';
 import EditingPage from '../pages/editing/EditingPage.js';
 import Paths from "../utils/path";
+import EditPage from "../pages/EditPage";
 
 
-function AuthenticatedRoute(props) {
+import firebase from "../utils/firebase.js";
+
+
+function AuthenticatedRoute() {
   const {state} = useContext(UserContext);
   const username = state.user?.username
 
+ 
   return (
     <div>
 
@@ -17,14 +22,11 @@ function AuthenticatedRoute(props) {
         state.user ?
         <>
            <Link to="/home/portfolio">Portfolio</Link>
-            <Link to={"/home/edit/contact/"+username}>Edit Portfolio</Link>
+            <Link to={"/home/edit/"+username}>Edit Portfolio</Link>
 
             <Switch>
-
-
               <Route exact path="/home/portfolio" component={Portfolio} />
-              <Redirect from={"/home/edit"+state.token.user} to={"/home/edit/contact/"+state.token.user}  />
-              <Route path={"/home/edit/:page?/:username"+state.token.user} component={props => <EditingPage {...props}  />}  />
+              <Route path={"/home/edit/"+username} component={EditingPage}  />
 
             </Switch>
         </>

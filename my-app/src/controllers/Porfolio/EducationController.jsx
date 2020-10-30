@@ -9,6 +9,8 @@ import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
 import SkeletonCard from "../../common/SkeletonCard";
 
+import useEducationAPI from "../../hooks/portfolio/useEducationAPI";
+
 
 const accentColor =  "#8E44AD";
 
@@ -22,56 +24,50 @@ const useStyles = makeStyles( theme => ({
   }
 }));
 
+
+
+const DataList = (props) => {
+  const { data } = props
+  return(
+    data.map((value,key) => {
+        return(
+          <>
+          {
+            (key === data.length - 1) ?
+            <EducationListItem key={key} data={value} />:
+            <>
+              <EducationListItem key={key} data={value} />
+              <Divider />
+            </>
+              
+          }
+          </>
+        
+        )
+      })
+  )
+}
+
 function EducationController(props) {
   const classes = useStyles();
   const { user } = props;
 
+  const {data, loading, error} = useEducationAPI(user);
 
-  const [loading, setLoading] = useState(true);
-  const [education, setEducation] = useState([]);
 
-  React.useEffect(() => {
-    setLoading(true);
-    const source = axios.CancelToken.source();
-   
+  // const [loading, setLoading] = useState(true);
 
-    AxiosInstance
-      .get(`/public/education/${user}`)
-      .then(response => {
-        const data = response?.data;
-        if(data) setEducation(data);
-      })
-    
-    setLoading(false);
-    return () => {
-      source.cancel(
-        "Canceled because of component unmounted"
-      );
-    };
-  },[user])
+  console.log(error)
+
 
   return (
  
       <CardAccent className={classes.root} color={accentColor}>
         <Typography className={classes.title} variant="h4" gutterBottom> Education</Typography>
-        {
-          loading? <SkeletonCard/>:
-          education.map((value,key) => {
-            return(
-              <>
-              {
-                (key === education.length - 1) ?
-                <EducationListItem key={key} data={value} />:
-                <>
-                  <EducationListItem key={key} data={value} />
-                  <Divider />
-                </>
-                  
-              }
-              </>
-            
-            )
-          })
+        
+        { 
+        loading? <SkeletonCard/>:
+          <DataList data={data}/>
         }
         <br/>
 

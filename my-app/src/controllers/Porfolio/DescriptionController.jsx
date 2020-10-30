@@ -6,7 +6,8 @@ import AxiosInstance from "../../utils/axios";
 
 const useStyles = makeStyles( theme => ({
   root: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.bacgroundAccent
   },
   title:{
     fontWeight: 700

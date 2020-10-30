@@ -82,18 +82,6 @@ export default function Overview(){
         setTechSkillData(techData);
     }
 
-    function getCustom1Sec(){
-        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
-            .then(res=>setCustom1Section(res.data.sectionTitle))
-            .catch(error=>console.log(error));
-    }
-
-    function getCustom2Sec(){
-        AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
-            .then(res=>setCustom2Section(res.data.sectionTitle))
-            .catch(error=>console.log(error));
-    }
-
     function getSectionItems(){
         AxiosInstance.get('edit/custom',config)
         .then(res=>getCustomOne(res.data))
@@ -141,7 +129,7 @@ export default function Overview(){
 
 
     return (
-
+        <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
             <div className={classes.paper}>
               
@@ -228,9 +216,10 @@ export default function Overview(){
                             Save my Portfolio
                         </Button>
                     </Grid>
-                  </Grid>
+                </Grid>
     
-              </div>
-            </Container>
+            </div>
+        </Container>
+    </div>
     )
 }
