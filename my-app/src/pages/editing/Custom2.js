@@ -1,5 +1,5 @@
 import React, { useState, useContext ,useEffect} from 'react';
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +14,7 @@ import AxiosInstance  from "../../utils/axios";
 import {customFields} from './FieldNames';
   
 export default function Custom2() {
-    const {state} = useContext(UserContext);
+    const {state} = useContext(StoreContext);
     const classes = useStyles();
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }

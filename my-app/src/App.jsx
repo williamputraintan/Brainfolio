@@ -7,7 +7,7 @@ import NavbarController from "./controllers/NavbarController";
 
 // Imports
 import { ThemeProvider } from '@material-ui/core/styles';
-import { UserContext } from './context/user.context';
+import { StoreContext } from './context/store.context';
 import DomTreeLoader from "./common/DOMTreeLoading";
 import LoadingPage from "./common/PageLoading";
 
@@ -18,6 +18,7 @@ import LightTheme from "./utils/theme/MinimalTheme";
 import AppLoader from "./components/AppLoader/index";
 import firebase from './utils/firebase';
 import { persistUser,setUserLoading } from "./context/actions/auth.actions";
+import MessageSnackbar from "./common/Snackbar";
 
 
 //Lazy Import
@@ -33,8 +34,9 @@ const newPortfolio = React.lazy(() => import('./pages/portfolio/new-portfolio.js
 
 
 function App() {
-
-  const {state,dispatch} = React.useContext(UserContext);
+  
+  // const {} = React.useContext(UserContext);
+  const {state,dispatch} = React.useContext(StoreContext);
   const { darkMode } = state;
   
   React.useEffect(() => {
@@ -45,17 +47,15 @@ function App() {
       persistUser(dispatch, user)
     })
 
+
+    
   },[])
 
- 
-
- 
-
   return (
-
       <Suspense fallback={<DomTreeLoader/>}>
         <ThemeProvider theme={darkMode? DarkTheme: LightTheme}>
           {state.isLoading && <LoadingPage /> }
+          <MessageSnackbar />
           <AppLoader>
             <NavbarController />
             <Switch>

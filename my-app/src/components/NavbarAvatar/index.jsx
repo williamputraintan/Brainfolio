@@ -21,7 +21,7 @@ import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 
 import { logUserOff } from "../../context/actions/auth.actions";
-import { UserContext } from "../../context/user.context.jsx";
+import { StoreContext } from "../../context/store.context.jsx";
 import Paths from "../../utils/path";
 import Paper from '@material-ui/core/Paper';
 
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 function NavAvatar(props) {
   const classes = useStyles();
 
-  const { state, dispatch } = React.useContext(UserContext);
+  const { state, dispatch } = React.useContext(StoreContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [darkMode, setDarkMode] = React.useState(false);

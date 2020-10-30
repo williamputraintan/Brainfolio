@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDebouncedCallback  } from 'use-debounce';
 import { setUsername, setUserLoading } from "../../context/actions/auth.actions";
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +53,7 @@ function SignUpNext(props) {
     username:""
   })
 
-  const {dispatch} = React.useContext(UserContext);
+  const {dispatch} = React.useContext(StoreContext);
 
   function onSubmitForm(e){
     e.preventDefault();

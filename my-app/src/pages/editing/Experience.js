@@ -1,6 +1,6 @@
 import React, { useState, useContext ,useEffect} from 'react';
 import AxiosInstance  from "../../utils/axios";
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -22,7 +22,7 @@ import {useStyles} from './Styles.js';
 import {experienceFields} from './FieldNames';
 
 export default function Experience() {
-  const {state} = useContext(UserContext);
+  const {state} = useContext(StoreContext);
   const classes = useStyles();
 
   const config = {

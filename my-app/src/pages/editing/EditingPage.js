@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -65,7 +65,7 @@ const buttonStyles = makeStyles((theme) => ({
 }));
 
 export default function EditingPage(props){
-    const {state} = useContext(UserContext);
+    const {state} = useContext(StoreContext);
     const classes = buttonStyles();
     const { match, history } = props;
     const { params } = match;

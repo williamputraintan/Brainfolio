@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Copyright from "../../common/Copyright";
@@ -50,7 +50,7 @@ function SignUpForm() {
     confirmPassword: ""
   })
   
-  const {dispatch} = React.useContext(UserContext);
+  const {dispatch} = React.useContext(StoreContext);
 
   function onSubmitForm(e){
     e.preventDefault();

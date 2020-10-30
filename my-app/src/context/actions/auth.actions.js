@@ -1,10 +1,10 @@
-import { USER_LOG_IN, USER_LOG_OFF, SET_USER_LOADING, SET_USER, SET_MODE } from "../reducers/user.reducer";
+import { USER_LOG_OFF, SET_USER_LOADING, SET_USER, SET_MODE } from "../constants";
+import { setMessage } from "./message.actions";
 import AxiosInstance from "../../utils/axios";
 import { history } from '../../utils/BrowserHistory';
 import Paths from "../../utils/path";
 import firebase from '../../utils/firebase';
 
-const path = "/auth"
 
 
 export const setDarkMode = (dispatch, bool) => {
@@ -12,6 +12,8 @@ export const setDarkMode = (dispatch, bool) => {
     type:  SET_MODE,
     payload: bool
   })
+
+
 }
 
 export const setUserLoading = (dispatch, bool) => {
@@ -42,8 +44,6 @@ export const getUserFromDb = async (dispatch, idToken) => {
         'Authorization': `Bearer ${idToken}`
       }
     })
-  
-
 
     const { data } = response;
 
@@ -54,6 +54,7 @@ export const getUserFromDb = async (dispatch, idToken) => {
     })  
 
     if(data.username === "" || !data.username){
+      setMessage("You are not authenticated! ")
       history.push(Paths.SIGN_UP_2);
     }else{
       history.push(`${Paths.PORTFOLIO}/${data.username}`);
@@ -62,6 +63,7 @@ export const getUserFromDb = async (dispatch, idToken) => {
     setUserLoading(dispatch, false)
   }
   catch(e){
+    
     setUserLoading(dispatch, false)
   }
  
@@ -78,6 +80,7 @@ export const signInUser = async (dispatch, email, password) => {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then(() => firebase.auth().signInWithEmailAndPassword(email, password));
     
+    setMessage(dispatch,"Successfully set username!");
     // if(instance){
     //   // const idToken = await firebase.auth().currentUser.getIdToken(true);
     //   console.log(instance)
@@ -109,10 +112,13 @@ export const signUpUser = async (dispatch, email, password) => {
       console.log(idToken);
       getUserFromDb(dispatch, idToken);
     }
+    setMessage(dispatch,"Successfully signed up!");
+
     history.push(Paths.SIGN_UP_2);
   }
   catch(e){
-    history.goBack();
+    setMessage(dispatch,"Failed to sign up!", e);
+
     setUserLoading(dispatch, false);
   }
 }
@@ -120,7 +126,6 @@ export const signUpUser = async (dispatch, email, password) => {
 export const setUsername = async (dispatch,username) => {
   try{
     const idToken = await firebase.auth().currentUser.getIdToken(true);
-    console.log(idToken)
 
     
     const response = await AxiosInstance
@@ -140,26 +145,30 @@ export const setUsername = async (dispatch,username) => {
       payload: {...data, token: idToken}
     })  
 
+    setMessage(dispatch,"Successfully set username!");
 
     history.push(Paths.SIGN_UP_3);
   }
   catch(e){
-    console.log(e)
+    setMessage(dispatch,"Username is already taken!")
     setUserLoading(dispatch, false);
   }
 }
 
 export const logUserOff = async (dispatch) => {
-  await firebase.auth().signOut().then(function() {
-    // Sign-out successful.
+
+  try{
+    await firebase.auth().signOut()
     dispatch({
       type: USER_LOG_OFF,
       payload: null
     })
-  }).catch(function(error) {
-    console.log(error)
+    history.push(Paths.ABOUT_US);
+  }catch(e){
+    setMessage(dispatch,"Failed to log out!")
+    console.log(e)
     history.push("/404")
-  });
+  }
 }
 
 

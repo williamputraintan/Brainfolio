@@ -4,7 +4,6 @@
  * **/
 
 const auth = "/auth"
-const baseUrl = ""
 
 const Paths = {
   SIGN_UP: auth + "/signup",

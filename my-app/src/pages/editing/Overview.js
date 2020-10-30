@@ -12,11 +12,11 @@ import OverviewInfo from './OverviewInfo.js';
 
 import { history } from '../../utils/BrowserHistory';
 import AxiosInstance from '../../utils/axios';
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 import { Paper } from '@material-ui/core';
 
 export default function Overview(){
-    const {state} = useContext(UserContext);
+    const {state} = useContext(StoreContext);
     const classes = useStyles();
     const config = {
         headers: { Authorization: `Bearer ${state.token}` }

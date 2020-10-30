@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { UserContext, } from '../context/user.context';
+import { StoreContext, } from '../context/store.context';
 import { Switch,Route, Redirect, Link } from 'react-router-dom';
 import Portfolio from '../pages/portfolio/portfolioPage.js';
 import EditingPage from '../pages/editing/EditingPage.js';
@@ -11,10 +11,14 @@ import firebase from "../utils/firebase.js";
 
 
 function AuthenticatedRoute() {
-  const {state} = useContext(UserContext);
+  const {state} = useContext(StoreContext);
   const username = state.user?.username
 
+  React.useEffect(() => {
+  },[username])
+
  
+    
   return (
     <div>
 

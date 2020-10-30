@@ -9,7 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { history } from "./utils/BrowserHistory"; 
 import theme from "./utils/theme/MinimalTheme";
 
-import { UserContextProvider } from './context/user.context';
+import { StoreContextProvider } from './context/store.context';
 
 
 
@@ -25,11 +25,9 @@ ReactDOM.render(
     <Router history={history}>
         <ThemeProvider theme={theme}>
           <CssBaseline>
-            <UserContextProvider>
-                
-                  <App />
-              
-              </UserContextProvider>
+              <StoreContextProvider>
+                <App />
+              </StoreContextProvider>
           </CssBaseline>
         </ThemeProvider>
     </Router>

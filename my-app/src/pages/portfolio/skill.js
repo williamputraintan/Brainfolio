@@ -1,5 +1,5 @@
 import React, { useState, useContext ,useEffect} from 'react';
-import { UserContext } from '../../context/user.context';
+import { UserContext } from '../../context/store.context';
 import AxiosInstance  from "../../utils/axios";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';

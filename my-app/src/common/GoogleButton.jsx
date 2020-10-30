@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { IoLogoGoogle } from 'react-icons/io';
 import firebase from "../utils/firebase.js";
-import { UserContext } from '../context/user.context';
+import { StoreContext } from '../context/store.context';
 import { setUserLoading} from "../context/actions/auth.actions";
 
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function GoogleButton(props) {
   const classes = useStyles();
 
-  const {dispatch} = React.useContext(UserContext);
+  const {dispatch} = React.useContext(StoreContext);
 
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope('profile');

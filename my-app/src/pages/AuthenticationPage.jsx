@@ -2,7 +2,7 @@ import React from 'react';
 import SignIn from './SignInPage.jsx'
 import SignUp from './SignUpPage.jsx'
 import { Switch,  Route,  useHistory, Redirect } from 'react-router-dom';
-import { UserContext } from '../context/user.context';
+import { StoreContext } from '../context/store.context';
 import { setUserLoading, setUser , getUserFromDb} from "../context/actions/auth.actions";
 import LoadingPage from "../common/PageLoading";
 
@@ -13,7 +13,7 @@ import firebase from "../utils/firebase.js";
 
 function AuthenticationPage() {
   const history = useHistory();
-  const {state, dispatch} = React.useContext(UserContext);
+  const {state, dispatch} = React.useContext(StoreContext);
 
   React.useEffect(() => {
     setUserLoading(dispatch, true)

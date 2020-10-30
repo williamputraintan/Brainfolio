@@ -1,5 +1,5 @@
 import React, { useState, useContext ,useEffect} from 'react';
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 import AxiosInstance  from "../../utils/axios";
 
 import Button from '@material-ui/core/Button';
@@ -24,7 +24,7 @@ import axios from 'axios';
 
 
 export default function Contact(props) {
-    const {state} = useContext(UserContext);
+    const {state} = useContext(StoreContext);
     const classes = useStyles();
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }

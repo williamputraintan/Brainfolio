@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import PageLoader from '../common/PageLoading';
 import { useWindowWidth,} from '@react-hook/window-size';
-import { UserContext } from '../context/user.context';
+import { StoreContext } from '../context/store.context';
 
 
 //Lazy-Load Imports
@@ -16,7 +16,7 @@ function NavbarController(props) {
 
   const windowWidth = useWindowWidth();
 
-  const {state} = React.useContext(UserContext);
+  const {state} = React.useContext(StoreContext);
 
 
 

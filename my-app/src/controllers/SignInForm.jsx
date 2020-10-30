@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GoogleButton from "../common/GoogleButton"; 
 import Copyright from "../common/Copyright";
 import Paths from "../utils/path";
-import { UserContext } from '../context/user.context';
+import { StoreContext } from '../context/store.context';
 import { NavLink as RouterLink, useHistory } from 'react-router-dom';
 
 import { useDebouncedCallback  } from 'use-debounce'
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function SignInController(props) {
 
   const classes = useStyles();
-  const {dispatch} = React.useContext(UserContext);
+  const {dispatch} = React.useContext(StoreContext);
   const history = useHistory();
 
   const [fields, setFields] = React.useState({

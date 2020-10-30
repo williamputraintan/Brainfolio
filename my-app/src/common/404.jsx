@@ -36,7 +36,7 @@ function Page404() {
   const classes = useStyles();
 
   return (
-      <Container className={classes.root} maxWidth="xs">
+      <div className={classes.root} maxWidth="xs">
         <Error404 className={classes.svg}/>
         <Typography className={classes.title} variant="h3" gutterBottom>
           Error 404
@@ -48,7 +48,7 @@ function Page404() {
         <Link component={RouterLink} color="primary" to="/aboutUs">
           Back to Home
         </Link>
-      </Container>
+      </div>
   )
 }
 

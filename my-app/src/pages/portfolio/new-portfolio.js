@@ -1,7 +1,7 @@
 import React, {useState, useContext}from 'react';
 import { useEffect} from 'react-dom';
 import AxiosInstance  from "../../utils/axios";
-import { UserContext } from '../../context/user.context';
+import { StoreContext } from '../../context/store.context';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -78,7 +78,7 @@ const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?
 export default function New(){
 
     // const [portfolio, setPortfolio] = useState(Object);
-    const {state} = useContext(UserContext);
+    const {state} = useContext(StoreContext);
     // const [profile,setProfile] = useState([]);
     
     // console.log(portfolio);
