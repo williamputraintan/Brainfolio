@@ -10,7 +10,7 @@ const BottomNavbar = React.lazy(() => import('../components/BottomNav'))
 
 
  
-const MOBILE_BREAKPOINTS = 576;
+const MOBILE_BREAKPOINTS = 600;
 
 function NavbarController(props) {
 

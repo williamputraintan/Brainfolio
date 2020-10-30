@@ -6,10 +6,10 @@ import { createMuiTheme }  from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     gradient: {
-      background: 'linear-gradient(90deg, #041e42,#5C788F)'
+      background: 'linear-gradient(90deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%)'
     },
     reverseGradient: {
-      background: 'linear-gradient(270deg, #041e42,#5C788F)'
+      background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
     primary: {
       main: '#1B2D57'
@@ -21,7 +21,8 @@ const theme = createMuiTheme({
     fontDefault: '#323232',
     fontGrey: {
       color: '#565656',
-    }
+    },
+    bacgroundAccent: "#ebfcff",
   },
   overrides: {
     MuiButton: {

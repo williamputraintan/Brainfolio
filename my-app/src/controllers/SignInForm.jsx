@@ -63,7 +63,6 @@ function SignInController(props) {
 
     const {email, password} = fields;
 
-    setUserLoading(dispatch, true);
 
     signInUser(dispatch, email, password)
   }
