@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import { history } from '../utils/BrowserHistory';
+import Paths from "./path";
 
 /** Status codes
  *  404 = Not found
@@ -26,14 +27,15 @@ axios.interceptors.response.use(response => {
   if(Axios.isCancel()){
     return;
   }
+
   console.log(response);
-  if(response.status){
+  if(response?.status){
     switch(response.status){
       case 404: 
         history.push("/404")
         break;
       case 401:
-        history.push("/auth/signin/1")
+        history.push(Paths.SIGN_IN)
         break;
       case 400: 
         history.goBack()

@@ -17,10 +17,10 @@ const storeReducer = (state, {type, payload}) => {
       return {...state, message:{...state.message, content: null, show: false}}
       
     case USER_LOG_IN:
-      return { ...state, user: {...state, token: payload,...payload.user} };
+      return { ...state,  isLoggedIn: true, user: {...payload.user, token: payload} };
 
     case USER_LOG_OFF: {
-      return { ...state, user: null };
+      return { ...state, user: null , isLoggedIn: false};
     }
 
     case SET_USER_LOADING: {
@@ -28,7 +28,7 @@ const storeReducer = (state, {type, payload}) => {
     }
     
     case SET_USER: {
-      return { ...state, user: {...payload.user, token: payload.token } };
+      return { ...state, user: {...payload.user, token: payload.token }, isLoggedIn: true };
     }
 
     case SET_MODE:

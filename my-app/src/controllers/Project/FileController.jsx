@@ -62,7 +62,7 @@ export default function SingleLineGridList(projectDisplay) {
           {files.map((file) => (
             <GridListTile key={file}>
               {/* {console.log(file[0].slice(-3))} */}
-              {(file[0].slice(-3))=="pdf" ? <img src={pdf}/>  : <img src={file[1]} />}
+              {(file[0].slice(-3))=== "pdf" ? <img src={pdf}/>  : <img src={file[1]} />}
               <GridListTileBar
                 title={file[0]}
                 classes={{

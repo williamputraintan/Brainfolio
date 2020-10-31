@@ -18,17 +18,14 @@ function NavbarController(props) {
 
   const {state} = React.useContext(StoreContext);
 
-
-
-
   return (
     <Suspense fallback={<PageLoader />}>
       {
         <>
         {
           windowWidth >= MOBILE_BREAKPOINTS ?
-          <Navbar  user={state}/>:
-          <BottomNavbar user={state} />
+          <Navbar state={state}/>:
+          <BottomNavbar state={state} />
         }
         </>
       }

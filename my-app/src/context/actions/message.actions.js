@@ -7,6 +7,11 @@ export const setMessage = (dispatch, content) => {
     payload: content
   })
 
+  setTimeout(
+    dispatch({
+      type:  END_MESSAGE
+    })
+  ,3000)
 
 }
 

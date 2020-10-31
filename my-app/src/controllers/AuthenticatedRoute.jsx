@@ -1,20 +1,25 @@
 import React, {useContext} from 'react';
 import { StoreContext, } from '../context/store.context';
 import { Switch,Route, Redirect, Link } from 'react-router-dom';
-import Portfolio from '../pages/portfolio/portfolioPage.js';
-import EditingPage from '../pages/editing/EditingPage.js';
 import Paths from "../utils/path";
-import EditPage from "../pages/EditPage";
 
+//Pages
+import PortfolioPage from "../pages/PortfolioPage";
+import EditPage from "../pages/EditPage";
+import EditingPage from '../pages/editing/EditingPage.js';
 
 import firebase from "../utils/firebase.js";
 
 
 function AuthenticatedRoute() {
   const {state} = useContext(StoreContext);
-  const username = state.user?.username
+  const username = state.user.username;
+
+
+  console.log(state.user)
 
   React.useEffect(() => {
+    
   },[username])
 
  
@@ -26,14 +31,15 @@ function AuthenticatedRoute() {
         state.user ?
         <>
             <Link to="/home/portfolio">Portfolio</Link>
-            <Link to={"/home/edit/contact/"+username}>Edit Portfolio</Link>
-            <Redirect from={"/home/edit"+state.token.user} to={"/home/edit/contact/"+state.token.user}  />
+            <Link to={"/home/edit/contact/"}>Edit Portfolio</Link>
+
+            {/* <Redirect from={"/home/edit"+state.user} to={"/home/edit/contact/"+state.user}  /> */}
 
             <Switch>
-              <Route exact path="/home/portfolio" component={Portfolio} />
-        
+              <Route exact path={`${Paths.PORTFOLIO}/:username`} component={PortfolioPage} />
+              <Route path={`${Paths.EDIT_PORTFOLIO}/:username/`} component={EditPage} />
               {/* <Route path={"/home/edit/"} component={EditPage}/> */}
-              <Route path={"/home/edit/:page?/:username"+state.token.user} component={props => <EditingPage {...props}  />}  />
+              {/* <Route path={"/home/edit/:page?/:username"} component={props => <EditingPage {...props}  />}  /> */}
             </Switch>
         </>
           : 

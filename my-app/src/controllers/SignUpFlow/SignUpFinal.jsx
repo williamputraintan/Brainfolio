@@ -12,6 +12,7 @@ import { uploadProfileImages } from "../../utils/http"
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Paths from "../../utils/path";
+import { StoreContext } from "../../context/store.context";
 
 
 
@@ -97,6 +98,8 @@ function SignUpFinal(props) {
   const backgroundEl = useRef();
   const avatarEl = useRef();
 
+  const {state} = React.useContext(StoreContext);
+
   const classes = useStyles();
   const [fields, setFields] = React.useState({
     background:null,
@@ -109,30 +112,31 @@ function SignUpFinal(props) {
     if(fields.background === "" || fields.avatar === ""){
       return;
     }
-    console.log(fields)
+   
     const formData = new FormData();
     formData.append("avatar", fields.avatar);
-    formData.append("background", fields.background);
-    
-    uploadProfileImages(formData);
+    formData.append("background",fields.background);
+
+
+    console.log("Fields", fields)
+    uploadProfileImages(formData,state.user.token);
   }
 
   function onAvatarUpload(e){
     e.preventDefault();
-    setFields({
-      ...fields,
-      avatar: e.target.files[0]
-    })
+    console.log(e.target.files[0])
     if(avatarEl){
-
-      console.log(avatarEl.current.src)
       avatarEl.current.style.display = "block";
-      console.log(URL.createObjectURL(e.target.files[0]))
+
       avatarEl.current.src = URL.createObjectURL(e.target.files[0]);
       avatarEl.current.onload = function(){
         URL.revokeObjectURL(avatarEl.src)
       }
     }
+    setFields({
+      ...fields,
+      avatar: e.target.files[0]
+    })
   }
 
   

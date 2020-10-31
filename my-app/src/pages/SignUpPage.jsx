@@ -18,10 +18,8 @@ import SignUpNext from "../controllers/SignUpFlow/SignUpNext";
 import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
 import Paths from '../utils/path';
 import SignUpFinal from '../controllers/SignUpFlow/SignUpFinal';
+import WelcomeImage from "../images/welcome/welcome1.png"
 
-
-
-let welcomeImg;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   image: {
-    backgroundImage: `url(${welcomeImg})`,
+    backgroundImage: `url(${WelcomeImage})`,
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
@@ -46,11 +44,8 @@ function getLastPath(pathname){
 }
 
 export default function SignUp() {
-
-  welcomeImg = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png")
   
   const classes = useStyles();
-
   const { pathname } = useLocation();
 
 

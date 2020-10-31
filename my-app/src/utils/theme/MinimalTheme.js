@@ -12,6 +12,8 @@ const theme = createMuiTheme({
       background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
     bacgroundAccent: "#ebfcff",
+    errorColor: "#FF3D00",
+    successColor: "#2962FF"
   },
   overrides: {
     MuiButton: {

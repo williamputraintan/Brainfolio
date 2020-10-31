@@ -99,9 +99,8 @@ function Navbar(props) {
 
   const classes = useStyles();
 
-  const {user} = props;
-
-
+  const {state} = props;
+  const {isLoggedIn, user} = state
 
 
   return (
@@ -111,29 +110,36 @@ function Navbar(props) {
            <Link component={RouterLink} to={Paths.ABOUT_US}>
               <img className={classes.brand} src={logo} alt="logo"/>
             </Link>
-          <div className={classes.navActions}>
-            <Button>
-              <Link 
-                component={RouterLink} 
-                activeClassName={classes.activeLink} 
-                to={`${Paths.PORTFOLIO}/${user.username}`}>Portfolio</Link>
-            </Button>
-            <Button>
-              <Link 
-                component={RouterLink} 
-                activeClassName={classes.activeLink} 
-                to={`${Paths.PROJECT}/${user.username}`}>Projects</Link>
-            </Button>
-            <Button>
-              <Link 
-                component={RouterLink} 
-                activeClassName={classes.activeLink} 
-                to={`${Paths.EDIT_PORTFOLIO}/${user.username}`}>Customize</Link>
-            </Button>
-          </div>
+            <div className={classes.navActions}>
+            {
+              isLoggedIn &&
+                <>
+                  <Button>
+                      <Link 
+                        component={RouterLink} 
+                        activeClassName={classes.activeLink} 
+                        to={`${Paths.PORTFOLIO}/${user.username}`}>Portfolio</Link>
+                    </Button>
+                    <Button>
+                      <Link 
+                        component={RouterLink} 
+                        activeClassName={classes.activeLink} 
+                        to={`${Paths.PROJECT}/${user.username}`}>Projects</Link>
+                    </Button>
+                    <Button>
+                      <Link 
+                        component={RouterLink} 
+                        activeClassName={classes.activeLink} 
+                        to={`${Paths.EDIT_PORTFOLIO}/${user.username}`}>Customize</Link>
+                    </Button>
+                  </>
+              }
+            </div>
+           
+          
           <div className={classes.rightContent}>
             {
-              user?.token? 
+              isLoggedIn? 
               <NavAvatar />
               : <Button>
                   <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>

@@ -4,8 +4,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDebouncedCallback  } from 'use-debounce';
-import { setUsername, setUserLoading } from "../../context/actions/auth.actions";
+import { setUsername as postUsername, setUserLoading } from "../../context/actions/auth.actions";
 import { StoreContext } from '../../context/store.context';
+import useCheckUsername from "../../hooks/useCheckUsername";
+import Chip from '@material-ui/core/Chip';
+import DoneIcon from '@material-ui/icons/Done';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+const baseUrl = "https://testdockerprod123.herokuapp.com"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,33 +51,36 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
     fontWeight: "1rem",
     marginLeft: theme.spacing(1) 
+  },
+  error: {
+    borderColor: theme.palette.errorColor
+  },
+  success: {
+    borderColor: theme.palette.successColor
   }
 }));
 
 function SignUpNext(props) {
   const classes = useStyles();
-  const [fields, setFields] = React.useState({
-    username:""
-  })
+  const [username, setUsername] = React.useState("")
 
   const {dispatch} = React.useContext(StoreContext);
+  
+  const { data, loading, error } = useCheckUsername(baseUrl + "/v2/auth/check/username", username)
 
   function onSubmitForm(e){
     e.preventDefault();
-    if(fields.username === "" ){
+    if(username === ""){
       return;
     }
-    const { username } = fields;
-    setUsername(dispatch, username);
+    console.log(username)
+    postUsername(dispatch, username);
   }
 
-  const onInputChange = (e) => debounced.callback(e.target.name,e.target.value)
+  const onInputChange = (e) => debounced.callback(e.target.value)
   const debounced = useDebouncedCallback(
-    (name,value) => {
-      setFields({
-        ...fields,
-        [name]: value
-      });
+    (value) => {
+      setUsername(value);
     },400
   );
 
@@ -98,11 +108,18 @@ function SignUpNext(props) {
             variant="filled"
           />
 
+          <Chip
+            variant="outlined"
+            label={username}
+            onDelete={(e) => e.preventDefault()}
+            deleteIcon={error ? <CircularProgress size="1rem"/> : <DoneIcon style={{fill:"#4AAA4D"}}/>} />
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
+            disabled={error? true: false}
             className={classes.submit}
           >
             Confirm

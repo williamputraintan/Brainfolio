@@ -57,9 +57,6 @@ function EducationController(props) {
 
   // const [loading, setLoading] = useState(true);
 
-  console.log(error)
-
-
   return (
  
       <CardAccent className={classes.root} color={accentColor}>

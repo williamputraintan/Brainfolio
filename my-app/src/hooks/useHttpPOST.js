@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import AxiosInstance from "../utils/axios";
 import Axios from "axios";
 
-const useAxiosInstance = (path) => {
+const useHttpPOST = (path,body) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState();
@@ -14,7 +14,7 @@ const useAxiosInstance = (path) => {
     
     (async () => {
       try{
-        const response = await AxiosInstance.get(path)
+        const response = await AxiosInstance.post(path, body)
         const data = response?.data;
         if(data) setData(data);
         setLoading(false);
@@ -31,10 +31,10 @@ const useAxiosInstance = (path) => {
         "Canceled because of component unmounted"
       );
     };
-  }, [path])
+  }, [body])
 
 
   return { data, loading, error }
 } 
 
-export default useAxiosInstance;
+export default useHttpPOST;

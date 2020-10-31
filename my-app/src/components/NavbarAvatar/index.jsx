@@ -68,8 +68,9 @@ function NavAvatar(props) {
   const classes = useStyles();
 
   const { state, dispatch } = React.useContext(StoreContext);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user } = state;
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [darkMode, setDarkMode] = React.useState(false);
   const open = Boolean(anchorEl);
 
@@ -130,7 +131,7 @@ function NavAvatar(props) {
 
         <Paper className={classes.menuDetails} square>
           <div className={classes.row}>
-            <Avatar alt="Remy Sharp"  className={classes.large}/>
+            <Avatar alt="Remy Sharp"  className={classes.large} src={user?.profile?.profileImage}/>
             <Typography component="div">
               <Typography component="p">
                 { state.user.username || "user"}

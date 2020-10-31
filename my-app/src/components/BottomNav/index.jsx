@@ -49,8 +49,8 @@ function BottomNavigationbar(props) {
   const [value, setValue] = React.useState('portfolio');
   const history = useHistory();
 
-  const {user} = props;
-  console.log(user)
+  const { state } = props;
+  const {isLoggedIn, user} = state
 
   const handleChange = (event, newValue) => {
     switch(newValue){
@@ -79,7 +79,7 @@ function BottomNavigationbar(props) {
               Logo
             </Typography>
             {
-              user?.token? 
+              isLoggedIn?
               <>
                 <NavbarAvatar/>
               </>
@@ -91,13 +91,17 @@ function BottomNavigationbar(props) {
         </Box>
       </AppBar>
       
-      <div className={classes.navContainer}>
-        <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav} showLabels>
-          <BottomNavigationAction label="Portfolio" value="portfolio" icon={<BusinessCenterIcon />} />
-          <BottomNavigationAction label="Projects" value="projects" icon={<GroupWorkIcon />} />
-          <BottomNavigationAction label="Account" value="account" icon={<AssignmentIndIcon />} />
-        </BottomNavigation>
-      </div>
+      {
+        isLoggedIn &&  
+        <div className={classes.navContainer}>
+          <BottomNavigation value={value} onChange={handleChange} className={classes.bottomNav} showLabels>
+            <BottomNavigationAction label="Portfolio" value="portfolio" icon={<BusinessCenterIcon />} />
+            <BottomNavigationAction label="Projects" value="projects" icon={<GroupWorkIcon />} />
+            <BottomNavigationAction label="Account" value="account" icon={<AssignmentIndIcon />} />
+          </BottomNavigation>
+        </div>
+      }
+     
      
     </>
   )

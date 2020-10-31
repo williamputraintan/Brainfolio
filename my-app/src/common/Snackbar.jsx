@@ -5,9 +5,14 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { StoreContext } from '../context/store.context';
 import { endMessage} from "../context/actions/message.actions"
 
+const SlideWrapper = (props) => {
+  return <Slide {...props} direction="down" />;
+}
+
 function MessageSnackbar(props) {
 
   const {state, dispatch} = React.useContext(StoreContext);
+  const { message } = state;
 
   const handleClose = () => {
     endMessage(dispatch)
@@ -15,9 +20,12 @@ function MessageSnackbar(props) {
 
   return (
     <Snackbar
-      open={state.showMessage}
+      open={state.message.show}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       onClose={handleClose}
-      message={state.message}
+      TransitionComponent={SlideWrapper}
+      message={message.content}
+      key={SlideWrapper}
     />
   )
 }

@@ -33,6 +33,7 @@ function SignInController(props) {
 
   const classes = useStyles();
   const {dispatch} = React.useContext(StoreContext);
+  
   const history = useHistory();
 
   const [fields, setFields] = React.useState({
