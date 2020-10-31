@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import {profileFields} from './FieldNames';
 
 import axios from 'axios';
+import Visibility from '../../controllers/Porfolio/Profile/Visibility';
 
 
 export default function Contact(props) {
@@ -191,8 +192,9 @@ export default function Contact(props) {
         <Container component="main" maxWidth="lg" style={{backgroundColor:'#fffff'}}>
 
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
-            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/></Hidden>
+            {/* <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
+            <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/></Hidden> */}
+            <Visibility/>
           </Container>
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
