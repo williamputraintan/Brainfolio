@@ -55,7 +55,7 @@ function AddButton(props) {
                     disabled={!((validateEmail(fields.email)) && fields.name) || props.isAdding}
                     onClick={handleButtonClick}
                 >
-                    Accept terms
+                    Add
                 </Button>
                 {props.isAdding && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
