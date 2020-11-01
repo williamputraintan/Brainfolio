@@ -11,24 +11,44 @@ import {getFirebaseError } from "../../utils/firebaseErrors";
 
 
 const getImageUrls = async (fileName) => {
-  const file = 
+
+  try{
+    const file = 
     await firebase.storage()
     .ref()
     .child(fileName)
     .getDownloadURL()
-  
+    return file
+  }
+  catch(e){
+    console.log(e)
+    return null;
+  }
 
-  return file
 }
 
 
-export const setDarkMode = (dispatch, bool) => {
+export const setDarkMode = async(dispatch,bool,user) => {
   dispatch({
-    type:  SET_MODE,
+    type: SET_MODE,
     payload: bool
   })
 
-
+  const idToken = await firebase.auth().currentUser.getIdToken(true);
+  if(!idToken){
+    // history.push(Paths.SIGN_IN)
+  }
+  
+  else{
+    const _response = await AxiosInstance
+    .post("/v2/auth/set/darkmode",
+      {isDarkMode: bool},
+      {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+  }
 }
 
 export const setUserLoading = (dispatch, bool) => {
@@ -42,7 +62,6 @@ export const setUserLoading = (dispatch, bool) => {
 
 export const persistUser = async (dispatch, user) =>{
   setUserLoading(dispatch,true);
-  console.log(user)
   try{
     if(user){
       const idToken = await firebase.auth().currentUser.getIdToken(true);
@@ -63,7 +82,7 @@ export const persistUser = async (dispatch, user) =>{
 
 
 export const getUserFromDb = async (dispatch, idToken) => {
-  console.log("GetUserFromDB", idToken)
+
   try{
     const response = await AxiosInstance
     .post("/v2/auth/validate",
@@ -73,34 +92,38 @@ export const getUserFromDb = async (dispatch, idToken) => {
       }
     })
 
-    const { data } = response;
-    const { profile } = data;
+    const data = response.data;
+    console.log(data)
 
+    if(data){
 
+      if(data.username === "" || !data.username){
+        setMessage(dispatch, "Sign up almost done!")
+  
+        history.push(Paths.SIGN_UP_2);
+      }
 
+      dispatch({
+        type:  SET_USER,
+        payload: {user: {...data}, token: idToken}
+      }) 
+
+      // history.push(`${Paths.PORTFOLIO}/${data.username}`);
+    }
+   
    
 
-    if(data.username === "" || !data.username){
-      setMessage(dispatch, "Sign up almost done!")
-
-      history.push(Paths.SIGN_UP_2);
-    }
-    console.log(profile)
   
-    if(profile.backgroundImage){
-      data.profile.backgroundImage = await getImageUrls(profile.backgroundImage);
-    }
-    if(profile.profileImage){
-      data.profile.profileImage = await getImageUrls(profile.profileImage);
-    }
+  
+    // if(profile.backgroundImage){
+    //   data.profile.backgroundImage = await getImageUrls(profile.backgroundImage);
+    // }
+    // if(profile.profileImage){
+    //   data.profile.profileImage = await getImageUrls(profile.profileImage);
+    // }
 
-    dispatch({
-      type:  SET_USER,
-      payload: {user: {...data}, token: idToken}
-    })  
-
+ 
     
-
     setUserLoading(dispatch, false);
   }
   catch(e){
@@ -124,6 +147,7 @@ export const signInUser = async (dispatch, email, password) => {
           if(res){
             const idToken = await firebase.auth().currentUser.getIdToken(true);
             await getUserFromDb(dispatch, idToken);
+           
           }
         })
         .catch(err => {

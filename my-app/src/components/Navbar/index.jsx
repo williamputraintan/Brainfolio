@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import logo from "../../images/logo-transparent.png"
+import logo from "../../Assets/images/logo-transparent.png"
 import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: 48
   },
   activeLink:{
-    color: `${theme.palette.secondary.main}!important`
+    color: `${theme.palette.primary.main}!important`
   },
   navActions:{
     flexGrow: 1,
@@ -100,7 +100,9 @@ function Navbar(props) {
   const classes = useStyles();
 
   const {state} = props;
-  const {isLoggedIn, user} = state
+  const {isLoggedIn, user} = state;
+
+  React.useEffect(()=> {},[isLoggedIn, user])
 
 
   return (

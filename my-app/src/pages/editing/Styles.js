@@ -1,8 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { black } from 'chalk';
 
 //styles for editing page main components
 const useStyles = makeStyles((theme) => ({
+    wrapperContainer:{
+      [theme.breakpoints.up("sm")]:{
+        padding: theme.spacing(4)
+      }
+    },
     paper: {
       display: 'flex',
       flexDirection: 'column',

@@ -7,15 +7,11 @@ import { useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
 
 // Dark Mode imports
-import DarkTheme from "../utils/theme/DarkTheme";
-import { makeStyles, lighten } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
+import { makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
-import AxiosInstance from "../utils/axios";
-import Link from '@material-ui/core/Link';
+
 import axios from 'axios'
 
 import SkeletonCard from "../common/SkeletonCard";
@@ -221,7 +217,7 @@ function PortfolioController() {
             </Grid>
             <Paper className={classes.actionCenter} elevation={1} square>
             <Button
-              color="secondary"
+              color="primary"
               className={classes.button}
               startIcon={<LinkedInIcon />}
             >

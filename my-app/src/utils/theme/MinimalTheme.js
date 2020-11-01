@@ -11,6 +11,17 @@ const theme = createMuiTheme({
     reverseGradient: {
       background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
+    primary: {
+      main: '#0358B6'
+    },
+    secondary: {
+      main: 'rgb(0,210,255)',
+    },
+    backgroundWhite: '#ffffff',
+    fontDefault: '#323232',
+    fontGrey: {
+      color: '#565656',
+    },
     bacgroundAccent: "#ebfcff",
     errorColor: "#FF3D00",
     successColor: "#2962FF"
@@ -24,6 +35,11 @@ const theme = createMuiTheme({
         fontWeight:700,
         color: 'white',
       },
+    },
+    MuiTab:{
+      wrapper:{
+          fontWeight:900
+      }
     },
     MuiTooltip: {
       tooltip: {

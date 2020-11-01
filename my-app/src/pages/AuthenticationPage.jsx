@@ -14,6 +14,7 @@ import firebase from "../utils/firebase.js";
 function AuthenticationPage() {
   const history = useHistory();
   const {state, dispatch} = React.useContext(StoreContext);
+  const { user } = state;
 
   React.useEffect(() => {
     setUserLoading(dispatch, true)
@@ -22,6 +23,7 @@ function AuthenticationPage() {
      * This redirect function handles in a redirect event occurred. 
      * If it does not, user will need to signin and set loading to false
      * **/
+
     firebase.auth().getRedirectResult()
     .then(res => {
       if(res.user == null){
@@ -34,8 +36,9 @@ function AuthenticationPage() {
 
   return (
     <>
-    {state.isLoading && <LoadingPage /> }
-
+      {state.isLoading && <LoadingPage /> }
+      {(state.isLoggedIn && user.isCompleted) && <Redirect to={`${Paths.PORTFOLIO}/${state.user.username}`}/>}
+      
       <Switch>
         <Route exact path={Paths.SIGN_IN} component={SignIn}/> 
         <Route path={Paths.SIGN_UP} component={SignUp}/>

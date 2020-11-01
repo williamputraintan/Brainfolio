@@ -59,12 +59,12 @@ function SignInController(props) {
   function onSubmitForm(e){
     e.preventDefault();
     if(fields.email === "" || fields.password === ""){
-      return;
+      return; 
     }
 
     const {email, password} = fields;
 
-
+    console.log("dasdas")
     signInUser(dispatch, email, password)
   }
 

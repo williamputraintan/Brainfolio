@@ -14,6 +14,7 @@ export const uploadProfileImages = (formData, idToken) => {
     })
     .then(res => {
       history.push(Paths.HOME);
+      console.log(res)
     })
 
 }

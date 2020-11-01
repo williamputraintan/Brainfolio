@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
-import BackgroundFiller from "../../images/backgroundFiller.jpeg"
+import BackgroundFiller from "../../Assets/images/backgroundFiller.jpeg"
 import { uploadProfileImages } from "../../utils/http"
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';

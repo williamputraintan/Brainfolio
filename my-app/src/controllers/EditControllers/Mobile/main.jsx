@@ -9,6 +9,7 @@ import { withRouter, Route  } from "react-router-dom";
 
 import EditLayout from "../Mobile/EditLayout";
 import Grid from '@material-ui/core/Grid';
+import SlideLayout from "../Mobile/SlideLayout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +47,29 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const editItems = ["Description", "Experience", "Educations", "Skills","Projects"]
+
+const indexToTabName = {
+  0: "contact",
+  1: "education",
+  2: "experience",
+  3: "skills",
+  4: "projects",
+  5: "custom1",
+  6: "custom2",
+  7: "overview"
+};
+
+const tabNames = Object.values(indexToTabName);
 
 function EditMobile(props) {
   const classes = useStyles();
   const { history, location } = props;
   const { pathname } = location;
+
+  const navigateToPage = (e, item) => {
+    history.push(`${location.pathname}/${item}`)
+
+  }
 
   return (
     <>
@@ -67,11 +85,11 @@ function EditMobile(props) {
         <Paper className={classes.root} elevation={1}>
           <Grid container justify="center">
             {
-              editItems.map((item,key) => {
+              tabNames.map((item,key) => {
                 return(
                   <Grid item xs={6} key={key}>
                     <Card variant="outlined" className={classes.editItem}>
-                      <CardActionArea onClick={() => history.push(`${location.pathname}/${item}`)}>
+                      <CardActionArea onClick={(e) => navigateToPage(e,item)}>
                         <CardMedia
                           className={classes.media}
                           image={`https://images.pexels.com/photos/2911521/pexels-photo-2911521.jpeg?auto=compress&cs=tinysrgb&h=300&w=300`}
@@ -88,7 +106,7 @@ function EditMobile(props) {
             }
           </Grid>
         </Paper>
-        <Route exact path="/home/edit/:username/:page" component={EditLayout}/>
+        <Route exact path="/home/edit/:username/:page" component={SlideLayout}/>
       </div>
    
       

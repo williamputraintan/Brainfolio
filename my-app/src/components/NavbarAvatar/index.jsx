@@ -20,7 +20,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 
-import { logUserOff } from "../../context/actions/auth.actions";
+import { logUserOff, setDarkMode } from "../../context/actions/auth.actions";
 import { StoreContext } from "../../context/store.context.jsx";
 import Paths from "../../utils/path";
 import Paper from '@material-ui/core/Paper';
@@ -69,19 +69,20 @@ function NavAvatar(props) {
 
   const { state, dispatch } = React.useContext(StoreContext);
   const { user } = state;
+  const { darkMode } = user;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [darkMode, setDarkMode] = React.useState(false);
+  const [mode, setMode] = React.useState(false);
   const open = Boolean(anchorEl);
 
 
   React.useEffect(() => {
-    
-    console.log(state)
+    setMode(darkMode)
+
     return () =>{
       setAnchorEl(null)
     }
-  },[state])
+  },[])
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,7 +99,10 @@ function NavAvatar(props) {
 
   const onSwitchChange = (e) => {
     e.preventDefault();
-    setDarkMode(!darkMode);
+
+    setDarkMode(dispatch,!mode, user);
+    setMode(!mode);
+    setAnchorEl(null);
   }
 
   return (
@@ -137,7 +141,7 @@ function NavAvatar(props) {
                 { state.user.username || "user"}
               </Typography>
               <Typography component="p">
-                  { state.user.email || "user@email.com"}
+                { state.user.email || "user@email.com"}
               </Typography>
             </Typography>
           </div>
@@ -148,10 +152,10 @@ function NavAvatar(props) {
         <MenuItem onClick={onSwitchChange}>
           <ListItemIcon>
             {
-              darkMode? <EmojiObjectsOutlinedIcon/>: <EmojiObjectsIcon/>
+              mode? <EmojiObjectsOutlinedIcon/>: <EmojiObjectsIcon/>
             }
           </ListItemIcon>
-          <Link className={classes.links} component={RouterLink} to={Paths.ABOUT_US}>Dark Mode</Link>
+          <Link className={classes.links}> Dark Mode </Link>
         </MenuItem>
 
         <Divider />

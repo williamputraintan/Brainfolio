@@ -11,6 +11,9 @@ import theme from "./utils/theme/MinimalTheme";
 
 import { StoreContextProvider } from './context/store.context';
 
+import WebFont from 'webfontloader';
+
+
 
 
 /** Router History -> ability to pass history to props (Global history) 
@@ -19,6 +22,12 @@ import { StoreContextProvider } from './context/store.context';
  *  Cssbaseline -> CSS reset
  * **/
 //
+
+WebFont.load({
+  google: {
+    families: ['Manrope', 'Heebo:800']
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>

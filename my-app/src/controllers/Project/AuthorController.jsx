@@ -24,10 +24,10 @@ function AuthorController(props) {
       backgroundColor: "#5584C2",
       color: "white",
       width:"100%",
-      padding: theme.spacing(2,2,2,0)
+      padding: theme.spacing(0,0,2)
     },
     authorCard: {
-      padding: theme.spacing(0,0,2,0)
+      padding: theme.spacing(0,0,0)
 
     }
     }));
@@ -65,7 +65,7 @@ function AuthorController(props) {
           </Grid>
           <Grid container className={classes.authorCard} spacing={2}>
             {authorDetails.map((author) => (
-              <Grid item key={author} xs={12} sm={6} md={12}>
+              <Grid item key={author} xs={12} sm={4} md={4}>
                 <Card>
                     <CardHeader
                     avatar={

@@ -35,26 +35,22 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     paddingTop: "56.25%"
   },
-  videoLabel:{
-    color: "white",
-    width:"100%",
-    padding: theme.spacing(2,2,2,0)
-  },
+  // videoLabel:{
+  //   color: "white",
+  //   width:"100%",
+  //   padding: theme.spacing(2,2,2,0)
+  // },
   videoGrid: {
-    padding: theme.spacing(3,6,6,4)
+    padding: theme.spacing(3,10,3)
   }
 }));
 
 export default function VideoController(props) {
   const classes = useStyles();
   const url = props.url;
+
   return (
     <Container>
-        <Grid item xs={12} className={classes.videoLabel}>
-            <Typography variant="h4">
-                Video
-            </Typography>
-        </Grid>
         <Grid item xs={12} className={classes.videoGrid}>
             <div className={classes.playerWrapper}>
                 <ReactPlayer

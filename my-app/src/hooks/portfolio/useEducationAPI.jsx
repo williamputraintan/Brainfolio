@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Axios from "axios";
 
-const pathUrl = "/public/education"
+const pathUrl = "https://testdockerprod123.herokuapp.com/public/education"
 
 const useEducationAPI = (user) => {
   const [loading, setLoading] = useState(false);

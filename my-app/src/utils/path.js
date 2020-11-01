@@ -5,6 +5,9 @@
 
 const auth = "/auth"
 
+
+const editBaseurl = "/home/edit/:username"
+
 const Paths = {
   SIGN_UP: auth + "/signup",
   SIGN_UP_1: auth + "/signup/1",
@@ -16,6 +19,14 @@ const Paths = {
   ABOUT_US: "/aboutUs",
   PROJECT: "/project",
   EDIT_PORTFOLIO: "/home/edit",
+  EDIT_CONTACT: editBaseurl + "/contact",
+  EDIT_EDUCATION: editBaseurl + "/education",
+  EDIT_SKILLS: editBaseurl + "/skills",
+  EDIT_EXPERIENCE:editBaseurl +  "/experience",
+  EDIT_PROJECTS: editBaseurl + "/project",
+  EDIT_CUSTOM1: editBaseurl + "/custom1",
+  EDIT_CUSTOM2: editBaseurl + "/custom2",
+  EDIT_OVERVIEW: editBaseurl + "/overview",
 }
 
 export default Paths

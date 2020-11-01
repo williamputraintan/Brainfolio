@@ -15,7 +15,7 @@ import SignInForm from "../controllers/SignInForm";
 //
 
 
-let welcomeImage = require("../images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png");
+let welcomeImage = require("../Assets/images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png");
 
 const useStyles = makeStyles((theme) => ({
   root: {

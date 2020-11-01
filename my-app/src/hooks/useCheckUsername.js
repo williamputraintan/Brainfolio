@@ -7,15 +7,19 @@ const baseUrl = "https://testdockerprod123.herokuapp.com"
 const useCheckUsername = (path,body) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState({
+    isUnique: false
+  });
 
   useEffect(() => {
     setError(false);
-    setLoading(true);
+    setLoading(false);
     const source = Axios.CancelToken.source();
     
+    console.log(data)
 
     if(body?.length > 5 ){
+      setLoading(true);
       Axios
       .post( path, {username: body})
         .then(({data}) => {

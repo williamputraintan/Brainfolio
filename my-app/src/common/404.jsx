@@ -1,5 +1,5 @@
 import React from 'react';
-import Error404 from "./SVG/Error404";
+import Error404 from "../Assets/SVG/Error404";
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
