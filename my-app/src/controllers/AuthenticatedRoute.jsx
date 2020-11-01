@@ -22,11 +22,10 @@ function AuthenticatedRoute() {
         state.user ?
         <>
            <Link to="/home/portfolio">Portfolio</Link>
-            <Link to={"/home/edit/"+username}>Edit Portfolio</Link>
-
+            <Link to={"/home/edit/contact/"+username}>Edit Portfolio</Link>
             <Switch>
               <Route exact path="/home/portfolio" component={Portfolio} />
-              <Route path={"/home/edit/"+username} component={EditingPage}  />
+              <Route path={"/home/edit/:page?/"+username} component={props=><EditingPage {...props}/>}  />
 
             </Switch>
         </>

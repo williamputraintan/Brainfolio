@@ -1,4 +1,5 @@
-import React, { useState, useContext,useCallback, useEffect } from 'react';
+import React, { useState, useContext} from 'react';
+import {UserContext} from '../../context/user.context';
 
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -22,7 +23,6 @@ import Custom2 from './Custom2';
 import Overview from './Overview';
 import theme from '../../utils/theme/MinimalTheme'
 import { useTrail, animated } from 'react-spring'
-
 
 const pageStyles = makeStyles((theme) => ({
     container:{
@@ -72,19 +72,15 @@ const pageStyles = makeStyles((theme) => ({
 }));
 
 export default function EditingPage(props){
+  const {match, history} = props;
+  const {params} = match;
+  const {page } = params;
+  const {state} = useContext(UserContext);
+  const username = state.user?.username
+  
     const classes = pageStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [value, setValue] = React.useState(0);
-    const [open, set] = useState(true);
 
-    const handleClickMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleCloseMenu = () => {
-        setAnchorEl(null);
-    };
-    
     const tabNameToIndex = {
       0: "contact",
       1: "education",
@@ -95,20 +91,58 @@ export default function EditingPage(props){
       6: "custom2",
       7: "overview"
     };
-  
-    function a11yProps(index) {
-      return {
-        id: `scrollable-auto-tab-${index}`,
-        'aria-controls': `scrollable-auto-tabpanel-${index}`,
-      };
+
+    const indexToTabName = {
+      contact:0 ,
+      education:1,
+      experience:2,
+      skills:3,
+      projects:4,
+      custom1:5,
+      custom2:6,
+      overview:7
+    };
+
+    const title={
+      0: "Fill your Contact Details",
+      1: "Add your Education History",
+      2: "Add your Experiences",
+      3: "Add your Skills",
+      4: "Showcase your Projects",
+      5: "Add your 1st Custom section",
+      6: "Add your 2nd Custom section",
+      7: "Your Overview"
     }
 
+    const subtitle={
+      0: "Complete your profile to be displayed on your Portfolio",
+      1: "List out Education history details",
+      2: "List out Experiences history details with descriptions",
+      3: "Describe both your Technical and Soft Skilss",
+      4: "Upload your files/ video link to showcase yout Project",
+      5: "Add entries for your other achievements",
+      6: "Add entries for your other achievements",
+      7: "Below are the information to be displayed on your Portfolio"
+    }
+
+    const [value, setValue] = React.useState(indexToTabName[page]);
+    const [open, set] = useState(true);
+
+    const handleClickMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
     function handleChange (event,newValue) {
-        setValue(newValue)
-        // history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
+        history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
+        setValue(newValue);
     };
 
     function menuClick(num){
+        history.push(`/home/edit/${tabNameToIndex[num]}/${username}`);      
         setValue(num);
         handleCloseMenu();
     }
@@ -133,8 +167,8 @@ export default function EditingPage(props){
                 <div className={classes.upperWords}>
                     <Trail open={open}>
                       <div>
-                        <Typography variant="h5" className={classes.title} >Complete your Portfolio</Typography>
-                        <Typography variant="h7" className={classes.subtitle} >Fill your experiences and achievements to be diplayed on your Portfolio </Typography>
+                        <Typography variant="h5" className={classes.title} >{title[value]}</Typography>
+                        <Typography variant="h7" className={classes.subtitle} >{subtitle[value]} </Typography>
                       </div>
                     </Trail>
                     
@@ -150,14 +184,14 @@ export default function EditingPage(props){
                             variant="scrollable"
                             scrollButtons="auto"
                             >
-                            <Tab label="Profile" {...a11yProps(0)} />
-                            <Tab label="Education" {...a11yProps(1)} />
-                            <Tab label="Experience" {...a11yProps(2)} />
-                            <Tab label="Skills" {...a11yProps(3)} />
-                            <Tab label="Projects" {...a11yProps(4)} />
-                            <Tab label="Custom 1" {...a11yProps(5)} />
-                            <Tab label="Custom 2" {...a11yProps(6)} />
-                            <Tab label="Overview" {...a11yProps(7)} />
+                            <Tab label="Profile" />
+                            <Tab label="Education" />
+                            <Tab label="Experience"/>
+                            <Tab label="Skills" />
+                            <Tab label="Projects"  />
+                            <Tab label="Custom 1" />
+                            <Tab label="Custom 2" />
+                            <Tab label="Overview" />
                             </Tabs>
                         </Paper>
                     </Hidden>
@@ -202,8 +236,7 @@ export default function EditingPage(props){
     );
 }
 
-
-
+//react spring
 function Trail({ open, children, ...props }) {
   const items = React.Children.toArray(children)
   const trail = useTrail(items.length, {
