@@ -24,6 +24,7 @@ import { persistUser,setUserLoading } from "./context/actions/auth.actions";
 const AboutUs = React.lazy(() => import('./pages/AboutUs.jsx'));
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
 const ProjectPage = React.lazy(() => import('./pages/ProjectPage.jsx'));
+const AllProjectPage = React.lazy(() => import('./pages/AllProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('./pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('./controllers/AuthenticatedRoute.jsx'));
 const newPortfolio = React.lazy(() => import('./pages/portfolio/new-portfolio.js'));
@@ -66,7 +67,8 @@ function App() {
                 <Route path="/auth" component={AuthenticationPage} />
                 <Route path="/portfolio/:username" component={Portfolio}/>
                 <Route path="/new/portfolio" component={newPortfolio}/>
-                <Route path="/project" component={ProjectPage}/>
+                <Route path="/project" component={AllProjectPage}/>
+                {/* <Route path="/project" component={ProjectPage}/> */}
                 <Route path="/aboutUs" component={AboutUs}/>
                 
                 <Route exact path="/404" component={Page404}/>
