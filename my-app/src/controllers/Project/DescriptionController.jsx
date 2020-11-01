@@ -7,7 +7,7 @@ import AxiosInstance from "../../utils/axios";
 
 const useStyles = makeStyles( theme => ({
   root: {
-    padding: theme.spacing(2,4,2,4)
+    // padding: theme.spacing(2,4,2,4)
   },
 }));
 
@@ -19,11 +19,6 @@ function DescriptionController(props) {
   return (
     <div>
       <Grid container className={classes.root}>
-          <Grid item xs={12}>
-            <Typography className={classes.title} variant="h4" gutterBottom>
-              Description
-            </Typography>
-          </Grid>
           <Grid item xs={12}>
           <Typography variant="body1">
             {description}
