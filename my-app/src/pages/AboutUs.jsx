@@ -58,12 +58,17 @@ const useStyles = makeStyles((theme) => ({
     },
     content:{
         position:'absolute',
-        left:'10%',
+        left:'8%',
         textAlign:'left',
         color:'#FFFFFF',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             top:'35%',
             width:'45%'
+        },
+        [theme.breakpoints.only('sm')]: {
+            top:'35%',
+            left:'5%',
+            width:'53%'
         },
         [theme.breakpoints.down('xs')]: {
             top:'25%',
