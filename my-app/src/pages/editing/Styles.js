@@ -144,6 +144,20 @@ const useStyles = makeStyles((theme) => ({
         float:"right"
       }
     },
+    overviewNone:{
+      display:'none'
+    },
+    noEntries:{
+      fontFamily:theme.typography.fontFamily,
+      fontWeight:'800',
+      color:theme.palette.primary.main,
+      [theme.breakpoints.up('sm')]:{
+        fontSize:'5vh'
+      },
+      [theme.breakpoints.down('xs')]:{
+        fontSize:'4vh'
+      }
+    }
 
    
 }));

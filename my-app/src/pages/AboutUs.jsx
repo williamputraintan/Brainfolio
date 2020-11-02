@@ -43,27 +43,26 @@ const useStyles = makeStyles((theme) => ({
         width:'100%',
         textAlign:'center',
         overflow:'hidden',
-        h2:{
-            paddingBottom:'2%', 
-            fontSize:'40px'
-        },
         [theme.breakpoints.up('sm')]: {
             padding: '3% 7% 3% 7%',
         },
         [theme.breakpoints.down('xs')]: {
             padding:'4% 7% 4% 7%',
-
         },
-        
     },
     content:{
         position:'absolute',
-        left:'10%',
+        left:'8%',
         textAlign:'left',
         color:'#FFFFFF',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             top:'35%',
             width:'45%'
+        },
+        [theme.breakpoints.only('sm')]: {
+            top:'35%',
+            left:'5%',
+            width:'53%'
         },
         [theme.breakpoints.down('xs')]: {
             top:'25%',
@@ -71,10 +70,10 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     footer:{
+        color:theme.palette.primary.color,
         height:'20vh',
         padding:'4% 8% 4% 8%',
         backgroundColor:'#E2ECF8',
-        color:theme.palette.primary.main,
         fontSize:'2vh',
         fontWeight:700,
         textAlign:'right'
@@ -103,6 +102,7 @@ const aboutTheme = createMuiTheme({
             }
         },
         h3:{
+            color:theme.palette.primary.main,
             marginBottom:'5%',
             fontWeight:500,
             [theme.breakpoints.up('sm')]:{

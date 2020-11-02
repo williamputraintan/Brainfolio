@@ -1,4 +1,5 @@
-import React, { useState, useContext,useCallback, useEffect } from 'react';
+import React, { useState, useContext} from 'react';
+import {UserContext} from '../../context/user.context';
 
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -21,20 +22,21 @@ import Custom1 from './Custom1';
 import Custom2 from './Custom2';
 import Overview from './Overview';
 import theme from '../../utils/theme/MinimalTheme'
-import { useTrail, animated } from 'react-spring'
+import { Trail }from './TrailSprings'
+import editpageheader from '../../images/editpageheader.png';
 
-
-const pageStyles = makeStyles((theme) => ({
+const pageStyles = makeStyles(() => ({
     container:{
       minHeight:'100vh',
       height:'auto'
     },
     tabContainer:{
-      // backgroundColor:"#E2ECF8",
-      backgroundColor:theme.palette.primary.main,
-      width:'100vw', 
+      backgroundImage: `url(${editpageheader})`,
+      backgroundRepeat:'no-repeat',
+      backgroundPosition:'center center',
+      backgroundSize:'cover',
       [theme.breakpoints.up('sm')]: {
-        height:'18vh'
+        height:'35vh'
       },
       [theme.breakpoints.down('xs')]: {
         height:'20vh'
@@ -42,28 +44,46 @@ const pageStyles = makeStyles((theme) => ({
     },
     upperWords:{
       height:'68%', 
-      padding:'2%'
+      padding:'2%',
+      color:'white',
+    },
+    text:{
+      textAlign:'center',
+      paddingTop:'5%'
     },
     title:{
-      fontWeight:'600',
-      color:theme.palette.fontDefault,
-      fontFamily:theme.typography.alternative,
+      fontWeight:'900',
+      fontFamily:theme.typography.fontFamily,
+      [theme.breakpoints.up('sm')]: {
+        fontSize:'5vh'
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize:'3.5vh'
+      }
     },
     subtitle:{
-      color:theme.palette.fontDefault,
-      fontFamily:theme.typography.alternative,
+      fontWeight:'500',
+      fontFamily:theme.typography.fontFamily,
+      [theme.breakpoints.up('sm')]: {
+        fontSize:'2vh'
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize:'1.5vh'
+      }
     },
     paperContainer:{
-      minHeight:'100vh'
+      minHeight:'100vh',
+      width:'100%'
     },
     formContainer:{
       padding:'3%'
     },
     button:{
-      backgroundColor:theme.palette.secondary.main,
-      color:theme.palette.fontDefault,
+      backgroundColor:theme.palette.primary.main,
+      color:'white',
       margin:'2%',
       fontFamily:theme.typography.fontFamily,
+      fontWeight:'600',
       '&:hover': {
           backgroundColor: theme.palette.secondary.main,
           color: '#4C516D'
@@ -72,19 +92,15 @@ const pageStyles = makeStyles((theme) => ({
 }));
 
 export default function EditingPage(props){
+  const {match, history} = props;
+  const {params} = match;
+  const {page } = params;
+  const {state} = useContext(UserContext);
+  const username = state.user?.username
+  
     const classes = pageStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [value, setValue] = React.useState(0);
-    const [open, set] = useState(true);
 
-    const handleClickMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleCloseMenu = () => {
-        setAnchorEl(null);
-    };
-    
     const tabNameToIndex = {
       0: "contact",
       1: "education",
@@ -95,20 +111,58 @@ export default function EditingPage(props){
       6: "custom2",
       7: "overview"
     };
-  
-    function a11yProps(index) {
-      return {
-        id: `scrollable-auto-tab-${index}`,
-        'aria-controls': `scrollable-auto-tabpanel-${index}`,
-      };
+
+    const indexToTabName = {
+      contact:0 ,
+      education:1,
+      experience:2,
+      skills:3,
+      projects:4,
+      custom1:5,
+      custom2:6,
+      overview:7
+    };
+
+    const title={
+      0: "Fill your Contact Details",
+      1: "Add your Education History",
+      2: "Add your Experiences",
+      3: "Add your Skills",
+      4: "Showcase your Projects",
+      5: "Add your 1st Custom section",
+      6: "Add your 2nd Custom section",
+      7: "You are almost done!"
     }
 
+    const subtitle={
+      0: "Complete your profile to be displayed on your Portfolio",
+      1: "List out Education history details",
+      2: "List out Experiences history details with descriptions",
+      3: "Describe both your Technical and Soft Skils",
+      4: "Upload your files or YouTube video link to showcase your Project",
+      5: "You may use this section to if you would like to showcase your other achievements",
+      6: "You may use this section to if you would like to showcase your other achievements",
+      7: "Below are the information to be displayed on your Portfolio"
+    }
+
+    const [value, setValue] = React.useState(indexToTabName[page]);
+    const [open, set] = useState(true);
+
+    const handleClickMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
     function handleChange (event,newValue) {
-        setValue(newValue)
-        // history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
+        history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
+        setValue(newValue);
     };
 
     function menuClick(num){
+        history.push(`/home/edit/${tabNameToIndex[num]}/${username}`);      
         setValue(num);
         handleCloseMenu();
     }
@@ -132,14 +186,13 @@ export default function EditingPage(props){
               <div className={classes.tabContainer}>
                 <div className={classes.upperWords}>
                     <Trail open={open}>
-                      <div>
-                        <Typography variant="h5" className={classes.title} >Complete your Portfolio</Typography>
-                        <Typography variant="h7" className={classes.subtitle} >Fill your experiences and achievements to be diplayed on your Portfolio </Typography>
+                      <div className={classes.text}>
+                        <Typography className={classes.title} >{title[value]}</Typography>
+                        <Typography className={classes.subtitle} >{subtitle[value]} </Typography>
                       </div>
                     </Trail>
-                    
-
                 </div>
+              </div>
                 <div >
                     <Hidden smDown>
                         <Paper style={{height:'100%'}}>
@@ -150,14 +203,14 @@ export default function EditingPage(props){
                             variant="scrollable"
                             scrollButtons="auto"
                             >
-                            <Tab label="Profile" {...a11yProps(0)} />
-                            <Tab label="Education" {...a11yProps(1)} />
-                            <Tab label="Experience" {...a11yProps(2)} />
-                            <Tab label="Skills" {...a11yProps(3)} />
-                            <Tab label="Projects" {...a11yProps(4)} />
-                            <Tab label="Custom 1" {...a11yProps(5)} />
-                            <Tab label="Custom 2" {...a11yProps(6)} />
-                            <Tab label="Overview" {...a11yProps(7)} />
+                            <Tab label="Profile" />
+                            <Tab label="Education" />
+                            <Tab label="Experience"/>
+                            <Tab label="Skills" />
+                            <Tab label="Projects"  />
+                            <Tab label="Custom 1" />
+                            <Tab label="Custom 2" />
+                            <Tab label="Overview" />
                             </Tabs>
                         </Paper>
                     </Hidden>
@@ -185,48 +238,22 @@ export default function EditingPage(props){
                     </Hidden>
                     </div>
                   </div>
-                <div className={classes.formContainer}>
-                  {value === 0 && <Contact/>}
-                  {value === 1 && <Education/>}
-                  {value === 2 && <Experience/>}
-                  {value === 3 && <Skills/>}
-                  {value === 4 && <Projects/>}
-                  {value === 5 && <Custom1/>}
-                  {value === 6 && <Custom2/>}
-                  {value === 7 && <Overview/>}
-                </div>
-            </div>
+                <Trail open={open}>
+                  <div className={classes.formContainer}>
+                    {value === 0 && <Contact/>}
+                    {value === 1 && <Education/>}
+                    {value === 2 && <Experience/>}
+                    {value === 3 && <Skills/>}
+                    {value === 4 && <Projects/>}
+                    {value === 5 && <Custom1/>}
+                    {value === 6 && <Custom2/>}
+                    {value === 7 && <Overview/>}
+                  </div>
+                </Trail>
           </Paper> 
         </Grid>
       </ThemeProvider>
     );
-}
-
-
-
-function Trail({ open, children, ...props }) {
-  const items = React.Children.toArray(children)
-  const trail = useTrail(items.length, {
-    config: { mass: 10, tension: 2000, friction: 400 },
-    opacity: open ? 1 : 0,
-    x: open ? 0 : 20,
-    height: open ? 110 : 0,
-    from: { opacity: 0, x: 20, height: 0 },
-  })
-  return (
-    <div className="trails-main" {...props}>
-      <div>
-        {trail.map(({ x, height, ...rest }, index) => (
-          <animated.div
-            key={items[index]}
-            className="trails-text"
-            style={{ ...rest, transform: x.interpolate((x) => `translate3d(0,${x}px,0)`) }}>
-            <animated.div style={{ height }}>{items[index]}</animated.div>
-          </animated.div>
-        ))}
-      </div>
-    </div>
-  )
 }
 
 

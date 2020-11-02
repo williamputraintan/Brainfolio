@@ -68,7 +68,8 @@ const useStyles = makeStyles((theme) => ({
       width:'100%',
       height:'100%', 
     },
-    padding:'0 0 0 4%'
+    padding:'0 0 0 4%',
+    color:theme.palette.primary.main
   },
   imgdesc:{
     [theme.breakpoints.up('sm')]:{
@@ -171,7 +172,7 @@ export default function VerticalTabs() {
                   <Typography align='left' variant='h3'>
                     Join Brainfolio to link with your colleagues and showcase your portfolio 
                   </Typography>
-                  <Button variant="contained" color={theme.palette.primary.main} className={classes.btn}  href="auth/signUp/1"> 
+                  <Button variant="contained" href="auth/signUp/1"> 
                     Get started
                   </Button>
                 </animated.div>
