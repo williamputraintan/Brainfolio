@@ -22,19 +22,21 @@ import Custom1 from './Custom1';
 import Custom2 from './Custom2';
 import Overview from './Overview';
 import theme from '../../utils/theme/MinimalTheme'
-import { useTrail, animated } from 'react-spring'
+import { Trail }from './TrailSprings'
+import editpageheader from '../../images/editpageheader.png';
 
-const pageStyles = makeStyles((theme) => ({
+const pageStyles = makeStyles(() => ({
     container:{
       minHeight:'100vh',
       height:'auto'
     },
     tabContainer:{
-      // backgroundColor:"#E2ECF8",
-      backgroundColor:theme.palette.primary.main,
-      width:'100vw', 
+      backgroundImage: `url(${editpageheader})`,
+      backgroundRepeat:'no-repeat',
+      backgroundPosition:'center center',
+      backgroundSize:'cover',
       [theme.breakpoints.up('sm')]: {
-        height:'18vh'
+        height:'35vh'
       },
       [theme.breakpoints.down('xs')]: {
         height:'20vh'
@@ -42,28 +44,46 @@ const pageStyles = makeStyles((theme) => ({
     },
     upperWords:{
       height:'68%', 
-      padding:'2%'
+      padding:'2%',
+      color:'white',
+    },
+    text:{
+      textAlign:'center',
+      paddingTop:'5%'
     },
     title:{
-      fontWeight:'600',
-      color:theme.palette.fontDefault,
-      fontFamily:theme.typography.alternative,
+      fontWeight:'900',
+      fontFamily:theme.typography.fontFamily,
+      [theme.breakpoints.up('sm')]: {
+        fontSize:'5vh'
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize:'3.5vh'
+      }
     },
     subtitle:{
-      color:theme.palette.fontDefault,
-      fontFamily:theme.typography.alternative,
+      fontWeight:'500',
+      fontFamily:theme.typography.fontFamily,
+      [theme.breakpoints.up('sm')]: {
+        fontSize:'2vh'
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize:'1.5vh'
+      }
     },
     paperContainer:{
-      minHeight:'100vh'
+      minHeight:'100vh',
+      width:'100%'
     },
     formContainer:{
       padding:'3%'
     },
     button:{
-      backgroundColor:theme.palette.secondary.main,
-      color:theme.palette.fontDefault,
+      backgroundColor:theme.palette.primary.main,
+      color:'white',
       margin:'2%',
       fontFamily:theme.typography.fontFamily,
+      fontWeight:'600',
       '&:hover': {
           backgroundColor: theme.palette.secondary.main,
           color: '#4C516D'
@@ -111,17 +131,17 @@ export default function EditingPage(props){
       4: "Showcase your Projects",
       5: "Add your 1st Custom section",
       6: "Add your 2nd Custom section",
-      7: "Your Overview"
+      7: "You are almost done!"
     }
 
     const subtitle={
       0: "Complete your profile to be displayed on your Portfolio",
       1: "List out Education history details",
       2: "List out Experiences history details with descriptions",
-      3: "Describe both your Technical and Soft Skilss",
-      4: "Upload your files/ video link to showcase yout Project",
-      5: "Add entries for your other achievements",
-      6: "Add entries for your other achievements",
+      3: "Describe both your Technical and Soft Skils",
+      4: "Upload your files or YouTube video link to showcase your Project",
+      5: "You may use this section to if you would like to showcase your other achievements",
+      6: "You may use this section to if you would like to showcase your other achievements",
       7: "Below are the information to be displayed on your Portfolio"
     }
 
@@ -166,14 +186,13 @@ export default function EditingPage(props){
               <div className={classes.tabContainer}>
                 <div className={classes.upperWords}>
                     <Trail open={open}>
-                      <div>
-                        <Typography variant="h5" className={classes.title} >{title[value]}</Typography>
-                        <Typography variant="h7" className={classes.subtitle} >{subtitle[value]} </Typography>
+                      <div className={classes.text}>
+                        <Typography className={classes.title} >{title[value]}</Typography>
+                        <Typography className={classes.subtitle} >{subtitle[value]} </Typography>
                       </div>
                     </Trail>
-                    
-
                 </div>
+              </div>
                 <div >
                     <Hidden smDown>
                         <Paper style={{height:'100%'}}>
@@ -219,47 +238,22 @@ export default function EditingPage(props){
                     </Hidden>
                     </div>
                   </div>
-                <div className={classes.formContainer}>
-                  {value === 0 && <Contact/>}
-                  {value === 1 && <Education/>}
-                  {value === 2 && <Experience/>}
-                  {value === 3 && <Skills/>}
-                  {value === 4 && <Projects/>}
-                  {value === 5 && <Custom1/>}
-                  {value === 6 && <Custom2/>}
-                  {value === 7 && <Overview/>}
-                </div>
-            </div>
+                <Trail open={open}>
+                  <div className={classes.formContainer}>
+                    {value === 0 && <Contact/>}
+                    {value === 1 && <Education/>}
+                    {value === 2 && <Experience/>}
+                    {value === 3 && <Skills/>}
+                    {value === 4 && <Projects/>}
+                    {value === 5 && <Custom1/>}
+                    {value === 6 && <Custom2/>}
+                    {value === 7 && <Overview/>}
+                  </div>
+                </Trail>
           </Paper> 
         </Grid>
       </ThemeProvider>
     );
-}
-
-//react spring
-function Trail({ open, children, ...props }) {
-  const items = React.Children.toArray(children)
-  const trail = useTrail(items.length, {
-    config: { mass: 10, tension: 2000, friction: 400 },
-    opacity: open ? 1 : 0,
-    x: open ? 0 : 20,
-    height: open ? 110 : 0,
-    from: { opacity: 0, x: 20, height: 0 },
-  })
-  return (
-    <div className="trails-main" {...props}>
-      <div>
-        {trail.map(({ x, height, ...rest }, index) => (
-          <animated.div
-            key={items[index]}
-            className="trails-text"
-            style={{ ...rest, transform: x.interpolate((x) => `translate3d(0,${x}px,0)`) }}>
-            <animated.div style={{ height }}>{items[index]}</animated.div>
-          </animated.div>
-        ))}
-      </div>
-    </div>
-  )
 }
 
 
