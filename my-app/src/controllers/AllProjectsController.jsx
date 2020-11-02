@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
       }
     },
     image: {
-      width:"500px",
+      width:"450px",
     },
     testing:{
       backgroundColor:"#003a25",
@@ -33,8 +33,7 @@ const useStyles = makeStyles((theme) => ({
       minHeight:'100vh',
     },
     DataGrid:{
-      xs:   6,
-      spacing: 3,
+      
     },
     allCardGrid:{
       // display: 'grid',
@@ -88,7 +87,7 @@ export default function DisplayAllProjectsController() {
               </Grid>
             </Hidden>
 
-            <Grid container item xs={6} spacing={3}>
+            <Grid container item md={6} xs={12} spacing={3} alignItems="center" justify="center">
               <Grid item xs={12}>
                 <Typography color="textSecondary" variant="h3" gutterBottom>
                   Your Projects
@@ -112,7 +111,7 @@ export default function DisplayAllProjectsController() {
                     spacing={4}
                   >
                     {allProjects.map(res=>(
-                    <Grid item xs={6} >
+                    <Grid item sm={6} xs={12} >
                       <CardProject data={res}/>
                     </Grid>
                     ))}

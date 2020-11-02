@@ -11,7 +11,6 @@ import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
-
     minHeight: '250px',
     maxheight: '250px',
     padding:0,
@@ -41,10 +40,10 @@ export default function CardProject(props) {
             title={data.title}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography noWrap gutterBottom variant="h5" component="h2">
               {data.title}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography noWrap variant="body2" color="textSecondary" component="p">
               {data.description}
             </Typography>
           </CardContent>
