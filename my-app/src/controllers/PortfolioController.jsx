@@ -234,10 +234,10 @@ function PortfolioController() {
               <section className={classes.portfolioItems}>
                 <Container maxWidth="lg">
                   <DescriptionController user={lastPath}/>
-                  {/* <ExperienceController user={lastPath}/> */}
+                  <ExperienceController user={lastPath}/>
                   <EducationController user={lastPath}/>
-                  {/* <SkillController user={lastPath}/>
-                  <ProjectController user={lastPath}/> */}
+                  {/* <SkillController user={lastPath}/> */}
+                  <ProjectController user={lastPath}/>
                 </Container>
               </section>
             </Grid>

@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/core/styles';
+import {useTransition, animated} from 'react-spring'
 
 import AxiosInstance from '../utils/axios'
 import { UserContext } from '../context/user.context'
@@ -17,10 +18,11 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
       [theme.breakpoints.up('sm')]: {
         minHeight: "100vh",
-      }
+      },
+      minHeight:'100vh'
     },
     image: {
-      width:"450px",
+      width:"400px",
     },
     testing:{
       backgroundColor:"#003a25",
@@ -33,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
       minHeight:'100vh',
     },
     DataGrid:{
-      
+      alignItems: 'center',
+      justifyItems:'center',
+      margin:'-12px'
     },
     allCardGrid:{
       // display: 'grid',
@@ -69,62 +73,57 @@ export default function DisplayAllProjectsController() {
           console.log(responseData);
         })
       },[]);
-
+      const transitions = useTransition(allProjects, item => item.key, {
+      from: { transform: 'translate3d(0,-40px,0)' },
+      enter: { transform: 'translate3d(0,0px,0)' },
+      })
     return (
         <div className={classes.root}>
-
+          
           <Grid
             container
             direction="row"
-            justify="center"
+            justifyItems="center"
             alignItems="center"
           >
-            <Hidden only='sm' smDown>
-
-            
-              <Grid item xs={6} className={classes.rowImageGrid} >
+            {/* logo */}
+            <Hidden only='md' mdDown>          
+              <Grid item md={4} className={classes.rowImageGrid} >
                 <img src={AllProjectLogo} className={classes.image}/>
               </Grid>
             </Hidden>
+            <Grid container item md={8} xs={12} spacing={3} alignItems="center" justify="center" >
 
-            <Grid container item md={6} xs={12} spacing={3} alignItems="center" justify="center">
-              <Grid item xs={12}>
+              <Grid item xs={12} alignContent='center'>
                 <Typography color="textSecondary" variant="h3" gutterBottom>
                   Your Projects
                 </Typography> 
-              </Grid>   
-              <Grid
-                item
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                xs={12}
-                spacing ={4}
-              >
-                <Container>
+              </Grid>
                   <Grid
+                    xs={12}
                     item
                     container
                     direction="row"
                     className = {classes.allCardGrid}
                     spacing={4}
                   >
-                    {allProjects.map(res=>(
-                    <Grid item sm={6} xs={12} >
-                      <CardProject data={res}/>
+                    {transitions.map(({ item, props, key }) =>
+                    <Grid item md={4} xs={12} >
+                      <animated.div key={key} style={props}>
+                        
+                        <CardProject data={item}/>
+    
+                      </animated.div>
                     </Grid>
-                    ))}
+                    )}
                   </Grid>
-                </Container>
 
-                <Grid item>
-                  <AddCard/>
-                </Grid>
-                    
+              <Grid item xs={1}>
+                <AddCard/>
               </Grid>
-             
             </Grid>
+
+            
           </Grid>            
         </div>
     )
