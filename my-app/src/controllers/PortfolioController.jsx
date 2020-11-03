@@ -143,9 +143,10 @@ function PortfolioController() {
   const classes = useStyles();
   const backgroundRef = useRef(null);
 
-  const { pathname } = useLocation();
+  const { search, pathname } = useLocation();
   const lastPath = pathname.split("/").slice(-1)[0] 
-
+  const destinationPath = lastPath + search;
+  console.log('destipath', destinationPath);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   
@@ -233,11 +234,11 @@ function PortfolioController() {
               {matches && <SectionMenu />}
               <section className={classes.portfolioItems}>
                 <Container maxWidth="lg">
-                  <DescriptionController user={lastPath}/>
-                  <ExperienceController user={lastPath}/>
-                  <EducationController user={lastPath}/>
-                  {/* <SkillController user={lastPath}/> */}
-                  <ProjectController user={lastPath}/>
+                  <DescriptionController user={destinationPath}/>
+                  <ExperienceController user={destinationPath}/>
+                  <EducationController user={destinationPath}/>
+                  {/* <SkillController user={destinationPath}/> */}
+                  <ProjectController user={destinationPath}/>
                 </Container>
               </section>
             </Grid>
