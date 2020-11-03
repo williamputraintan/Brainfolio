@@ -21,7 +21,7 @@ const storeReducer = (state, {type, payload}) => {
       return { ...state,  isLoggedIn: true, user: {...payload.user, token: payload} };
 
     case USER_LOG_OFF: {
-      return { ...state, user: null , isLoggedIn: false};
+      return { ...state, user: {isDarkMode: state.user.darkMode} , isLoggedIn: false};
     }
 
     case SET_USER_LOADING: {

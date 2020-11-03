@@ -28,8 +28,6 @@ import Paper from '@material-ui/core/Paper';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Avatar from '@material-ui/core/Avatar';
 
-import Box from '@material-ui/core/Box';
-
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 

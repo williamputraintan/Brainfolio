@@ -12,10 +12,10 @@ const theme = createMuiTheme({
       background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
     primary: {
-      main: '#0358B6'
+      main: '#0013FE'
     },
     secondary: {
-      main: 'rgb(0,210,255)',
+      main: '#FE6C00',
     },
     backgroundWhite: '#ffffff',
     fontDefault: '#323232',
@@ -24,7 +24,7 @@ const theme = createMuiTheme({
     },
     bacgroundAccent: "#ebfcff",
     errorColor: "#FF3D00",
-    successColor: "#2962FF"
+    successColor: "#2962FF",
   },
   overrides: {
     MuiButton: {
@@ -64,7 +64,7 @@ const theme = createMuiTheme({
       '"Segoe UI Symbol"',
     ].join(','),
     alternative: [
-        'Inter',
+        'Heebo',
         '-apple-system',
         'BlinkMacSystemFont',
         '"Segoe UI"',

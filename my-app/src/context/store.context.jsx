@@ -6,11 +6,11 @@ import userReducer from "./reducers/store.reducer";
 const StoreContext = createContext();
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   isLoggedIn: false,
   user:{
     token: null,
-    darkMode: true,
+    darkMode: false,
   },
   message: {
     content: "dsadasd",

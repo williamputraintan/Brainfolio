@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
 import { StoreContext } from '../context/store.context';
 
-import DomTreeLoader from "../common/DOMTreeLoading";
 
 
 //Pages
@@ -18,7 +17,6 @@ import Paths from "../utils/path";
 
 //Lazy Import
 // const AboutUs = React.lazy(() => import('../pages/AboutUs.jsx'));
-const AuthenticationPage = React.lazy(() => import('../pages/AuthenticationPage'));
 const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
@@ -53,7 +51,6 @@ function AppLoader(props) {
     appAuth.onAuthStateChanged(user => {
       persistUser(dispatch, user)
       console.log(user)
-
     })
     
   },[user.username])
@@ -61,26 +58,17 @@ function AppLoader(props) {
 
 
   return (
-    <Suspense fallback={<DomTreeLoader/>}>
+
       <section className={classes.root}>
         <NavbarController />
             <Switch>
-                <Route exact path="/" render={() => <Redirect to="/aboutUs"/>}/>
-                <Route path="/home" component={AuthenticatedRoute} />
-                
-                {/** Public Routes**/}
-                <Route path="/auth" component={AuthenticationPage} />
-                <Route path="/project" component={ProjectPage}/>
-                {/* <Route path="/aboutUs" component={AboutUs}/> */}
-
-                <Route path={Paths.ABOUT_US} component={LandingPage}/>
-                <Route exact path="/404" component={Page404}/>
-                
-                {/* <Route path="/" component={Timeline} className={classes.root} />  */}
+              <Route path={Paths.HOME}component={AuthenticatedRoute} />
+              <Route path={Paths.PROJECT} component={ProjectPage}/>
+              <Route exact path="/404" component={Page404}/>
                 
             </Switch>
       </section>
-    </Suspense>
+
   )
 }
 
