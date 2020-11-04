@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react'
+import { UserContext } from '../../context/user.context';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
@@ -55,7 +56,10 @@ const accentColor = "#FDD835";
 
 function SkillController(props) {
   const classes = useStyles();
-
+  const {state} = useContext(UserContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.token}` }
+  };
   const { user } = props;
   const [loading, setLoading] = useState(true);
   const [skills, setSkills] = useState({
@@ -74,7 +78,7 @@ function SkillController(props) {
    
 
     AxiosInstance
-      .get(`/public/skills/${user}`)
+      .get(`/public/skills/${user}`, config)
       .then(response => {
         const { data } = response;
         const technical = data.filter(item => item.category === "Technical")

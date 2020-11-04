@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react'
+import { UserContext } from '../../context/user.context';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
@@ -18,11 +19,14 @@ const useStyles = makeStyles( theme => ({
 const accentColor =  "#f44336";
 function DescriptionController() {
   const classes = useStyles();
-
+  const {state} = useContext(UserContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.token}` }
+  };
   
   // React.useEffect(() => {
   //   AxiosInstance
-  //     .get("/public/allproject/username")
+  //     .get("/public/allproject/username", config)
   //     .then(res => {
   //       console.log(res)
   //     })

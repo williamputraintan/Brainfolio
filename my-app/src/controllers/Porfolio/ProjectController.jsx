@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { UserContext } from '../../context/user.context';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
@@ -24,7 +25,10 @@ const accentColor ="#8bc34a";
 
 function ProjectController(props) {
   const classes = useStyles();
-
+  const {state} = useContext(UserContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.token}` }
+  };
 
   const { user } = props;
 
@@ -38,7 +42,7 @@ function ProjectController(props) {
    
 
     AxiosInstance
-      .get(`/public/allproject/${user}`)
+      .get(`/public/allproject/${user}`, config)
       .then(response => {
         // const { data } = response;
         // setProjects(data);
