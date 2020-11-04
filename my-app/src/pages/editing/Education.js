@@ -57,6 +57,7 @@ export default function Education() {
         ...fields,
         [e.target.name]: e.target.value
       })
+      console.log(fields);
     }
 
     function handleOnGoing(event){
