@@ -44,7 +44,7 @@ export const getUserFromDb = async (dispatch, idToken) => {
     })
   
 
-
+    console.log(response);
     const { data } = response;
 
 
@@ -76,7 +76,10 @@ export const signInUser = async (dispatch, email, password) => {
 
   try{
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => firebase.auth().signInWithEmailAndPassword(email, password));
+        .then(() => firebase.auth().signInWithEmailAndPassword(email, password))
+        .catch(err =>  { console.log(err);setUserLoading(dispatch, false);
+          history.push({pathname: Paths.SIGN_IN,
+          state: {err} })});
     
     // if(instance){
     //   // const idToken = await firebase.auth().currentUser.getIdToken(true);
@@ -93,6 +96,7 @@ export const signInUser = async (dispatch, email, password) => {
     // // }
   }
   catch(error){
+    console.log("its gere andrew")
     let errorCode = error.code;
     let errorMessage = error.message;
     console.log(errorCode,errorMessage)
@@ -101,14 +105,16 @@ export const signInUser = async (dispatch, email, password) => {
 }
 
 export const signUpUser = async (dispatch, email, password) => {
+
   try{
     const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-    console.log(user)
     if(user){
       const idToken = await firebase.auth().currentUser.getIdToken(true);
-      console.log(idToken);
+
       getUserFromDb(dispatch, idToken);
     }
+    
+
     history.push(Paths.SIGN_UP_2);
   }
   catch(e){
@@ -137,7 +143,7 @@ export const setUsername = async (dispatch,username) => {
 
     dispatch({
       type:  SET_USER,
-      payload: {...data, token: idToken}
+      payload: {username: username, token: idToken}
     })  
 
 
