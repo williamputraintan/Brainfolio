@@ -17,7 +17,7 @@ import {educationFields} from './FieldNames';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
+import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
 export default function Education() {
     const {state} = useContext(UserContext);
     const classes = useStyles();
@@ -84,12 +84,16 @@ export default function Education() {
         //when user edits an existing entry
         if(editId!=null){
           AxiosInstance.put('/edit/education/'+editId,finalFields)
-          .then(res=> res? resetForm() : null)
+          .then((res)=> {
+            setAlertSuccess(true)
+            resetForm()})
           .catch(error=> console.log(error));
         }// when user submits a new entry
         else{
           AxiosInstance.post('/edit/education',finalFields,config)
-          .then(res=> res? resetForm():null)
+          .then((res)=> {
+            setAlertSuccess(true)
+            resetForm()})
           .catch(error=> console.log(error));
         }
       }else{
@@ -142,10 +146,14 @@ export default function Education() {
     useEffect(() => {
       getExistingEducation();
     },[formDisable,editId]);
-  
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
               <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>

@@ -19,9 +19,8 @@ import Hidden from '@material-ui/core/Hidden';
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-import axios from 'axios';
 import AxiosInstance from '../../utils/axios';
-import Axios from 'axios';
+import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
 
 export default function Projects() {
   
@@ -206,6 +205,7 @@ export default function Projects() {
       //Sending data
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
+        setAlertSuccess(true)
         console.log(response);
         const data = response.data
         
@@ -268,10 +268,14 @@ export default function Projects() {
       return result;
     }
 
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
       <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback} toDelete={deleteProject}/> </Hidden>
             <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback} toDelete={deleteProject}/></Hidden>
@@ -281,7 +285,6 @@ export default function Projects() {
               <div className={classes.paper}>
                 <form className={classes.form} noValidate>
                   <Grid container spacing={3}> 
-
                       <Grid item xs={12} sm={12}>
                           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
                             <Select

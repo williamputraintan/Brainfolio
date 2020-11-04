@@ -20,7 +20,7 @@ import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {experienceFields} from './FieldNames';
-
+import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
 export default function Experience() {
   const {state} = useContext(UserContext);
   const classes = useStyles();
@@ -87,12 +87,16 @@ export default function Experience() {
       //when user edits an entry
       if(editId!=null){
         AxiosInstance.put('/edit/experience/'+editId,finalFields,config)
-        .then(res=> res? resetForm() :null)
+        .then((res)=> {
+          setAlertSuccess(true)
+          resetForm()})
         .catch(error=>console.log(error));
       }//when user submits a new entry
       else{
         AxiosInstance.post('/edit/experience',finalFields,config)
-        .then(res=> res? resetForm(): null)
+        .then((res)=> {
+          setAlertSuccess(true)
+          resetForm()})
         .catch(error=>console.log(error));
       }
     }else{
@@ -153,10 +157,14 @@ export default function Experience() {
   useEffect(() => {
     getExistingExperience();
   },[formDisable,editId]);
-  
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
+  function closeAlert(){
+    setAlertSuccess(false);
+  }
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
                 <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> 

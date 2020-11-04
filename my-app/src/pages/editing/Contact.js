@@ -23,7 +23,7 @@ import {profileFields} from './FieldNames';
 
 import axios from 'axios';
 import Visibility from '../../controllers/Porfolio/Profile/Visibility';
-
+import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
 
 export default function Contact(props) {
     const {state} = useContext(UserContext);
@@ -113,6 +113,7 @@ export default function Contact(props) {
 
       AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
+        setAlertSuccess(true)
         console.log(response)
         const data = response.data
         setFields(data)
@@ -186,11 +187,14 @@ export default function Contact(props) {
       //   setButtonClick(false)
       // })
     // },[buttonClick]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
      <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg" style={{backgroundColor:'#fffff'}}>
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             {/* <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
             <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/></Hidden> */}

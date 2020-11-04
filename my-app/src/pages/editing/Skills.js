@@ -20,7 +20,7 @@ import CardInfo from './CardInfo.js';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {skillsFields} from './FieldNames';
-
+import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
 import axios from 'axios';
 
 export default function Skills(){
@@ -69,12 +69,16 @@ export default function Skills(){
         // when user edits an entry
         if(editId!=null){
           AxiosInstance.put('/edit/skills/'+editId,{...fields},config)
-          .then(res=> res? resetForm() : null)
+          .then((res)=> {
+            setAlertSuccess(true)
+            resetForm()})
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills',finalFields,config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            setAlertSuccess(true)
+            resetForm()})
           .catch(error=>console.log(error));
         }
       }else{
@@ -131,11 +135,14 @@ export default function Skills(){
     useEffect(() => {
      getExistingSkills();
     },[formDisable,editId]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
-
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden><br/>
               <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
