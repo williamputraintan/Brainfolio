@@ -15,7 +15,7 @@ const userReducer = (state, {type, payload}) => {
       return { ...state, isLoading: payload.isLoading };
     }
     case SET_USER: {
-      return { ...state, user: payload.user, token: payload.token };
+      return { ...state, user: {...state.user, username: payload.username}, token: payload.token };
     }
 
     case SET_MODE:

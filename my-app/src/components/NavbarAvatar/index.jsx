@@ -133,10 +133,10 @@ function NavAvatar(props) {
             <Avatar alt="Remy Sharp"  className={classes.large}/>
             <Typography component="div">
               <Typography component="p">
-                { state.user.username || "user"}
+                { state.user?.username || "user"}
               </Typography>
               <Typography component="p">
-                  { state.user.email || "user@email.com"}
+                  { state.user?.email || "user@email.com"}
               </Typography>
             </Typography>
           </div>

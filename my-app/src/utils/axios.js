@@ -10,8 +10,8 @@ import { history } from '../utils/BrowserHistory';
 //     "localhost:5000": 
 //     ""
 
-const URL_PATH = "https://testdockerprod123.herokuapp.com/"
-// const URL_PATH = "http://localhost:5000/"
+// const URL_PATH = "https://testdockerprod123.herokuapp.com"
+const URL_PATH = "http://localhost:5000/"
 
 const axios = Axios.create({
   baseURL: URL_PATH,
@@ -33,7 +33,7 @@ axios.interceptors.response.use(response => {
         history.push("/404")
         break;
       case 401:
-        history.push("/auth/signin/1")
+        history.push("/auth/signin")
         break;
       case 400: 
         history.goBack()
