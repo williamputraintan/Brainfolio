@@ -76,7 +76,10 @@ export const signInUser = async (dispatch, email, password) => {
 
   try{
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => firebase.auth().signInWithEmailAndPassword(email, password));
+        .then(() => firebase.auth().signInWithEmailAndPassword(email, password))
+        .catch(err =>  { console.log(err);setUserLoading(dispatch, false);
+          history.push({pathname: Paths.SIGN_IN,
+          state: {err} })});
     
     // if(instance){
     //   // const idToken = await firebase.auth().currentUser.getIdToken(true);
@@ -93,6 +96,7 @@ export const signInUser = async (dispatch, email, password) => {
     // // }
   }
   catch(error){
+    console.log("its gere andrew")
     let errorCode = error.code;
     let errorMessage = error.message;
     console.log(errorCode,errorMessage)
