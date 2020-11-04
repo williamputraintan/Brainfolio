@@ -22,7 +22,10 @@ const theme = createMuiTheme({
     fontGrey: {
       color: '#565656',
     },
-    bacgroundAccent: "#ebfcff",
+    // bacgroundAccent: "#ebfcff",
+    bacgroundAccent: "#fff",
+    titleBgAccent: "#EEEEEE",
+    cardAccent: "#f9f9f9"
   },
   overrides: {
     MuiButton: {

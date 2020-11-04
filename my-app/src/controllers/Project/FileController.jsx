@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import { useSpring, animated } from 'react-spring'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,17 +10,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Container, Typography } from '@material-ui/core';
-import pdf from '../../images/icon/pdf-icon.png'
-
+import pdf from '../../images/icon/pdf.png'
+import image from '../../images/welcome/welcome1.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.cardAccent,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
     maxWidth: 256,
-    height: 300
+    Height: 300
     // backgroundColor: theme.palette.background.paper,
   },
   // gridList: {
@@ -31,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   // },
   fileDesc: {
     overflow: "scroll"
+  },
+  fileLabel: {
+    padding: theme.spacing(0,0,5)
   },
   title: {
     color: 'white',
@@ -44,24 +49,41 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100"
   },
   fileTitle:{
-    overflow: "hidden",
-    textOverflow: "..."
-    // color: "white",
-    // width:"100%",
-    // padding: theme.spacing(0,0,2)
   },
 }));
 
 export default function SingleLineGridList(projectDisplay) {
   const classes = useStyles();
   const files = projectDisplay.data;
-  // const files = [[],[],[],[],[],[]]
-  console.log(files)
-  // let files2 = [files]
-  // console.log(files2)
+  const dummy = {
+    "contributor": [],
+    "projectFileName": [
+        [
+            "LC 77599_downloaded_stream_185.pdf", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png"
+        ],
+        [
+          "Photo.png", "http://www.rsjlawang.com/assets/images/lightbox/image-4.jpg"]
+    ],
+    "_id": "5fa28dc4ed32a200038081d6",
+    "endDate": "2021-07-24T00:00:00.000Z",
+    "isPublic": true,
+    "username": "frankaldo",
+    "title": "MOC",
+    "description": "MOC is hard",
+    "__v": 0
+  }
+  const dum = dummy.projectFileName;
+
+
+  function shortenTitle(title){
+    if (title.length>9){
+      return title.slice(0,9)+" ..."
+    }
+    return title
+  }
+
 
   return (
-
     <Grid container>
       <Typography variant="h4" className={classes.fileLabel}>
         Files
@@ -69,6 +91,7 @@ export default function SingleLineGridList(projectDisplay) {
       <Grid container className={classes.file} spacing={4}>
         {files.map((file) => (
           <Grid item key={file} xs={12} sm={4} md={4}>
+            <CardAnimation>
             <Card className={classes.root}>
               <CardMedia
                 component="img"
@@ -79,16 +102,21 @@ export default function SingleLineGridList(projectDisplay) {
               />
               <CardContent className={classes.fileDesc}>
                 <Typography className={classes.fileTitle} gutterBottom variant="body1" component="body1">
-                  {file[0]}
+                  {shortenTitle(file[0])}
                 </Typography>
               </CardContent>
 
               <CardActions>
-                <Button size="small" color="primary">
+                <Button 
+                size="small" 
+                color="primary"
+                href={file[1]}
+                target="_blank">
                   Download
                 </Button>
               </CardActions>
             </Card>
+            </CardAnimation>
           </Grid>
         ))}
       </Grid>
@@ -96,3 +124,45 @@ export default function SingleLineGridList(projectDisplay) {
     </Grid>
   );
 }
+
+function CardAnimation({children}) {
+  const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
+
+  // We add this ref to card element and use in onMouseMove event to get element's offset and dimensions.
+  const ref = useRef();
+  
+  // The useSpring hook
+  const [props, set] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 5, tension: 350, friction: 40 } }))
+
+  return (
+    <animated.div
+      ref={ref}
+      onMouseMove={({ clientX, clientY }) => { 
+        const x =
+          clientX -
+          (ref.current.offsetLeft -
+            (window.scrollX || window.pageXOffset || document.body.scrollLeft));
+        // Get mouse y position within card
+        const y =
+          clientY -
+          (ref.current.offsetTop -
+            (window.scrollY || window.pageYOffset || document.body.scrollTop));
+          // Set animated values based on mouse position and card dimensions
+        const dampen = 50; // Lower the number the less rotation
+        const xys = [
+          -(y - ref.current.clientHeight / 2) / dampen, // rotateX
+          (x - ref.current.clientWidth / 2) / dampen, // rotateY
+          1.02 // Scale
+        ];
+        set({ xys: xys })}}
+      
+      onMouseLeave={() => {
+        set({ xys: [0, 0, 1] });
+      }}
+
+      style={{ transform: props.xys.interpolate(trans) }}
+    >
+      {children}
+    </animated.div>
+  );
+} 

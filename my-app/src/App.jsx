@@ -50,8 +50,6 @@ function App() {
 
  
 
- 
-
   return (
 
       <Suspense fallback={<DomTreeLoader/>}>
@@ -67,8 +65,8 @@ function App() {
                 <Route path="/auth" component={AuthenticationPage} />
                 <Route path="/portfolio/:username" component={Portfolio}/>
                 <Route path="/new/portfolio" component={newPortfolio}/>
-                <Route path="/project" component={AllProjectPage}/>
-                {/* <Route path="/project" component={ProjectPage}/> */}
+                <Route path="/allproject" component={AllProjectPage}/>
+                <Route path="/project/:username/:id" component={ProjectPage}/>
                 <Route path="/aboutUs" component={AboutUs}/>
                 
                 <Route exact path="/404" component={Page404}/>

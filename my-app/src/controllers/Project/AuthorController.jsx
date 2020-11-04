@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import Card from '@material-ui/core/Card';
+// import CardAccent from "../../common/CardAccent";
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { useSpring, animated } from 'react-spring'
+
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -21,64 +24,60 @@ function AuthorController(props) {
       }
     },
     author:{
-      backgroundColor: "#5584C2",
-      color: "white",
+      // backgroundColor: theme.palette.bacgroundAccent,
+      color: theme.palette.text.primary,
       width:"100%",
       padding: theme.spacing(0,0,2)
     },
     authorCard: {
-      padding: theme.spacing(0,0,0)
-
+      padding: theme.spacing(0,0,0),
+      // backgroundColor: theme.palette.titleBgAccent,
+      backgroundColor: theme.palette.cardAccent,
+    },
+    outline: {
+      // margin: theme.spacing(0,2,0),
+      backgroundColor: theme.palette.bacgroundAccent,
+      border: "3px",
+      width: "100%",
+      padding: theme.spacing(2)
     }
     }));
 
     const classes = useStyles();
-
+    const data = props.data;
     // const [author] = props.data;
-    // console.log("AUHTOR: "+author)
-    const author = "Harry J, w@e.com, aoiw, ef@ef.com, feoie, OEI@oiefj.com,feoie, OEI@oiefj.com,feoie, OEI@oiefj.com";
 
-
-    function authorArray(authors){
-      let nameEmailAuthors = [];
-      if (authors!==""){
-        let author = authors.split(',');
-        // console.log(author.length)
-        // console.log(author)
-        for (let i=0; i<((author.length)/2)+2;i++){
-          nameEmailAuthors.push([author.splice(0,2)]);
-          // console.log(i)
-          // console.log("Len mname "+nameEmailAuthors.length)
-        }
-      } else {
-        nameEmailAuthors.push(["Personal Project", ""]);
-      }
-      return nameEmailAuthors;
-    }
-    const authorDetails = authorArray(author);
     return (
-        <Container className={classes.cardGrid} >
+
+      <Grid className={classes.outline}>
+        <Container >
           <Grid className={classes.author}>
-            <Typography variant="h6">
+            <Typography variant="h4">
               Author
             </Typography>
           </Grid>
-          <Grid container className={classes.authorCard} spacing={2}>
-            {authorDetails.map((author) => (
-              <Grid item key={author} xs={12} sm={4} md={4}>
-                <Card>
-                    <CardHeader
-                    avatar={
-                        <Avatar className={classes.avatar}/>
-                    }
-                    title= {""+author[0]}
-                    subheader= {""+author[1]}
-                    />
-                </Card>
+          <Grid container spacing={2}>
+            {data.map((author) => (
+              <Grid item key={author} xs={12} sm={6} md={4} lg={3}>
+                <CardActionArea
+                  href={`mailto:${author.email}`}
+                  >
+                  <Card className={classes.authorCard}>
+                      <CardHeader
+                      avatar={
+                          <Avatar className={classes.avatar}/>
+                      }
+                      title= {author.name}
+                      subheader= {author.email}
+                      />
+                  </Card>
+                </CardActionArea>
               </Grid>
             ))}
           </Grid>
         </Container>
+      </Grid>
+
     )
 }
 

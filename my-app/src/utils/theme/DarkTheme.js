@@ -18,7 +18,9 @@ const theme = createMuiTheme({
       main: '#afd1ff',
     },
     bacgroundAccent: "#1e2f39",
-    fontAccent: "#90C5EC"
+    fontAccent: "#90C5EC",
+    titleBgAccent: "#1A2831",
+    cardAccent: "#243945"
   },
   overrides: {
     MuiButton: {
