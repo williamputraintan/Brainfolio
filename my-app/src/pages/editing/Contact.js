@@ -40,8 +40,8 @@ export default function Contact(props) {
       relevantLink: "",
       linkedIn:"",
       description: "",
-      profileImageName: [],
-      backgroundImageName: [],
+      profileImage: "",
+      backgroundImage: "",
       isPublic:false,
       color_theme:false
     }; 
@@ -111,7 +111,7 @@ export default function Contact(props) {
       formData.append('profileToDelete', profileToDelete);
       formData.append('backgroundToDelete', backgroundToDelete);
 
-      AxiosInstance.post("/edit/profile/save/", formData, config)
+      AxiosInstance.post("v2/edit/profile/save/", formData, config)
       .then((response) => {
         if(response.status == 200 || response.status == 201){
 
@@ -152,8 +152,8 @@ export default function Contact(props) {
     }
 
     function getExistingProfile(){
-      AxiosInstance.get("/edit/profile"+state.user)
-      .then(res=> setExistingData(res.data))
+      AxiosInstance.get("v2/edit/profile"+state.user)
+      .then(res=> setExistingData(res.data.profile))
       .catch(error=> console.log(error));
     }
 
@@ -168,9 +168,9 @@ export default function Contact(props) {
     //props from children
     const myCallback = (idReceived) => {
 
-      AxiosInstance.get("edit/profile/"+idReceived, config)
+      AxiosInstance.get("v2/edit/profile/"+idReceived, config)
       .then(res=>{
-        const dataFromChild = res.data
+        const dataFromChild = res.data.profile
         setFields(dataFromChild);
         setFormDisable(false);
         setEditId(dataFromChild._id);

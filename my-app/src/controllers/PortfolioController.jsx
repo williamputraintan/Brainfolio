@@ -158,37 +158,49 @@ function PortfolioController() {
     address: "",
     phone: "",
     email:"",
+    description: "",
     github: "",
-    backgroundImageName: "",
-    profileImageName: ""
+    fullname: "",
+    backgroundImageLink: "",
+    profileImageLink: ""
   })
 
   React.useEffect(() => {
     const source = axios.CancelToken.source();
    
+    console.log(lastPath)
+    AxiosInstance
+      .get(`/public/profile/${lastPath}`)
+      .then(response => {
+        console.log("its here")
+        const data = response?.data
+        const user = response?.data.user;
+        const profile2 = response?.data.user.profile;
+        console.log(profile2)
+        if(data.user){
+          console.log("its hereheheh")
+          console.log(user.username)
+          setProfile({
+            username: user.username,
+            filename: profile2.fullname,
+            title: profile2.title,
+            address: profile2.address,
+            phone: profile2.phone,
+            email: profile2.displayEmail,
+            linkedIn: profile2.linkedIn,
+            github: profile2.github,
+            description: profile2.description,
+            backgroundImageLink:response?.data.backgroundImageLink,
+            profileImageLink: response?.data.profileImageLink
+          })
+        }
+        console.log("its here123")
+        console.log(profile)
 
-    // AxiosInstance
-    //   .get(`/public/profile/${lastPath}`)
-    //   .then(response => {
-    //     const data = response?.data;
-    //     if(data){
-    //       setProfile({
-    //         username: data?.username,
-    //         title: data?.title,
-    //         address: data?.address,
-    //         phone:data?.phone,
-    //         email:data?.email,
-    //         linkedIn: data?.linkedIn,
-    //         backgroundImageName: data?.backgroundImageName,
-    //         profileImageName: data?.profileImageName
-    //       })
-    //     }
-        
-
-    //     if(backgroundRef.current){
-    //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
-    //     }
-    //   })
+        if(backgroundRef.current){
+          backgroundRef.current.style.backgroundColor = `url(backgroundImageLink)`;
+        }
+      })
     
     return () => {
       source.cancel(
