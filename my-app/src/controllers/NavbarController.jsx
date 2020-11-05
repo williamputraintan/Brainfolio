@@ -18,8 +18,8 @@ function NavbarController(props) {
 
   const {state} = React.useContext(UserContext);
 
-
-
+  console.log("navbar controller");
+  console.log(state);
 
   return (
     <Suspense fallback={<PageLoader />}>
