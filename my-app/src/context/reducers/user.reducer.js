@@ -10,7 +10,7 @@ const userReducer = (state, {type, payload}) => {
     case USER_LOG_IN:
       return { ...state, token: payload, user:payload.user };
     case USER_LOG_OFF: {
-      return { ...state, token: null };
+      return { ...state,user:null, token: null };
     }
     case SET_USER_LOADING: {
       return { ...state, isLoading: payload.isLoading };

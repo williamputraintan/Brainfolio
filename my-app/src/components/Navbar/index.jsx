@@ -100,10 +100,13 @@ function Navbar(props) {
   const classes = useStyles();
 
   const {user} = props;
-
-
-
-
+  var usernamepath = null
+  if(user == null){
+    usernamepath = null
+  }
+  if(user.user != null){
+     usernamepath = user.user.username;
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -116,19 +119,19 @@ function Navbar(props) {
               <Link 
                 component={RouterLink} 
                 activeClassName={classes.activeLink} 
-                to={`${Paths.PORTFOLIO}/${user.username}`}>Portfolio</Link>
+                to={`${Paths.PORTFOLIO}/${usernamepath}`}>Portfolio</Link>
             </Button>
             <Button>
               <Link 
                 component={RouterLink} 
                 activeClassName={classes.activeLink} 
-                to={`${Paths.PROJECT}/${user.username}`}>Projects</Link>
+                to={`${Paths.PROJECT}/${usernamepath}`}>Projects</Link>
             </Button>
             <Button>
               <Link 
                 component={RouterLink} 
                 activeClassName={classes.activeLink} 
-                to={`${Paths.EDIT_PORTFOLIO}/${user.username}`}>Customize</Link>
+                to={`${Paths.EDIT_PORTFOLIO}/${usernamepath}`}>Customize</Link>
             </Button>
           </div>
           <div className={classes.rightContent}>
