@@ -15,7 +15,7 @@ const Paths = {
   HOME: "/home",
   PORTFOLIO: "/portfolio",
   ABOUT_US: "/aboutUs",
-  PROJECT: "/project",
+  ALL_PROJECT: "/allproject",
   EDIT_PORTFOLIO: "/home/edit",
 }
 

@@ -125,7 +125,7 @@ function Navbar(props) {
               <Link 
                 component={RouterLink} 
                 activeClassName={classes.activeLink} 
-                to={`${Paths.PROJECT}/${usernamepath}`}>Projects</Link>
+                to={`${Paths.ALL_PROJECT}`}>Projects</Link>
             </Button>
             <Button>
               <Link 

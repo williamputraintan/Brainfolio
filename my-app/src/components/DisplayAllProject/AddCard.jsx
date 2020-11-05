@@ -31,8 +31,8 @@ export default function AddCard() {
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
-
-            <IconButton>
+            {/*USERNAME */}
+            <IconButton href="https://brainfolio.herokuapp.com/home/edit/projects/">
                 <Icon className="fa fa-plus-circle" style={{ fontSize: 50 }}>add_circle</Icon>
             </IconButton>
             {/* <Card className={classes.root}>

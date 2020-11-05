@@ -12,6 +12,7 @@ import CardProject from '../components/DisplayAllProject/DisplayCard';
 import AddCard from '../components/DisplayAllProject/AddCard';
 import AllProjectLight from '../common/SVG/AllProjectLight.js'
 import AllProjectLogo from '../common/AllProjectLogo.png'
+import allProjectDark from '../images/allProject/allProjectDark.png'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       width:"400px",
     },
     testing:{
-      backgroundColor:"#003a25",
+      backgroundColor:"#FF0000",
       
     },
     rowImageGrid:{
@@ -79,14 +80,82 @@ export default function DisplayAllProjectsController() {
       })
     return (
         <div className={classes.root}>
+          <Container maxWidth="lg">
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+
+              {/* first row */}
+              <Grid
+                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                xs={12}
+              >
+                <Grid item xs={6} alignContent='center'>
+                  <Typography color="textSecondary" variant="h3" gutterBottom>
+                    Your Projects
+                  </Typography> 
+                </Grid>
+                <Grid item xs={6} className={classes.rowImageGrid} >
+                  <img src={allProjectDark} className={classes.image}/>
+                </Grid>
+              </Grid>
+
+              {/* Second Row */}
+              <Grid
+                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                xs={12}
+              >
+                    {transitions.map(({ item, props, key }) =>
+                    <Grid item md={4} xs={12} >
+                      <animated.div key={key} style={props}>
+                        
+                        <CardProject data={item}/>
+    
+                      </animated.div>
+                    </Grid>
+                    )}
+
+
+
+
+              </Grid>
+
+              <AddCard/>
+
+
+
+
+
+            
+
+
+
+
+
+            </Grid>
+
+          </Container>
+
+    
           
-          <Grid
+          {/* <Grid
             container
             direction="row"
             justifyItems="center"
             alignItems="center"
           >
-            {/* logo */}
+            logo
             <Hidden only='md' mdDown>          
               <Grid item md={4} className={classes.rowImageGrid} >
                 <img src={AllProjectLogo} className={classes.image}/>
@@ -124,7 +193,7 @@ export default function DisplayAllProjectsController() {
             </Grid>
 
             
-          </Grid>            
+          </Grid> */}
         </div>
     )
 }

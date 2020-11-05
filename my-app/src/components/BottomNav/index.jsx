@@ -58,7 +58,7 @@ function BottomNavigationbar(props) {
         history.push(`${Paths.PORTFOLIO}/${user.username}`)
         break;
       case "projects":
-        history.push(`${Paths.PROJECT}/${user.username}`)
+        history.push(`${Paths.ALL_PROJECT}`)
         break;
       case "account":
         console.log(`${Paths.EDIT_PORTFOLIO}/${user.username}`)
