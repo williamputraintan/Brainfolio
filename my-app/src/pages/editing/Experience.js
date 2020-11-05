@@ -31,7 +31,7 @@ export default function Experience() {
 
   const initialState={
     type: "Work",
-    companyName:"",
+    name:"",
     title: "",
     description:""
   }
@@ -204,11 +204,11 @@ export default function Experience() {
                             <div className={classes.field}> Company Name *</div>
                             <TextField
                             disabled={formDisable}
-                            name="companyName"
+                            name="name"
                             variant="outlined"
                             required
                             fullWidth
-                            value={fields.companyName}
+                            value={fields.name}
                             placeholder="University of Melbourne"                 
                             autoFocus
                             onChange={onInputChange}    

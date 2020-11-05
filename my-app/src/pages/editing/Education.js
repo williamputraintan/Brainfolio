@@ -83,7 +83,7 @@ export default function Education() {
         setFormDisable(true);
         //when user edits an existing entry
         if(editId!=null){
-          AxiosInstance.put('/edit/education/'+editId,finalFields)
+          AxiosInstance.put('/edit/education/'+editId,finalFields,config)
           .then((res)=> {
             setAlertSuccess(true)
             resetForm()})
@@ -125,6 +125,7 @@ export default function Education() {
       .then(res=> res? 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
+        setOnGoing(res.data.onGoing) &&
         setEndDate(new Date(res.data.endDate)): null)
       .catch(error=>
         console.log(error));

@@ -148,11 +148,16 @@ export default function DoubleTypeInfo(props) {
       setOpen(false);
   }
 
+  function handleDate(date){
+    var formatDate = date.split("T")[0];
+    return formatDate;
+  }
+
   function handleDataValue(key,value,res){
     if(key==="startDate"){
-        return value.substring(3,15);
+        return handleDate(value);
     } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
-        return value.substring(3,15);
+        return handleDate(value);
     } else{
         return value;
     }

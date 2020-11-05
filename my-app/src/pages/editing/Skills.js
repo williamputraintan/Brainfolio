@@ -10,7 +10,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
@@ -34,7 +33,6 @@ export default function Skills(){
     const initialState = {
       category: "Technical",
       name: "",
-      rating:""
     }
 
     const [fields, setFields] = React.useState(initialState);
@@ -52,7 +50,7 @@ export default function Skills(){
     }
     
     function validInputs(){
-      return (fields.name!=="" && fields.rating!=="0")
+      return (fields.name!=="")
     }
 
     function handleSubmit(e){
@@ -109,7 +107,7 @@ export default function Skills(){
 
     function resetForm(){
       setFormDisable(false);
-      setFields({ name:"", rating:0});
+      setFields(initialState);
       setEditId(null);
       setWarning(false);
     }
@@ -192,19 +190,7 @@ export default function Skills(){
                         helperText={(fields.name)!==""?null:"Incomplete entry"}                
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <Box borderColor="transparent">
-                        <Typography component="legend">Rating *</Typography>
-                        <Rating
-                          disabled={formDisable}
-                          name="rating"
-                          value={fields.rating}
-                          onChange={onInputChange}
-                          error = {(fields.rating)===0}  
-                          helperText={(fields.rating)!==0?null:"Incomplete entry"} 
-                        />
-                      </Box>
-                    </Grid>
+                    
                     <Grid style={{marginLeft:'2%'}} >
                         <Button
                         disabled={formDisable}
