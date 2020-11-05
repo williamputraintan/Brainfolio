@@ -69,7 +69,7 @@ export default function Experience() {
   };
 
   function validInputs(){
-    return (fields.type!=="" && fields.name!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
+    return (fields.type!=="" && fields.companyName!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
   }
 
   function handleSubmit(e){
@@ -211,10 +211,9 @@ export default function Experience() {
                             fullWidth
                             value={fields.companyName}
                             placeholder="University of Melbourne"                 
-                            autoFocus
                             onChange={onInputChange}    
-                            error = {(fields.name)===""}  
-                            helperText={(fields.name)!==""?null:"Incomplete entry"}                
+                            error = {(fields.companyName)===""}  
+                            helperText={(fields.companyName)!==""?null:"Incomplete entry"}                
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>

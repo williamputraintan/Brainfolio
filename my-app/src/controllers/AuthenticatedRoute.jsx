@@ -23,6 +23,7 @@ function AuthenticatedRoute() {
         <>
            <Link to="/home/portfolio">Portfolio</Link>
             <Link to={"/home/edit/contact/"+username}>Edit Portfolio</Link>
+            <Redirect from={"/home/edit/"+username} to={"/home/edit/contact/"+username}/>
             <Switch>
               <Route exact path="/home/portfolio" component={Portfolio} />
               <Route path={"/home/edit/:page?/"+username} component={props=><EditingPage {...props}/>}  />

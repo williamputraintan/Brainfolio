@@ -92,9 +92,10 @@ export default function PopupInfo(props) {
   }
 
   function handleDate(date){
-    var formatDate = date.substring(0,10);
+    var formatDate = date.split("T")[0];
     return formatDate;
   }
+  
   function handleValue(key,value,res){
     if(key==="startDate"){
       return handleDate(value);

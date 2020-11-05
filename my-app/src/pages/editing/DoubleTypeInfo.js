@@ -134,7 +134,7 @@ export default function DoubleTypeInfo(props) {
 
   //disregard unwanted props
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="" && key!=="type");
   }
 
   //pass to parent component
@@ -148,11 +148,16 @@ export default function DoubleTypeInfo(props) {
       setOpen(false);
   }
 
+  function handleDate(date){
+    var formatDate = date.split("T")[0];
+    return formatDate;
+  }
+
   function handleDataValue(key,value,res){
     if(key==="startDate"){
-        return value.substring(3,15);
+        return handleDate(value);
     } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
-        return value.substring(3,15);
+        return handleDate(value);
     } else{
         return value;
     }

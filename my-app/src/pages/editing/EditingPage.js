@@ -40,7 +40,9 @@ const pageStyles = makeStyles(() => ({
       },
       [theme.breakpoints.down('xs')]: {
         height:'20vh'
-      }
+      },
+      padding:'2%',
+      color:'white',
     },
     upperWords:{
       height:'68%', 
@@ -49,7 +51,7 @@ const pageStyles = makeStyles(() => ({
     },
     text:{
       textAlign:'center',
-      paddingTop:'5%'
+      paddingTop:'6%'
     },
     title:{
       fontWeight:'900',
@@ -68,7 +70,7 @@ const pageStyles = makeStyles(() => ({
         fontSize:'2vh'
       },
       [theme.breakpoints.down('xs')]: {
-        fontSize:'1.5vh'
+        fontSize:'1.7vh'
       }
     },
     paperContainer:{
@@ -76,7 +78,9 @@ const pageStyles = makeStyles(() => ({
       width:'100%'
     },
     formContainer:{
-      padding:'3%'
+      backgroundColor:'white',
+      padding:'3%',
+      marginBottom:'10%'
     },
     button:{
       backgroundColor:theme.palette.primary.main,
@@ -88,7 +92,12 @@ const pageStyles = makeStyles(() => ({
           backgroundColor: theme.palette.secondary.main,
           color: '#4C516D'
       }
-    } 
+    },
+    borderBot:{
+      borderBottomStyle:'solid',
+      borderBottomColor: "grey",
+      borderBottomWidth:'1px'
+    }
 }));
 
 export default function EditingPage(props){
@@ -184,60 +193,61 @@ export default function EditingPage(props){
           <Paper elevation={5} className={classes.paperContainer}>
             <div> 
               <div className={classes.tabContainer}>
-                <div className={classes.upperWords}>
+                
                     <Trail open={open}>
                       <div className={classes.text}>
                         <Typography className={classes.title} >{title[value]}</Typography>
                         <Typography className={classes.subtitle} >{subtitle[value]} </Typography>
                       </div>
                     </Trail>
-                </div>
-              </div>
-                <div >
-                    <Hidden smDown>
-                        <Paper style={{height:'100%'}}>
-                            <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor="primary"
-                            variant="scrollable"
-                            scrollButtons="auto"
-                            >
-                            <Tab label="Profile" />
-                            <Tab label="Education" />
-                            <Tab label="Experience"/>
-                            <Tab label="Skills" />
-                            <Tab label="Projects"  />
-                            <Tab label="Custom 1" />
-                            <Tab label="Custom 2" />
-                            <Tab label="Overview" />
-                            </Tabs>
-                        </Paper>
-                    </Hidden>
-                    
-                    <Hidden mdUp>
-                        <Button className={classes.button} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
-                            <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[value]}
-                        </Button>
-                        <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleCloseMenu}
-                        >
-                            <MenuItem onClick={()=>menuClick(0)}>Contact</MenuItem>
-                            <MenuItem onClick={()=>menuClick(1)}>Education</MenuItem>
-                            <MenuItem onClick={()=>menuClick(2)}>Experience</MenuItem>
-                            <MenuItem onClick={()=>menuClick(3)}>Skills</MenuItem>
-                            <MenuItem onClick={()=>menuClick(4)}>Projects</MenuItem>
-                            <MenuItem onClick={()=>menuClick(5)}>Custom 1</MenuItem>
-                            <MenuItem onClick={()=>menuClick(6)}>Custom 2</MenuItem>
-                            <MenuItem onClick={()=>menuClick(7)}>Overview</MenuItem>
-                        </Menu>      
-                    </Hidden>
-                    </div>
                   </div>
+      
+              <div>
+                <Hidden smDown>
+                    <Paper style={{height:'100%'}}>
+                        <Tabs
+                        className={classes.borderBot}
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        >
+                        <Tab label="Profile" />
+                        <Tab label="Education" />
+                        <Tab label="Experience"/>
+                        <Tab label="Skills" />
+                        <Tab label="Projects"  />
+                        <Tab label="Custom 1" />
+                        <Tab label="Custom 2" />
+                        <Tab label="Overview" />
+                        </Tabs>
+                    </Paper>
+                </Hidden>
+                    
+                <Hidden mdUp>
+                    <Button className={classes.button} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickMenu}>
+                        <MenuIcon style={{marginRight:'5%'}}/>{tabNameToIndex[value]}
+                    </Button>
+                    <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleCloseMenu}
+                    >
+                        <MenuItem onClick={()=>menuClick(0)}>Contact</MenuItem>
+                        <MenuItem onClick={()=>menuClick(1)}>Education</MenuItem>
+                        <MenuItem onClick={()=>menuClick(2)}>Experience</MenuItem>
+                        <MenuItem onClick={()=>menuClick(3)}>Skills</MenuItem>
+                        <MenuItem onClick={()=>menuClick(4)}>Projects</MenuItem>
+                        <MenuItem onClick={()=>menuClick(5)}>Custom 1</MenuItem>
+                        <MenuItem onClick={()=>menuClick(6)}>Custom 2</MenuItem>
+                        <MenuItem onClick={()=>menuClick(7)}>Overview</MenuItem>
+                    </Menu>      
+                </Hidden>
+              </div>
+            </div>
                 <Trail open={open}>
                   <div className={classes.formContainer}>
                     {value === 0 && <Contact/>}

@@ -83,7 +83,7 @@ export default function Education() {
         setFormDisable(true);
         //when user edits an existing entry
         if(editId!=null){
-          AxiosInstance.put('/edit/education/'+editId,finalFields)
+          AxiosInstance.put('/edit/education/'+editId,finalFields,config)
           .then((res)=> {
             setAlertSuccess(true)
             resetForm()})
@@ -125,6 +125,7 @@ export default function Education() {
       .then(res=> res? 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
+        setOnGoing(res.data.onGoing) &&
         setEndDate(new Date(res.data.endDate)): null)
       .catch(error=>
         console.log(error));
@@ -167,7 +168,6 @@ export default function Education() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}>Degree * </div>
                             <TextField
-                            autoFocus
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"
