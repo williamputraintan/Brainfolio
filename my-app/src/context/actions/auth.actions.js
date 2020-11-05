@@ -1,4 +1,4 @@
-import { USER_LOG_IN, USER_LOG_OFF, SET_USER_LOADING, SET_USER, SET_MODE } from "../reducers/user.reducer";
+import { USER_LOG_IN, USER_LOG_OFF, PERSIST_USER,SET_USER_LOADING, SET_USER, SET_MODE } from "../reducers/user.reducer";
 import AxiosInstance from "../../utils/axios";
 import { history } from '../../utils/BrowserHistory';
 import Paths from "../../utils/path";
@@ -49,8 +49,8 @@ export const getUserFromDb = async (dispatch, idToken) => {
 
 
     dispatch({
-      type:  SET_USER,
-      payload: {user: {...data}, token: idToken}
+      type:  PERSIST_USER,
+      payload: {user: data, token: idToken}
     })  
 
     if(data.username === "" || !data.username){

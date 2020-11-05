@@ -53,6 +53,7 @@ export default function Experience() {
       ...fields,
       [e.target.name]: e.target.value
     })
+    console.log(state);
   }
 
   function handleStartDate(date){

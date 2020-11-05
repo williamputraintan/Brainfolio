@@ -3,6 +3,7 @@ export const USER_LOG_OFF = "USER_LOG_OFF";
 export const SET_USER_LOADING = "SET_USER_LOADING";
 export const SET_USER = "SET_USER";
 export const SET_MODE = "SET_USER";
+export const PERSIST_USER = "PERSIST_USER";
 
 const userReducer = (state, {type, payload}) => {
   switch (type) {
@@ -17,7 +18,9 @@ const userReducer = (state, {type, payload}) => {
     case SET_USER: {
       return { ...state, user: {...state.user, username: payload.username}, token: payload.token };
     }
-
+    case PERSIST_USER: {
+      return { ...state, user: payload.user, token: payload.token }
+    }
     case SET_MODE:
       return { ...state, darkMode: payload };
     default:
