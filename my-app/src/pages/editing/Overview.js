@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +9,6 @@ import {useStyles} from './Styles.js';
 import {profileFields, experienceFields, educationFields, skillsFields, customFields} from './FieldNames.js';
 import OverviewInfo from './OverviewInfo.js';
 
-import { history } from '../../utils/BrowserHistory';
 import AxiosInstance from '../../utils/axios';
 import { UserContext } from '../../context/user.context';
 import { Paper } from '@material-ui/core';
@@ -119,10 +117,10 @@ export default function Overview(){
     }
 
     function noEntry(){
-        return (profileData.length==0 && educationData.length==0 && 
-                workData.length==0 && volunteerData.length==0 && 
-                softSkillData.length==0 && techSkillData.length==0 &&
-                custom1Data.length==0&&custom2Data.length==0)
+        return (profileData.length===0 && educationData.length===0 && 
+                workData.length===0 && volunteerData.length===0 && 
+                softSkillData.length===0 && techSkillData.length===0 &&
+                custom1Data.length===0&&custom2Data.length===0)
     }
 
     useEffect(() => {
@@ -132,6 +130,7 @@ export default function Overview(){
         getExistingSkills();
         getSectionItems();
         getCustom1Sec();
+        console.log(custom1Section);
         getCustom2Sec();
     },[]);
 
@@ -143,39 +142,39 @@ export default function Overview(){
                 <Grid container spacing={3}> 
                     {noEntry()?<Trail open={open}><div className={classes.noEntries}>No entries yet</div></Trail> :null}
                     <List component="list" style={{width:'100%'}}>
-                        <ListItem className={profileData.length==0?classes.overviewNone:null}>
+                        <ListItem className={profileData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Contact Details</Paper>
                                 {/* <OverviewInfo data={profileData} fieldNames={profileFields}/> */}
                             </Grid>
                         </ListItem>               
                         
-                        <ListItem className={educationData.length==0?classes.overviewNone:null}>
+                        <ListItem className={educationData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Education History</Paper>
                                 <OverviewInfo data={educationData} fieldNames={educationFields}/>
                             </Grid>
                         </ListItem>
                     
-                        <ListItem className={workData.length==0 && volunteerData.length==0?classes.overviewNone:null}>
+                        <ListItem className={workData.length===0 && volunteerData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Experiences</Paper>
-                                <div className={workData.length==0?classes.overviewNone:null}>
+                                <div className={workData.length===0?classes.overviewNone:null}>
                                     <div className={classes.fieldSubtitle}> Work Experiences</div>
                                     <OverviewInfo data={workData} fieldNames={experienceFields}/>
                                 </div>
                             </Grid>
                         </ListItem>
-                        <Divider className={workData.length==0?classes.overviewNone:null}/>
+                        <Divider className={workData.length<2?classes.overviewNone:null}/>
                         
-                        <ListItem className={volunteerData.length==0?classes.overviewNone:null}>
+                        <ListItem className={volunteerData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <div className={classes.fieldSubtitle}>Volunteer Experiences</div>
                                 <OverviewInfo data={volunteerData} fieldNames={experienceFields}/>
                             </Grid>
                         </ListItem>
                        
-                        <ListItem className={projectData.length==0?classes.overviewNone:null}>
+                        <ListItem className={projectData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Projects</Paper>
 
@@ -183,10 +182,10 @@ export default function Overview(){
                             </Grid>
                         </ListItem>
  
-                        <ListItem className={softSkillData.length==0 && techSkillData.length==0?classes.overviewNone:null}>
+                        <ListItem className={softSkillData.length===0 && techSkillData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your Skills List</Paper>
-                                <div className={softSkillData.length==0?classes.overviewNone:null}>
+                                <div className={softSkillData.length===0?classes.overviewNone:null}>
                                     <div className={classes.fieldSubtitle}> <tab/> Soft Skills</div>
                                     <OverviewInfo data={softSkillData} fieldNames={skillsFields}/>
                                 </div>
@@ -194,39 +193,27 @@ export default function Overview(){
                         </ListItem>    
                         <Divider className={softSkillData.length<2?classes.overviewNone:null}/>  
 
-                        <ListItem className={techSkillData.length==0?classes.overviewNone:null}>
+                        <ListItem className={techSkillData.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <div className={classes.fieldSubtitle}> <tab/>Technical Skills</div>
                                 <OverviewInfo data={techSkillData} fieldNames={skillsFields}/>
                             </Grid>
                         </ListItem>
                        
-                        <ListItem className={custom1Data.length==0?classes.overviewNone:null}>
+                        <ListItem className={custom1Data.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your {custom1Section? custom1Section : "Custom 1"} Section</Paper>
                                 <OverviewInfo data={custom1Data} fieldNames={customFields}/>
                             </Grid>
                         </ListItem>
 
-                        <ListItem className={custom2Data.length==0?classes.overviewNone:null}>
+                        <ListItem className={custom2Data.length===0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
                                 <Paper className={classes.fieldTitleCont}>Your {custom2Section? custom2Section : "Custom 2"}  Section</Paper>
                                 <OverviewInfo data={custom2Data} fieldNames={customFields}/>
                             </Grid>
                         </ListItem> 
                     </List>
-
-                    <Grid  style={{width:'100%'}}>
-                        <Button
-                        type="submit"
-                        variant="contained"
-                        className={classes.submit}
-                        fullWidth
-                        color='primary'
-                        >
-                            Save my Portfolio
-                        </Button>
-                    </Grid>
                 </Grid>
             </div>
         </Container>

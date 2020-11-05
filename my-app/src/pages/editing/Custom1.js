@@ -20,16 +20,6 @@ export default function Custom1() {
     const config = {
       headers: { Authorization: `Bearer ${state.token}` }
     };
-
-
-    //later use data from database
-    const fakedata=[{
-      sectionTitle: "ho",
-      itemTitle: "ho",
-      itemSubTitle:"ho",
-      customDesc:"ho",
-    }]
-
    
     const initialState = {
       sectionTitle:"",
@@ -171,7 +161,8 @@ export default function Custom1() {
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder={sectionTitleFinal}
+                          placeholder="Section Title"
+                          value={sectionTitleFinal?sectionTitleFinal:null}
                           autoFocus
                           onChange={onInputChange}                  
                           />
