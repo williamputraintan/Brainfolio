@@ -210,7 +210,6 @@ export default function Experience() {
                             fullWidth
                             value={fields.name}
                             placeholder="University of Melbourne"                 
-                            autoFocus
                             onChange={onInputChange}    
                             error = {(fields.name)===""}  
                             helperText={(fields.name)!==""?null:"Incomplete entry"}                

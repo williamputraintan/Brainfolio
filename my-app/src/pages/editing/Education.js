@@ -168,7 +168,6 @@ export default function Education() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}>Degree * </div>
                             <TextField
-                            autoFocus
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"

@@ -181,7 +181,6 @@ export default function Skills(){
                         variant="outlined"
                         fullWidth
                         placeholder="Cooperative Team member"
-                        autoFocus
                         multiline
                         rows={2}
                         value={fields.name}

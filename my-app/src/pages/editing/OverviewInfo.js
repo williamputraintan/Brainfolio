@@ -17,7 +17,6 @@ export default function OverviewInfo(props){
         return (key!=="_id" && key!=="username" && key!=="__v"  && (key!=="sectionTitle" && key!=="type") && key!=="onGoing" && value!=="" && value!==[]);
     }
     
-    
     return (
         <div>
             <List>
