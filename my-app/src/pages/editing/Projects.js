@@ -15,6 +15,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Hidden from '@material-ui/core/Hidden';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -43,6 +45,7 @@ export default function Projects() {
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
+    const [onGoing, setOnGoing] = React.useState(false);
     // const [disableForm, setDisableForm] = React.useState(false)
 
 
@@ -58,7 +61,7 @@ export default function Projects() {
       // description:"",
       // youtubeLink: "",
       contributor:[],
-      projectFileName:[],
+      projectFileName:[]
     })
 
     const config = {
@@ -168,6 +171,10 @@ export default function Projects() {
       }
       return true
     }
+
+    function handleOnGoing(event){
+      setOnGoing(event.target.checked);
+    };
 
     function convertISOtoYMD(isoDate){
       const date = new Date(isoDate)
@@ -321,7 +328,6 @@ export default function Projects() {
                               fullWidth
                               type="date"
                               name="startDate"
-                              // defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
                               value={convertISOtoYMD(fields.startDate)}       
                             />
@@ -339,6 +345,19 @@ export default function Projects() {
                               value={convertISOtoYMD(fields.endDate)}        
                             />
                       </Grid>
+
+                      <Grid item xs={12} sm={12}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={onGoing}
+                                onChange={handleOnGoing}
+                                color="primary"
+                              />
+                            }
+                            label="On Going"
+                          />
+                        </Grid>
                       <Grid item xs={12} sm={12}>  
                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                           Add Contributor
