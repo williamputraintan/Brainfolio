@@ -34,7 +34,7 @@ export default function Skills(){
     const initialState = {
       category: "Technical",
       name: "",
-      rating:""
+      // rating:""
     }
 
     const [fields, setFields] = React.useState(initialState);
@@ -52,7 +52,7 @@ export default function Skills(){
     }
     
     function validInputs(){
-      return (fields.name!=="" && fields.rating!=="0")
+      return (fields.name!=="")
     }
 
     function handleSubmit(e){
@@ -109,7 +109,7 @@ export default function Skills(){
 
     function resetForm(){
       setFormDisable(false);
-      setFields({ name:"", rating:0});
+      // setFields({ name:"", rating:0}); //Temporarly removed
       setEditId(null);
       setWarning(false);
     }
@@ -192,7 +192,8 @@ export default function Skills(){
                         helperText={(fields.name)!==""?null:"Incomplete entry"}                
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+{/* Skills rating temporary removed */}
+                    {/* <Grid item xs={12} sm={12}>
                       <Box borderColor="transparent">
                         <Typography component="legend">Rating *</Typography>
                         <Rating
@@ -204,7 +205,7 @@ export default function Skills(){
                           helperText={(fields.rating)!==0?null:"Incomplete entry"} 
                         />
                       </Box>
-                    </Grid>
+                    </Grid> */}
                     <Grid style={{marginLeft:'2%'}} >
                         <Button
                         disabled={formDisable}
