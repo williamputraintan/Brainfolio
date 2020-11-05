@@ -216,17 +216,6 @@ export default function Overview(){
                         </ListItem> 
                     </List>
 
-                    <Grid  style={{width:'100%'}}>
-                        <Button
-                        type="submit"
-                        variant="contained"
-                        className={classes.submit}
-                        fullWidth
-                        color='primary'
-                        >
-                            Save my Portfolio
-                        </Button>
-                    </Grid>
                 </Grid>
             </div>
         </Container>
