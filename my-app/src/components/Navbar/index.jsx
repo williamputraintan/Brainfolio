@@ -107,8 +107,6 @@ function Navbar(props) {
   if(user.user != null){
      usernamepath = user.user.username;
   }
-  console.log("navbar index")
-  console.log(usernamepath)
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>

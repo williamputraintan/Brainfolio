@@ -17,10 +17,6 @@ function NavbarController(props) {
   const windowWidth = useWindowWidth();
 
   const {state} = React.useContext(UserContext);
-
-  console.log("navbar controller");
-  console.log(state);
-
   return (
     <Suspense fallback={<PageLoader />}>
       {
