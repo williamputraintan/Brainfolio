@@ -134,7 +134,7 @@ export default function DoubleTypeInfo(props) {
 
   //disregard unwanted props
   function checkUnwanted(key, value){
-    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
+    return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="" && key!=="type");
   }
 
   //pass to parent component

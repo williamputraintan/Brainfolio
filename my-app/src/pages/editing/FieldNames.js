@@ -22,7 +22,7 @@ const educationFields = {
 
 const experienceFields={
     "type":"Type",
-    "name":"Company Name",
+    "companyName":"Company Name",
     "title":"Job title",
     "description":"Job Description",
     "startDate":"Start Date",
