@@ -88,11 +88,11 @@ export default function DisplayAllProjectsController() {
           console.log(responseData);
         })
       },[]);
-      const transitions = useTransition(allProjects, item => item.key, {
-      from: { transform: 'translate3d(0,-40px,0)' },
-      enter: { transform: 'translate3d(0,0px,0)' },
-      })
-
+      // const transitions = useTransition(allProjects, item => item.key, {
+      // from: { transform: 'translate3d(0,-40px,0)' },
+      // enter: { transform: 'translate3d(0,0px,0)' },
+      // })
+  
       const listTheme = createMuiTheme({
         overrides: {
           MuiGridListTile: {
@@ -134,7 +134,7 @@ export default function DisplayAllProjectsController() {
               </div>
               <div className={classes.sec2root}>
                 <GridList className={classes.gridList} cols={2.5} style={{height:'auto'}}>
-                  {transitions.map(({ item, props, key }) => (
+                  {allProjects.map((item ) => (
                     <GridListTile style={{height:'250px'}} >
                       <div >
                         <CardProject data={item}/>

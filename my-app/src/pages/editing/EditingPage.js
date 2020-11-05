@@ -166,7 +166,7 @@ export default function EditingPage(props){
     };
 
     function handleChange (event,newValue) {
-        history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);      
+        history.push(`/home/edit/${tabNameToIndex[newValue]}/${username}`);       
         setValue(newValue);
     };
 
