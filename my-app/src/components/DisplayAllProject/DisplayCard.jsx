@@ -7,17 +7,18 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Container } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+
 const useStyles = makeStyles({
-  root: {
-    minHeight: '250px',
-    maxheight: '250px',
+  cardRoot: {
+    height: '250px',
     padding:0,
   },
   media: {
     height: 140,
   },
+  content:{
+    backgroundColor:'white'
+  }
 });
 
 export default function CardProject(props) {
@@ -32,15 +33,14 @@ export default function CardProject(props) {
 
     return (
       
-      <Card className={classes.root}>
+      <Card className={classes.cardRoot}>
         <CardActionArea href={link}>
-          <Container className={classes.root}>
           <CardMedia
             className={classes.media}
             image={img}
             title={data.title}
           />
-          <CardContent>
+          <CardContent className={classes.content} >
             <Typography noWrap gutterBottom variant="h5" component="h2">
               {data.title}
             </Typography>
@@ -48,7 +48,6 @@ export default function CardProject(props) {
               {data.description}
             </Typography>
           </CardContent>
-          </Container>
         </CardActionArea>
       </Card>
     )
