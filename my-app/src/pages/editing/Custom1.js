@@ -75,15 +75,21 @@ export default function Custom1() {
         if(editId!=null){
           AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
           .then((res)=> {
-            setAlertSuccess(true)
-            resetForm()})
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }// when user submits a new entry
         else{
           AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
           .then((res)=> {
-            setAlertSuccess(true)
-            resetForm()})
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }
       

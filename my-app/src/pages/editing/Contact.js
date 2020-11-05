@@ -113,15 +113,18 @@ export default function Contact(props) {
 
       AxiosInstance.post("/edit/profile/save/", formData, config)
       .then((response) => {
-        setAlertSuccess(true)
-        console.log(response)
-        const data = response.data
-        setFields(data)
-        setProfileToDelete([])
-        setBackgroundToDelete([])
-        setButtonClick(true)
-        document.getElementById('profileImage').value = ''
-        document.getElementById('backgroundImage').value = ''
+        if(response.status == 200 || response.status == 201){
+
+          setAlertSuccess(true)
+          console.log(response)
+          const data = response.data
+          setFields(data)
+          setProfileToDelete([])
+          setBackgroundToDelete([])
+          setButtonClick(true)
+          document.getElementById('profileImage').value = ''
+          document.getElementById('backgroundImage').value = ''
+        }
       })
       .catch(err =>{
         console.log(err);

@@ -68,15 +68,21 @@ export default function Skills(){
         if(editId!=null){
           AxiosInstance.put('/edit/skills/'+editId,{...fields},config)
           .then((res)=> {
-            setAlertSuccess(true)
-            resetForm()})
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills',finalFields,config)
           .then((res)=> {
-            setAlertSuccess(true)
-            resetForm()})
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+            })
           .catch(error=>console.log(error));
         }
       }else{

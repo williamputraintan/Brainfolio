@@ -15,6 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardInfo from './CardInfo.js';
 import PopUpInfo from './PopUpInfo';
@@ -43,6 +44,7 @@ export default function Projects() {
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
+    const [isLoading,setIsLoading]= React.useState(false);
     // const [disableForm, setDisableForm] = React.useState(false)
 
 
@@ -91,7 +93,6 @@ export default function Projects() {
         ...fields,
         [e.target.name]: e.target.value
       })
-      console.log(fields);
     }
 
     //inputFileCheck
@@ -158,7 +159,6 @@ export default function Projects() {
       .catch(error=>
         console.log(error))
     }
-
     //Youtube url check
     function isYoutubeUrl (url) {
       let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
@@ -202,18 +202,27 @@ export default function Projects() {
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
       }
+
+      setIsLoading(true);
       //Sending data
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
-        setAlertSuccess(true)
-        console.log(response);
-        const data = response.data
+        if (response.status ==200 || response.status == 201){
+          setAlertSuccess(true)
+          console.log(response);
+          const data = response.data
+          
+          setFields(data)
+          setFilesToDelete([])
+          setFilesToUpload([])
+          setAllContributors(data.contributor)
+          document.getElementById('inputFile').value = ''
+          setIsLoading(false);
+        } else {
+          throw Error
+        }
         
-        setFields(data)
-        setFilesToDelete([])
-        setFilesToUpload([])
-        setAllContributors(data.contributor)
-        document.getElementById('inputFile').value = ''
+
       })
       .catch(err =>{
         console.log(err);
@@ -454,7 +463,7 @@ export default function Projects() {
                   </Grid>
                   <Grid xs={12} sm={12}>
                       <Button
-                      disabled={(!isYoutubeUrl(fields.youtubeLink)) || errorFileMessage}
+                      disabled={(!isYoutubeUrl(fields.youtubeLink)) || errorFileMessage || isLoading}
                       type="submit"
                       variant="contained"
                       className={classes.submit}
@@ -463,6 +472,7 @@ export default function Projects() {
                       onClick={event=>handleFormSubmit(event) }
                       >
                       Save to my Projects
+                      {isLoading?<CircularProgress color="secondary" size={20}/>:null}
                       </Button>
                   </Grid>
                 </form>
