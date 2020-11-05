@@ -166,7 +166,8 @@ export default function Custom2() {
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder={sectionTitleFinal}
+                          placeholder="Section Title"
+                          value={sectionTitleFinal?sectionTitleFinal:null}
                           autoFocus
                           onChange={onInputChange}                  
                           />

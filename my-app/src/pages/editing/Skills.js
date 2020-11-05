@@ -10,8 +10,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -20,7 +18,6 @@ import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {skillsFields} from './FieldNames';
 import SuccessAlert from '../../components/EdittingPage/SuccessAlert'
-import axios from 'axios';
 
 export default function Skills(){
     const {state} = useContext(UserContext);
