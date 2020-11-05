@@ -40,7 +40,7 @@ export default function cardInfo(props){
     }
 
     function handleDate(date){
-        var formatDate = date.substring(0,10);
+        var formatDate = date.split("T")[0];
         return formatDate;
     }
 

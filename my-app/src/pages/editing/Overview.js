@@ -192,7 +192,7 @@ export default function Overview(){
                                 </div>
                             </Grid>
                         </ListItem>    
-                        <Divider className={softSkillData.length==0?classes.overviewNone:null}/>  
+                        <Divider className={softSkillData.length<2?classes.overviewNone:null}/>  
 
                         <ListItem className={techSkillData.length==0?classes.overviewNone:null}>
                             <Grid item xs={12} sm={12}>
