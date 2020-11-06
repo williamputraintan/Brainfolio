@@ -255,7 +255,7 @@ function PortfolioController() {
                   <DescriptionController user={destinationPath}/>
                   <ExperienceController user={destinationPath}/>
                   <EducationController user={destinationPath}/>
-                  {/* <SkillController user={destinationPath}/> */}
+                  <SkillController user={destinationPath}/>
                   <ProjectController user={destinationPath}/>
                   <Custom1Controller user={destinationPath}/>
                   <Custom2Controller user={destinationPath}/>

@@ -52,7 +52,7 @@ const useStyles = makeStyles( theme => ({
 }));
 
 
-const accentColor = "#FDD835";
+const accentColor = "#D2CF37";
 
 function SkillController(props) {
   const classes = useStyles();
