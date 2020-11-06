@@ -2,18 +2,16 @@ import React, { useState, useContext ,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {useTransition, animated} from 'react-spring'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
 import AxiosInstance from '../utils/axios'
-import { StoreContext } from '../context/store.context'
+import { StoreContext } from '../context/store.context';
 import CardProject from '../components/DisplayAllProject/DisplayCard';
 import AddCard from '../components/DisplayAllProject/AddCard';
-
-//Images
-import allProjectDark from '../Assets/images/logo-filled.png';
+import allProjectDark from '../Assets/images/allProjectDark.png';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,12 +22,27 @@ const useStyles = makeStyles((theme) => ({
       minHeight:'100vh'
     },
     image: {
-      width:"400px",
+      [theme.breakpoints.up('sm')]:{
+        width:"400px",
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:"300px",
+      },
+      
     },
     rowImageGrid:{
       display: 'grid',
       alignItems: 'center',
-      justifyItems:'center'
+      justifyItems:'center',
+      [theme.breakpoints.up('sm')]:{
+        width:'40%',
+        height:'100%', 
+        float:'right',
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:'100%',
+        height:'100%', 
+      },
     },
     sec2root: {
       display: 'flex',
@@ -54,14 +67,21 @@ const useStyles = makeStyles((theme) => ({
     titleBar: {
       background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
-    cardRoot: {
-      height: '250px',
-      padding:0,
-    },
     firstRow:{
       height: '55vh', 
       width:'100%', 
       padding:'10%'
+    },
+    allTitle:{
+      [theme.breakpoints.up('sm')]:{
+        width:'50%',
+        height:'100%', 
+        float:'left',
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:'100%',
+        height:'100%', 
+      },
     }
 }));
 
@@ -74,24 +94,39 @@ export default function DisplayAllProjectsController() {
 
     //config header
     const config = {
-        headers: { Authorization: `Bearer ${state.user.token}` }
+        headers: { Authorization: `Bearer ${state.token}` }
     };
 
     const [allProjects, setAllProjects] =  React.useState([]);
 
     useEffect(() => {
-      AxiosInstance.get(
-        "/projects/",
-        config
-        )
-      .then((response) => {
-        const responseData = response?.data;
-        setAllProjects(responseData);
-        console.log("ResponseData", responseData);
-      })
-    },[]);
+        AxiosInstance.get(
+          "/projects/",
+          config
+          )
+        .then((response) => {
+          const responseData = response.data;
+          setAllProjects(responseData);
+          console.log(responseData);
+        })
+      },[]);
+      // const transitions = useTransition(allProjects, item => item.key, {
+      // from: { transform: 'translate3d(0,-40px,0)' },
+      // enter: { transform: 'translate3d(0,0px,0)' },
+      // })
+  
+      const listTheme = createMuiTheme({
+        overrides: {
+          MuiGridListTile: {
+            root: {
+                height:'250px'
+              }
+            },   
+          },
+      });
 
     return (
+      <ThemeProvider theme={listTheme}>
         <div className={classes.root}>
           <Container maxWidth="lg">
             <Grid
@@ -109,13 +144,13 @@ export default function DisplayAllProjectsController() {
                   alignItems="center"
                   xs={12}
                 >
-                  <Grid item xs={6} alignContent='center'>
+                  <Grid item alignContent='center' classes={classes.allTitle}>
                     <Typography variant="h3" gutterBottom className={classes.title}>
                       Your Projects
                     </Typography> 
                   </Grid>
-                  <Grid item xs={6} className={classes.rowImageGrid} >
-                    <img alt="project" src={allProjectDark} className={classes.image}/>
+                  <Grid item className={classes.rowImageGrid} >
+                    <img src={allProjectDark} className={classes.image}/>
                   </Grid>
                 </Grid>
               </div>
@@ -134,5 +169,6 @@ export default function DisplayAllProjectsController() {
             </Grid>
           </Container>
         </div>
+        </ThemeProvider>
     )
 }

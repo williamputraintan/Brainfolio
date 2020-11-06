@@ -1,38 +1,57 @@
-import React , {useContext} from 'react';
+import React,{useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { StoreContext } from '../../context/store.context';
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import {history} from '../../utils/BrowserHistory';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-  root: {
-    width: 345,
+  cardRoot: {
+    height: '300px',
+    padding:0,
   },
   media: {
     height: 140,
   },
+  content:{
+    backgroundColor:'white'
+  }
 });
 
-
-export default function AddCard() {
+export default function CardProject(props) {
     const classes = useStyles();
     const {state} = useContext(StoreContext);
+    const data = props.data;
     const username = state.user?.username
+    const link = "https://brainfolio.herokuapp.com/project/" + data._id
 
-    function handleClick(){
-        history.push(`/home/edit/${username}`)
+    const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
+    
+    function handleClick(){     
+      history.push(`project/${username}/${data._id}`)
     }
 
     return (
-        <div>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
-            {/*USERNAME */}
-            <IconButton onClick={handleClick}>
-                <Icon className="fa fa-plus-circle" style={{ fontSize: 50 }}>add_circle</Icon>
-            </IconButton>
-        
-        </div>
+      
+      <Card className={classes.cardRoot}>
+        <CardActionArea onClick={handleClick}>
+          <CardMedia
+            className={classes.media}
+            image={img}
+            title={data.title}
+          />
+          <CardContent className={classes.content} >
+            <Typography noWrap gutterBottom variant="h5" component="h2">
+              {data.title}
+            </Typography>
+            <Typography noWrap variant="body2" color="textSecondary" component="p">
+              {data.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     )
 }
