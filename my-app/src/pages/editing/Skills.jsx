@@ -10,9 +10,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -20,8 +17,7 @@ import CardInfo from './CardInfo.jsx';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {skillsFields} from './FieldNames';
-
-import axios from 'axios';
+import SuccessAlert from '../../components/EditDialog'
 
 export default function Skills(){
     const {state} = useContext(StoreContext);
@@ -34,7 +30,6 @@ export default function Skills(){
     const initialState = {
       category: "Technical",
       name: "",
-      rating:""
     }
 
     const [fields, setFields] = React.useState(initialState);
@@ -52,7 +47,7 @@ export default function Skills(){
     }
     
     function validInputs(){
-      return (fields.name!=="" && fields.rating!=="0")
+      return (fields.name!=="")
     }
 
     function handleSubmit(e){
@@ -69,12 +64,22 @@ export default function Skills(){
         // when user edits an entry
         if(editId!=null){
           AxiosInstance.put('/edit/skills/'+editId,{...fields},config)
-          .then(res=> res? resetForm() : null)
+          .then((res)=> {
+            if(res.status === 200 || res.status === 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(error=> console.log(error));
         }//when user submits a new entry
         else{
           AxiosInstance.post('/edit/skills',finalFields,config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+            })
           .catch(error=>console.log(error));
         }
       }else{
@@ -105,7 +110,7 @@ export default function Skills(){
 
     function resetForm(){
       setFormDisable(false);
-      setFields({ name:"", rating:0});
+      setFields(initialState);
       setEditId(null);
       setWarning(false);
     }
@@ -131,11 +136,14 @@ export default function Skills(){
     useEffect(() => {
      getExistingSkills();
     },[formDisable,editId]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
-
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown> <CardInfo title={'Soft Skills'} datalist={existingSoft} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden><br/>
               <Hidden mdDown> <CardInfo title={'Technical Skills'} datalist={existingTech} fieldNames={skillsFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
@@ -176,7 +184,6 @@ export default function Skills(){
                         variant="outlined"
                         fullWidth
                         placeholder="Cooperative Team member"
-                        autoFocus
                         multiline
                         rows={2}
                         value={fields.name}
@@ -185,19 +192,7 @@ export default function Skills(){
                         helperText={(fields.name)!==""?null:"Incomplete entry"}                
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <Box borderColor="transparent">
-                        <Typography component="legend">Rating *</Typography>
-                        <Rating
-                          disabled={formDisable}
-                          name="rating"
-                          value={fields.rating}
-                          onChange={onInputChange}
-                          error = {(fields.rating)===0}  
-                          helperText={(fields.rating)!==0?null:"Incomplete entry"} 
-                        />
-                      </Box>
-                    </Grid>
+                    
                     <Grid style={{marginLeft:'2%'}} >
                         <Button
                         disabled={formDisable}

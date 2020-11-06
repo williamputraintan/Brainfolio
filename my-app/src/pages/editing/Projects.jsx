@@ -15,13 +15,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-import axios from 'axios';
 import AxiosInstance from '../../utils/axios';
-import Axios from 'axios';
+import SuccessAlert from '../../components/EditDialog/'
 
 export default function Projects() {
   
@@ -34,7 +36,6 @@ export default function Projects() {
       "description":"Description",
       "startDate":"Start Date",
       "endDate":"End Date",
-      "title":"Title",
       "isPublic":"Visibility",
       "youtubeLink": "youtubeLink" 
     }
@@ -44,8 +45,13 @@ export default function Projects() {
     const [allProjects, setAllProjects] =  React.useState([]);
     const [filesToUpload, setFilesToUpload] = React.useState([])
     const [filesToDelete, setFilesToDelete] = React.useState([])
-    const [buttonClick, setButtonClick] = React.useState(false)
-    
+    const [isLoading,setIsLoading]= React.useState(false);
+    const [onGoing, setOnGoing] = React.useState(false);
+    // const [disableForm, setDisableForm] = React.useState(false)
+
+
+    const [errorFileMessage, setErrorFileMessage] = React.useState()
+
     // fields form
     const [fields, setFields] = React.useState({
       // _id:"",
@@ -56,27 +62,34 @@ export default function Projects() {
       // description:"",
       // youtubeLink: "",
       contributor:[],
-      projectFileName:[],
+      projectFileName:[]
     })
 
     const config = {
       headers: { Authorization: `Bearer ${state.user.token}` }
     };
 
+    //Getting All project Data
     useEffect(() => {
       AxiosInstance.get(
         "/projects/",
         config
         )
       .then((response) => {
-        console.log(state.user.token);
         const responseData = response.data;
-        // setAllProjects(responseData);
-        setButtonClick(false)
+        console.log(responseData)
+        setAllProjects(responseData);
       })
-    },[buttonClick]);
-
-
+    },[isLoading]);
+    function deleteProject(projectId){
+      AxiosInstance.delete(
+        '/projects/' + projectId,
+        config
+      ).then((response) =>{
+        setAllProjects(allProjects.filter(function(value, index, arr){ return value._id !== response._id;}));
+      })
+    }
+    //Change input    
     function onFormInputChange(e){
       setFields({
         ...fields,
@@ -84,32 +97,55 @@ export default function Projects() {
       })
     }
 
-    function isFileAlreadyExist(fileArray){
-      for(let eachFile of fileArray){
+    //inputFileCheck
+    function isFileAlreadyExist(fileObjArray){
+      for(let eachObjFile of fileObjArray){
         for(let currFile of fields.projectFileName){
-          console.log(eachFile.name);
-          console.log(currFile[0]);
-          if(eachFile.name == currFile[0]){
-            
-            console.log('eachFile =' , eachFile);
-            console.log('currFile = ', currFile[0]);
-            return false;
+          if(eachObjFile.name == currFile.name){ 
+            return true;
           }
+        }
+      }
+      return false;
+    }
+    //Filename Extension check
+    function fileExtensionCheck(fileObjArray){
+      for(let eachObjFile of fileObjArray){
+        if(!eachObjFile.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)){
+          return false;
         }
       }
       return true;
     }
 
+    //Handle file input
     function onFileChangeUpload(e){
-      setFilesToUpload(e.target.files)       
-      console.log('filetoupload = ',e.target.files);
+      if(isFileAlreadyExist(e.target.files)){
+        // setDisableForm(false)
+        setErrorFileMessage("File already exist")
+        return false;
+      }
+      if(e.target.files.length > 3){
+        setErrorFileMessage("More than 3 file selected")
+        // setDisableForm(false)
+        return false;
+      }
+      if(!fileExtensionCheck(e.target.files)){
+        // setDisableForm(false)
+        setErrorFileMessage("Only jpg, jpeg, png, gif, pdf is accepted")
+        return false;
+      }
+      setErrorFileMessage()
+      setFilesToUpload(e.target.files)
     }
 
-    function onDeleteFile(e, fileName){
+    //Handle file delete
+    function onDeleteFile(e, fileObj){
+      const fileName = fileObj.name
       e.preventDefault();
       setFilesToDelete(filesToDelete.concat(fileName))
       for(let i in fields.projectFileName){
-        if(fileName.name == fields.projectFileName[i][0]){
+        if(fileName == fields.projectFileName[i].name){
           fields.projectFileName.splice(i,1)
         }
       }
@@ -125,12 +161,23 @@ export default function Projects() {
       .catch(error=>
         console.log(error))
     }
+    //Youtube url check
     function isYoutubeUrl (url) {
+      let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
       if(url){
-        let youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
+        
         return youtubeRegex.test(url)
       }
       return true
+    }
+
+    function handleOnGoing(event){
+      setOnGoing(event.target.checked);
+    };
+
+    function convertISOtoYMD(isoDate){
+      const date = new Date(isoDate)
+      return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
     }
 
     //Save Project Button
@@ -161,18 +208,27 @@ export default function Projects() {
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
       }
+
+      setIsLoading(true);
       //Sending data
       AxiosInstance.post("/projects/save/", formData, config)
       .then((response) => {
-        console.log(response);
-        const data = response.data
+        if (response.status ==200 || response.status == 201){
+          setAlertSuccess(true)
+          console.log(response);
+          const data = response.data
+          
+          setFields(data)
+          setFilesToDelete([])
+          setFilesToUpload([])
+          setAllContributors(data.contributor)
+          document.getElementById('inputFile').value = ''
+          setIsLoading(false);
+        } else {
+          throw Error
+        }
         
-        setFields(data)
-        setFilesToDelete([])
-        setFilesToUpload([])
-        setAllContributors(data.contributor)
-        setButtonClick(true)
-        document.getElementById('inputFile').value = ''
+
       })
       .catch(err =>{
         console.log(err);
@@ -227,20 +283,23 @@ export default function Projects() {
       return result;
     }
 
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
       <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
-            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/> </Hidden>
-            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback}/></Hidden>
+            <Hidden smDown><CardInfo title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback} toDelete={deleteProject}/> </Hidden>
+            <Hidden mdUp><PopUpInfo  title={'Projects'} datalist={allProjects} fieldNames={fieldNames} path={'/projects/'} toEdit={myCallback} toDelete={deleteProject}/></Hidden>
           </Container> 
 
           <Container component="main" maxWidth="lg" className={classes.formContainer}>
               <div className={classes.paper}>
                 <form className={classes.form} noValidate>
                   <Grid container spacing={3}> 
-
                       <Grid item xs={12} sm={12}>
                           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
                             <Select
@@ -277,9 +336,8 @@ export default function Projects() {
                               fullWidth
                               type="date"
                               name="startDate"
-                              defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
-                              value={fields.startDate}        
+                              value={convertISOtoYMD(fields.startDate)}       
                             />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -291,11 +349,23 @@ export default function Projects() {
                               fullWidth
                               type="date"
                               name="endDate"
-                              defaultValue="2019-05-24"
                               onChange={onFormInputChange} 
-                              value={fields.endDate}        
+                              value={convertISOtoYMD(fields.endDate)}        
                             />
                       </Grid>
+
+                      <Grid item xs={12} sm={12}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={onGoing}
+                                onChange={handleOnGoing}
+                                color="primary"
+                              />
+                            }
+                            label="On Going"
+                          />
+                        </Grid>
                       <Grid item xs={12} sm={12}>  
                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                           Add Contributor
@@ -366,15 +436,14 @@ export default function Projects() {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <div>
-                          <TextField 
+                          <input 
                             id="inputFile" 
                             type="file" 
                             multiple 
                             name="files" 
                             onChange={onFileChangeUpload}
-                            error={(!isFileAlreadyExist(filesToUpload))}
-                            helperText={(!isFileAlreadyExist(filesToUpload)) ? "File already exist" : null}
                             />
+                            {errorFileMessage && <Typography color="error">{errorFileMessage}</Typography>}
                         </div>
                         <Card className={classes.cardContributor}>
                           <CardContent>
@@ -384,9 +453,9 @@ export default function Projects() {
 
                               {fields.projectFileName.map((res,index)=>(
                                 <React.Fragment key={index}>
-                                  <a href={res[1]}>{res[0]} </a>
+                                  <a href={res.link} target="_blank">{res.name} </a>
                                   {/* <input type="button" value={res[0]} onClick={onDeleteFile} /> */}
-                                  <button onClick={(e) => onDeleteFile(e, res[0])}>X</button>
+                                  <button onClick={(e) => onDeleteFile(e, res)}>X</button>
                                   {/* <input type="button" onClick={onDeleteFile(res[0])} /> */}
                                   <br/>
                                 </React.Fragment>
@@ -412,7 +481,7 @@ export default function Projects() {
                   </Grid>
                   <Grid xs={12} sm={12}>
                       <Button
-                      disabled={!(isYoutubeUrl(fields.youtubeLink)&&isFileAlreadyExist(filesToUpload))}
+                      disabled={(!isYoutubeUrl(fields.youtubeLink)) || errorFileMessage || isLoading}
                       type="submit"
                       variant="contained"
                       className={classes.submit}
@@ -421,6 +490,7 @@ export default function Projects() {
                       onClick={event=>handleFormSubmit(event) }
                       >
                       Save to my Projects
+                      {isLoading?<CircularProgress color="secondary" size={20}/>:null}
                       </Button>
                   </Grid>
                 </form>

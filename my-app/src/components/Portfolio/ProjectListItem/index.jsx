@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { format, parseISO  } from "date-fns";
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom";
+import {StoreContext} from "../../../context/store.context";
+import Paths from "../../../utils/path";
+
 
 const useStyles = makeStyles( theme => ({
   root:{
@@ -38,6 +41,17 @@ function ProjectListItem(props) {
   const { data } = props;
   const classes = useStyles();
   const history = useHistory();
+  const { pathname } = useLocation();
+
+  const {state} = useContext(StoreContext);
+
+  console.log("_id", data._id);
+  function projectLinkClick(){
+    const username = pathname.split("/")?.pop();
+    if(username){
+      history.push(`${Paths.PROJECT}/${username}/${data._id}`)
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -54,7 +68,7 @@ function ProjectListItem(props) {
         {data.description}
       </Typography>
 
-      <Link className={classes.button} color="primary" onClick={() => history.push()}>Learn More</Link>
+      <Link className={classes.button} color="primary" onClick={projectLinkClick}>Learn More</Link>
     </div>
   )
 }

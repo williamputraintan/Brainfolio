@@ -10,6 +10,7 @@ import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
 import firebase from "../../utils/firebase";
 import {getFirebaseError} from "../../utils/firebaseErrors";
+import SearchBar from "../SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -154,7 +155,9 @@ function Navbar(props) {
             </div>
            
           
+          
           <div className={classes.rightContent}>
+            <SearchBar />
             {
               isLoggedIn? 
               <NavAvatar profile={profileUrl}/>
@@ -169,5 +172,6 @@ function Navbar(props) {
     </div>
   );
 }
+
 
 export default Navbar;

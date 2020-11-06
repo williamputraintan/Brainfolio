@@ -76,14 +76,13 @@ export default function Experience() {
   function handleSubmit(e){
     e.preventDefault();
   
-    let finalFields = {
+    var finalFields = {
       username:state.user.username,
       ...fields,
       startDate:startDate, 
       endDate:endDate, 
       onGoing:onGoing
     }
-    console.log(finalFields)
     if(validInputs()){
       //disable form for request
       setFormDisable(true);
@@ -101,7 +100,7 @@ export default function Experience() {
       else{
         AxiosInstance.post('/edit/experience',finalFields,config)
         .then((res)=> {
-          if(res.status == 200 || res.status == 201){
+          if(res.status === 200 || res.status === 201){
             setAlertSuccess(true)
             resetForm()
           }
