@@ -12,7 +12,7 @@ import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import AxiosInstance  from "../../utils/axios";
 import {customFields} from './FieldNames';
-
+import SuccessAlert from '../../components/EditDialog'
   
 export default function Custom1() {
     const {state} = useContext(StoreContext);
@@ -20,16 +20,6 @@ export default function Custom1() {
     const config = {
       headers: { Authorization: `Bearer ${state.user.token}` }
     };
-
-
-    //later use data from database
-    const fakedata=[{
-      sectionTitle: "ho",
-      itemTitle: "ho",
-      itemSubTitle:"ho",
-      customDesc:"ho",
-    }]
-
    
     const initialState = {
       sectionTitle:"",
@@ -74,12 +64,22 @@ export default function Custom1() {
       setFormDisable(true);
         if(editId!=null){
           AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }// when user submits a new entry
         else{
           AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }
       
@@ -141,12 +141,15 @@ export default function Custom1() {
       getSectionTitle();
       getSectionItems();
     },[formDisable,editId]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
   
     return (
-<div style={{padding:'0 5%'}}>
+      <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             <Hidden mdDown><CardInfo title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
             <Hidden lgUp><PopUpInfo  title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
@@ -164,7 +167,8 @@ export default function Custom1() {
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder={sectionTitleFinal}
+                          placeholder="Section Title"
+                          value={sectionTitleFinal?sectionTitleFinal:null}
                           autoFocus
                           onChange={onInputChange}                  
                           />

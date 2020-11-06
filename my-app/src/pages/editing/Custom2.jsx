@@ -10,9 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-import AxiosInstance  from "../../utils/axios";
+import AxiosInstance  from '../../utils/axios';
 import {customFields} from './FieldNames';
-  
+import SuccessAlert from '../../components/EditDialog'
+
 export default function Custom2() {
     const {state} = useContext(StoreContext);
     const classes = useStyles();
@@ -62,12 +63,22 @@ export default function Custom2() {
       setFormDisable(true);
         if(editId!=null){
           AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }// when user submits a new entry
         else{
           AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
-          .then(res=>resetForm())
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(err=> console.log(err));
         }
       
@@ -129,12 +140,15 @@ export default function Custom2() {
       getSectionTitle();
       getSectionItems();
     },[formDisable,editId]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
   
     return (
-<div style={{padding:'0 5%'}}>
+      <div style={{padding:'0 5%'}}>
         <Container component="main" maxWidth="lg">
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             <Hidden mdDown><CardInfo title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
             <Hidden lgUp><PopUpInfo  title={sectionTitleFinal? sectionTitleFinal + " Section": "Custom Section"} datalist={existingData} fieldNames={customFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
@@ -152,7 +166,8 @@ export default function Custom2() {
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder={sectionTitleFinal}
+                          placeholder="Section Title"
+                          value={sectionTitleFinal?sectionTitleFinal:null}
                           autoFocus
                           onChange={onInputChange}                  
                           />

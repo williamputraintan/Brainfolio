@@ -33,7 +33,6 @@ const indexToTabName = {
   4: "projects",
   5: "custom1",
   6: "custom2",
-  7: "overview"
 };
 
 const tabNames = Object.values(indexToTabName);
