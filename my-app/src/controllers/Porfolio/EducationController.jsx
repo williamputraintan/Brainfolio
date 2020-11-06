@@ -12,7 +12,7 @@ import SkeletonCard from "../../common/SkeletonCard";
 import useEducationAPI from "../../hooks/portfolio/useEducationAPI";
 
 
-const accentColor =  "#8E44AD";
+const accentColor =  "#FFBE33";
 
 
 const useStyles = makeStyles( theme => ({
@@ -59,6 +59,12 @@ function EducationController(props) {
 
   console.log(error)
 
+  if ((data.length) < 1) {
+    return (
+      <>
+      </>
+    )
+  }
 
   return (
  

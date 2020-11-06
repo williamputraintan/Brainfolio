@@ -23,7 +23,7 @@ const useStyles = makeStyles( theme => ({
 
 
 
-const accentColor =  "#1e88e5";
+const accentColor =  "#FA8135";
 
 
 
@@ -57,6 +57,13 @@ function ExperienceController(props) {
       );
     };
   },[user])
+
+  if ((experience.length) < 1) {
+    return (
+      <>
+      </>
+    )
+  }
 
   return (
       

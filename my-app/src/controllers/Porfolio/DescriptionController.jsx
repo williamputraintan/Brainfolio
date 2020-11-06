@@ -36,6 +36,13 @@ function DescriptionController() {
 
   const [description, setDescription] = useState("Lorem ipsum dolor amet")
 
+  if ((description.length) < 1) {
+    return (
+      <>
+      </>
+    )
+  }
+
   return (
     <div>
       <CardAccent className={classes.root} color={accentColor}>

@@ -32,7 +32,7 @@ function ProjectController(props) {
 
   const { user } = props;
 
-
+  console.log("PROJECT COMP USER:" , user)
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
 
@@ -48,7 +48,7 @@ function ProjectController(props) {
         // setProjects(data);
         const data = response?.data;
         if(data) setProjects(data);
-        console.log(response)
+        console.log("RESPOTNSE: ", response)
       })
     
     setLoading(false);
@@ -58,6 +58,13 @@ function ProjectController(props) {
       );
     };
   },[user])
+  
+  if ((projects.length) < 1) {
+    return (
+      <>
+      </>
+    )
+  }
 
   return (
     <CardAccent className={classes.root} color={accentColor}>
