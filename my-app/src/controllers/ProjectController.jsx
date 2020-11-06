@@ -5,6 +5,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
 import {useParams} from "react-router";
+import { format, parseISO  } from "date-fns";
+
 
 // Dark Mode imports
 import DarkTheme from "../utils/theme/DarkTheme";
@@ -173,6 +175,19 @@ function ProjectController() {
       )
     }
   }
+
+  function showDate(data) {
+    if (data.startDate && data.endDate) {
+      return (
+        <Typography variant="h5" align="Left"> 
+        {format(parseISO(data.startDate), "MMMM yy")} 
+        &nbsp;&nbsp; - &nbsp;&nbsp; 
+        {format(parseISO(data.endDate), "MMMM yy")}
+        </Typography>
+      )
+    }
+    return (<></>)
+  }
   return (
       <Suspense fallback={SkeletonCard}>
         <div className={classes.root}>
@@ -186,12 +201,7 @@ function ProjectController() {
                     <Typography variant="h3" align="Left">
                       <b>{project.title}</b>
                     </Typography>
-                    <Typography variant="h5" align="Left"> 
-                    {/* {format(parseISO(data.startDate), "MMMM yy")} 
-                    &nbsp;&nbsp; - &nbsp;&nbsp; 
-                    {format(parseISO(data.endDate), "MMMM yy")} */}
-                      {/* {project.startDate} - {project.endDate} */}
-                    </Typography>
+                    {showDate(project)}
                   </Grid>
                   
                   <Grid container item xs={12} sm={12} md={12}
