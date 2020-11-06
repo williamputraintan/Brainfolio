@@ -15,8 +15,6 @@ const useCheckUsername = (path,body) => {
     setError(false);
     setLoading(false);
     const source = Axios.CancelToken.source();
-    
-    console.log(data)
 
     if(body?.length > 5 ){
       setLoading(true);
