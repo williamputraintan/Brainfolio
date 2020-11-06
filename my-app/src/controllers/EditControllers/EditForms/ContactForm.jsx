@@ -26,9 +26,11 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ImageIcon from '@material-ui/icons/Image';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
+import Axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,9 +39,15 @@ const useStyles = makeStyles((theme) => ({
   },
   formContainer: {
     margin: 0,
+    margin:"auto",
     padding: `${theme.spacing(1)}px 0`
   },
   formRow: {
+    [theme.breakpoints.down('sm')]:{
+      '& > div':{
+        marginBottom: theme.spacing(2)
+      }
+    },
     [theme.breakpoints.up('sm')]:{
       '& > div':{
         paddingRight: theme.spacing(3),
@@ -62,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     textTransform: "Capitalize",
     marginBottom: theme.spacing(1)
+  },
+  tick:{
+    color: "#2AE502"
   }
 }));
 
@@ -71,17 +82,21 @@ const useStyles = makeStyles((theme) => ({
 const initialState = {
   title: "",
   fullname: "",
-  email:"",
+  displayEmail:"",
   phone:"",
   address:"",
-  relevantLink: "",
+  github:"",
   linkedIn:"",
-  description: "",
-  profileImage: null,
-  backgroundImage: null,
+  profileImage: "",
+  backgroundImage: "",
   isPublic: true,
-  isDarkMode: true
+  isDarkMode: true,
+  backgroundFile: null,
+  avatarFile: null
 }; 
+
+
+const getLastPath = (path) => path.split("/").slice(-1);
 
 
 // TODO: Validation and Hooks
@@ -93,14 +108,56 @@ function ContactForm() {
   const { register, errors, handleSubmit } = useForm();
 
 
+
   React.useEffect(() => {
+    const source = Axios.CancelToken.source();
+    console.log(state.user)
     setFields({
       ...fields,
-      isDarkMode: state.user.darkMode
+      isDarkMode: state.user.darkMode,
+      displayEmail: state.user.profile.email || state.user.email,
+      title: state.user.profile.title || "",
+      fullname: state.user.profile.fullname || "",
+      address: state.user.profile.address || "",
+      phone: state.user.profile.phone || "",
+      github: state.user.profile.github || "",
+      linkedIn: state.user.profile.linkedIn || "",
+      profileImage: state.user.profile.profileImage || "",
+      backgroundImage: state.user.profile.backgroundImage || "",
+      description: state.user.profile.description || ""
     })
-  },[])
+    return () => {
+      source.cancel(
+        "Canceled because of component unmounted"
+      );
+    };  
+  },[state.user])
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = () => {
+    const idToken = state.user.token;
+    const formData = new FormData();
+    
+    for(const [key,value] of Object.entries(fields)){
+      formData.append(key,value)
+    }
+
+    Axios
+      .post("https://testdockerprod123.herokuapp.com/v2/edit/profile/save",
+      formData,
+        {
+          headers:{
+            'Content-Type':'multipart/form-data',
+            'Authorization': `Bearer ${idToken}`
+          }
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+  }
 
   function onInputChange(e){
     setFields({
@@ -119,24 +176,23 @@ function ContactForm() {
   
   function onAvatarUpload(e){
     e.preventDefault();
-    console.log(e.target.files[0])
+    console.log("Avatar", e.target.files[0])
     setFields({
       ...fields,
-      profileImage: e.target.files[0]
+      avatarFile: e.target.files[0]
     })
   }
 
   
   function onBackgroundUpload(e){
     e.preventDefault();
-    console.log(e.target.files[0])
+    console.log("Background",e.target.files[0])
     setFields({
       ...fields,
-      backgroundImage: e.target.files[0]
+      backgroundFile: e.target.files[0]
     }) 
   }
 
-  console.log(errors)
   return (
 
       <Container className={classes.formContainer} maxWidth="sm">
@@ -147,7 +203,7 @@ function ContactForm() {
                 className={classes.switchLabel}
                 control={
                   <Switch
-                    checked={fields.isDarkMode}
+                    checked={fields.isDarkMode || false}
                     onChange={onCheckedChange}
                     name="isDarkMode"
                     color="primary"
@@ -163,20 +219,19 @@ function ContactForm() {
                 className={classes.switchLabel}
                 control={
                   <Switch
-                    checked={fields.isPublic}
+                    checked={fields.isPublic || false}
                     onChange={onCheckedChange}
                     name="isPublic"
                     color="primary"
-                    
                   />
                 }
                 labelPlacement="start"
-                label="Visibility"
+                label="Public"
               />
           </Grid>
 
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
 
 
             <TextField
@@ -196,13 +251,13 @@ function ContactForm() {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               inputRef={register({pattern: "^[a-zA-Z]+$"})}
               helperText={errors.fullname && "Fullname invalid"}
               label="Full Name"
               fullWidth
-              value={fields.fullName}
+              value={fields.fullname}
               id="filled-fullname"
               variant="filled"
               placeholder="John Doe"
@@ -216,14 +271,14 @@ function ContactForm() {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              label="Email"
-              value={fields.email}
-              id="filled-email"
+              label="Display Email"
+              value={fields.displayEmail}
+              id="filled-displayEmail"
               variant="filled"
               placeholder="John.doe@email.com"
-              name="email"
+              name="displayEmail"
               fullWidth
               InputProps={{
                 startAdornment: <InputAdornment position="start">
@@ -235,12 +290,12 @@ function ContactForm() {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               inputRef={register({pattern: "^[+0-9]*$"})}
               label="Phone"
               fullWidth
-              value={fields.fullName}
+              value={fields.phone}
               id="filled-phone"
               variant="filled"
               placeholder="(61) 400123123"
@@ -254,7 +309,7 @@ function ContactForm() {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Github"
               value={fields.github}
@@ -272,14 +327,14 @@ function ContactForm() {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="LinkedIn"
               value={fields.linkedIn}
               id="filled-linkedIn"
               variant="filled"
               placeholder="www.linkedin.com/johndoe"
-              name="linkedin"
+              name="linkedIn"
               fullWidth
               InputProps={{
                 startAdornment: <InputAdornment position="start">
@@ -311,7 +366,7 @@ function ContactForm() {
           <Grid item xs={12}>
             <TextField
               label="Description"
-              value={fields.address}
+              value={fields.description}
               id="filled-address"
               variant="filled"
               name="description"
@@ -323,7 +378,7 @@ function ContactForm() {
             />
           </Grid>
           
-          <Grid item xs={6} className={classes.column}>
+          <Grid item xs={12} sm={6} className={classes.column}>
             <>
               <input
                 accept="image/*"
@@ -341,26 +396,27 @@ function ContactForm() {
                   variant="outlined"
                   component="span" 
                   color="primary" 
+                  endIcon={fields.avatarFile && <DoneAllIcon className={classes.tick} />}
                   className={classes.uploadBtn}>
                   Upload Profile Image
                 </Button>
               </label>      
             </>
             {
-                fields.profileImage?.name &&
-                    <Chip
-                      className={classes.chip}
-                      label={fields.profileImage?.name}
-                      clickable
-                      color="primary"
-                      onDelete={() => {setFields({...fields, profileImage: null})}}
+              fields.profileImage &&
+                <Chip
+                  className={classes.chip}
+                  label={getLastPath(fields.profileImage)}
+                  clickable
+                  color="primary"
+                  onDelete={() => {setFields({...fields, avatarFile: null, profileImage: ""})}}
               />
 
               }
            
           </Grid>
 
-          <Grid item xs={6} className={classes.column}>
+          <Grid item xs={12} sm={6} className={classes.column}>
           <>
               <input
                 accept="image/*"
@@ -377,20 +433,21 @@ function ContactForm() {
                   component="span" 
                   variant="outlined"
                   fullWidth
+                  endIcon={fields.backgroundFile && <DoneAllIcon className={classes.tick} />}
                   color="primary" className={classes.uploadBtn}>
                   Upload Background Image
                 </Button>
               </label>      
 
               {
-                fields.backgroundImage?.name &&
+                fields.backgroundImage &&
                     <Chip
                       className={classes.chip}
-                      label={fields.backgroundImage?.name}
+                      label={getLastPath(fields.backgroundImage)}
                       clickable
                       color="primary"
-                      onDelete={() => {setFields({...fields, backgroundImage: null})}}
-              />
+                      onDelete={() => {setFields({...fields, backgroundImage: "", backgroundFile:null})}}
+                />
 
               }
             </>

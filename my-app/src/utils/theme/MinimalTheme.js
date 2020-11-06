@@ -48,6 +48,12 @@ const theme = createMuiTheme({
         backgroundColor: "#1D3B64"
       }
     },
+    MuiGridListTile: {
+      root: {
+        height:'250px'
+      }
+    },   
+    
   },
   typography: {
     fontFamily: [

@@ -72,9 +72,8 @@ export const persistUser = async (dispatch, user) =>{
   }
   catch(e){
     const message = getFirebaseError(e.code);
-    console.log("e")
-    setMessage(dispatch,message);
     setUserLoading(dispatch, false);
+    alert(message);
   }
   
 }
@@ -153,11 +152,17 @@ export const signInUser = async (dispatch, email, password) => {
         .catch(err => {
           console.log(err)
           const message = getFirebaseError(err.code);
-          setMessage(dispatch,message);
           setUserLoading(dispatch, false);
+          alert(message);
         })
     })
 }
+
+export const signUpSSO = async (dispatch) =>{
+  const idToken = await firebase.auth().currentUser.getIdToken(true);
+  await getUserFromDb(dispatch, idToken);
+  history.push(Paths.SIGN_UP_2);
+} 
 
 export const signUpUser = async (dispatch, email, password) => {
   try{
@@ -167,14 +172,15 @@ export const signUpUser = async (dispatch, email, password) => {
       console.log(idToken);
       await getUserFromDb(dispatch, idToken);
     }
-    setMessage(dispatch,"Successfully signed up!");
+    
 
     history.push(Paths.SIGN_UP_2);
   }
   catch(e){
     const message = getFirebaseError(e.code);
-    setMessage(dispatch,message);
     setUserLoading(dispatch, false);
+    alert(message);
+
   }
 }
 

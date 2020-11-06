@@ -43,9 +43,9 @@ function EducationListItem(props) {
         </Typography>
 
         <Typography className={classes.subTitle} variant="body1" gutterBottom>
-            {format(parseISO(data.startDate), "MMMM yy")} 
+            {/* {format(parseISO(data.startDate), "MMMM yy")} 
             &nbsp;&nbsp; - &nbsp;&nbsp; 
-            {format(parseISO(data.endDate), "MMMM yy")}
+            {format(parseISO(data.endDate), "MMMM yy")} */}
         </Typography>
       </div>
     

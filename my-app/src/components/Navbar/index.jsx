@@ -8,6 +8,8 @@ import Link from '@material-ui/core/Link';
 import logo from "../../Assets/images/logo-transparent.png"
 import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
+import firebase from "../../utils/firebase";
+import {getFirebaseError} from "../../utils/firebaseErrors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +104,20 @@ function Navbar(props) {
   const {state} = props;
   const {isLoggedIn, user} = state;
 
-  React.useEffect(()=> {},[isLoggedIn, user])
+  const [profileUrl,setProfileUrl] = React.useState(null)
+
+  React.useEffect(()=> {
+    const storageRef = firebase.storage().ref()
+    if(user.profile?.profileImage){
+      storageRef.child(user.profile.profileImage)
+      .getDownloadURL()
+      .then(url => setProfileUrl(url))
+      .catch(err => setProfileUrl(null));
+    
+    }
+
+
+  },[isLoggedIn, user])
 
 
   return (
@@ -132,7 +147,7 @@ function Navbar(props) {
                       <Link 
                         component={RouterLink} 
                         activeClassName={classes.activeLink} 
-                        to={`${Paths.EDIT_PORTFOLIO}/${user.username}`}>Customize</Link>
+                        to={`${Paths.EDIT_PORTFOLIO}/${user.username}/contact`}>Customize</Link>
                     </Button>
                   </>
               }
@@ -142,7 +157,7 @@ function Navbar(props) {
           <div className={classes.rightContent}>
             {
               isLoggedIn? 
-              <NavAvatar />
+              <NavAvatar profile={profileUrl}/>
               : <Button>
                   <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
                 </Button>

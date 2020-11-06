@@ -33,13 +33,14 @@ function GoogleButton(props) {
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(function() {
-      var provider = new firebase.auth.GoogleAuthProvider();
+      const provider = new firebase.auth.GoogleAuthProvider();
       return firebase.auth().signInWithRedirect(provider);
     })
     .catch(function(error) {
       // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      
     });
   }
 

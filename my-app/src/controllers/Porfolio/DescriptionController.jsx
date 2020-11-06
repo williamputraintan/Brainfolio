@@ -33,8 +33,8 @@ function DescriptionController() {
   const [description, setDescription] = useState("Lorem ipsum dolor amet")
 
   return (
-    <div>
-      <CardAccent className={classes.root} color={accentColor}>
+    <div id="description">
+      <CardAccent  className={classes.root} color={accentColor}>
           
         <Typography className={classes.title} variant="h4" gutterBottom> Description</Typography>
         <Typography variant="body1">

@@ -5,7 +5,7 @@ import { Switch,  Route,  useHistory, Redirect } from 'react-router-dom';
 import { StoreContext } from '../context/store.context';
 import { setUserLoading, setUser , getUserFromDb} from "../context/actions/auth.actions";
 import LoadingPage from "../common/PageLoading";
-
+import {signUpSSO} from "../context/actions/auth.actions";
 
 //Libraries
 import Paths from "../utils/path";
@@ -26,10 +26,12 @@ function AuthenticationPage() {
 
     firebase.auth().getRedirectResult()
     .then(res => {
-      if(res.user == null){
+      if(res.user != null){
+        signUpSSO(dispatch);
+        setUserLoading(dispatch, false)
+      }else{
         setUserLoading(dispatch, false)
       }
-
     })
   }, [dispatch,history]);
 

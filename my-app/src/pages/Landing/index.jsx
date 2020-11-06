@@ -1,10 +1,12 @@
 import React, {useRef} from 'react';
 import { makeStyles }from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
-import Hero from "./hero";
+import Hero from "./Hero";
 import Steps from "./Steps";
 import Logo from "../../Assets/SVG/Logo.jsx";
-import { motion, useViewportScroll } from "framer-motion"
+import { motion, useViewportScroll } from "framer-motion";
+
+import Team from "./Team";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +38,6 @@ function LandingPage() {
   React.useEffect(() => {
   },[])
 
-
   return (
     <main className={classes.root} ref={ref}>
       <Typography color="primary" component="span" className={classes.copyright}>
@@ -45,7 +46,8 @@ function LandingPage() {
       <Logo className={classes.brand} width={32} height={32}/>
       <Hero scrollY={scrollYProgress}/>
       <Steps />
-      <motion.div className={classes.test} style={{ scaleX: scrollYProgress  }} />
+      <Team />
+      {/* <motion.div className={classes.test} style={{ scaleY: scrollYProgress  }} /> */}
     </main>
   )
 }

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import { StoreContext, } from '../context/store.context';
-import { Switch,Route, Redirect, Link, useHistory } from 'react-router-dom';
+import { Switch,Route, Redirect, useLocation, useHistory } from 'react-router-dom';
 import Paths from "../utils/path";
 
 //Pages
@@ -15,6 +15,7 @@ function AuthenticatedRoute() {
   const {state} = useContext(StoreContext);
   const username = state.user.username;
   const history = useHistory();
+  const {pathname} = useLocation();
 
  
 
@@ -22,22 +23,19 @@ function AuthenticatedRoute() {
     if(state.user.isCompleted === false){
       history.push(Paths.SIGN_UP_2);
     }
-    console.log(state.user)
   },[])
-
- 
     
   return (
     <div>
 
       {
-        state.user ?
+        state.user?.username ?
         <>
             {/* <Redirect from={"/home/edit"+state.user} to={"/home/edit/contact/"+state.user}  /> */}
-
+            { (pathname === Paths.HOME) && <Redirect to={`${Paths.PORTFOLIO}/${state.user.username}`}/> }
             <Switch>
               <Route exact path={`${Paths.PORTFOLIO}/:username`} component={PortfolioPage} />
-              <Route path={`${Paths.EDIT_PORTFOLIO}/:username/`} component={EditPage} />
+              <Route path={`${Paths.EDIT_PORTFOLIO}/:username`} component={EditPage} />
 
             {/* <Switch>
               <Route exact path="/home/portfolio" component={Portfolio} />

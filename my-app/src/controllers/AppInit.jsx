@@ -6,7 +6,7 @@ import { StoreContext } from '../context/store.context';
 
 
 //Pages
-import Page404 from "../common/404";
+
 import NavbarController from "../controllers/NavbarController";
 
 
@@ -20,7 +20,8 @@ import Paths from "../utils/path";
 const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
-const LandingPage = React.lazy(() => import('../pages/LandingPage.jsx'));
+const EditingPage = React.lazy(() => import('../pages/EditPage.jsx'));
+const AllProjectPage = React.lazy(() => import('../pages/AllProjectPage.jsx'));
 
 
 
@@ -58,14 +59,13 @@ function AppLoader(props) {
 
 
   return (
-
       <section className={classes.root}>
         <NavbarController />
             <Switch>
               <Route path={Paths.HOME}component={AuthenticatedRoute} />
-              <Route path={Paths.PROJECT} component={ProjectPage}/>
-              <Route exact path="/404" component={Page404}/>
-                
+              <Route path={Paths.PROJECT} component={AllProjectPage}/>
+              <Route path={Paths.EDIT_PORTFOLIO} component={EditingPage}/>
+              {/* <Route path="/allproject" component={AllProjectPage}/> */}
             </Switch>
       </section>
 

@@ -12,7 +12,8 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
 
-import axios from 'axios'
+import axios from 'axios';
+import AxiosInstance from "../utils/axios";
 
 import SkeletonCard from "../common/SkeletonCard";
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -29,11 +30,10 @@ const ProjectController = React.lazy(() => import('./Porfolio/ProjectController'
 const SkillController = React.lazy(() => import('./Porfolio/SkillController'));
 
 
+
 // images
 const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
 const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
-
-
 
 
 
@@ -63,21 +63,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize:" cover",
     backgroundBlendMode: "overlay",
-    backgroundColor: theme.palette.text.divider,
+    backgroundColor: "#343434",
     width:"100%",
     display: "flex",
     
     alignItems: "center",
-    padding: theme.spacing(8),
+   
   
     [theme.breakpoints.down('sm')]: {
       minHeight:"50vh",  
       justifyContent: "center",
+      padding: `${theme.spacing(2)}px 0px`,
   
     },
     [theme.breakpoints.up('sm')]: {
       minHeight: 240,
       justifyContent: "flex-start",
+      padding: theme.spacing(8),
     }
   },
   name: {
@@ -93,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary
   },
   textWrapper:{
+    [theme.breakpoints.up('xs')]: {
+      margin: "auto",
+      width: "auto!important",
+    },
     [theme.breakpoints.down('sm')]: {
       width: 256,
       margin: "auto"
@@ -160,28 +166,34 @@ function PortfolioController() {
     const source = axios.CancelToken.source();
    
 
-    // AxiosInstance
-    //   .get(`/public/profile/${lastPath}`)
-    //   .then(response => {
-    //     const data = response?.data;
-    //     if(data){
-    //       setProfile({
-    //         username: data?.username,
-    //         title: data?.title,
-    //         address: data?.address,
-    //         phone:data?.phone,
-    //         email:data?.email,
-    //         linkedIn: data?.linkedIn,
-    //         backgroundImageName: data?.backgroundImageName,
-    //         profileImageName: data?.profileImageName
-    //       })
-    //     }
+    AxiosInstance
+      .get(`/public/profile/${lastPath}`)
+      .then(response => {
+        const data = response?.data;
+        const user = response?.data.user;
+        const profileData = response?.data.user.profile;
+
+        if(data){
+          setProfile({
+            username: user.username,
+            filename: profileData.fullname,
+            title: profileData.title,
+            address: profileData.address,
+            phone: profileData.phone,
+            email: profileData.displayEmail,
+            linkedIn: profileData.linkedIn,
+            github: profileData.github,
+            description: profileData.description,
+            backgroundImageLink:response?.data.backgroundImageLink,
+            profileImageLink: response?.data.profileImageLink
+          })
+        }
         
 
-    //     if(backgroundRef.current){
-    //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
-    //     }
-    //   })
+        if(backgroundRef.current){
+          backgroundRef.current.style.backgroundImage = `url(${response?.data.backgroundImageLink})`;
+        }
+      })
     
     return () => {
       source.cancel(
@@ -202,7 +214,7 @@ function PortfolioController() {
               container item xs={12} 
               className={classes.headerBackground}>
               <Grid container item xs ={12} sm={4} justify="center">
-                <Avatar src={img || profile.backgroundImage} className = {classes.large}/>
+                <Avatar src={profile.profileImageLink || img } className = {classes.large}/>
               </Grid>
               <Grid container item xs={12} sm={8} justify="flex-start">
                 <div className={classes.textWrapper}>
@@ -229,11 +241,11 @@ function PortfolioController() {
               {matches && <SectionMenu />}
               <section className={classes.portfolioItems}>
                 <Container maxWidth="lg">
-                  <DescriptionController user={lastPath}/>
-                  {/* <ExperienceController user={lastPath}/> */}
+                  <DescriptionController  user={lastPath}/>
+                  <ExperienceController user={lastPath}/>
                   <EducationController user={lastPath}/>
-                  {/* <SkillController user={lastPath}/>
-                  <ProjectController user={lastPath}/> */}
+                  <SkillController user={lastPath}/>
+                  <ProjectController user={lastPath}/>
                 </Container>
               </section>
             </Grid>

@@ -1,9 +1,10 @@
-import React, {useRef, useState, Suspense} from 'react'
+import React, {useRef, useContext, useState, Suspense} from 'react'
 import {Grid ,Avatar, Button} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
+import {useParams} from "react-router";
 
 // Dark Mode imports
 import DarkTheme from "../utils/theme/DarkTheme";
@@ -12,7 +13,7 @@ import { makeStyles ,createMuiTheme, ThemeProvider} from '@material-ui/core/styl
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 import { borders } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
 
@@ -22,7 +23,7 @@ import Link from '@material-ui/core/Link';
 import axios from 'axios'
 
 import SkeletonCard from "../common/SkeletonCard";
-
+import { StoreContext } from '../context/store.context';
 
 
 //Lazy - Load components
@@ -34,40 +35,52 @@ const VideoController = React.lazy(() => import('./Project/VideoController.jsx')
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColor: theme.palette.background,
     [theme.breakpoints.up('sm')]: {
       minHeight: "100vh",
     }
   },
   author:{
-    backgroundColor: "#3368B6",
-    color: "white",
+    // backgroundColor: theme.palette.bacgroundAccent,
+    // backgroundColor: "white",
+    color: theme.palette.text.primary,
     width:"100%",
     padding: theme.spacing(3,0,3)
     // borderRadius: 3
   },
+  background: {
+    // backgroundColor: "#303030"
+  },
   description: {
-    backgroundColor: "#3368B6",
-    color: "white",
+    backgroundColor: theme.palette.bacgroundAccent,
+    color: theme.palette.text.secondary,
     width:"100%",
-    padding: theme.spacing(1,4,3),
+    padding: theme.spacing(4,4,0),
     // borderRadius: 3
   },
   title:{
-    backgroundColor: "#174BA8",
+    backgroundColor: theme.palette.titleBgAccent,
+    color: theme.palette.text.primary,
+    // opacity: "70%",
+    // transparancy: "90%",
     width:"100%",
-    padding: theme.spacing(3,4,3)
+    padding: theme.spacing(4,4,4),
+    margin: theme.spacing(4,0,0),
+    [theme.breakpoints.down('xs')]:{
+      margin: theme.spacing(3,0,0)
+    }
   },
   files:{
-    backgroundColor: "#7AA6D2",
+    backgroundColor: theme.palette.bacgroundAccent,
+    color: theme.palette.text.primary,
     width:"100%",
-    padding: theme.spacing(3,4,3),
-    // borderRadius: 3
+    padding: theme.spacing(3,5,5),
   },
   video:{
-    backgroundColor: "#95BEDD",
+    backgroundColor: theme.palette.bacgroundAccent,
+    color: theme.palette.text.primary,
     width:"100%",
     padding: theme.spacing(3,0,3),
-    // borderRadius: 3
   },
   pad: {
     padding: theme.spacing(3,4,3),
@@ -77,10 +90,18 @@ const useStyles = makeStyles((theme) => ({
 function ProjectController() {
 
   const classes = useStyles();
+  const {state} = useContext(StoreContext);
+
+  //config header
+  // const config = {
+  //     headers: { Authorization: `Bearer ${state.token}` }
+  // };
 
   const { pathname } = useLocation();
-  console.log("Pathname "+ pathname);
+
   const theme = useTheme();
+  
+
   const [project,setProject] = useState({
     contributor: [],
     projectFileName: [],
@@ -100,7 +121,9 @@ function ProjectController() {
     const source = axios.CancelToken.source();
    
     AxiosInstance
-      .get(`/public${pathname}`)
+      // .get(`/public${pathname}`,config)
+      .get(/public/+pathname.slice(1,))
+      // .get(/public/+"project/franklind/5fa007f33f1365000329f3e6")
       .then(response => {
         const data = response?.data;
         if(data){
@@ -126,7 +149,6 @@ function ProjectController() {
     //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
     //     }
       })
-    
     return () => {
       source.cancel(
         "Canceled because of component unmounted"
@@ -135,9 +157,9 @@ function ProjectController() {
   },[])
 
   // console.log(project);
-  console.log(project);
+  // console.log(project);
   // console.log(project.projectFileName)
-  // Use ThemeProvider and CSSbaseline for darkmode
+
   function showVideo(url){
     if (url) {
       return (
@@ -151,18 +173,21 @@ function ProjectController() {
   return (
       <Suspense fallback={SkeletonCard}>
         <div className={classes.root}>
-          <Paper>
-            <Container maxWidth="md" >
+            <Container maxWidth="lg" >
               <Grid container >
                 <Grid container>
+                  {/* title */}
                   <Grid item xs={12} sm={12}
                     className={classes.title}
                   >
                     <Typography variant="h3" align="Left">
-                      {project.title}
+                      <b>{project.title}</b>
                     </Typography>
                     <Typography variant="h5" align="Left"> 
-                      {project.startDate} - {project.endDate}
+                    {/* {format(parseISO(data.startDate), "MMMM yy")} 
+                    &nbsp;&nbsp; - &nbsp;&nbsp; 
+                    {format(parseISO(data.endDate), "MMMM yy")} */}
+                      {/* {project.startDate} - {project.endDate} */}
                     </Typography>
                   </Grid>
                   
@@ -170,25 +195,26 @@ function ProjectController() {
                     className = {classes.description}
                   >
                     <DescriptionController data={project.description}/>   
-                  </Grid>
+                  
                     
                     {showVideo(project.youtubeLink)}
 
-                    <Grid container item xs={12} sm={12} md={12}
-                     className = {classes.author}
-                    >
-                      <AuthorController data={project.contributor}/>
-                    </Grid>
+                  </Grid>
+                </Grid>
 
-                    <Grid container item xs={12}
-                    className={classes.files}
-                    >
-                      <FileController data={project.projectFileName}/>
-                    </Grid>
+                <Grid container item xs={12} sm={12} md={12}
+                  className = {classes.author}
+                >
+                  <AuthorController data={project.contributor}/>
+                </Grid>
+
+                <Grid container item xs={12}
+                className={classes.files}
+                >
+                  <FileController data={project.projectFileName}/>
                 </Grid>
               </Grid>
             </Container>
-        </Paper>
 
         </div>
         

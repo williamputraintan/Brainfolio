@@ -53,10 +53,7 @@ const indexToTabName = {
   1: "education",
   2: "experience",
   3: "skills",
-  4: "projects",
-  5: "custom1",
-  6: "custom2",
-  7: "overview"
+  4: "projects"
 };
 
 const tabNames = Object.values(indexToTabName);
@@ -68,7 +65,6 @@ function EditMobile(props) {
 
   const navigateToPage = (e, item) => {
     history.push(`${location.pathname}/${item}`)
-
   }
 
   return (
@@ -106,7 +102,7 @@ function EditMobile(props) {
             }
           </Grid>
         </Paper>
-        <Route exact path="/home/edit/:username/:page" component={SlideLayout}/>
+        <Route exact path="/app/home/edit/:username/:page" component={SlideLayout}/>
       </div>
    
       

@@ -7,9 +7,11 @@ import SchoolIcon from '@material-ui/icons/School';
 import WorkIcon from '@material-ui/icons/Work';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Typography from '@material-ui/core/Typography';
+import { HashLink } from 'react-router-hash-link';
 
 
 import Tooltip from '@material-ui/core/Tooltip';
+import { useLocation } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
 
 function MenuSection() {
   const classes = useStyles();
+  const { pathname } = useLocation();
 
   return (
     <div className={classes.root}>
+
+    <HashLink smooth to={`${pathname}#description`}>
       <Tooltip className={classes.tooltip} title="Description" placement="right" aria-label="Description">
         <IconButton 
           name="Description"
@@ -44,7 +49,10 @@ function MenuSection() {
           <DescriptionIcon />
         </IconButton>
       </Tooltip>
+
+    </HashLink>
     
+    <HashLink smooth to={`${pathname}#experience`}>
       <Tooltip className={classes.tooltip} title="Experience" placement="right" aria-label="Experience">
         <IconButton 
           name="Experience"
@@ -52,7 +60,9 @@ function MenuSection() {
           <WorkIcon />
         </IconButton>
       </Tooltip>
+    </HashLink>
 
+    <HashLink smooth to={`${pathname}#education`}>
       <Tooltip className={classes.tooltip} title="Education" placement="right" aria-label="Education">
         <IconButton 
           name="Education"
@@ -60,7 +70,9 @@ function MenuSection() {
           <SchoolIcon />
         </IconButton>
       </Tooltip>
+    </HashLink>
 
+    <HashLink smooth to={`${pathname}#skill`}>
       <Tooltip className={classes.tooltip} title="Skill" placement="right" aria-label="Skill">
         <IconButton 
           name="Skill"
@@ -68,7 +80,9 @@ function MenuSection() {
           <ExtensionIcon />
         </IconButton>
       </Tooltip>
+    </HashLink>
 
+    <HashLink smooth to={`${pathname}#project`}>
       <Tooltip className={classes.tooltip} title="Project" placement="right" aria-label="Project">
         <IconButton 
           name="Project"
@@ -76,6 +90,7 @@ function MenuSection() {
           <GroupWorkIcon />
         </IconButton>
       </Tooltip>
+    </HashLink>
 
     </div>
      

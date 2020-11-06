@@ -20,8 +20,8 @@ function DescriptionController(props) {
     <div>
       <Grid container className={classes.root}>
           <Grid item xs={12}>
-          <Typography variant="body1">
-            {description}
+          <Typography variant="h6" gutterBottom>
+          <b>{description}</b>
         </Typography>
           </Grid>
       </Grid>

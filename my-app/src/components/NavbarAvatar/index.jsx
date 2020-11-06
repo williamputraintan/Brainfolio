@@ -74,8 +74,10 @@ function NavAvatar(props) {
   const open = Boolean(anchorEl);
 
 
+
   React.useEffect(() => {
     setMode(darkMode)
+    console.log(user.profile.profileImage)
 
     return () =>{
       setAnchorEl(null)
@@ -133,7 +135,7 @@ function NavAvatar(props) {
 
         <Paper className={classes.menuDetails} square>
           <div className={classes.row}>
-            <Avatar alt="Remy Sharp"  className={classes.large} src={user?.profile?.profileImage}/>
+            <Avatar alt={user.username}  className={classes.large} src={props.profile}/>
             <Typography component="div">
               <Typography component="p">
                 { state.user.username || "user"}

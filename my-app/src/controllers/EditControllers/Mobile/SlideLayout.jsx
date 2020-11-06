@@ -8,11 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
-import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
 import SkeletonCard from "../../../common/SkeletonCard";
-import { Route, Switch, withRouter, Redirect } from "react-router";
+import { Route, Switch, useHistory , useLocation } from "react-router";
 
 import Paths from "../../../utils/path";
 
@@ -26,6 +25,7 @@ const Projects = React.lazy(() => import('../../../pages/editing/Projects'));
 const Custom1 = React.lazy(() => import('../../../pages/editing/Custom1'));
 const Custom2 = React.lazy(() => import('../../../pages/editing/Custom2'));
 const Overview = React.lazy(() => import('../../../pages/editing/Overview'));
+const Profile = React.lazy(() => import('../../EditControllers/EditForms/ContactForm'));
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -45,13 +45,32 @@ const useStyles = makeStyles((theme) => ({
       }
     },
   },
+  title: {
+    padding: 0,
+    '& > *':{
+      fontFamily: "heebo, 'sans-serif'",
+      fontWeight: 700,
+      textTransform: "Capitalize",
+    }
+  }
 }));
 
 
 function SlideLayout() {
   const history = useHistory();
   const classes = useStyles();
+  const { pathname } = useLocation();
 
+
+  function moveBack(){
+
+    if(pathname){
+      let basePath = pathname.split("/");
+      basePath.pop();
+      basePath = basePath.join("/");
+      history.push(basePath);
+    }
+  }
 
   return (
     <Dialog
@@ -65,16 +84,17 @@ function SlideLayout() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogActions>
-          <IconButton aria-label="Close" onClick={() => history.goBack()}>
+          <IconButton aria-label="Close" onClick={moveBack}>
             <KeyboardBackspaceIcon />
           </IconButton>
+          <DialogTitle className={classes.title} id="alert-dialog-title">{pathname.split("/").pop()}</DialogTitle>
         </DialogActions>
-        
+
         <DialogContent>
 
           <Suspense fallback={<SkeletonCard/>}>
             <Switch>
-              <Route exact path={Paths.EDIT_CONTACT} component={Contact}/>
+              <Route exact path={Paths.EDIT_CONTACT} component={Profile}/>
               <Route exact path={Paths.EDIT_EDUCATION} component={Education}/>
               <Route exact path={Paths.EDIT_EXPERIENCE} component={Experience}/>
               <Route exact path={Paths.EDIT_SKILLS} component={Skills}/>

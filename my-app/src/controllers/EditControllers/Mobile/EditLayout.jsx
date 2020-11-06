@@ -2,11 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Education from "../../../pages/editing/Education";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,15 +28,18 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     paddingBottom: theme.spacing(8),
     overflow: "auto"
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 }));
 
+//ignore component
 function EditLayout(props) {
   const classes = useStyles();
   const history = useHistory();
-
-  
-
+  const {pathname} = useLocation();
 
   return (
     <AnimatePresence>
@@ -47,9 +51,12 @@ function EditLayout(props) {
             animate={{ transform: "translateY(-90vh)" }}
             transition={{ type: "spring",damping: 19}}
             >
-            <IconButton className={classes.closeButton} aria-label="Close" onClick={() => history.goBack()}>
-              <CloseIcon />
-            </IconButton>
+              <div className={classes.row}>
+                <IconButton className={classes.closeButton} aria-label="Close" onClick={() => history.goBack()}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+          
 
             <div className={classes.content}>
               <Education />

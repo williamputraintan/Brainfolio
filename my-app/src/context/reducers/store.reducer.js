@@ -9,7 +9,6 @@ import {
 } from "../constants";
 
 const storeReducer = (state, {type, payload}) => {
-  console.log(state, payload)
   switch (type) {
     case SET_MESSAGE: 
       return {...state, message:{...state.message, content: payload, show: true}}

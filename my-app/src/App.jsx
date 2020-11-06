@@ -17,6 +17,8 @@ import Paths from "./utils/path";
 import LandingPage from "./pages/Landing";
 
 import DomTreeLoader from "./common/DOMTreeLoading";
+import Page404 from "./common/404";
+
 
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
 
@@ -37,8 +39,8 @@ function App() {
           <Route path={Paths.APP} component={AppInit}/>
           <Route path={Paths.AUTH} component={AuthenticationPage} />
           <Route path={Paths.ABOUT_US} component={LandingPage}/>
+          <Route exact path="/404" component={Page404}/>
         </Switch>
-        {/* <MessageSnackbar /> */}
       </ThemeProvider>
     </Suspense>
   );

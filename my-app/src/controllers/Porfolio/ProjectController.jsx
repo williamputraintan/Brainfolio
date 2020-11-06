@@ -56,17 +56,19 @@ function ProjectController(props) {
   },[user])
 
   return (
-    <CardAccent className={classes.root} color={accentColor}>
-      <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
-      {
-        loading? <SkeletonCard/>:
-        projects.map((value,key) => {
-          return(
-            <ProjectListItem key={key} data={value}/>
-          )
-        })
-      }
-    </CardAccent>
+    <div id="project">
+      <CardAccent  className={classes.root} color={accentColor}>
+        <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
+        {
+          loading? <SkeletonCard/>:
+          projects.map((value,key) => {
+            return(
+              <ProjectListItem key={key} data={value}/>
+            )
+          })
+        }
+      </CardAccent>
+    </div>
   )
 }
 

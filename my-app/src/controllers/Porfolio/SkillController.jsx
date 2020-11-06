@@ -93,7 +93,8 @@ function SkillController(props) {
   },[user])
 
   return (
-    <CardAccent className={classes.root} color={accentColor}>
+    <div id="skill">
+    <CardAccent  className={classes.root} color={accentColor}>
       <Typography className={classes.title} variant="h4" gutterBottom> Skills</Typography>
       <Typography className={classes.subTitle} variant="h6" gutterBottom> Technical Skills</Typography>
         <>
@@ -124,6 +125,7 @@ function SkillController(props) {
         </>
      
     </CardAccent>
+    </div>
   )
 }
 

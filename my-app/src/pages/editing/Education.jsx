@@ -17,8 +17,9 @@ import {educationFields} from './FieldNames';
 import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-
+import SuccessAlert from '../../components/EditDialog';
 export default function Education() {
+
     const {state} = useContext(StoreContext);
     const classes = useStyles();
     const config = {
@@ -57,6 +58,7 @@ export default function Education() {
         ...fields,
         [e.target.name]: e.target.value
       })
+      console.log(fields);
     }
 
     function handleOnGoing(event){
@@ -70,7 +72,7 @@ export default function Education() {
     function handleSubmit(e){
       e.preventDefault();
   
-      var finalFields={ 
+      const finalFields={ 
         username:state.user.username,
         ...fields,
         startDate:startDate, 
@@ -82,13 +84,25 @@ export default function Education() {
         setFormDisable(true);
         //when user edits an existing entry
         if(editId!=null){
-          AxiosInstance.put('/edit/education/'+editId,finalFields)
-          .then(res=> res? resetForm() : null)
+          AxiosInstance.put('/edit/education/'+editId,finalFields,config)
+          .then((res)=> {
+            if(res.status === 200 || res.status === 201){
+
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(error=> console.log(error));
         }// when user submits a new entry
         else{
           AxiosInstance.post('/edit/education',finalFields,config)
-          .then(res=> res? resetForm():null)
+          .then((res)=> {
+            if(res.status == 200 || res.status == 201){
+
+              setAlertSuccess(true)
+              resetForm()
+            }
+          })
           .catch(error=> console.log(error));
         }
       }else{
@@ -120,6 +134,7 @@ export default function Education() {
       .then(res=> res? 
         setFields(res.data) && 
         setStartDate(new Date(res.data.startDate)) && 
+        setOnGoing(res.data.onGoing) &&
         setEndDate(new Date(res.data.endDate)): null)
       .catch(error=>
         console.log(error));
@@ -141,10 +156,14 @@ export default function Education() {
     useEffect(() => {
       getExistingEducation();
     },[formDisable,editId]);
-  
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
-      <div className={classes.wrapperContainer}>
+      <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown><CardInfo title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </Hidden>
               <Hidden lgUp><PopUpInfo  title={'Education'} datalist={existingData} fieldNames={educationFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
@@ -158,7 +177,6 @@ export default function Education() {
                         <Grid item xs={12} sm={12}>
                             <div className={classes.field}>Degree * </div>
                             <TextField
-                            autoFocus
                             disabled={formDisable}
                             name="degree"
                             variant="outlined"
@@ -277,5 +295,3 @@ export default function Education() {
           </div>
     );
   }
-
-

@@ -41,7 +41,16 @@ const useStyles = makeStyles((theme) => ({
   //   padding: theme.spacing(2,2,2,0)
   // },
   videoGrid: {
-    padding: theme.spacing(3,10,3)
+    padding: theme.spacing(1,10,3),
+    [theme.breakpoints.down('md')]:{
+      padding: theme.spacing(1,7,3)
+    },
+    [theme.breakpoints.down('sm')]:{
+      padding: theme.spacing(1,5,3)
+    },
+    [theme.breakpoints.down('xs')]:{
+      padding: theme.spacing(1,1,3)
+    }
   }
 }));
 

@@ -3,17 +3,22 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme }from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import HeroIllustration from "./SVG/HeroIllustration";
-
+import LandingBackground from "./Images/LandingBg.png";
+import { NavLink as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Paths from "../../utils/path";
 
 
 
 
 const useStyles = makeStyles((theme) => ({
   root:{
+    backgroundImage: `url(${LandingBackground})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
     backgroundColor: "#FEFCF7",
     padding: theme.spacing(4),
     [theme.breakpoints.up("sm")]:{
@@ -80,6 +85,11 @@ const useStyles = makeStyles((theme) => ({
     '& > div':{
       marginRight: theme.spacing(1)
     }
+  },
+  button: {
+    '& > span > a':{
+      color: "#FFFFFF",
+    }
   }
 }));
 
@@ -110,8 +120,9 @@ function Hero({scrollY}) {
               </Box>
             </Typography>
 
-            <Button variant="contained" color="primary">
-              Get Started
+            <Button  className={classes.button} variant="contained" color="primary">
+             
+              <Link component={RouterLink} to={Paths.SIGN_IN}> Get Started</Link>
             </Button>
 
             <Typography component="div" className={classes.landingCaption}>

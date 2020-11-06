@@ -61,18 +61,18 @@ function EducationController(props) {
   // const [loading, setLoading] = useState(true);
 
   return (
-    
+    <div id="education" >
+        <CardAccent className={classes.root} color={accentColor}>
+          <Typography className={classes.title} variant="h4" gutterBottom> Education</Typography>
+          
+          { 
+          loading? <SkeletonCard/>:
+            <DataList data={data}/>
+          }
+          <br/>
 
-      <CardAccent className={classes.root} color={accentColor}>
-        <Typography className={classes.title} variant="h4" gutterBottom> Education</Typography>
-        
-        { 
-        loading? <SkeletonCard/>:
-          <DataList data={data}/>
-        }
-        <br/>
-
-      </CardAccent>
+        </CardAccent>
+    </div>
   )
 }
 

@@ -20,6 +20,7 @@ import CardInfo from './CardInfo.jsx';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {experienceFields} from './FieldNames';
+import SuccessAlert from '../../components/EditDialog';
 
 export default function Experience() {
   const {state} = useContext(StoreContext);
@@ -31,7 +32,7 @@ export default function Experience() {
 
   const initialState={
     type: "Work",
-    name:"",
+    companyName:"",
     title: "",
     description:""
   }
@@ -53,6 +54,7 @@ export default function Experience() {
       ...fields,
       [e.target.name]: e.target.value
     })
+    console.log(state);
   }
 
   function handleStartDate(date){
@@ -68,31 +70,42 @@ export default function Experience() {
   };
 
   function validInputs(){
-    return (fields.type!=="" && fields.name!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
+    return (fields.type!=="" && fields.companyName!=="" && fields.title!=="" && fields.description!=="" && startDate!==new Date(null))
   }
 
   function handleSubmit(e){
     e.preventDefault();
   
-    var finalFields = {
+    let finalFields = {
       username:state.user.username,
       ...fields,
       startDate:startDate, 
       endDate:endDate, 
       onGoing:onGoing
     }
+    console.log(finalFields)
     if(validInputs()){
       //disable form for request
       setFormDisable(true);
       //when user edits an entry
       if(editId!=null){
         AxiosInstance.put('/edit/experience/'+editId,finalFields,config)
-        .then(res=> res? resetForm() :null)
+        .then((res)=> {
+          if(res.status === 200 || res.status === 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
         .catch(error=>console.log(error));
       }//when user submits a new entry
       else{
         AxiosInstance.post('/edit/experience',finalFields,config)
-        .then(res=> res? resetForm(): null)
+        .then((res)=> {
+          if(res.status == 200 || res.status == 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
         .catch(error=>console.log(error));
       }
     }else{
@@ -153,10 +166,14 @@ export default function Experience() {
   useEffect(() => {
     getExistingExperience();
   },[formDisable,editId]);
-  
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
+  function closeAlert(){
+    setAlertSuccess(false);
+  }
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
+            <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
             <Container component="main" maxWidth="lg" className={classes.listContainer}>
               <Hidden mdDown>
                 <CardInfo title={'Work Experience'} datalist={existingWorkData} fieldNames={experienceFields} toEdit={myEditCallback} toDelete={myDeleteCallback}/> 
@@ -196,16 +213,15 @@ export default function Experience() {
                             <div className={classes.field}> Company Name *</div>
                             <TextField
                             disabled={formDisable}
-                            name="name"
+                            name="companyName"
                             variant="outlined"
                             required
                             fullWidth
-                            value={fields.name}
+                            value={fields.companyName}
                             placeholder="University of Melbourne"                 
-                            autoFocus
                             onChange={onInputChange}    
-                            error = {(fields.name)===""}  
-                            helperText={(fields.name)!==""?null:"Incomplete entry"}                
+                            error = {(fields.companyName)===""}  
+                            helperText={(fields.companyName)!==""?null:"Incomplete entry"}                
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>

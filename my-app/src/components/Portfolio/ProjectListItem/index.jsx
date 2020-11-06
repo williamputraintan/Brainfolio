@@ -44,7 +44,7 @@ function ProjectListItem(props) {
             {data.title}
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          {`${format(Date.parse(data.startDate), 'MMMM yy')} - ${format(Date.parse(data.endDate), 'MMMM yy')}`}
+          {/* {`${format(Date.parse(data.startDate), 'MMMM yy')} - ${format(Date.parse(data.endDate), 'MMMM yy')}`} */}
         </Typography>
       </div>
 
