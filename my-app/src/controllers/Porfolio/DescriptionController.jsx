@@ -39,6 +39,9 @@ function DescriptionController(props) {
 
   // const [description, setDescription] = useState("Lorem ipsum dolor amet")
 
+  if ((description == undefined)) {
+    return (<></>);
+  };
   if ((description.length) < 1) {
     return (
       <>

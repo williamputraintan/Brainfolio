@@ -3,7 +3,7 @@ import { UserContext } from '../../context/user.context';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
-import ProjectListItem from "../../components/Portfolio/ProjectListItem"
+import Custom1ListItem from "../../components/Portfolio/Custom1ListItem"
 
 import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
@@ -33,7 +33,7 @@ const useStyles = makeStyles( theme => ({
 
 }));
 
-const accentColor ="#8E44AD";
+const accentColor ="#1E88E5";
 
 function Custom1Controller(props) {
   const classes = useStyles();
@@ -47,53 +47,76 @@ function Custom1Controller(props) {
 
   const [loading, setLoading] = useState(true);
   const [custom, setCustom] = useState([]);
-
-//   React.useEffect(() => {
-//     setLoading(true);
-//     const source = axios.CancelToken.source();
+  const [sectionTitle, setSectionTitle] = useState("");
+  React.useEffect(() => {
+    setLoading(true);
+    const source = axios.CancelToken.source();
    
 
-//     AxiosInstance
-//       .get(`/public/allproject/${user}`, config)
-//       .then(response => {
-//         // const { data } = response;
-//         // setProjects(data);
-//         const data = response?.data;
-//         if(data) setProjects(data);
-//         console.log(response)
-//       })
+    AxiosInstance
+      .get(`/public/custom/${user}`, config)
+      .then(response => {
+        // const { data } = response;
+        // setProjects(data);
+        const data = response?.data;
+        console.log("dataaaa", data)
+        if(data) {
+          setCustom(data.custom2.data);
+          setSectionTitle(data.custom2.sectionTitle);
+        }
+        
+      })
     
-    // setLoading(false);
-    // return () => {
-    //   source.cancel(
-    //     "Canceled because of component unmounted"
-    //   );
-    // };
-    // },[user])
+    setLoading(false);
+    return () => {
+      source.cancel(
+        "Canceled because of component unmounted"
+      );
+    };
+    },[user])
 
-    if ((custom.length) < 1) {
-        return (
-          <>
-          </>
-        )
-      }
+    if ((custom.length==undefined) || (custom.length) < 1) {
+      return (
+        <>
+        </>
+      )
+    }
+
+  console.log("CUSTOM1:",custom);
+  console.log("SECTION ", sectionTitle);
   return (
     <CardAccent className={classes.root} color={accentColor}>
-      <Typography className={classes.label} variant="h4">
-        {"Awards"}
+      <Typography className={classes.label} variant="h4" gutterBottom>
+        {sectionTitle}
       </Typography>
-       <Typography className={classes.title} variant="h3">
-            {"title"}
-        </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          {"subtitile"}
-        </Typography>
-
-      <Typography className={classes.desc} variant="body1">
-        {"Body"}
-      </Typography>
-
+      {
+        loading? <SkeletonCard/>:
+        custom.map((value,key) => {
+          return(
+            <Custom1ListItem key={key} data={value}/>
+          )
+        })
+      }
     </CardAccent>
+    
+    // <CardAccent className={classes.root} color={accentColor}>
+    //   <Typography className={classes.label} variant="h4">
+    //     {sectionTitle}
+    //   </Typography>
+
+      
+    //    <Typography className={classes.title} variant="h3">
+    //         {"title"}
+    //     </Typography>
+    //     <Typography variant="subtitle1" gutterBottom>
+    //       {"subtitile"}
+    //     </Typography>
+
+    //   <Typography className={classes.desc} variant="body1">
+    //     {"Body"}
+    //   </Typography>
+
+    // </CardAccent>
   )
 }
 export default Custom1Controller

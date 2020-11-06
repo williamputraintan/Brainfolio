@@ -151,6 +151,7 @@ function PortfolioController() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
+  const [path, setPath] = useState("")
   
   
   const [profile,setProfile] = useState({
@@ -169,9 +170,11 @@ function PortfolioController() {
   React.useEffect(() => {
     const source = axios.CancelToken.source();
    
-    console.log(lastPath)
+    console.log("LAST PATH",lastPath)
+    const path = lastPath;
+    setPath(path);
     AxiosInstance
-      .get(`/public/profile/${lastPath}`)
+      .get(`/public/profile/${path}`)
       .then(response => {
         console.log("its here")
         const data = response?.data
@@ -196,7 +199,7 @@ function PortfolioController() {
           })
         }
         console.log("its here123")
-        console.log(profile)
+        console.log("lastttttt ", lastPath)
 
         if(backgroundRef.current){
           backgroundRef.current.style.backgroundColor = `url(backgroundImageLink)`;
@@ -252,13 +255,13 @@ function PortfolioController() {
 
                 }
                 <Container maxWidth="lg">
-                  <DescriptionController user={destinationPath}/>
-                  <ExperienceController user={destinationPath}/>
-                  <EducationController user={destinationPath}/>
-                  <SkillController user={destinationPath}/>
-                  <ProjectController user={destinationPath}/>
-                  <Custom1Controller user={destinationPath}/>
-                  <Custom2Controller user={destinationPath}/>
+                  <DescriptionController user={path}/>
+                  <ExperienceController user={path}/>
+                  <EducationController user={path}/>
+                  <SkillController user={path}/>
+                  <ProjectController user={path}/>
+                  <Custom1Controller user={path}/>
+                  <Custom2Controller user={path}/>
                 </Container>
               </section>
             </Grid>

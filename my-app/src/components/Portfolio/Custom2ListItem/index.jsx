@@ -1,8 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
 import { format, parseISO  } from "date-fns";
 
 const useStyles = makeStyles( theme => ({
@@ -23,7 +22,7 @@ const useStyles = makeStyles( theme => ({
   },
   row: {
     display: "flex",
-    justifyContent:"space-between",
+    // justifyContent:"space-between",
   },
   button: {
     marginTop: theme.spacing(4),
@@ -37,34 +36,23 @@ function ProjectListItem(props) {
   const { data } = props;
   const classes = useStyles();
 
-  console.log("dateeeeee", data.startDate)
-  console.log("dateeeeee ENDDD", data.endDate)
-
-  function showDate(data) {
-    if (data.startDate && data.endDate) {
-      return (
-        <Typography variant="subtitle1" gutterBottom>
-          {`${format(Date.parse(data.startDate), 'MMMM yy')} - ${format(Date.parse(data.endDate), 'MMMM yy')}`}
-        </Typography>
-      )
-    }
-    return (<></>)
-  }
-
   return (
     <div className={classes.root}>
-      <div className={classes.row}>
+      {/* <div className={classes.row}> */}
         <Typography className={classes.title} variant="h2">
-            {data.title}
+            {data.itemTitle}
         </Typography>
-        {showDate(data)}
-      </div>
+        {/* <br/> */}
+        <Typography variant="subtitle1" gutterBottom>
+            {data.itemSubTitle}
+        </Typography>
+      {/* </div> */}
 
       <Typography variant="body1">
         {data.description}
       </Typography>
 
-      <Link className={classes.button} color="primary">Learn More</Link>
+      {/* <Divider/> */}
     </div>
   )
 }

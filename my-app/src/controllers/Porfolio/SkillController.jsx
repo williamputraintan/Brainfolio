@@ -16,8 +16,9 @@ const data = {
 
 const useStyles = makeStyles( theme => ({
   root: {
-    padding: theme.spacing(2),
-    borderBottom: `5px solid ${theme.palette.primary.main}`
+    padding: theme.spacing(3),
+    borderBottom: `5px solid ${theme.palette.primary.main}`,
+    marginBottom: theme.spacing(2)
   },
   title:{
     fontWeight: 700
@@ -96,34 +97,58 @@ function SkillController(props) {
     };
   },[user])
 
+
+  // function 
+  function softSkill(softSkills) {
+    if (softSkills.length > 1) {
+      return (
+        <>
+          <Typography className={classes.subTitle} variant="h6" gutterBottom> Soft Skills</Typography>
+          <div className={classes.container}>
+            {
+              softSkills.map( (value,key)=> {
+                return(
+                  <Chip color="primary" variant="outlined" className={classes.outlined} key={key} label={value.name} />
+                )
+              })
+            }
+          </div>
+        </>
+      )
+    }
+    return (<></>);
+  }
+
+  function techSkill(technicalSkills) {
+    if (technicalSkills.length>1) {
+      return (
+        <>
+        <Typography className={classes.subTitle} variant="h6" gutterBottom> Technical Skills</Typography>
+        <div className={classes.container}>
+          {
+            technicalSkills.map((value,key)=> {
+              return(
+                <Chip className={classes.chip} key={key} label={value.name} />
+              )
+            })
+          }
+        </div>
+        </>
+      )
+    }
+    return(<></>);
+
+  }
   return (
     <CardAccent className={classes.root} color={accentColor}>
       <Typography className={classes.title} variant="h4" gutterBottom> Skills</Typography>
-      <Typography className={classes.subTitle} variant="h6" gutterBottom> Technical Skills</Typography>
         <>
           {
             loading? <SkeletonCard /> :
               <>
-                <div className={classes.container}>
-                  {
-                    technicalSkills.map((value,key)=> {
-                      return(
-                        <Chip className={classes.chip} key={key} label={value.name} />
-                      )
-                    })
-                  }
-                </div>
-                <Typography className={classes.subTitle} variant="h6" gutterBottom> Soft Skills</Typography>
-                <div className={classes.container}>
-                  {
-                    softSkills.map( (value,key)=> {
-                      return(
-                        <Chip color="primary" variant="outlined" className={classes.outlined} key={key} label={value.name} />
-                      )
-                    })
-                  }
-                </div>
-            </>
+                {techSkill(technicalSkills)}
+                {softSkill(softSkills)}
+              </>
           }
         </>
      

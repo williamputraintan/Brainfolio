@@ -39,7 +39,6 @@ const DataList = (props) => {
               <EducationListItem key={key} data={value} />
               <Divider />
             </>
-              
           }
           </>
         
@@ -70,7 +69,7 @@ function EducationController(props) {
  
       <CardAccent className={classes.root} color={accentColor}>
         <Typography className={classes.title} variant="h4" gutterBottom> Education</Typography>
-        
+
         { 
         loading? <SkeletonCard/>:
           <DataList data={data}/>
