@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   cardRoot: {
-    height: '250px',
+    height: '300px',
     padding:0,
   },
   media: {

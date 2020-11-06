@@ -22,12 +22,27 @@ const useStyles = makeStyles((theme) => ({
       minHeight:'100vh'
     },
     image: {
-      width:"400px",
+      [theme.breakpoints.up('sm')]:{
+        width:"400px",
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:"300px",
+      },
+      
     },
     rowImageGrid:{
       display: 'grid',
       alignItems: 'center',
-      justifyItems:'center'
+      justifyItems:'center',
+      [theme.breakpoints.up('sm')]:{
+        width:'40%',
+        height:'100%', 
+        float:'right',
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:'100%',
+        height:'100%', 
+      },
     },
     sec2root: {
       display: 'flex',
@@ -52,14 +67,21 @@ const useStyles = makeStyles((theme) => ({
     titleBar: {
       background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
-    cardRoot: {
-      height: '250px',
-      padding:0,
-    },
     firstRow:{
       height: '55vh', 
       width:'100%', 
       padding:'10%'
+    },
+    allTitle:{
+      [theme.breakpoints.up('sm')]:{
+        width:'50%',
+        height:'100%', 
+        float:'left',
+      },
+      [theme.breakpoints.down('xs')]:{
+        width:'100%',
+        height:'100%', 
+      },
     }
 }));
 
@@ -122,12 +144,12 @@ export default function DisplayAllProjectsController() {
                   alignItems="center"
                   xs={12}
                 >
-                  <Grid item xs={6} alignContent='center'>
+                  <Grid item alignContent='center' classes={classes.allTitle}>
                     <Typography variant="h3" gutterBottom className={classes.title}>
                       Your Projects
                     </Typography> 
                   </Grid>
-                  <Grid item xs={6} className={classes.rowImageGrid} >
+                  <Grid item className={classes.rowImageGrid} >
                     <img src={allProjectDark} className={classes.image}/>
                   </Grid>
                 </Grid>
