@@ -124,7 +124,7 @@ function ProjectController() {
    
     AxiosInstance
       // .get(`/public${pathname}`,config)
-      .get(/public/+pathname.slice(1,))
+      .get("/public/"+pathname.split("/").slice(2).join("/"))
       // .get(/public/+"project/franklind/5fa007f33f1365000329f3e6")
       .then(response => {
         const data = response?.data;

@@ -22,6 +22,7 @@ const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
 const EditingPage = React.lazy(() => import('../pages/EditPage.jsx'));
+const ProjectDetail =  React.lazy(() => import('../pages/ProjectPage.jsx'));
 
 
 
@@ -65,7 +66,7 @@ function AppLoader(props) {
             <Switch>
               <Route path={Paths.HOME} component={AuthenticatedRoute} />
               <Route exact path={`${Paths.PORTFOLIO}/:username`} component={Portfolio} />
-
+              <Route path={`${Paths.PROJECT}/:username/:id`} component={ProjectDetail}/>
               {/* <Route path="/allproject" component={AllProjectPage}/> */}
             </Switch>
       </section>

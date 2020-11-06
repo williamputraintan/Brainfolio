@@ -12,6 +12,7 @@ import firebase from "../utils/firebase.js";
 
 const AllProjectPage = React.lazy(() => import('../pages/AllProjectPage.jsx'));
 
+
 function AuthenticatedRoute() {
   const {state} = useContext(StoreContext);
   const username = state.user.username;
@@ -38,7 +39,7 @@ function AuthenticatedRoute() {
         
               <Route path={`${Paths.EDIT_PORTFOLIO}/:username`} component={EditPage} />
               <Route path={Paths.ALL_PROJECT} component={AllProjectPage}/>
-
+        
 
             {/* <Switch>
               <Route exact path="/home/portfolio" component={Portfolio} />
