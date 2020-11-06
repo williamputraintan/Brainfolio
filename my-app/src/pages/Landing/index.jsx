@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import { makeStyles }from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
-import Hero from "./Hero";
+import Hero from "./hero";
 import Steps from "./Steps";
 import Logo from "../../Assets/SVG/Logo.jsx";
 import { motion, useViewportScroll } from "framer-motion";
