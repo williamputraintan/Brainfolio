@@ -17,6 +17,10 @@ import Paths from "../../utils/path";
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import SearchBar from "../SearchBar";
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 const useStyles = makeStyles( theme => ({
@@ -41,6 +45,15 @@ const useStyles = makeStyles( theme => ({
     width: "100%",
     backgroundColor: theme.palette.backgroundAccent
   },
+  wrapper: {
+    backgroundColor: theme.palette.background.paper
+  },
+  row: {
+    display: "flex",
+  },
+  search: {
+    flexGrow: 1
+  }
 }));
 
 function BottomNavigationbar(props) {
@@ -48,6 +61,8 @@ function BottomNavigationbar(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState('portfolio');
   const history = useHistory();
+
+  const [open,setOpen] = React.useState(true);
 
   const { state } = props;
   const {isLoggedIn, user} = state
@@ -69,26 +84,51 @@ function BottomNavigationbar(props) {
     setValue(newValue);
   };
 
+
+  const closeSearch = () => {
+    setOpen(true);
+    console.log("Close")
+  }
+
   return (
     <>
+      
       <AppBar position="static" class={classes.appbar}>
-        <Box boxShadow={2}>
-          <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" className={classes.title}>
-              Logo
-            </Typography>
-            {
-              isLoggedIn?
-              <>
-                <NavbarAvatar/>
-              </>
-              : <Button>
-                  <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
-                </Button>
-            }
-          </Toolbar>
-        </Box>
+        {
+          open ? 
+            <Box boxShadow={2} className={classes.wrapper}>
+              <Toolbar className={classes.toolbar}>
+                <Typography variant="h6" className={classes.title}>
+                  Logo
+                </Typography>
+                <IconButton aria-label="delete" onClick={() => setOpen(false)}>
+                  <SearchIcon/>
+                </IconButton>
+              
+                  {isLoggedIn?
+                    <>
+                      <NavbarAvatar/>
+                    </>
+                    : 
+                    <>
+                      <Button>
+                        <Link component={RouterLink} to={Paths.SIGN_IN}>Sign In</Link>
+                      </Button>
+                    </>
+                  }
+              </Toolbar>
+            </Box>:
+            <div className={classes.row}>
+              <SearchBar  className={classes.search}/>
+              <IconButton color="primary" aria-label="delete" onClick={closeSearch}>
+                <CloseIcon/>
+              </IconButton>
+            </div>
+        }
+     
+
       </AppBar>
+      
       
       {
         isLoggedIn &&  

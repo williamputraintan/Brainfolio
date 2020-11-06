@@ -37,6 +37,17 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: 'auto',
     },
+    [theme.breakpoints.down('xs')]: {
+      flexGrow: 1,
+      height: 48
+    },
+    
+  },
+  searchInput: {
+    [theme.breakpoints.down('xs')]: {
+      width: "100%"
+    },
+
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -45,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+   
   },
   result: {
     position: "absolute",
@@ -54,13 +66,21 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[2],
     backgroundColor: "#FFFFFF",
     padding: theme.spacing(1),
-    cursor: "pointer"
+    cursor: "pointer",
+    zIndex: 999,
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: 0,
+      width: 320,
+    },
   },
   root:{
     display:"flex",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: theme.palette.background.paper,
+    [theme.breakpoints.down('xs')]: {
+      flexGrow: 1
+    },
   }
 }));
 
@@ -86,7 +106,7 @@ function SearchBar() {
 
     if(search.length > 0){
         setLoading(true)
-        Axios.get(path + `?user=${search}`)
+        Axios.get(path + `?search=${search}`)
         .then(res => {
           if(res.data){
             setData(res.data)
@@ -124,6 +144,8 @@ function SearchBar() {
     setData([])
   }
 
+  
+
   return (
     <div className={classes.root}>
       <div className={classes.search}>
@@ -131,6 +153,7 @@ function SearchBar() {
           <SearchIcon />
         </div>
         <InputBase
+          className={classes.searchInput}
           value={search}
           placeholder="Search…"
           classes={{
@@ -140,7 +163,7 @@ function SearchBar() {
           inputProps={{ 'aria-label': 'search' }}
           onChange={(e) => setSearch(e.target.value)}
         />
-        { loading && <CircularProgress className={classes.loader} size={20} />}
+        { loading && <CircularProgress className={classes.loader} size={20}/>}
       </div>
      
       {
