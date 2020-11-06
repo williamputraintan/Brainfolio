@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    overflow: 'hidden',
     maxWidth: 256,
     Height: 300
     // backgroundColor: theme.palette.background.paper,
@@ -31,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
   //   cellHeight: '300px',
   //   padding: theme.spacing(0,0,2,)
   // },
-  fileDesc: {
-    overflow: "scroll"
-  },
   fileLabel: {
     padding: theme.spacing(0,0,5)
   },
@@ -55,25 +51,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SingleLineGridList(projectDisplay) {
   const classes = useStyles();
   const files = projectDisplay.data;
-  const dummy = {
-    "contributor": [],
-    "projectFileName": [
-        [
-            "LC 77599_downloaded_stream_185.pdf", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png"
-        ],
-        [
-          "Photo.png", "http://www.rsjlawang.com/assets/images/lightbox/image-4.jpg"]
-    ],
-    "_id": "5fa28dc4ed32a200038081d6",
-    "endDate": "2021-07-24T00:00:00.000Z",
-    "isPublic": true,
-    "username": "frankaldo",
-    "title": "MOC",
-    "description": "MOC is hard",
-    "__v": 0
-  }
-  const dum = dummy.projectFileName;
-
 
   function shortenTitle(title){
     if (title.length>9){
@@ -81,7 +58,6 @@ export default function SingleLineGridList(projectDisplay) {
     }
     return title
   }
-
 
   return (
     <Grid container>
@@ -100,7 +76,9 @@ export default function SingleLineGridList(projectDisplay) {
                 image={(file[0].slice(-3))=="pdf" ? pdf : file[1]}
                 title= {file[1]}
               />
-              <CardContent className={classes.fileDesc}>
+              <CardContent 
+              // className={classes.fileDesc}
+              >
                 <Typography className={classes.fileTitle} gutterBottom variant="body1" component="body1">
                   {shortenTitle(file[0])}
                 </Typography>
