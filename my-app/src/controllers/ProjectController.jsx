@@ -23,7 +23,7 @@ import Link from '@material-ui/core/Link';
 import axios from 'axios'
 
 import SkeletonCard from "../common/SkeletonCard";
-import { StoreContext } from '../context/store.context';
+import { StoreContext } from '../context/store.context'
 
 
 //Lazy - Load components
@@ -98,10 +98,12 @@ function ProjectController() {
   // };
 
   const { pathname } = useLocation();
+  console.log("Pathname "+ pathname);
 
   const theme = useTheme();
   
 
+  console.log("USRRR "+ JSON.stringify(state));
   const [project,setProject] = useState({
     contributor: [],
     projectFileName: [],
@@ -149,6 +151,7 @@ function ProjectController() {
     //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
     //     }
       })
+    console.log("PORJ "+project)
     return () => {
       source.cancel(
         "Canceled because of component unmounted"

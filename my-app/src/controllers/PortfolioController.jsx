@@ -85,16 +85,18 @@ const useStyles = makeStyles((theme) => ({
   name: {
     fontWeight: 700,
     color: theme.palette.text.primary,
-    textTransform: "Capitalize"
+    textTransform: "Capitalize",
+    color: "#FAFAFA"
   },
   caption: {
-    color: theme.palette.text.secondary
+    color: "#FAFAFA"
   },
   details: {
     fontWeight: 700,
-    color: theme.palette.text.secondary
+    color: "#FAFAFA"
   },
   textWrapper:{
+    color:"#FFFFFF",
     [theme.breakpoints.up('xs')]: {
       margin: "auto",
       width: "auto!important",
@@ -218,7 +220,7 @@ function PortfolioController() {
               </Grid>
               <Grid container item xs={12} sm={8} justify="flex-start">
                 <div className={classes.textWrapper}>
-                  <Typography className={classes.name} variant="h3"> {profile.username}</Typography>
+                  <Typography className={classes.name} color="inherit" variant="h3"> {profile.username}</Typography>
                   {profile.title && <Typography className={classes.caption} variant="h5"> {profile.title}</Typography>}
                   <br/>
                   {profile.address && <Typography className={classes.details} > Location: {profile.address} </Typography>}

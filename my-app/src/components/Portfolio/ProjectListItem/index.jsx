@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { format, parseISO  } from "date-fns";
+import { useHistory } from "react-router-dom"
 
 const useStyles = makeStyles( theme => ({
   root:{
@@ -36,6 +37,7 @@ const useStyles = makeStyles( theme => ({
 function ProjectListItem(props) {
   const { data } = props;
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <div className={classes.root}>
@@ -52,7 +54,7 @@ function ProjectListItem(props) {
         {data.description}
       </Typography>
 
-      <Link className={classes.button} color="primary">Learn More</Link>
+      <Link className={classes.button} color="primary" onClick={() => history.push()}>Learn More</Link>
     </div>
   )
 }

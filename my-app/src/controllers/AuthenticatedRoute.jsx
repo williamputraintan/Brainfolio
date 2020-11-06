@@ -4,12 +4,13 @@ import { Switch,Route, Redirect, useLocation, useHistory } from 'react-router-do
 import Paths from "../utils/path";
 
 //Pages
-import PortfolioPage from "../pages/PortfolioPage";
+
 import EditPage from "../pages/EditPage";
 import EditingPage from '../pages/editing/EditingPage.jsx';
 
 import firebase from "../utils/firebase.js";
 
+const AllProjectPage = React.lazy(() => import('../pages/AllProjectPage.jsx'));
 
 function AuthenticatedRoute() {
   const {state} = useContext(StoreContext);
@@ -34,8 +35,10 @@ function AuthenticatedRoute() {
             {/* <Redirect from={"/home/edit"+state.user} to={"/home/edit/contact/"+state.user}  /> */}
             { (pathname === Paths.HOME) && <Redirect to={`${Paths.PORTFOLIO}/${state.user.username}`}/> }
             <Switch>
-              <Route exact path={`${Paths.PORTFOLIO}/:username`} component={PortfolioPage} />
+        
               <Route path={`${Paths.EDIT_PORTFOLIO}/:username`} component={EditPage} />
+              <Route path={Paths.ALL_PROJECT} component={AllProjectPage}/>
+
 
             {/* <Switch>
               <Route exact path="/home/portfolio" component={Portfolio} />

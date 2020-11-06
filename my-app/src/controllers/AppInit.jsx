@@ -15,13 +15,14 @@ import { persistUser,setUserLoading } from "../context/actions/auth.actions";
 import MessageSnackbar from "../common/Snackbar";
 import Paths from "../utils/path";
 
+
 //Lazy Import
 // const AboutUs = React.lazy(() => import('../pages/AboutUs.jsx'));
 const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
 const EditingPage = React.lazy(() => import('../pages/EditPage.jsx'));
-const AllProjectPage = React.lazy(() => import('../pages/AllProjectPage.jsx'));
+
 
 
 
@@ -62,9 +63,9 @@ function AppLoader(props) {
       <section className={classes.root}>
         <NavbarController />
             <Switch>
-              <Route path={Paths.HOME}component={AuthenticatedRoute} />
-              <Route path={Paths.PROJECT} component={AllProjectPage}/>
-              <Route path={Paths.EDIT_PORTFOLIO} component={EditingPage}/>
+              <Route path={Paths.HOME} component={AuthenticatedRoute} />
+              <Route exact path={`${Paths.PORTFOLIO}/:username`} component={Portfolio} />
+
               {/* <Route path="/allproject" component={AllProjectPage}/> */}
             </Switch>
       </section>
