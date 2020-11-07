@@ -1,6 +1,7 @@
 import React, {useRef, useContext, useState, Suspense} from 'react'
 import {Grid ,Avatar, Button} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { format, parseISO  } from "date-fns";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
@@ -159,9 +160,18 @@ function ProjectController() {
     };
   },[])
 
-  // console.log(project);
-  // console.log(project);
-  // console.log(project.projectFileName)
+  function showDate(data) {
+    if (data.startDate && data.endDate) {
+      return (
+        <Typography variant="h5" align="Left"> 
+        {format(parseISO(data.startDate), "MMMM yy")} 
+        &nbsp;&nbsp; - &nbsp;&nbsp; 
+        {format(parseISO(data.endDate), "MMMM yy")}
+        </Typography>
+      )
+    }
+    return (<></>)
+  }
 
   function showVideo(url){
     if (url) {
@@ -186,12 +196,7 @@ function ProjectController() {
                     <Typography variant="h3" align="Left">
                       <b>{project.title}</b>
                     </Typography>
-                    <Typography variant="h5" align="Left"> 
-                    {/* {format(parseISO(data.startDate), "MMMM yy")} 
-                    &nbsp;&nbsp; - &nbsp;&nbsp; 
-                    {format(parseISO(data.endDate), "MMMM yy")} */}
-                      {/* {project.startDate} - {project.endDate} */}
-                    </Typography>
+                    {showDate(project)}
                   </Grid>
                   
                   <Grid container item xs={12} sm={12} md={12}

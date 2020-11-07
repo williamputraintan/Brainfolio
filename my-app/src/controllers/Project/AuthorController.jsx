@@ -48,36 +48,38 @@ function AuthorController(props) {
     // const [author] = props.data;
 
     return (
-
-      <Grid className={classes.outline}>
-        <Container >
-          <Grid className={classes.author}>
-            <Typography variant="h4">
-              Author
-            </Typography>
-          </Grid>
-          <Grid container spacing={2}>
-            {data.map((author) => (
-              <Grid item key={author} xs={12} sm={6} md={4} lg={3}>
-                <CardActionArea
-                  href={`mailto:${author.email}`}
-                  >
-                  <Card className={classes.authorCard}>
-                      <CardHeader
-                      avatar={
-                          <Avatar className={classes.avatar}/>
-                      }
-                      title= {author.name}
-                      subheader= {author.email}
-                      />
-                  </Card>
-                </CardActionArea>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Grid>
-
+      <>
+      { data.length?
+        (<Grid className={classes.outline}>
+          <Container >
+            <Grid className={classes.author}>
+              <Typography variant="h4">
+                Author
+              </Typography>
+            </Grid>
+            <Grid container spacing={2}>
+              {data.map((author) => (
+                <Grid item key={author} xs={12} sm={6} md={4} lg={3}>
+                  <CardActionArea
+                    href={`mailto:${author.email}`}
+                    >
+                    <Card className={classes.authorCard}>
+                        <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}/>
+                        }
+                        title= {author.name}
+                        subheader= {author.email}
+                        />
+                    </Card>
+                  </CardActionArea>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Grid>):
+        <></>}
+      </>
     )
 }
 
