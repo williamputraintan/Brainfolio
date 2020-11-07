@@ -7,6 +7,7 @@ import ProjectListItem from "../../components/Portfolio/ProjectListItem"
 import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
 import SkeletonCard from "../../common/SkeletonCard";
+import CardEmpty from "../../common/CardEmpty";
 
 const useStyles = makeStyles( theme => ({
   root: {
@@ -57,17 +58,24 @@ function ProjectController(props) {
 
   return (
     <div id="project">
-      <CardAccent  className={classes.root} color={accentColor}>
-        <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
-        {
-          loading? <SkeletonCard/>:
-          projects.map((value,key) => {
-            return(
-              <ProjectListItem key={key} data={value}/>
-            )
-          })
-        }
-      </CardAccent>
+      
+      { projects.length?
+        (<CardAccent  className={classes.root} color={accentColor}>
+          <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
+            {
+              loading? <SkeletonCard/>:
+              projects.map((value,key) => {
+                return(
+                  <ProjectListItem key={key} data={value}/>
+                )
+              })
+            }
+        </CardAccent> ):
+        <CardAccent  className={classes.root} color={accentColor}>
+          <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
+          <CardEmpty text="There is no project you have uploaded currently"/>
+        </CardAccent>
+      }
     </div>
   )
 }

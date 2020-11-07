@@ -47,6 +47,12 @@ const useStyles = makeStyles( theme => ({
   subTitle:{
     fontWeight: 700,
     marginTop: theme.spacing(2)
+  },
+  text:{
+    fontWeight: 700,
+    fontSize: "0.875rem",
+    fontStyle: "italic",
+    color: theme.palette.text.secondary
   }
 }));
 
@@ -81,7 +87,7 @@ function SkillController(props) {
         const soft = data.filter(item => item.category == "Soft") 
         setTechnical(technical)
         setSoft(soft)
-    
+        console.log("Data euyy", data)
       })
     
     setLoading(false);
@@ -101,25 +107,42 @@ function SkillController(props) {
           {
             loading? <SkeletonCard /> :
               <>
-                <div className={classes.container}>
-                  {
-                    technicalSkills.map((value,key)=> {
-                      return(
-                        <Chip className={classes.chip} key={key} label={value.name} />
-                      )
-                    })
-                  }
-                </div>
+                {
+                  technicalSkills.length?
+                  (<div className={classes.container}>
+                    {
+                      technicalSkills.map((value,key)=> {
+                        return(
+                          <Chip className={classes.chip} key={key} label={value.name} />
+                        )
+                      })
+                    }
+                  </div>):
+                  <div>
+                    <Typography className={classes.text}>
+                      You have not entered any tech skills.
+                    </Typography>
+                  </div>
+                }
                 <Typography className={classes.subTitle} variant="h6" gutterBottom> Soft Skills</Typography>
-                <div className={classes.container}>
-                  {
-                    softSkills.map( (value,key)=> {
-                      return(
-                        <Chip color="primary" variant="outlined" className={classes.outlined} key={key} label={value.name} />
-                      )
-                    })
-                  }
-                </div>
+                
+                {
+                  softSkills.length?
+                  (  <div className={classes.container}>
+                      {
+                        softSkills.map( (value,key)=> {
+                          return(
+                            <Chip color="primary" variant="outlined" className={classes.outlined} key={key} label={value.name} />
+                          )
+                        })
+                      }
+                    </div>):
+                    <div>
+                      <Typography className={classes.text}>
+                      You have not entered any Soft skills.
+                    </Typography>
+                    </div>
+                }
             </>
           }
         </>
