@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 
-
+import Visibility from './Visibility'
 import FormTitle from "../../../common/FormTitle";
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -194,8 +194,15 @@ function ContactForm() {
   }
 
   return (
-
-      <Container className={classes.formContainer} maxWidth="sm">
+    <div>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={12} md={8}>
+        <Container className={classes.formContainer} maxWidth="sm">
         <Grid container className={classes.formRow}>
 
         <Grid item xs={6}>
@@ -463,7 +470,19 @@ function ContactForm() {
         </Button>
 
       </Container>
-  
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Container component="main" maxWidth="lg" className={classes.listContainer}>
+            <Visibility/>  
+          </Container>          
+        </Grid>
+
+
+
+      </Grid>
+
+  </div>
          
 
   )
