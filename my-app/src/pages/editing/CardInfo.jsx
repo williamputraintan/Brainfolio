@@ -19,8 +19,18 @@ export default function cardInfo(props){
 
     //disregard unwanted props
     function checkUnwanted(key,value){
-        return (key!=="_id" && key!=="username" && key!=="__v"  && (key!=="sectionTitle" && key!=="type") && key!=="onGoing" && value!=="" && value!==[]);
+        return (key!=="_id" &&
+         key!=="username" && 
+         key!=="__v"  && 
+         (key!=="sectionTitle" && key!=="type") && 
+         key!=="onGoing" && 
+         value!=="" &&
+         value!==[] &&
+         key !== "projectFileName" &&
+         key !== "contributor");
     }
+
+
 
     //pass to parent component
     const myEditCallback = (idReceived) => {
