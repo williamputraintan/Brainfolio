@@ -94,7 +94,7 @@ export default function DisplayAllProjectsController() {
 
     //config header
     const config = {
-        headers: { Authorization: `Bearer ${state.token}` }
+        headers: { Authorization: `Bearer ${state.user.token}` }
     };
 
     const [allProjects, setAllProjects] =  React.useState([]);
@@ -105,6 +105,7 @@ export default function DisplayAllProjectsController() {
           config
           )
         .then((response) => {
+          
           const responseData = response.data;
           setAllProjects(responseData);
           console.log(responseData);
