@@ -23,7 +23,7 @@ import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import AxiosInstance from '../../utils/axios';
-import SuccessAlert from '../../components/EditDialog/'
+import SuccessAlert from '../../components/EditDialog/index'
 
 export default function Projects() {
   

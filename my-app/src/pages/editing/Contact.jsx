@@ -20,7 +20,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import {profileFields} from './FieldNames';
-
+import SuccessAlert from '../../components/EditDialog/index'
 import axios from 'axios';
 
 
@@ -110,14 +110,16 @@ export default function Contact(props) {
       
       AxiosInstance.post("/v2/edit/profile/save/", formData, config)
       .then((response) => {
-        console.log(response)
-        const data = response.data
-        setFields(data)
-        setProfileToDelete([])
-        setBackgroundToDelete([])
-        setButtonClick(true)
-        document.getElementById('profileImage').value = ''
-        document.getElementById('backgroundImage').value = ''
+        if(response.status == 200 || response.status == 201){
+          console.log(response)
+          const data = response.data
+          setFields(data)
+          setProfileToDelete([])
+          setBackgroundToDelete([])
+          setButtonClick(true)
+          document.getElementById('profileImage').value = ''
+          document.getElementById('backgroundImage').value = ''
+        }
       })
       .catch(err =>{
         console.log(err);
@@ -183,11 +185,14 @@ export default function Contact(props) {
       //   setButtonClick(false)
       // })
     // },[buttonClick]);
-
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
     return (
      <div className={classes.wrapperContainer}>
         <Container component="main" maxWidth="lg" style={{backgroundColor:'#fffff'}}>
-
+          <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
           <Container component="main" maxWidth="lg" className={classes.listContainer}>
             <Hidden mdDown><CardInfo title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/> </Hidden>
             <Hidden lgUp><PopUpInfo  title={'Contact'} datalist={existingData} fieldNames={profileFields} path={'/edit/profile/'} toEdit={myCallback}/></Hidden>

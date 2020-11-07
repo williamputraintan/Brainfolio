@@ -17,7 +17,7 @@ import CardInfo from './CardInfo.jsx';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {skillsFields} from './FieldNames';
-import SuccessAlert from '../../components/EditDialog'
+import SuccessAlert from '../../components/EditDialog/index'
 
 export default function Skills(){
     const {state} = useContext(StoreContext);

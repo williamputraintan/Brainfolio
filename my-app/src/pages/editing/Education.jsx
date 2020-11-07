@@ -17,7 +17,7 @@ import {educationFields} from './FieldNames';
 import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
-import SuccessAlert from '../../components/EditDialog';
+import SuccessAlert from '../../components/EditDialog/index';
 export default function Education() {
 
     const {state} = useContext(StoreContext);

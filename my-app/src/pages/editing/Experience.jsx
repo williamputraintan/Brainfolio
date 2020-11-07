@@ -20,7 +20,7 @@ import CardInfo from './CardInfo.jsx';
 import DoubleTypeInfo from './DoubleTypeInfo';
 import {useStyles} from './Styles.js';
 import {experienceFields} from './FieldNames';
-import SuccessAlert from '../../components/EditDialog';
+import SuccessAlert from '../../components/EditDialog/index';
 
 export default function Experience() {
   const {state} = useContext(StoreContext);

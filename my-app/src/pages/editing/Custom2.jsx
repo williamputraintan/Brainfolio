@@ -12,7 +12,7 @@ import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import AxiosInstance  from '../../utils/axios';
 import {customFields} from './FieldNames';
-import SuccessAlert from '../../components/EditDialog'
+import SuccessAlert from '../../components/EditDialog/index'
 
 export default function Custom2() {
     const {state} = useContext(StoreContext);
