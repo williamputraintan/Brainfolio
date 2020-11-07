@@ -54,7 +54,7 @@ export default function Experience() {
       ...fields,
       [e.target.name]: e.target.value
     })
-    console.log(state);
+    console.log(fields);
   }
 
   function handleStartDate(date){
@@ -83,6 +83,7 @@ export default function Experience() {
       endDate:endDate, 
       onGoing:onGoing
     }
+    console.log(finalFields)
     if(validInputs()){
       //disable form for request
       setFormDisable(true);
@@ -100,6 +101,7 @@ export default function Experience() {
       else{
         AxiosInstance.post('/edit/experience',finalFields,config)
         .then((res)=> {
+          console.log(res);
           if(res.status === 200 || res.status === 201){
             setAlertSuccess(true)
             resetForm()

@@ -47,9 +47,7 @@ export default function cardInfo(props){
     }
 
     function handleValue(key,value,res){
-        if(key==="startDate"){
-            return handleDate(value);
-        } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
+        if(key==="startDate" || key==="endDate"){
             return handleDate(value);
         } else{
             return value;

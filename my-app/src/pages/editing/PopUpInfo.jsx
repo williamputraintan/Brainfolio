@@ -94,16 +94,15 @@ export default function PopupInfo(props) {
   function handleDate(date){
     var formatDate = date.substring(0,10);
     return formatDate;
-  }
-  function handleValue(key,value,res){
-    if(key==="startDate"){
-      return handleDate(value);
-    } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
-      return handleDate(value);
+}
+
+function handleValue(key,value,res){
+    if(key==="startDate" || key==="endDate"){
+        return handleDate(value);
     } else{
-      return value;
+        return value;
     }
-  }
+}
 
 
   return (
