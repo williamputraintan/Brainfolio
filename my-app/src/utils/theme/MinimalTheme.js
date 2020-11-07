@@ -1,4 +1,3 @@
-
 import { createMuiTheme }  from '@material-ui/core/styles';
 
 
@@ -12,19 +11,20 @@ const theme = createMuiTheme({
       background: 'linear-gradient(270deg, rgba(0,210,255,1) 0%, rgba(0,74,175,1) 100%);'
     },
     primary: {
-      main: '#0013FE'
+      main: '#1B2D57'
     },
     secondary: {
-      main: '#FE6C00',
+      main: '#A0CFE7',
     },
     backgroundWhite: '#ffffff',
     fontDefault: '#323232',
     fontGrey: {
       color: '#565656',
     },
-    bacgroundAccent: "#ebfcff",
-    errorColor: "#FF3D00",
-    successColor: "#2962FF",
+    // bacgroundAccent: "#ebfcff",
+    bacgroundAccent: "#fff",
+    titleBgAccent: "#EEEEEE",
+    cardAccent: "#f9f9f9"
   },
   overrides: {
     MuiButton: {
@@ -36,11 +36,6 @@ const theme = createMuiTheme({
         color: 'white',
       },
     },
-    MuiTab:{
-      wrapper:{
-          fontWeight:900
-      }
-    },
     MuiTooltip: {
       tooltip: {
         fontSize: "1.1em",
@@ -48,12 +43,6 @@ const theme = createMuiTheme({
         backgroundColor: "#1D3B64"
       }
     },
-    MuiGridListTile: {
-      root: {
-        height:'250px'
-      }
-    },   
-    
   },
   typography: {
     fontFamily: [
@@ -70,7 +59,7 @@ const theme = createMuiTheme({
       '"Segoe UI Symbol"',
     ].join(','),
     alternative: [
-        'Heebo',
+        'Inter',
         '-apple-system',
         'BlinkMacSystemFont',
         '"Segoe UI"',

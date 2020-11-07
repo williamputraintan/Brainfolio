@@ -19,26 +19,10 @@ const theme = createMuiTheme({
     },
     bacgroundAccent: "#1e2f39",
     fontAccent: "#90C5EC",
-    errorColor: "#FF9E80",
-    successColor: "#82B1FF"
-  },
-  fontFamily: {
-    alternative: [
-      'Heebo',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(',')
+    titleBgAccent: "#1A2831",
+    cardAccent: "#243945"
   },
   overrides: {
-    
     MuiButton: {
       contained:{
         fontWeight:700
@@ -47,11 +31,6 @@ const theme = createMuiTheme({
         fontWeight:700,
         color: 'white',
       },
-    },
-    MuiTab:{
-      wrapper:{
-          fontWeight:900
-      }
     },
     MuiBottomNavigation:{
       root: {
@@ -76,11 +55,6 @@ const theme = createMuiTheme({
         color: "#90C5EC"
       }
     },
-    MuiGridListTile: {
-      root: {
-        height:'250px'
-      }
-    },   
   },
   typography: {
     fontFamily: [
