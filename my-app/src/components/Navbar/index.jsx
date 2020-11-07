@@ -5,7 +5,8 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import { NavLink as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import logo from "../../Assets/images/logo-transparent.png"
+import LogoLight from "../../Assets/images/Logo/LogoLight.png";
+import LogoDark from "../../Assets/images/Logo/LogoDark.png";
 import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
 import firebase from "../../utils/firebase";
@@ -126,7 +127,7 @@ function Navbar(props) {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
            <Link component={RouterLink} to={Paths.ABOUT_US}>
-              <img className={classes.brand} src={logo} alt="logo"/>
+              <img className={classes.brand} src={state.user.darkMode? LogoDark: LogoLight} alt="logo"/>
             </Link>
             <div className={classes.navActions}>
             {

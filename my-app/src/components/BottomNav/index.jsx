@@ -21,6 +21,8 @@ import SearchBar from "../SearchBar";
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import LogoLight from "../../Assets/images/Logo/LogoLight.png";
+import LogoDark from "../../Assets/images/Logo/LogoDark.png";
 
 
 const useStyles = makeStyles( theme => ({
@@ -38,7 +40,7 @@ const useStyles = makeStyles( theme => ({
     flexGrow: 1,
   },
   brand: {
-    height: 18
+    height: 47
   },
   appbar:{
     height: 56,
@@ -52,6 +54,9 @@ const useStyles = makeStyles( theme => ({
     display: "flex",
   },
   search: {
+    flexGrow: 1
+  },
+  imgWrapper:{
     flexGrow: 1
   }
 }));
@@ -98,9 +103,9 @@ function BottomNavigationbar(props) {
           open ? 
             <Box boxShadow={2} className={classes.wrapper}>
               <Toolbar className={classes.toolbar}>
-                <Typography variant="h6" className={classes.title}>
-                  Logo
-                </Typography>
+                <div className={classes.imgWrapper}>
+                  <img className={classes.brand} src={state.user.darkMode? LogoDark: LogoLight} alt="logo"/>
+                </div>
                 <IconButton aria-label="delete" onClick={() => setOpen(false)}>
                   <SearchIcon/>
                 </IconButton>
