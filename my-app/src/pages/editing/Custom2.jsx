@@ -42,6 +42,7 @@ export default function Custom2() {
       })
     }
 
+    //Create Section Title
     function handleTitleSubmit(event){
       event.preventDefault();
       setFormDisable(true);
@@ -55,32 +56,31 @@ export default function Custom2() {
        .catch(err=> console.log(err));
     }
 
-    
-    
     function handleSubmit(e){
       e.preventDefault();
 
       setFormDisable(true);
-        if(editId!=null){
-          AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
-          .then((res)=> {
-            if(res.status == 200 || res.status == 201){
-              setAlertSuccess(true)
-              resetForm()
-            }
-          })
-          .catch(err=> console.log(err));
-        }// when user submits a new entry
-        else{
-          AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
-          .then((res)=> {
-            if(res.status == 200 || res.status == 201){
-              setAlertSuccess(true)
-              resetForm()
-            }
-          })
-          .catch(err=> console.log(err));
-        }
+      //Handle Edit custom entry
+      if(editId!=null){
+        AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
+        .then((res)=> {
+          if(res.status == 200 || res.status == 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
+        .catch(err=> console.log(err));
+      }// Handle submit a new entry
+      else{
+        AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
+        .then((res)=> {
+          if(res.status == 200 || res.status == 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
+        .catch(err=> console.log(err));
+      }
       
     }
     
@@ -235,19 +235,17 @@ export default function Custom2() {
                       </Grid>              
                     </Grid>
               
-                  <Button
-                    disabled={formDisable}
-                    type="submit"
-                    variant="contained"
-                    className={classes.submit}
-                    alignItems='center'
-                    color='primary'
-                    fullWidth
-                    onClick={event=>handleSubmit(event)}
-                  >
-                    Save to my {sectionTitleFinal? sectionTitleFinal: "Custom"} Section
-                    {formDisable?<CircularProgress color="secondary" size={20}/>:null}
-                  </Button>
+                  <Grid item xs={12} sm={12} style={{marginTop:'4%'}}>
+                    <Button
+                      disabled={formDisable}
+                      type="submit"
+                      variant="contained" 
+                      color="secondary" 
+                      onClick={event=>handleSubmit(event)}>
+                      Save to my {sectionTitleFinal? sectionTitleFinal: "Custom"} Section
+                      {formDisable?<CircularProgress color="secondary" size={20}/>:null}
+                    </Button>
+                  </Grid>
                 </form>
               </div>      
             </Container>

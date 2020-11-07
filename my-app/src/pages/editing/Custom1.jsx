@@ -25,12 +25,11 @@ export default function Custom1() {
       sectionTitle:"",
       type: "custom1",
       itemTitle: "",
-      itemSubTitle:"",
-      description:"",
+      itemSubTitle: "",
+      description: ""
     }
 
     const [fields, setFields] = React.useState(initialState);
-
     const [formDisable,setFormDisable]= React.useState(false);
     const [sectionTitleFinal, setSectionTitle]= React.useState("");
     const [existingData, setExistingData]= React.useState([]);
@@ -43,6 +42,7 @@ export default function Custom1() {
       })
     }
 
+    //Create Section title 
     function handleTitleSubmit(event){
       event.preventDefault();
       setFormDisable(true);
@@ -56,59 +56,64 @@ export default function Custom1() {
        .catch(err=> console.log(err));
     }
 
-    
-    
+    //Handle form submit
     function handleSubmit(e){
       e.preventDefault();
 
+      //Disable form when handling request
       setFormDisable(true);
-        if(editId!=null){
-          AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
-          .then((res)=> {
-            if(res.status == 200 || res.status == 201){
-              setAlertSuccess(true)
-              resetForm()
-            }
-          })
-          .catch(err=> console.log(err));
-        }// when user submits a new entry
-        else{
-          AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
-          .then((res)=> {
-            if(res.status == 200 || res.status == 201){
-              setAlertSuccess(true)
-              resetForm()
-            }
-          })
-          .catch(err=> console.log(err));
-        }
-      
+
+      //Edits an entry
+      if(editId!=null){
+        AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
+        .then((res)=> {
+          if(res.status == 200 || res.status == 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
+        .catch(err=> console.log(err));
+      }//User submits a new entry
+      else{
+        AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
+        .then((res)=> {
+          if(res.status == 200 || res.status == 201){
+            setAlertSuccess(true)
+            resetForm()
+          }
+        })
+        .catch(err=> console.log(err));
+      }
     }
     
+    //Sets custom title
     function resetSectionTitle(title){
       setSectionTitle(title);
       setFormDisable(false);
     }
     
+    //Reset form
     function resetForm(){
       setFormDisable(false);
       setFields({ ...initialState });
       setEditId(null);
-      // setWarning(false);
     }
 
+    //Get section title
     function getSectionTitle(){
       AxiosInstance.get('edit/custom/sectiontitle/custom1',config)
       .then(res=>setSectionTitle(res.data.sectionTitle))
       .catch(error=>console.log(error));
     }
 
+     //Get entries
     function getSectionItems(){
       AxiosInstance.get('edit/custom',config)
       .then(res=>getCustomOne(res.data))
       .catch(error=>console.log(error));
     }
 
+    //Get custom data
     function getCustomOne(res){
       var customOne=[]
       for (var i = 0, len = res.length; i < len; i++) {
@@ -119,6 +124,7 @@ export default function Custom1() {
       setExistingData(customOne);
     }
 
+    //Handle entry edits
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/custom/"+idReceived,config)
@@ -129,6 +135,7 @@ export default function Custom1() {
       setEditId(idReceived);
     }
 
+    //Handle entry deletion
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.delete("/edit/custom/"+idReceived,config)
@@ -236,19 +243,18 @@ export default function Custom1() {
                       </Grid>              
                     </Grid>
               
-                  <Button
-                    disabled={formDisable}
-                    type="submit"
-                    variant="contained"
-                    className={classes.submit}
-                    alignItems='center'
-                    color='primary'
-                    fullWidth
-                    onClick={event=>handleSubmit(event)}
-                  >
-                    Save to my {sectionTitleFinal? sectionTitleFinal: "Custom"} Section
-                    {formDisable?<CircularProgress color="secondary" size={20}/>:null}
-                  </Button>
+                 
+                  <Grid item xs={12} sm={12} style={{marginTop:'4%'}}>
+                    <Button
+                      disabled={formDisable}
+                      type="submit"
+                      variant="contained" 
+                      color="secondary" 
+                      onClick={event=>handleSubmit(event)}>
+                      Save to my {sectionTitleFinal? sectionTitleFinal: "Custom"} Section
+                      {formDisable?<CircularProgress color="secondary" size={20}/>:null}
+                    </Button>
+                  </Grid>
                 </form>
               </div>      
             </Container>

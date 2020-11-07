@@ -25,7 +25,6 @@ import SuccessAlert from '../../components/EditDialog/index';
 export default function Experience() {
   const {state} = useContext(StoreContext);
   const classes = useStyles();
-
   const config = {
     headers: { Authorization: `Bearer ${state.user.token}` }
   };
@@ -303,20 +302,17 @@ export default function Experience() {
                         </Grid>
                         
                     </Grid>
-                    <Grid xs={12} sm={12}>
+                    <Grid item xs={12} sm={12} style={{marginTop:'2%'}}>
                         <Button
-                        disabled={formDisable}
-                        type="submit"
-                        variant="contained"
-                        className={classes.submit}
-                        fullWidth
-                        color='primary'
-                        onClick={event=>handleSubmit(event)}                
-                        >
-                        Save to my Experience
-                        {formDisable?<CircularProgress color="secondary" size={20}/>:null}
+                          disabled={formDisable}
+                          type="submit"
+                          variant="contained" 
+                          color="secondary" 
+                          onClick={event=>handleSubmit(event)}>
+                          Save to my Experience  
+                          {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
-                    </Grid>
+                      </Grid>
                   </form>
                   </div>      
               </Container>
