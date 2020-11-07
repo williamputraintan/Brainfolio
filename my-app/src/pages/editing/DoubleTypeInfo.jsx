@@ -148,11 +148,14 @@ export default function DoubleTypeInfo(props) {
       setOpen(false);
   }
 
-  function handleDataValue(key,value,res){
-    if(key==="startDate"){
-        return value.substring(3,15);
-    } else if(key==="endDate" && res.hasOwnProperty('onGoing') && !res.onGoing){
-        return value.substring(3,15);
+  function handleDate(date){
+    var formatDate = date.substring(0,10);
+    return formatDate;
+}
+
+function handleValue(key,value,res){
+    if(key==="startDate" || key==="endDate"){
+        return handleDate(value);
     } else{
         return value;
     }
@@ -189,7 +192,7 @@ export default function DoubleTypeInfo(props) {
               <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}}>
                     <div style={{float:'right'}}> <EditButton id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback}/> </div>
-                      {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleDataValue(key,value,res)} </div>))}
+                      {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>))}
                     </ListItem> 
                     {++count < tab1List.length? <Divider/>:null}
                     </div>
@@ -202,7 +205,7 @@ export default function DoubleTypeInfo(props) {
                     <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                     <ListItem style={{ display:'inline'}}>
                     <div style={{float:'right'}}> <EditButton id={res._id} toEdit={myEditCallback} toDelete={myDeleteCallback} /> </div>
-                      {Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {handleDataValue(key,value,res)} </div>)) }
+                      {Object.entries(res).map(([key,value],i) => (checkUnwanted(key) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>)) }
                     </ListItem> 
                     {++count < tab2List.length? <Divider/>:null}
                     </div>
