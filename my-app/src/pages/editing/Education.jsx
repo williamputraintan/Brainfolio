@@ -273,20 +273,17 @@ export default function Education() {
                             label="On Going"
                           />
                         </Grid>
-                    <Grid xs={12} sm={12}>
+                      <Grid item xs={12} sm={12} style={{marginTop:'1%'}}>
                         <Button
-                        disabled={formDisable}
-                        type="submit"
-                        variant="contained"
-                        className={classes.submit}
-                        fullWidth
-                        color='primary'
-                        onClick={event=>handleSubmit(event)}                
-                        >
-                        Save to my Education     
-                        {formDisable?<CircularProgress color="secondary" size={20}/>:null}
+                          disabled={formDisable}
+                          type="submit"
+                          variant="contained" 
+                          color="secondary" 
+                          onClick={event=>handleSubmit(event)}>
+                          Save to my Education  
+                          {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
-                    </Grid>
+                      </Grid>
                     </Grid>
                   </form>
                   </div>      

@@ -14,10 +14,10 @@ export default function cardInfo(props){
     const fieldNames = props.fieldNames;
     var data = props.datalist;
 
-    //used in Divider usage
+    //Used in Divider usage
     var count = 0;
 
-    //disregard unwanted props
+    //Disregard unwanted props
     function checkUnwanted(key,value){
         return (key!=="_id" &&
          key!=="username" && 
@@ -30,13 +30,12 @@ export default function cardInfo(props){
          key !== "contributor");
     }
 
-
-
-    //pass to parent component
+    //Pass edit id to parent component
     const myEditCallback = (idReceived) => {
         props.toEdit(idReceived)
     }
 
+    //Pass delete id to parent component
     const myDeleteCallback = (idReceived) => {
         props.toDelete(idReceived)
     }
@@ -62,18 +61,16 @@ export default function cardInfo(props){
             </Typography>
             <List>
                 {data.map(res=>(
-                    
-                <div>
-                    {/* EndDate value onGoing when onGoing is checked */}
-                    <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
-                    <ListItem style={{ display:'inline'}}>
-                    <div style={{float:'right'}}> <EditButton id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
-                        {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>))}
-                    </ListItem> 
-                    {++count < data.length? <Divider/>:null}
-                </div>
+                    <div>
+                        {/* EndDate value onGoing when onGoing is checked */}
+                        <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
+                        <ListItem style={{ display:'inline'}}>
+                        <div style={{float:'right'}}> <EditButton id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
+                            {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)} </div>))}
+                        </ListItem> 
+                        {++count < data.length? <Divider/>:null}
+                    </div>
                 ))}
-                
             </List>
         </CardContent>
     </Card>)

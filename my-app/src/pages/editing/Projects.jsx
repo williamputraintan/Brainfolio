@@ -479,19 +479,18 @@ export default function Projects() {
                           />
                       </Grid> 
                   </Grid>
-                  <Grid xs={12} sm={12}>
-                      <Button
+
+                  <Grid item xs={12} sm={12} style={{marginTop:'4%'}}>
+                    <Button
                       disabled={(!isYoutubeUrl(fields.youtubeLink)) || errorFileMessage || isLoading}
                       type="submit"
-                      variant="contained"
-                      className={classes.submit}
-                      fullWidth
-                      color='primary'
+                      variant="contained" 
+                      color="secondary" 
                       onClick={event=>handleFormSubmit(event) }
                       >
-                      Save to my Projects
+                      Save to my Projects  
                       {isLoading?<CircularProgress color="secondary" size={20}/>:null}
-                      </Button>
+                    </Button>
                   </Grid>
                 </form>
               </div>      
