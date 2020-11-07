@@ -3,12 +3,12 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import AxiosInstance from '../../utils/axios';
 
 export default function EditButton(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   var id = props.id;
 
+  //handle option button click
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -19,11 +19,13 @@ export default function EditButton(props) {
     handleClose();
   }
 
+  //props pass to parent
   const handleDelete = ()=>{
     props.toDelete(id)
     handleClose();
   }
 
+  //close option button
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -32,19 +34,19 @@ export default function EditButton(props) {
     <div>
         <Button> 
             <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                Open Menu
+              Open Menu
             </MoreHorizIcon>
         </Button> 
         <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-            <MenuItem onClick={handleEdit}>Edit</MenuItem>
-            <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        </Menu>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+      </Menu>
     </div>
   );
 }

@@ -39,6 +39,14 @@ export default function Skills(){
     const [formDisable,setFormDisable]= React.useState(false);
     const [warning,setWarning] = React.useState(false);
 
+    //check for successfull request
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
+
+    //handle field changes
     function onInputChange(e){
       setFields({
         ...fields,
@@ -46,17 +54,19 @@ export default function Skills(){
       })
     }
     
+    //make sure fields are correct
     function validInputs(){
       return (fields.name!=="")
     }
 
+    //handle fields request
     function handleSubmit(e){
       e.preventDefault();
       
       var finalFields={ 
         username:state.user.username,
-        ...fields}
-        console.log(finalFields);
+        ...fields
+      }
 
       if(validInputs()===true){
         //disables form until request complete
@@ -87,12 +97,14 @@ export default function Skills(){
       }
     }
 
+    //get user's skills
     function getExistingSkills(){
       AxiosInstance.get("/edit/skills/",config)
       .then(res=> res? separateType(res.data): null)
       .catch(error=>console.log(error))
     }
 
+    //separate skills to sections
     function separateType(res){
       var softData=[];
       var techData=[]
@@ -105,9 +117,9 @@ export default function Skills(){
       }
       setExistingSoft(softData);
       setExistingTech(techData);
-  }
- 
+    }
 
+    //reset fields form
     function resetForm(){
       setFormDisable(false);
       setFields(initialState);
@@ -115,6 +127,7 @@ export default function Skills(){
       setWarning(false);
     }
 
+    // handle edit entry
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/skills/"+idReceived,config)
@@ -125,6 +138,7 @@ export default function Skills(){
       setEditId(idReceived);
     }
 
+    //handle delete entry
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.delete("/edit/skills/"+idReceived,config)
@@ -136,10 +150,7 @@ export default function Skills(){
     useEffect(() => {
      getExistingSkills();
     },[formDisable,editId]);
-    const [alertSuccess, setAlertSuccess] = React.useState(false);
-    function closeAlert(){
-      setAlertSuccess(false);
-    }
+  
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg">
@@ -154,46 +165,46 @@ export default function Skills(){
                   tab1List={existingTech} tab2List={existingSoft} 
                   fieldNames={skillsFields}
                   path={'/edit/skills/'}
-                  toEdit={myEditCallback} toDelete={myDeleteCallback}/></Hidden>
+                  toEdit={myEditCallback} toDelete={myDeleteCallback}/>
+              </Hidden>
             </Container> 
 
-          <Container component="main" maxWidth="lg" className={classes.formContainer}>
-            <div className={classes.paper}>
-              {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
-              <form className={classes.form} noValidate>
-                <Grid container spacing={3}> 
-                  <Grid item xs={12} sm={12}>
-                    <div className={classes.field}> Category *</div>
-                    <RadioGroup 
-                      name="category" 
-                      error = {(fields.category)===""}  
-                      helperText={(fields.category)!==""?null:"Choice Required"}  
-                      disabled={formDisable} 
-                      value={fields.category} 
-                      onChange={onInputChange}
-                      >
-                        <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
-                        <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
-                    </RadioGroup>      
-                  </Grid>
+            <Container component="main" maxWidth="lg" className={classes.formContainer}>
+              <div className={classes.paper}>
+                {warning?<Alert severity="error">Incomplete/Invalid fields input!</Alert>:null}
+                <form className={classes.form} noValidate>
+                  <Grid container spacing={3}> 
                     <Grid item xs={12} sm={12}>
-                        <div className={classes.field}> Enter your Skill *</div>
-                        <TextField
-                        disabled={formDisable}
-                        name="name"
-                        variant="outlined"
-                        fullWidth
-                        placeholder="Cooperative Team member"
-                        multiline
-                        rows={2}
-                        value={fields.name}
-                        onChange={onInputChange}    
-                        error = {(fields.name)===""}  
-                        helperText={(fields.name)!==""?null:"Incomplete entry"}                
-                        />
+                      <div className={classes.field}> Category *</div>
+                      <RadioGroup 
+                        name="category" 
+                        error = {(fields.category)===""}  
+                        helperText={(fields.category)!==""?null:"Choice Required"}  
+                        disabled={formDisable} 
+                        value={fields.category} 
+                        onChange={onInputChange}
+                        >
+                          <FormControlLabel value="Technical" control={<Radio />} label="Technical" />
+                          <FormControlLabel value="Soft" control={<Radio />} label="Soft" />
+                      </RadioGroup>      
                     </Grid>
-                    
-                    <Grid item xs={12} sm={12} style={{marginTop:'2%'}}>
+                      <Grid item xs={12} sm={12}>
+                          <div className={classes.field}> Enter your Skill *</div>
+                          <TextField
+                          disabled={formDisable}
+                          name="name"
+                          variant="outlined"
+                          fullWidth
+                          placeholder="Cooperative Team member"
+                          multiline
+                          rows={2}
+                          value={fields.name}
+                          onChange={onInputChange}    
+                          error = {(fields.name)===""}  
+                          helperText={(fields.name)!==""?null:"Incomplete entry"}                
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={12} style={{marginTop:'2%'}}>
                         <Button
                           disabled={formDisable}
                           type="submit"
@@ -203,11 +214,11 @@ export default function Skills(){
                           Save to my Skills  
                           {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
-                      </Grid>
-                  </Grid>
-                </form>
-              </div>
-            </Container>
+                       </Grid>
+                    </Grid>
+                  </form>
+                </div>
+              </Container>
           </Container>
         </div>
     )

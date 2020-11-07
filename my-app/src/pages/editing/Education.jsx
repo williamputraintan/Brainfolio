@@ -18,8 +18,8 @@ import CardInfo from './CardInfo.jsx';
 import PopUpInfo from './PopUpInfo';
 import {useStyles} from './Styles.js';
 import SuccessAlert from '../../components/EditDialog/index';
-export default function Education() {
 
+export default function Education() {
     const {state} = useContext(StoreContext);
     const classes = useStyles();
     const config = {
@@ -30,8 +30,7 @@ export default function Education() {
       degree: "",
       institution: "",
       location:"",
-      score:"",
-      
+      score:""
     }
     
     const [fields, setFields] = React.useState(initialState);
@@ -45,30 +44,43 @@ export default function Education() {
     const [startDate,setStartDate] =  React.useState(new Date());
     const [endDate,setEndDate] =  React.useState(new Date());
 
+    //successful request
+    const [alertSuccess, setAlertSuccess] = React.useState(false);
+
+    //handle start date changes
     function handleStartDate(date){
       setStartDate(date);
     }
 
+    //handle end date changes
     function handleEndDate(date){
       setEndDate(date);
     }
 
+    //handle request alert 
+    function closeAlert(){
+      setAlertSuccess(false);
+    }
+
+    //handle field changes
     function onInputChange(e){
       setFields({
         ...fields,
         [e.target.name]: e.target.value
       })
-      console.log(fields);
     }
 
+    //handle on going changes
     function handleOnGoing(event){
       setOnGoing(event.target.checked);
     };
 
+    //check all inputs
     function validInputs(){
       return (fields.degree!=="" && fields.institution!=="" && startDate!==new Date(null))
     }
   
+    //handle form submit
     function handleSubmit(e){
       e.preventDefault();
   
@@ -98,7 +110,6 @@ export default function Education() {
           AxiosInstance.post('/edit/education',finalFields,config)
           .then((res)=> {
             if(res.status == 200 || res.status == 201){
-
               setAlertSuccess(true)
               resetForm()
             }
@@ -109,10 +120,9 @@ export default function Education() {
         //alert here incomplete fields
         setWarning(true);
       }
-      
     }
 
-
+    //get user's education 
     function getExistingEducation(){
       //using username in backend 
       AxiosInstance.get("/edit/education",config)
@@ -120,6 +130,7 @@ export default function Education() {
       .catch(error=>console.log(error))
     }
 
+    //reset form fields
     function resetForm(){
       setFormDisable(false)
       setFields({ ...initialState });
@@ -127,7 +138,7 @@ export default function Education() {
       setWarning(false);
     }
 
-    //props from children
+    //handle edit entry
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/education/"+idReceived,config)
@@ -141,6 +152,7 @@ export default function Education() {
       setEditId(idReceived);
     }
 
+    //handle delete entry
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       console.log(idReceived);
@@ -149,17 +161,12 @@ export default function Education() {
          getExistingEducation():null)
       .catch(error=>
         console.log(error));
-     
     }
-
 
     useEffect(() => {
       getExistingEducation();
     },[formDisable,editId]);
-    const [alertSuccess, setAlertSuccess] = React.useState(false);
-    function closeAlert(){
-      setAlertSuccess(false);
-    }
+
     return (
       <div style={{padding:'0 5%'}}>
           <Container component="main" maxWidth="lg" >
