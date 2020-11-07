@@ -80,7 +80,7 @@ export default function Projects() {
         console.log(responseData)
         setAllProjects(responseData);
       })
-    },[isLoading]);
+    },[isLoading, allProjects]);
     function deleteProject(projectId){
       AxiosInstance.delete(
         '/projects/' + projectId,
