@@ -3,6 +3,7 @@ import { StoreContext } from '../../context/store.context';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import Custom2ListItem from "../../components/Portfolio/Custom2ListItem"
 
 import AxiosInstance from "../../utils/axios";
@@ -93,30 +94,23 @@ function Custom2Controller(props) {
         loading? <SkeletonCard/>:
         custom.map((value,key) => {
           return(
-            <Custom2ListItem key={key} data={value}/>
+            <>
+            {
+              (key === custom.length - 1) ?
+              <Custom2ListItem key={key} data={value}/>:
+              <>
+                <Custom2ListItem key={key} data={value}/>
+                <Divider />
+              </>
+                
+            }
+            </>
+
+            // <Custom1ListItem key={key} data={value}/>
           )
         })
       }
-    </CardAccent>
-    
-    // <CardAccent className={classes.root} color={accentColor}>
-    //   <Typography className={classes.label} variant="h4">
-    //     {sectionTitle}
-    //   </Typography>
-
-      
-    //    <Typography className={classes.title} variant="h3">
-    //         {"title"}
-    //     </Typography>
-    //     <Typography variant="subtitle1" gutterBottom>
-    //       {"subtitile"}
-    //     </Typography>
-
-    //   <Typography className={classes.desc} variant="body1">
-    //     {"Body"}
-    //   </Typography>
-
-    // </CardAccent>
-  )
+      </CardAccent>
+    )
 }
 export default Custom2Controller

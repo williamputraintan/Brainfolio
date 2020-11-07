@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
 import Custom1ListItem from "../../components/Portfolio/Custom1ListItem"
+import Divider from '@material-ui/core/Divider';
 
 import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
@@ -94,30 +95,23 @@ function Custom1Controller(props) {
         loading? <SkeletonCard/>:
         custom.map((value,key) => {
           return(
-            <Custom1ListItem key={key} data={value}/>
+            <>
+            {
+              (key === custom.length - 1) ?
+              <Custom1ListItem key={key} data={value}/>:
+              <>
+                <Custom1ListItem key={key} data={value}/>
+                <Divider />
+              </>
+                
+            }
+            </>
+
+            // <Custom1ListItem key={key} data={value}/>
           )
         })
       }
     </CardAccent>
-    
-    // <CardAccent className={classes.root} color={accentColor}>
-    //   <Typography className={classes.label} variant="h4">
-    //     {sectionTitle}
-    //   </Typography>
-
-      
-    //    <Typography className={classes.title} variant="h3">
-    //         {"title"}
-    //     </Typography>
-    //     <Typography variant="subtitle1" gutterBottom>
-    //       {"subtitile"}
-    //     </Typography>
-
-    //   <Typography className={classes.desc} variant="body1">
-    //     {"Body"}
-    //   </Typography>
-
-    // </CardAccent>
   )
 }
 export default Custom1Controller

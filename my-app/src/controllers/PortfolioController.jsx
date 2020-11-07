@@ -28,8 +28,8 @@ const ExperienceController = React.lazy(() => import('./Porfolio/ExperienceContr
 const EducationController = React.lazy(() => import('./Porfolio/EducationController'));
 const ProjectController = React.lazy(() => import('./Porfolio/ProjectController'));
 const SkillController = React.lazy(() => import('./Porfolio/SkillController'));
-
-
+const Custom1Controller = React.lazy(() => import('./Porfolio/Custom1Controller'));
+const Custom2Controller = React.lazy(() => import('./Porfolio/Custom2Controller'));
 
 // images
 const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
@@ -250,6 +250,9 @@ function PortfolioController() {
                   <EducationController user={lastPath}/>
                   <SkillController user={lastPath}/>
                   <ProjectController user={lastPath}/>
+                  <Custom1Controller user={lastPath}/>
+                  <Custom2Controller user={lastPath}/>
+
                 </Container>
               </section>
             </Grid>
