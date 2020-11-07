@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
@@ -64,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "42px",
     width: 240,
     boxShadow: theme.shadows[2],
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.secondary,
     padding: theme.spacing(1),
     cursor: "pointer",
     zIndex: 999,
@@ -77,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
     display:"flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: theme.palette.background.paper,
     [theme.breakpoints.down('xs')]: {
       flexGrow: 1
     },

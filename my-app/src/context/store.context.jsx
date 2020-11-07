@@ -1,4 +1,3 @@
-import { FastfoodOutlined } from "@material-ui/icons";
 import React, { useReducer, createContext } from "react";
 import userReducer from "./reducers/store.reducer";
 

@@ -154,13 +154,9 @@ function ContactForm() {
           }
       })
       .then(res => {
-        if(res.status == 200 || res.status == 201){
+        if(res.status === 200 || res.status === 201){
           setAlertSuccess(true)
-          console.log(res)
-          dispatch({
-            type: UPDATE_USER,
-            payload: res
-          })
+          alert("Details updated will be available on next Log In")
         }
       })
       .catch(err => {

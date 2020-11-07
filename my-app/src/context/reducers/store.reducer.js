@@ -9,10 +9,11 @@ import {
   UPDATE_USER
 } from "../constants";
 
+
 const storeReducer = (state, {type, payload}) => {
   switch (type) {
     case UPDATE_USER:{
-      return {...state, user: payload}
+      return {...state, user: payload ,}
     }
     case SET_MESSAGE: 
       return {...state, message:{...state.message, content: payload, show: true}}
