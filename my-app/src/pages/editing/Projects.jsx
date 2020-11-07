@@ -337,7 +337,7 @@ export default function Projects() {
                               type="date"
                               name="startDate"
                               onChange={onFormInputChange} 
-                              value={convertISOtoYMD(fields.startDate)}       
+                              // value={convertISOtoYMD(fields.startDate)}       
                             />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -350,7 +350,7 @@ export default function Projects() {
                               type="date"
                               name="endDate"
                               onChange={onFormInputChange} 
-                              value={convertISOtoYMD(fields.endDate)}        
+                              // value={convertISOtoYMD(fields.endDate)}        
                             />
                       </Grid>
 
