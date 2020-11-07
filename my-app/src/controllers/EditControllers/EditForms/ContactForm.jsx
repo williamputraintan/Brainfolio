@@ -31,6 +31,7 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Axios from "axios";
+import SuccessAlert from '../../../components/EditDialog/index'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -151,7 +152,10 @@ function ContactForm() {
           }
       })
       .then(res => {
-        console.log(res)
+        if(res.status == 200 || res.status == 201){
+          setAlertSuccess(true)
+          console.log(res)
+        }
       })
       .catch(err => {
         console.log(err);
@@ -192,9 +196,13 @@ function ContactForm() {
       backgroundFile: e.target.files[0]
     }) 
   }
-
+  const [alertSuccess, setAlertSuccess] = React.useState(false);
+  function closeAlert(){
+    setAlertSuccess(false);
+  }
   return (
     <div>
+      <SuccessAlert isOpen={alertSuccess} closeAlert={closeAlert}/>
       <Grid
         container
         direction="row"
