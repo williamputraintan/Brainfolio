@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
     '& > svg':{
       height: "100%",
-      width: "100%"
+      width: "100%",
+      maxHeight:"48vh"
     }
   },  
   landingTitle:{
@@ -103,7 +104,7 @@ function Hero({scrollY}) {
 
   return (
     <section className={classes.root}>
-       <Grid container direction={matches? 'row': 'column-reverse'} className={classes.container}>
+       <Grid container direction={matches? 'row':''} className={classes.container}>
          
           <Grid item xs={12} md={6} className={classes.content}>
             <Typography component="div" className={classes.titleWrapper}>
