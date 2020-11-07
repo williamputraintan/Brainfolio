@@ -21,7 +21,6 @@ const Projects = React.lazy(() => import('../../pages/editing/Projects'));
 const Custom1 = React.lazy(() => import('../../pages/editing/Custom1'));
 const Custom2 = React.lazy(() => import('../../pages/editing/Custom2'));
 const ContactForm = React.lazy(() => import("./EditForms/ContactForm"));
-const Overview = React.lazy(() => import("../../pages/editing/Overview"));
 
 //Data display
 const ContactList =  React.lazy(() => import("./DataDisplay/ContactList"));
@@ -76,7 +75,6 @@ function FormDataLayout(props) {
                   <Route exact path={Paths.EDIT_PROJECTS} component={Projects}/>
                   <Route exact path={Paths.EDIT_CUSTOM1} component={Custom1}/>
                   <Route exact path={Paths.EDIT_CUSTOM2} component={Custom2}/>
-                  {/* <Route exact path={Paths.EDIT_OVERVIEW} component={Overview}/> */}
                 </Switch>
           
             </Grid>

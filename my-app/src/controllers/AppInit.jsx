@@ -24,9 +24,6 @@ const AuthenticatedRoute = React.lazy(() => import('../controllers/Authenticated
 const EditingPage = React.lazy(() => import('../pages/EditPage.jsx'));
 const ProjectDetail =  React.lazy(() => import('../pages/ProjectPage.jsx'));
 
-
-
-
 /** Component to load stuff before rendering UI
  *  App -> Load theme -> AppLoader -> Load user fromDatabase ->...
  *  Also to ensure dark mode is applied before render

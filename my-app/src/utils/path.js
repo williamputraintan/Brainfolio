@@ -29,7 +29,6 @@ const Paths = {
   EDIT_PROJECTS:app + editBaseurl + "/projects",
   EDIT_CUSTOM1: app +editBaseurl + "/custom1",
   EDIT_CUSTOM2: app +editBaseurl + "/custom2",
-  EDIT_OVERVIEW: app +editBaseurl + "/overview",
 }
 
 export default Paths

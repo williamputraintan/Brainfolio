@@ -182,13 +182,11 @@ export default function Custom1() {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <Button
-                          type="submit"
-                          variant="contained"
-                          className={classes.submit}
-                          alignItems='center'
-                          color='primary'
-                          onClick={event=>handleTitleSubmit(event)}
-                        >
+                        disabled={formDisable}
+                        type="submit"
+                        variant="contained" 
+                        color="secondary" 
+                        onClick={event=>handleTitleSubmit(event)}>
                           Save Title
                           {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
