@@ -161,7 +161,8 @@ function PortfolioController() {
     email:"",
     github: "",
     backgroundImageName: "",
-    profileImageName: ""
+    profileImageName: "",
+    fullname: ""
   })
 
   React.useEffect(() => {
@@ -177,6 +178,7 @@ function PortfolioController() {
 
         if(data){
           setProfile({
+            fullname: user.profile.fullname,
             username: user.username,
             filename: profileData.fullname,
             title: profileData.title,
@@ -220,7 +222,7 @@ function PortfolioController() {
               </Grid>
               <Grid container item xs={12} sm={8} justify="flex-start">
                 <div className={classes.textWrapper}>
-                  <Typography className={classes.name} color="inherit" variant="h3"> {profile.username}</Typography>
+                  <Typography className={classes.name} color="inherit" variant="h3"> {profile.fullname||profile.username}</Typography>
                   {profile.title && <Typography className={classes.caption} variant="h5"> {profile.title}</Typography>}
                   <br/>
                   {profile.address && <Typography className={classes.details} > Location: {profile.address} </Typography>}

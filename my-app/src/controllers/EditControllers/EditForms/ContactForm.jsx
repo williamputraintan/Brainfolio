@@ -31,7 +31,9 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Axios from "axios";
-import SuccessAlert from '../../../components/EditDialog/index'
+import SuccessAlert from '../../../components/EditDialog/index';
+
+import { UPDATE_USER } from "../../../context/constants";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -103,7 +105,7 @@ const getLastPath = (path) => path.split("/").slice(-1);
 // TODO: Validation and Hooks
 function ContactForm() {
   const classes = useStyles();
-  const { state } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
 
   const [fields, setFields] = React.useState(initialState);
   const { register, errors, handleSubmit } = useForm();
@@ -155,6 +157,10 @@ function ContactForm() {
         if(res.status == 200 || res.status == 201){
           setAlertSuccess(true)
           console.log(res)
+          dispatch({
+            type: UPDATE_USER,
+            payload: res
+          })
         }
       })
       .catch(err => {
