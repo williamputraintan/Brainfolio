@@ -90,8 +90,21 @@ export default function DisplayAllProjectsController() {
 
     const classes = useStyles();
     const {state} = useContext(StoreContext);
-    
+    const img = [
+      'https://images.pexels.com/photos/2179483/pexels-photo-2179483.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/2179483/pexels-photo-2179483.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/2179483/pexels-photo-2179483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/2179483/pexels-photo-2179483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w',
+      'https://images.pexels.com/photos/5253574/pexels-photo-5253574.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+      'https://images.pexels.com/photos/2317711/pexels-photo-2317711.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/2317711/pexels-photo-2317711.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/2317711/pexels-photo-2317711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/2317711/pexels-photo-2317711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w',
+      'https://images.pexels.com/photos/2156881/pexels-photo-2156881.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+      'https://images.pexels.com/photos/2317710/pexels-photo-2317710.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+      'https://images.pexels.com/photos/983200/pexels-photo-983200.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+    ]
+    function getImg(index){
 
+
+      const num = index%(img.length);
+      return img[num]
+
+    }
     //config header
     const config = {
         headers: { Authorization: `Bearer ${state.user.token}` }
@@ -157,10 +170,10 @@ export default function DisplayAllProjectsController() {
               </div>
               <div className={classes.sec2root}>
                 <GridList className={classes.gridList} cols={3.5} style={{height:'auto'}}>
-                  {allProjects.map((item ) => (
+                  {allProjects.map((item, index ) => (
                     <GridListTile style={{height:'250px'}} >
                       <div >
-                        <CardProject data={item}/>
+                        <CardProject data={item} img={getImg(index)}/>
                       </div>
                     </GridListTile>
                   ))}

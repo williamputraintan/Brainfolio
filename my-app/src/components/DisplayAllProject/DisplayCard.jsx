@@ -28,8 +28,8 @@ export default function CardProject(props) {
     const username = state.user?.username
     const link = "https://brainfolio.herokuapp.com/project/" + data._id
 
-    const img = 'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg';
-    
+    // const img = 'https://images.pexels.com/photos/7369/startup-photos.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500%201x,%20https://images.pexels.com/photos/7369/startup-photos.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500%202x';
+    const img = props.img
     function handleClick(){     
       history.push(`project/${username}/${data._id}`)
     }
