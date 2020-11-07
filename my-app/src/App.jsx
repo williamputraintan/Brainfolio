@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense}  from 'react';
+import React, {Suspense}  from 'react';
 
 // Imports
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -19,16 +19,13 @@ import LandingPage from "./pages/Landing";
 import DomTreeLoader from "./common/DOMTreeLoading";
 import Page404 from "./common/404";
 
-
 const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
-
 
 function App() {
   
   // const {} = React.useContext(UserContext);
   const {state} = React.useContext(StoreContext);
   const darkMode = state.user?.darkMode;
-
 
   return (
     <Suspense fallback={<DomTreeLoader/>}>

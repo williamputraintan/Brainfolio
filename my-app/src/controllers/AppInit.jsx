@@ -17,7 +17,6 @@ import Paths from "../utils/path";
 
 
 //Lazy Import
-// const AboutUs = React.lazy(() => import('../pages/AboutUs.jsx'));
 const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
