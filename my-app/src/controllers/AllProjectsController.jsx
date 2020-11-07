@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     sec2root: {
-      display: 'flex',
+
       flexWrap: 'wrap',
       justifyContent: 'space-around',
       overflow: 'hidden',
@@ -156,7 +156,7 @@ export default function DisplayAllProjectsController() {
                 </Grid>
               </div>
               <div className={classes.sec2root}>
-                <GridList className={classes.gridList} cols={2.5} style={{height:'auto'}}>
+                <GridList className={classes.gridList} cols={3.5} style={{height:'auto'}}>
                   {allProjects.map((item ) => (
                     <GridListTile style={{height:'250px'}} >
                       <div >
