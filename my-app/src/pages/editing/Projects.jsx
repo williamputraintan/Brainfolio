@@ -80,13 +80,15 @@ export default function Projects() {
         console.log(responseData)
         setAllProjects(responseData);
       })
-    },[isLoading, allProjects]);
+    },[isLoading]);
     function deleteProject(projectId){
+      setIsLoading(true)
       AxiosInstance.delete(
         '/projects/' + projectId,
         config
       ).then((response) =>{
         setAllProjects(allProjects.filter(function(value, index, arr){ return value._id !== response._id;}));
+        setIsLoading(false)
       })
     }
     //Change input    
