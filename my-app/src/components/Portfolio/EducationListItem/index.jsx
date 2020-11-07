@@ -35,18 +35,25 @@ function EducationListItem(props) {
   const { data } = props;
   const classes = useStyles();
 
+  function showDate(data) {
+    if (data.startDate && data.endDate) {
+      return(
+        <Typography className={classes.subTitle} variant="body1" gutterBottom>
+          {format(parseISO(data.startDate), "MMMM yyyy")} 
+          &nbsp;&nbsp; - &nbsp;&nbsp; 
+          {format(parseISO(data.endDate), "MMMM yyyy")}
+        </Typography>)
+    }
+    return (<></>)
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.row}>
         <Typography className={classes.title} variant="h4" gutterBottom>
             {data.institution}
         </Typography>
-
-        <Typography className={classes.subTitle} variant="body1" gutterBottom>
-            {/* {format(parseISO(data.startDate), "MMMM yy")} 
-            &nbsp;&nbsp; - &nbsp;&nbsp; 
-            {format(parseISO(data.endDate), "MMMM yy")} */}
-        </Typography>
+        {showDate(data)}
       </div>
     
       <Typography className={classes.subTitle} variant="h4" gutterBottom>

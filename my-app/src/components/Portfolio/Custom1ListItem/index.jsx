@@ -2,11 +2,11 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import { format, parseISO  } from "date-fns";
 
 const useStyles = makeStyles( theme => ({
   root:{
     paddingTop:theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   title:{
     fontWeight: 700,

@@ -17,6 +17,10 @@ const useStyles = makeStyles( theme => ({
     fontWeight: 700,
     fontSize: "1.333rem"
   },
+  date:{
+    fontWeight: 700,
+    fontSize: "1.233rem"
+  },
   subTitle:{
     fontWeight: 700,
     fontSize: "1.2rem"
@@ -59,9 +63,14 @@ function ProjectListItem(props) {
         <Typography className={classes.title} variant="h2">
             {data.title}
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          {/* {`${format(Date.parse(data.startDate), 'MMMM yy')} - ${format(Date.parse(data.endDate), 'MMMM yy')}`} */}
-        </Typography>
+
+        { data.startDate?
+          (<Typography className={classes.subTitle} variant="subtitle1" gutterBottom>
+          {`${format(Date.parse(data.startDate), 'MMMM yyyy')} - ${format(Date.parse(data.endDate), 'MMMM yyyy')}`}
+          </Typography>):
+          <></>
+        }
+
       </div>
 
       <Typography variant="body1">

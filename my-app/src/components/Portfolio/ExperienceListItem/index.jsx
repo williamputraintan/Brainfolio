@@ -9,20 +9,36 @@ const useStyles = makeStyles( theme => ({
     paddingTop:theme.spacing(3),
     // padding: `${theme.spacing(3)}px 0px`,
     "& > *": {
-      marginBottom: theme.spacing(2)
+      // marginBottom: theme.spacing(2)
     }
   },
   title:{
+    fontWeight: 900,
+    fontSize: "1.333rem",
+    margin: theme.spacing(0)
+  },
+  comp:{
     fontWeight: 700,
-    fontSize: "1.333rem"
+    fontSize: "1.133rem",
+    margin: theme.spacing(0)
+  },
+  date:{
+    fontWeight: 400,
+    fontSize: "1.0rem"
   },
   subTitle:{
     fontWeight: 700,
     fontSize: "1.2rem"
   },
+  job:{
+    fontWeight: 700,
+    fontSize: "1.2rem",
+    marginTop: theme.spacing(4)
+  },
   desc:{
     fontWeight: 700,
-    fontSize: "1rem"
+    fontSize: "1rem",
+    marginBottom: theme.spacing(2)
   },
   row: {
     display: "flex",
@@ -58,11 +74,11 @@ function ExperienceListItem(props) {
   return (
     <div className={classes.root}>
       <div className={classes.row}>
-        <Typography className={classes.title} variant="h2">
-            {data.title}
-        </Typography>
+      <Typography className={classes.title} variant="h2">
+          <b>{data.title}</b>
+      </Typography>
         {
-          data.type === "Volunteer"? 
+          data.type === "Work"? 
             <Chip
               className={classes.work}
               label="Work"
@@ -75,17 +91,19 @@ function ExperienceListItem(props) {
             />
         }
       </div>
-      
-      <Typography className={classes.subTitle} variant="h3">
-        {format(parseISO(data.startDate), "MMMM yy")} -  
-        {format(parseISO(data.endDate), "MMMM yy")} 
+      <Typography className={classes.comp} variant="h3">
+            {data.companyName}
+        </Typography>
+      <Typography className={classes.date} variant="h3">
+        {format(parseISO(data.startDate), "MMMM yyyy")} -  
+        {format(parseISO(data.endDate), "MMMM yyyy")} 
       </Typography>
       <Typography className={classes.subTitle} variant="h2">
           {data.name}
       </Typography>
-      <Typography className={classes.subTitle}  variant="h3">
+      <Typography className={classes.job}  variant="h3">
           Job Description:<br/>
-          <Typography variant="body1">
+          <Typography className={classes.desc} variant="body1">
             {data.description}
           </Typography>
       </Typography>
