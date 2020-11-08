@@ -241,7 +241,7 @@ function PortfolioController() {
             </Button>
 
             </Paper>
-            <Grid container item xs={12}>
+            <Grid container item xs={12} wrap='nowrap'>
               {matches && <SectionMenu />}
               <section className={classes.portfolioItems}>
                 <Container maxWidth="lg">
@@ -252,7 +252,6 @@ function PortfolioController() {
                   <ProjectController user={lastPath}/>
                   <Custom1Controller user={lastPath}/>
                   <Custom2Controller user={lastPath}/>
-
                 </Container>
               </section>
             </Grid>
