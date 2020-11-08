@@ -17,6 +17,7 @@ import AxiosInstance from "../utils/axios";
 
 import SkeletonCard from "../common/SkeletonCard";
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { setUserLoading } from '../context/actions/auth.actions';
 
 
@@ -236,10 +237,18 @@ function PortfolioController() {
               color="primary"
               className={classes.button}
               startIcon={<LinkedInIcon />}
+              href= {profile.linkedIn}
             >
               LinkedIn
             </Button>
-
+            <Button
+              color="primary"
+              className={classes.button}
+              startIcon={<GitHubIcon />}
+              href= {profile.github}
+            >
+              Github
+            </Button>
             </Paper>
             <Grid container item xs={12} wrap='nowrap'>
               {matches && <SectionMenu />}
