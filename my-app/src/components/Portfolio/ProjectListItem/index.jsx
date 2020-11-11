@@ -32,6 +32,10 @@ const useStyles = makeStyles( theme => ({
   row: {
     display: "flex",
     justifyContent:"space-between",
+    [theme.breakpoints.down('sm')]: {
+      display: "block",
+      justifyContent: "column",
+    }
   },
   button: {
     marginTop: theme.spacing(4),
