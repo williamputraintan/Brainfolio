@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import EditButton from './EditButton.jsx'
 
+//Pop Up
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -69,41 +70,53 @@ export default function PopupInfo(props) {
     
   const [open, setOpen] = React.useState(false);
 
+  //handle pop up open
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  //handle pop up close
   const handleClose = () => {
     setOpen(false);
   };
 
+  //disregard unwanted fields
   function checkUnwanted(key, value){
     return (key!=="_id" && key!=="username" && key!=="__v" && key!=="onGoing" && value!=="");
   }
 
-  //pass to parent component
+  //pass edit id to parent component
   const myEditCallback = (idReceived) => {
     props.toEdit(idReceived)
     handleClose();
   }
 
+  //pass delete id to parent
   const myDeleteCallback = (idReceived) => {
       props.toDelete(idReceived)
       handleClose();
   }
 
+  //handle date for display
   function handleDate(date){
     var formatDate = date.substring(0,10);
     return formatDate;
 }
 
-function handleValue(key,value,res){
+  //handle value display 
+  function handleValue(key,value,res){
     if(key==="startDate" || key==="endDate"){
         return handleDate(value);
-    } else{
+    } else if(key==='isPublic'){
+        if (value===true){
+            return "Public"
+        }else{
+            return "Private"
+        }
+    }else{
         return value;
     }
-}
-
+  }
 
   return (
     <div>
@@ -122,10 +135,13 @@ function handleValue(key,value,res){
                 <div style={{display:'none'}}>{res.hasOwnProperty('onGoing') && res.onGoing?res.endDate="On Going" :null}</div>
                 <ListItem style={{ display:'inline'}}>
                 <div style={{float:'right'}}><EditButton id={res._id}  toEdit={myEditCallback} toDelete={myDeleteCallback} />  </div>
-                  {Object.entries(res).map(([key,value],i) => (checkUnwanted(key,value) && <div> {fieldNames[key]} : {handleValue(key,value,res)}</div>)) }
+                  {Object.entries(res).map(([key,value],i) => 
+                    (checkUnwanted(key,value) && <div> {fieldNames[key]} : 
+                    {handleValue(key,value,res)}</div>)) 
+                  }
                 </ListItem> 
                 {++count < data.length? <Divider/>:null}
-                </div>
+              </div>
             ))}
           </Typography>
         </DialogContent>

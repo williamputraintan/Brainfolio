@@ -17,6 +17,10 @@ const useStyles = makeStyles( theme => ({
     fontWeight: 700,
     fontSize: "1.333rem"
   },
+  date:{
+    fontWeight: 700,
+    fontSize: "1.233rem"
+  },
   subTitle:{
     fontWeight: 700,
     fontSize: "1.2rem"
@@ -28,6 +32,10 @@ const useStyles = makeStyles( theme => ({
   row: {
     display: "flex",
     justifyContent:"space-between",
+    [theme.breakpoints.down('sm')]: {
+      display: "block",
+      justifyContent: "column",
+    }
   },
   button: {
     marginTop: theme.spacing(4),
@@ -53,15 +61,32 @@ function ProjectListItem(props) {
     }
   }
 
+  function showDate(data) {
+    if (data.startDate && data.endDate && !data.onGoing) {
+      return(
+        <Typography className={classes.subTitle} variant="body1" gutterBottom>
+          {format(parseISO(data.startDate), "MMMM yyyy")} 
+          &nbsp;&nbsp; - &nbsp;&nbsp; 
+          {format(parseISO(data.endDate), "MMMM yyyy")}
+        </Typography>)
+    }else if(data.startDate&& data.onGoing){
+      return(
+      <Typography className={classes.subTitle} variant="body1" gutterBottom>
+      {format(parseISO(data.startDate), "MMMM yyyy")} 
+      &nbsp;&nbsp; - On Going
+    </Typography>)
+    }
+    return (<></>)
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.row}>
         <Typography className={classes.title} variant="h2">
             {data.title}
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          {/* {`${format(Date.parse(data.startDate), 'MMMM yy')} - ${format(Date.parse(data.endDate), 'MMMM yy')}`} */}
-        </Typography>
+        {showDate(data)}
+
       </div>
 
       <Typography variant="body1">

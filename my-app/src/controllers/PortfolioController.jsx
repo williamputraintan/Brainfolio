@@ -17,6 +17,7 @@ import AxiosInstance from "../utils/axios";
 
 import SkeletonCard from "../common/SkeletonCard";
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { setUserLoading } from '../context/actions/auth.actions';
 
 
@@ -28,8 +29,8 @@ const ExperienceController = React.lazy(() => import('./Porfolio/ExperienceContr
 const EducationController = React.lazy(() => import('./Porfolio/EducationController'));
 const ProjectController = React.lazy(() => import('./Porfolio/ProjectController'));
 const SkillController = React.lazy(() => import('./Porfolio/SkillController'));
-
-
+const Custom1Controller = React.lazy(() => import('./Porfolio/Custom1Controller'));
+const Custom2Controller = React.lazy(() => import('./Porfolio/Custom2Controller'));
 
 // images
 const headerImg = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
@@ -236,12 +237,20 @@ function PortfolioController() {
               color="primary"
               className={classes.button}
               startIcon={<LinkedInIcon />}
+              href= {profile.linkedIn}
             >
               LinkedIn
             </Button>
-
+            <Button
+              color="primary"
+              className={classes.button}
+              startIcon={<GitHubIcon />}
+              href= {profile.github}
+            >
+              Github
+            </Button>
             </Paper>
-            <Grid container item xs={12}>
+            <Grid container item xs={12} wrap='nowrap'>
               {matches && <SectionMenu />}
               <section className={classes.portfolioItems}>
                 <Container maxWidth="lg">
@@ -250,6 +259,8 @@ function PortfolioController() {
                   <EducationController user={lastPath}/>
                   <SkillController user={lastPath}/>
                   <ProjectController user={lastPath}/>
+                  <Custom1Controller user={lastPath}/>
+                  <Custom2Controller user={lastPath}/>
                 </Container>
               </section>
             </Grid>

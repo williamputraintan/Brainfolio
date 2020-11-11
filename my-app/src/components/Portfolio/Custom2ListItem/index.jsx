@@ -7,6 +7,7 @@ import { format, parseISO  } from "date-fns";
 const useStyles = makeStyles( theme => ({
   root:{
     paddingTop:theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   title:{
     fontWeight: 700,

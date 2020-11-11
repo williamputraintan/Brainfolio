@@ -17,15 +17,11 @@ import Paths from "../utils/path";
 
 
 //Lazy Import
-// const AboutUs = React.lazy(() => import('../pages/AboutUs.jsx'));
 const ProjectPage = React.lazy(() => import('../pages/ProjectPage.jsx'));
 const Portfolio = React.lazy(() => import('../pages/PortfolioPage.jsx'));
 const AuthenticatedRoute = React.lazy(() => import('../controllers/AuthenticatedRoute.jsx'));
 const EditingPage = React.lazy(() => import('../pages/EditPage.jsx'));
 const ProjectDetail =  React.lazy(() => import('../pages/ProjectPage.jsx'));
-
-
-
 
 /** Component to load stuff before rendering UI
  *  App -> Load theme -> AppLoader -> Load user fromDatabase ->...

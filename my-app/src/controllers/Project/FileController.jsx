@@ -10,7 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Container, Typography } from '@material-ui/core';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import PictureAsPdfIcon from '../../pages/Project/Images/pdf.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +21,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 256,
     Height: 300
     // backgroundColor: theme.palette.background.paper,
+  },
+  text:{
+    fontWeight: 700,
+    fontSize: "0.875rem",
+    fontStyle: "italic",
+    color: theme.palette.text.secondary,
+    float: "left"
   },
   // gridList: {
   //   flexWrap: 'nowrap',
@@ -63,7 +70,9 @@ export default function SingleLineGridList(projectDisplay) {
       <Typography variant="h4" className={classes.fileLabel}>
         Files
       </Typography>
-      <Grid container className={classes.file} spacing={4}>
+
+      { files.length ?
+      (<Grid container className={classes.file} spacing={4}>
         {files.map((file) => (
           <Grid item key={file} xs={12} sm={4} md={4}>
             <CardAnimation>
@@ -72,7 +81,7 @@ export default function SingleLineGridList(projectDisplay) {
                 component="img"
                 alt={file[0]}
                 height="216"
-                image={(file[0].slice(-3))==="pdf" ? <PictureAsPdfIcon/> : file[1]}
+                image={(file[0].slice(-3))==="pdf" ? PictureAsPdfIcon : file[1]}
                 title= {file[1]}
               />
               <CardContent 
@@ -96,7 +105,13 @@ export default function SingleLineGridList(projectDisplay) {
             </CardAnimation>
           </Grid>
         ))}
-      </Grid>
+      </Grid>):
+        <Grid item xs={12}>
+          <Typography className={classes.text}>
+            No file available.
+          </Typography>
+        </Grid>
+    }
 
     </Grid>
   );

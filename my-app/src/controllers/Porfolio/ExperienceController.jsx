@@ -8,6 +8,7 @@ import ExperienceListItem from "../../components/Portfolio/ExperienceListItem"
 import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
 import SkeletonCard from "../../common/SkeletonCard";
+import CardEmpty from "../../common/CardEmpty";
 
 
 const useStyles = makeStyles( theme => ({
@@ -34,6 +35,8 @@ function ExperienceController(props) {
 
   const [loading, setLoading] = useState(true);
   const [experience, setExperience] = useState([]);
+  const [work, setWork] = useState([]);
+  const [volunteer, setVolunteer] = useState([]);
 
   React.useEffect(() => {
     setLoading(true);
@@ -45,8 +48,14 @@ function ExperienceController(props) {
       .then(response => {
         const data = response?.data;
         if(data) setExperience(data);
+        const work = data.filter(item => item.type === "Work")
+        const volunteer = data.filter(item => item.type == "Volunteer") 
+        setWork(work)
+        setVolunteer(volunteer)
         
-        console.log(data)
+        console.log("EXPPPP",data)
+        console.log("WORKKK", work)
+        console.log("Volunterrrr", volunteer)
       })
     
     setLoading(false);
@@ -58,13 +67,15 @@ function ExperienceController(props) {
   },[user])
 
   return (
-    <div id="experience">
+
+    experience.length?
+    (<div id="experience">
       <CardAccent  className={classes.root} color={accentColor}>
         <Typography className={classes.title} variant="h4" gutterBottom> Experience</Typography>
 
         {
           loading? <SkeletonCard/>:
-          experience.map( (value,key)=> {
+          work.map( (value,key)=> {
             return(
               <>
                 {
@@ -79,7 +90,30 @@ function ExperienceController(props) {
             )
           })
         }
+        {
+          loading? <SkeletonCard/>:
+          volunteer.map( (value,key)=> {
+            return(
+              <>
+                {
+                  (key === experience.length - 1) ?
+                    <ExperienceListItem key={key} data={value}/>:
+                    <div key={key}>
+                      <ExperienceListItem key={key} data={value}/>
+                      <Divider />
+                    </div>
+                }
+              </>
+            )
+          })
+        }
+      </CardAccent>
+    </div>):
 
+    <div id="experience">
+      <CardAccent  className={classes.root} color={accentColor}>
+        <Typography className={classes.title} variant="h4" gutterBottom> Experience</Typography>
+      <CardEmpty text="You have not entered any experience :("/>
       </CardAccent>
     </div>
   )

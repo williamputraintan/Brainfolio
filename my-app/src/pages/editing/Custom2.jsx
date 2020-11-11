@@ -84,30 +84,34 @@ export default function Custom2() {
       
     }
     
+    // Set Section Title
     function resetSectionTitle(title){
       setSectionTitle(title);
       setFormDisable(false);
     }
     
+    // Reset form fields
     function resetForm(){
       setFormDisable(false);
       setFields({ ...initialState });
       setEditId(null);
-      // setWarning(false);
     }
 
+    // Get the Section title
     function getSectionTitle(){
       AxiosInstance.get('edit/custom/sectiontitle/custom2',config)
       .then(res=>setSectionTitle(res.data.sectionTitle))
       .catch(error=>console.log(error));
     }
 
+    // Get the section items
     function getSectionItems(){
       AxiosInstance.get('edit/custom',config)
       .then(res=>getCustomTwo(res.data))
       .catch(error=>console.log(error));
     }
 
+    // Get this section's items
     function getCustomTwo(res){
       var customTwo=[]
       for (var i = 0, len = res.length; i < len; i++) {
@@ -118,6 +122,7 @@ export default function Custom2() {
       setExistingData(customTwo);
     }
 
+    // Handle entry editing
     const myEditCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.get("/edit/custom/"+idReceived,config)
@@ -128,6 +133,7 @@ export default function Custom2() {
       setEditId(idReceived);
     }
 
+    // Handle entry deletion
     const myDeleteCallback = (idReceived) => {
       setFormDisable(false);
       AxiosInstance.delete("/edit/custom/"+idReceived,config)
@@ -173,17 +179,17 @@ export default function Custom2() {
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
+                      <Grid item xs={12} sm={12}>
                         <Button
-                          type="submit"
-                          variant="contained"
-                          className={classes.submit}
-                          alignItems='center'
-                          color='primary'
-                          onClick={event=>handleTitleSubmit(event)}
-                        >
+                        disabled={formDisable}
+                        type="submit"
+                        variant="contained" 
+                        color="secondary" 
+                        onClick={event=>handleTitleSubmit(event)}>
                           Save Title
                           {formDisable?<CircularProgress color="secondary" size={20}/>:null}
                         </Button>
+                      </Grid>
                       </Grid>
                       <div><h3>Items </h3></div>
                       <Grid item xs={12} sm={12}>
@@ -198,7 +204,6 @@ export default function Custom2() {
                           name="itemTitle"
                           onChange={onInputChange}  
                           value={fields.itemTitle}               
-
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -213,7 +218,6 @@ export default function Custom2() {
                           name="itemSubTitle"
                           onChange={onInputChange}    
                           value={fields.itemSubTitle}               
-
                           />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -230,7 +234,6 @@ export default function Custom2() {
                           multiline
                           row={3}
                           value={fields.description}               
-
                           />
                       </Grid>              
                     </Grid>

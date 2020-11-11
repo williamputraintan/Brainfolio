@@ -1,3 +1,4 @@
+//field names of each section
 const profileFields = {
     "title": "Title",
     "fullName": "Full Name",

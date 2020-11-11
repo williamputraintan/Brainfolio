@@ -17,23 +17,22 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
     },
     submit: {
-        backgroundColor:theme.palette.primary.main,
-        fontFamily:theme.typography.fontFamily,
-        margin: theme.spacing(3, 0, 2),
-        justifyContent: 'center',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-            color: '#4C516D'
-          },
+      backgroundColor:theme.palette.primary.main,
+      fontFamily:theme.typography.fontFamily,
+      margin: theme.spacing(3, 0, 2),
+      justifyContent: 'center',
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.main,
+        color: '#4C516D'
+        }
     },
     field:{
-        marginBottom:"3%",
-        fontWeight:600
-        
+      marginBottom:"3%",
+      fontWeight:600
     },
     cardRoot: {
-        minWidth: 235,
-        padding:'2%',
+      minWidth: 235,
+      padding:'2%',
     },
     formContainer:{
       [theme.breakpoints.up('sm')]:{
@@ -45,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
       },
       marginBottom:'3%',
     },
- 
     listContainer:{
       [theme.breakpoints.up('sm')]:{
         width:'40%',
@@ -120,14 +118,13 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 22
       }
     },
-    
     fieldSubtitle:{
-        marginTop:'1%',
-        paddingLeft:'2%',
-        fontWeight:600 ,
-        [theme.breakpoints.up('sm')]:{
-          fontSize: 18
-        }
+      marginTop:'1%',
+      paddingLeft:'2%',
+      fontWeight:600 ,
+      [theme.breakpoints.up('sm')]:{
+        fontSize: 18
+      }
     },
     fieldInfo:{
       display:'inline',
@@ -147,9 +144,7 @@ const useStyles = makeStyles((theme) => ({
         width :'65%', 
         float:"right"
       }
-    },
-
-   
+    }
 }));
   
 export { useStyles };

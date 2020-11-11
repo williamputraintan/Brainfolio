@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   brand: {
-    height: 48
+    height: '5em',
   },
   activeLink:{
     color: `${theme.palette.primary.main}!important`

@@ -54,13 +54,12 @@ export default function Projects() {
 
     // fields form
     const [fields, setFields] = React.useState({
-      // _id:"",
       isPublic:true,
-      // title: "",
-      // startDate:"",
-      // endDate:"",
-      // description:"",
-      // youtubeLink: "",
+      title: "",
+      startDate:"",
+      endDate:"",
+      description:"",
+      youtubeLink: "",
       contributor:[],
       projectFileName:[]
     })
@@ -157,7 +156,8 @@ export default function Projects() {
     const myCallback = (idReceived) => {
       AxiosInstance.get("projects/item/"+idReceived, config)
       .then(res=>{
-        setFields(res.data)
+        setFields(res.data);
+        setOnGoing(res.data.onGoing);
         }
       )
       .catch(error=>
@@ -206,6 +206,10 @@ export default function Projects() {
         }
         formData.append(key, fields[key]);
       }
+
+      //Setting on going fields
+      formData.append('onGoing',onGoing);
+
       //Setting files to delete
       for(let eachFile of filesToDelete){
         formData.append('filesToDelete',eachFile)
@@ -339,7 +343,7 @@ export default function Projects() {
                               type="date"
                               name="startDate"
                               onChange={onFormInputChange} 
-                              // value={convertISOtoYMD(fields.startDate)}       
+                              value={convertISOtoYMD(fields.startDate)}       
                             />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -352,7 +356,7 @@ export default function Projects() {
                               type="date"
                               name="endDate"
                               onChange={onFormInputChange} 
-                              // value={convertISOtoYMD(fields.endDate)}        
+                              value={convertISOtoYMD(fields.endDate)}        
                             />
                       </Grid>
 
