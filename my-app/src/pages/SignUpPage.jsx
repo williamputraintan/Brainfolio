@@ -18,7 +18,7 @@ import SignUpNext from "../controllers/SignUpFlow/SignUpNext";
 import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
 import Paths from '../utils/path';
 import SignUpFinal from '../controllers/SignUpFlow/SignUpFinal';
-import WelcomeImage from "../Assets/images/welcome/welcome1.png"
+import WelcomeImage from "../Assets/images/welcome/welcome3.png"
 
 
 const useStyles = makeStyles((theme) => ({

@@ -17,7 +17,6 @@ import Paths from "../../../utils/path";
 
 
 
-const Contact = React.lazy(() => import('../../../pages/editing/Contact'));
 const Education = React.lazy(() => import('../../../pages/editing/Education'));
 const Skills = React.lazy(() => import('../../../pages/editing/Skills'));
 const Experience = React.lazy(() => import('../../../pages/editing/Experience'));

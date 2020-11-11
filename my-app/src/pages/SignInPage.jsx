@@ -8,14 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Slide } from '@material-ui/core';
 
 import SignInForm from "../controllers/SignInForm";
-
-
-
-
-//
-
-
-let welcomeImage = require("../Assets/images/welcome/welcome"+(Math.floor(Math.random() * 5)+1).toString()+".png");
+import WelcomeImage from "../Assets/images/welcome/welcome2.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   image: {
-    backgroundImage: `url(${welcomeImage})`,
+    backgroundImage: `url(${WelcomeImage})`,
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
