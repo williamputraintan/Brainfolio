@@ -36,13 +36,21 @@ function EducationListItem(props) {
   const classes = useStyles();
 
   function showDate(data) {
-    if (data.startDate && data.endDate) {
+    //end date is not on going
+    if (data.startDate && data.endDate && !data.onGoing) {
       return(
         <Typography className={classes.subTitle} variant="body1" gutterBottom>
           {format(parseISO(data.startDate), "MMMM yyyy")} 
           &nbsp;&nbsp; - &nbsp;&nbsp; 
           {format(parseISO(data.endDate), "MMMM yyyy")}
         </Typography>)
+    }//end date is on going
+    else if(data.startDate&& data.onGoing){
+      return(
+      <Typography className={classes.subTitle} variant="body1" gutterBottom>
+      {format(parseISO(data.startDate), "MMMM yyyy")} 
+      &nbsp;&nbsp; - On Going
+    </Typography>)
     }
     return (<></>)
   }

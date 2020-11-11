@@ -161,11 +161,17 @@ export default function DoubleTypeInfo(props) {
 
   // handle value
   function handleValue(key,value,res){
-      if(key==="startDate" || key==="endDate"){
-          return handleDate(value);
-      } else{
-          return value;
-      }
+    if(key==="startDate" || key==="endDate"){
+        return handleDate(value);
+    } else if(key==='isPublic'){
+        if (value===true){
+            return "Public"
+        }else{
+            return "Private"
+        }
+    }else{
+        return value;
+    }
   }
 
   return (

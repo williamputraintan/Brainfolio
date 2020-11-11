@@ -107,7 +107,13 @@ export default function PopupInfo(props) {
   function handleValue(key,value,res){
     if(key==="startDate" || key==="endDate"){
         return handleDate(value);
-    } else{
+    } else if(key==='isPublic'){
+        if (value===true){
+            return "Public"
+        }else{
+            return "Private"
+        }
+    }else{
         return value;
     }
   }
