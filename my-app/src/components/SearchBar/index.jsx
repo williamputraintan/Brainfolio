@@ -83,14 +83,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const data = [{
-  username: "dadasda",
-  email:"dsadasdas"
-},{
-  username: "dadasda",
-  email:"dsadasdas"
-}]
-
 function SearchBar() {
   const [search, setSearch] = React.useState("");
   const [data, setData] = React.useState([]);

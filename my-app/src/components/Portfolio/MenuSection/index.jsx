@@ -6,7 +6,6 @@ import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import SchoolIcon from '@material-ui/icons/School';
 import WorkIcon from '@material-ui/icons/Work';
 import DescriptionIcon from '@material-ui/icons/Description';
-import Typography from '@material-ui/core/Typography';
 import { HashLink } from 'react-router-hash-link';
 
 

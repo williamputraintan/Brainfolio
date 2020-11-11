@@ -7,14 +7,11 @@ import Paths from "../utils/path";
 
 import EditPage from "../pages/EditPage";
 
-import firebase from "../utils/firebase.js";
-
 const AllProjectPage = React.lazy(() => import('../pages/AllProjectPage.jsx'));
 
 
 function AuthenticatedRoute() {
   const {state} = useContext(StoreContext);
-  const username = state.user.username;
   const history = useHistory();
   const {pathname} = useLocation();
 

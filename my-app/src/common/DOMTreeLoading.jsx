@@ -1,5 +1,5 @@
 import React from 'react';
-import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
+import { lighten, makeStyles } from '@material-ui/core/styles';
 import { motion, AnimatePresence } from "framer-motion"
 
 

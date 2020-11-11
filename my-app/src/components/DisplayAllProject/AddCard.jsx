@@ -4,20 +4,8 @@ import { StoreContext } from '../../context/store.context';
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton';
 import {history} from '../../utils/BrowserHistory';
-import Paths from "../../utils/path";
-
-const useStyles = makeStyles({
-  root: {
-    width: 345,
-  },
-  media: {
-    height: 140,
-  },
-});
-
 
 export default function AddCard() {
-    const classes = useStyles();
     const {state} = useContext(StoreContext);
     const username = state.user?.username
 

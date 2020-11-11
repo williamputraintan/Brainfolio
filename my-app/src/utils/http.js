@@ -1,4 +1,3 @@
-import Axios from "./axios";
 import AxiosInstance from "./axios";
 import { history } from './BrowserHistory';
 import Paths from './path';

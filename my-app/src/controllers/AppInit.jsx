@@ -1,6 +1,6 @@
-import React, {useEffect, Suspense} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Switch,  Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch,  Route} from 'react-router-dom';
 import { StoreContext } from '../context/store.context';
 
 
@@ -12,7 +12,6 @@ import NavbarController from "../controllers/NavbarController";
 
 import firebase from '../utils/firebase';
 import { persistUser,setUserLoading } from "../context/actions/auth.actions";
-import MessageSnackbar from "../common/Snackbar";
 import Paths from "../utils/path";
 
 

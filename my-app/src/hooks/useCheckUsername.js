@@ -1,8 +1,6 @@
-import React, {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react'
 import Axios from "axios";
 
-
-const baseUrl = "https://testdockerprod123.herokuapp.com"
 
 const useCheckUsername = (path,body) => {
   const [loading, setLoading] = useState(false);

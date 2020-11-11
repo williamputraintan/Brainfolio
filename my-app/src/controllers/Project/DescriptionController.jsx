@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
-import {Grid ,Avatar, Button} from '@material-ui/core';
+import React from 'react';
+import {Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CardAccent from "../../common/CardAccent";
-import AxiosInstance from "../../utils/axios";
 
 const useStyles = makeStyles( theme => ({
   root: {

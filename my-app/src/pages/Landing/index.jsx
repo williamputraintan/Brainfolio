@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import Hero from "./hero";
 import Steps from "./Steps";
 import Logo from "../../Assets/SVG/Logo.jsx";
-import { motion, useViewportScroll } from "framer-motion";
+import { useViewportScroll } from "framer-motion";
 
 import Team from "./Team";
 

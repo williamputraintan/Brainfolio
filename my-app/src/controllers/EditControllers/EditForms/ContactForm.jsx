@@ -6,10 +6,8 @@ import { useForm } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 
 import Visibility from './Visibility'
-import FormTitle from "../../../common/FormTitle";
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -32,9 +30,6 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Axios from "axios";
 import SuccessAlert from '../../../components/EditDialog/index';
-
-import { UPDATE_USER } from "../../../context/constants";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,7 +100,7 @@ const getLastPath = (path) => path.split("/").slice(-1);
 // TODO: Validation and Hooks
 function ContactForm() {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext);
+  const { state} = useContext(StoreContext);
 
   const [fields, setFields] = React.useState(initialState);
   const { register, errors, handleSubmit } = useForm();

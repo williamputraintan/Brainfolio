@@ -10,7 +10,6 @@ import LogoDark from "../../Assets/images/Logo/LogoDark.png";
 import NavAvatar from "../NavbarAvatar";
 import Paths from "../../utils/path";
 import firebase from "../../utils/firebase";
-import {getFirebaseError} from "../../utils/firebaseErrors";
 import SearchBar from "../SearchBar";
 
 const useStyles = makeStyles((theme) => ({

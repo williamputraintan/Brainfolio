@@ -18,9 +18,6 @@ import AxiosInstance from "../utils/axios";
 import SkeletonCard from "../common/SkeletonCard";
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { setUserLoading } from '../context/actions/auth.actions';
-
-
 
 //Lazy - Load components
 

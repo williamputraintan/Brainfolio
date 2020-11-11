@@ -1,15 +1,13 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import Card from '@material-ui/core/Card';
 // import CardAccent from "../../common/CardAccent";
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { useSpring, animated } from 'react-spring'
-
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles ,createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 

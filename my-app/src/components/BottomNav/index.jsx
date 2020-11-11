@@ -5,7 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import NavbarAvatar from "../NavbarAvatar";
 import { NavLink as RouterLink, useHistory } from 'react-router-dom';
 import Link from '@material-ui/core/Link';

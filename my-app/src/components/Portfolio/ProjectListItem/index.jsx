@@ -1,11 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { format, parseISO  } from "date-fns";
 import { useHistory, useLocation } from "react-router-dom";
-import {StoreContext} from "../../../context/store.context";
 import Paths from "../../../utils/path";
 
 
@@ -51,7 +49,6 @@ function ProjectListItem(props) {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const {state} = useContext(StoreContext);
 
   console.log("_id", data._id);
   function projectLinkClick(){

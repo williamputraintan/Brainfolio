@@ -8,11 +8,6 @@ import AxiosInstance from "../../utils/axios";
 import axios from 'axios'
 import SkeletonCard from "../../common/SkeletonCard";
 
-const data = {
-  softSkills: [ "Leadership", "Logic"],
-  technicalSkills:["React.js", "Nest.js"]  
-}
-
 const useStyles = makeStyles( theme => ({
   root: {
     padding: theme.spacing(2),
@@ -64,11 +59,6 @@ function SkillController(props) {
 
   const { user } = props;
   const [loading, setLoading] = useState(true);
-  const [skills, setSkills] = useState({
-    technicalSkills: [],
-    softSkills: []
-  });
-
   const [technicalSkills, setTechnical] = useState([])
   const [softSkills, setSoft] = useState([])
 

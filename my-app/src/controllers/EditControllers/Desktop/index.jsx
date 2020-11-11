@@ -5,25 +5,16 @@ import Grid from '@material-ui/core/Grid';
 import { StoreContext } from '../../../context/store.context';
 import Container from '@material-ui/core/Container';
 
-
-
-import { useTrail, animated } from 'react-spring';
-import { Route, Switch, withRouter, Redirect } from "react-router";
-import Paper from '@material-ui/core/Paper';
-
+import { withRouter } from "react-router";
 
 import TypographyTitle from "../../../common/SectionTitle";
 
 import Paths from "../../../utils/path";
 
-
 import EditPageTabs from "../../../components/EditingTabs/TabWrapper";
 import EditPageTab from "../../../components/EditingTabs/Tab";
 
 import FormDataLayout from "../FormDataLayout";
-
-
-
 
 const indexToTabName = {
   0: "contact",
@@ -58,9 +49,7 @@ function EditDesktop(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const { history, location, match } = props;
-  const { params } = match
-
+  const { history } = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

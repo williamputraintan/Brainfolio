@@ -1,4 +1,4 @@
-import React, { useState, useContext ,useEffect} from 'react';
+import React, { useContext ,useEffect} from 'react';
 import { StoreContext } from '../../context/store.context';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -77,7 +77,7 @@ export default function Custom1() {
       else{
         AxiosInstance.post('edit/custom/item',{username: state.user.username,...fields},config)
         .then((res)=> {
-          if(res.status == 200 || res.status == 201){
+          if(res.status === 200 || res.status === 201){
             setAlertSuccess(true)
             resetForm()
           }

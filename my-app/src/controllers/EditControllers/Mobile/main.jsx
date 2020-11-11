@@ -7,7 +7,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withRouter, Route  } from "react-router-dom";
 
-import EditLayout from "../Mobile/EditLayout";
 import Grid from '@material-ui/core/Grid';
 import SlideLayout from "../Mobile/SlideLayout";
 
@@ -63,8 +62,7 @@ const tabNames = Object.values(indexToTabName);
 function EditMobile(props) {
   const classes = useStyles();
   const { history, location } = props;
-  const { pathname } = location;
-
+  
   const navigateToPage = (e, item) => {
     history.push(`${location.pathname}/${item}`)
   }

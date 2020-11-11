@@ -20,14 +20,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const MOBILE_BREAKPOINTS = 600;
-
-
 function EditingPage(props) {
 
   const windowWidth = useWindowWidth();
   const classes = useStyles();
-  const {state,dispatch} = React.useContext(StoreContext);
+  const {state} = React.useContext(StoreContext);
   const { user } = state;
 
   return (

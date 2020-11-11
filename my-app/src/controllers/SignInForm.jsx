@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,10 +9,10 @@ import GoogleButton from "../common/GoogleButton";
 import Copyright from "../common/Copyright";
 import Paths from "../utils/path";
 import { StoreContext } from '../context/store.context';
-import { NavLink as RouterLink, useHistory } from 'react-router-dom';
+import { NavLink as RouterLink} from 'react-router-dom';
 
 import { useDebouncedCallback  } from 'use-debounce'
-import { setUserLoading, signInUser} from "../context/actions/auth.actions";
+import { signInUser} from "../context/actions/auth.actions";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -33,8 +32,7 @@ function SignInController(props) {
 
   const classes = useStyles();
   const {dispatch} = React.useContext(StoreContext);
-  
-  const history = useHistory();
+
 
   const [fields, setFields] = React.useState({
     email: "",

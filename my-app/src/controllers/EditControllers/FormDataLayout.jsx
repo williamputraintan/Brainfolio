@@ -1,6 +1,6 @@
 import React , {Suspense} from 'react';
 import Paper from '@material-ui/core/Paper';
-import { Route, Switch, useLocation,useHistory, Redirect} from "react-router";
+import { Route, Switch, useLocation} from "react-router";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -48,12 +48,7 @@ function FormDataLayout(props) {
 
   const classes = useStyles();
   const { pathname } = useLocation();
-  const history = useHistory();
-
   React.useEffect(() =>{
-    // if(pathname === ""){
-
-    // }
     console.log(pathname)
   },[])
 

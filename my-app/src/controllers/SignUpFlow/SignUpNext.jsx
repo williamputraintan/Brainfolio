@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDebouncedCallback  } from 'use-debounce';
-import { setUsername as postUsername, setUserLoading } from "../../context/actions/auth.actions";
+import { setUsername as postUsername } from "../../context/actions/auth.actions";
 import { StoreContext } from '../../context/store.context';
 import useCheckUsername from "../../hooks/useCheckUsername";
 import Chip from '@material-ui/core/Chip';

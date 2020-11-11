@@ -1,26 +1,16 @@
-import React, {useRef, useContext, useState, Suspense} from 'react'
-import {Grid ,Avatar, Button} from '@material-ui/core';
+import React, { useContext, useState, Suspense} from 'react'
+import {Grid} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { format, parseISO  } from "date-fns";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
-import {useParams} from "react-router";
 
 // Dark Mode imports
-import DarkTheme from "../utils/theme/DarkTheme";
-import MinimalTheme from "../utils/theme/MinimalTheme"
-import { makeStyles ,createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles} from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import { borders } from '@material-ui/system';
-import Box from '@material-ui/core/Box';
 
 
 import AxiosInstance from "../utils/axios";
-import Link from '@material-ui/core/Link';
 import axios from 'axios'
 
 import SkeletonCard from "../common/SkeletonCard";
@@ -100,9 +90,6 @@ function ProjectController() {
 
   const { pathname } = useLocation();
   console.log("Pathname "+ pathname);
-
-  const theme = useTheme();
-  
 
   console.log("USRRR "+ JSON.stringify(state));
   const [project,setProject] = useState({

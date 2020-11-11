@@ -109,7 +109,7 @@ export default function Education() {
         else{
           AxiosInstance.post('/edit/education',finalFields,config)
           .then((res)=> {
-            if(res.status == 200 || res.status == 201){
+            if(res.status === 200 || res.status === 201){
               setAlertSuccess(true)
               resetForm()
             }
