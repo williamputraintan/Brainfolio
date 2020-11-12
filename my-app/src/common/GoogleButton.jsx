@@ -30,10 +30,11 @@ function GoogleButton(props) {
   function onGoogleSignIn(e){
     e.preventDefault();
     setUserLoading(dispatch,true);
-
+    console.log('google signin bugged1')
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(function() {
       const provider = new firebase.auth.GoogleAuthProvider();
+      console.log('google signin bugged2')
       return firebase.auth().signInWithRedirect(provider);
     })
     .catch(function(error) {

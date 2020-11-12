@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect , useContext} from 'react';
+import { StoreContext } from '../../context/store.context';
 import Axios from "axios";
 
 const pathUrl = "https://testdockerprod123.herokuapp.com/public/education"
@@ -7,7 +8,10 @@ const useEducationAPI = (user) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState([]);
-
+  const {state} = useContext(StoreContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.user.token}` }
+  };
   useEffect(() => {
     setError(false);
     setLoading(true);
@@ -15,7 +19,8 @@ const useEducationAPI = (user) => {
     
     (async () => {
       try{
-        const response = await Axios.get(`${pathUrl}/${user}`)
+
+        const response = await Axios.get(`${pathUrl}/${user}`, config)
         const data = response?.data;
         if(data) setData(data);
         setLoading(false);

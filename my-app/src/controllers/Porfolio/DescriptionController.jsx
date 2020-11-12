@@ -19,12 +19,11 @@ const useStyles = makeStyles( theme => ({
 const accentColor =  "#f44336";
 function DescriptionController(props) {
   const { user } = props;
-  const classes = useStyles();
-  const {state} = useContext(StoreContext);
   const [description, setDescription] = useState([]);
-
+  const {state} = useContext(StoreContext);
+  const classes = useStyles();
   const config = {
-    headers: { Authorization: `Bearer ${state.token}` }
+    headers: { Authorization: `Bearer ${state.user.token}` }
   };
   
   React.useEffect(() => {

@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react';
+import { StoreContext } from '../../context/store.context';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
 import Typography from '@material-ui/core/Typography';
@@ -32,14 +33,17 @@ function ProjectController(props) {
 
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-
+  const {state} = useContext(StoreContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.user.token}` }
+  };
   React.useEffect(() => {
     setLoading(true);
     const source = axios.CancelToken.source();
    
 
     AxiosInstance
-      .get(`/public/allproject/${user}`)
+      .get(`/public/allproject/${user}`, config)
       .then(response => {
         // const { data } = response;
         // setProjects(data);

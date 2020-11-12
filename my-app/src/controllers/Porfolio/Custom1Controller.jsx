@@ -40,7 +40,7 @@ function Custom1Controller(props) {
   const classes = useStyles();
   const {state} = useContext(StoreContext);
   const config = {
-    headers: { Authorization: `Bearer ${state.token}` }
+    headers: { Authorization: `Bearer ${state.user.token}` }
   };
 
   const { user } = props;

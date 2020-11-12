@@ -2,7 +2,7 @@ import firebase from 'firebase';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPDHZUaN2WC2-ub3G3LTwHvRqv3f9pe_c",
-  authDomain: "https://brainfolio-1faf6.firebaseapp.com",
+  authDomain: "brainfolio-1faf6.firebaseapp.com",
   databaseURL: "https://brainfolio-1faf6.firebaseio.com",
   projectId: "brainfolio-1faf6",
   storageBucket: "brainfolio-1faf6.appspot.com",

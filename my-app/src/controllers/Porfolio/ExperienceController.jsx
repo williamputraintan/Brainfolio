@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react';
+import { StoreContext } from '../../context/store.context';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CardAccent from "../../common/CardAccent";
@@ -37,14 +38,17 @@ function ExperienceController(props) {
   const [experience, setExperience] = useState([]);
   const [work, setWork] = useState([]);
   const [volunteer, setVolunteer] = useState([]);
-
+  const {state} = useContext(StoreContext);
+  const config = {
+    headers: { Authorization: `Bearer ${state.user.token}` }
+  };
   React.useEffect(() => {
     setLoading(true);
     const source = axios.CancelToken.source();
    
 
     AxiosInstance
-      .get(`/public/experience/${user}`)
+      .get(`/public/experience/${user}`, config)
       .then(response => {
         const data = response?.data;
         if(data) setExperience(data);

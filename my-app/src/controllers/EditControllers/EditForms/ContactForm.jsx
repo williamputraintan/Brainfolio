@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useState, useContext} from 'react'
 import { StoreContext } from '../../../context/store.context';
 
 import { useForm } from "react-hook-form";
@@ -12,8 +12,9 @@ import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import InputAdornment from '@material-ui/core/InputAdornment';
-
-
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachmentIcon from '@material-ui/icons/Attachment';
@@ -100,8 +101,15 @@ const getLastPath = (path) => path.split("/").slice(-1);
 // TODO: Validation and Hooks
 function ContactForm() {
   const classes = useStyles();
-  const { state} = useContext(StoreContext);
 
+  const [existingData,setExistingData] = useState([]);
+  const [editId, setEditId] = React.useState(null);
+  const [formDisable,setFormDisable]= React.useState(false);
+  const [warning,setWarning] = React.useState(false);
+  const [buttonClick, setButtonClick] = React.useState(false)
+
+
+  const { state} = useContext(StoreContext);
   const [fields, setFields] = React.useState(initialState);
   const { register, errors, handleSubmit } = useForm();
 
@@ -109,10 +117,11 @@ function ContactForm() {
 
   React.useEffect(() => {
     const source = Axios.CancelToken.source();
-    console.log(state.user)
+
     setFields({
       ...fields,
       isDarkMode: state.user.darkMode,
+      isPublic: String(state.user.profile.isPublic),
       displayEmail: state.user.profile.email || state.user.email,
       title: state.user.profile.title || "",
       fullname: state.user.profile.fullname || "",
@@ -138,9 +147,10 @@ function ContactForm() {
     for(const [key,value] of Object.entries(fields)){
       formData.append(key,value)
     }
+    console.log(formData)
 
     Axios
-      .post("https://testdockerprod123.herokuapp.com/v2/edit/profile/save",
+      .post("http://localhost:5000/v2/edit/profile/save",
       formData,
         {
           headers:{
@@ -193,6 +203,7 @@ function ContactForm() {
       backgroundFile: e.target.files[0]
     }) 
   }
+  
   const [alertSuccess, setAlertSuccess] = React.useState(false);
   function closeAlert(){
     setAlertSuccess(false);
@@ -227,19 +238,17 @@ function ContactForm() {
           </Grid>
 
           <Grid item xs={6}>
-            <FormControlLabel
-                className={classes.switchLabel}
-                control={
-                  <Switch
-                    checked={fields.isPublic || false}
-                    onChange={onCheckedChange}
-                    name="isPublic"
-                    color="primary"
-                  />
-                }
-                labelPlacement="start"
-                label="Public"
-              />
+          <InputLabel id="privacylabel">Privacy</InputLabel>
+            <Select
+              labelId="privacy"
+              value={fields.isPublic}
+              className={classes.select}
+              name='isPublic'
+              onChange={onInputChange}
+            >
+              <MenuItem value={true}>Public</MenuItem>
+              <MenuItem value={false}>Private</MenuItem>
+            </Select>
           </Grid>
 
 

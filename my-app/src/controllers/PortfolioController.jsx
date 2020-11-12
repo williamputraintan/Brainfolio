@@ -1,4 +1,6 @@
-import React, {useRef, useState, Suspense} from 'react'
+import React, {useRef, useState, useContext, Suspense} from 'react'
+import { StoreContext } from '../context/store.context';
+
 import {Grid ,Avatar, Button} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import SectionMenu from "../components/Portfolio/MenuSection"; 
@@ -142,7 +144,11 @@ const useStyles = makeStyles((theme) => ({
 
 function PortfolioController() {
   
+  const {state} = useContext(StoreContext);
   const classes = useStyles();
+  const config = {
+    headers: { Authorization: `Bearer ${state.user.token}` }
+  };
   const backgroundRef = useRef(null);
 
   const { pathname } = useLocation();
@@ -165,10 +171,10 @@ function PortfolioController() {
 
   React.useEffect(() => {
     const source = axios.CancelToken.source();
-   
+    console.log(config)
 
     AxiosInstance
-      .get(`/public/profile/${lastPath}`)
+      .get(`/public/profile/${lastPath}`, config)
       .then(response => {
         const data = response?.data;
         const user = response?.data.user;
