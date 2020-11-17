@@ -77,7 +77,7 @@ function ProjectController(props) {
         </CardAccent> ):
         <CardAccent  className={classes.root} color={accentColor}>
           <Typography className={classes.title} variant="h4" gutterBottom> Projects</Typography>
-          <CardEmpty text="There is no project you have uploaded currently"/>
+          <CardEmpty text="The user has not uploaded any project currently."/>
         </CardAccent>
       }
     </div>

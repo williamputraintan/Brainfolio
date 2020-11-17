@@ -70,7 +70,7 @@ function ProjectListItem(props) {
       return(
       <Typography className={classes.subTitle} variant="body1" gutterBottom>
       {format(parseISO(data.startDate), "MMMM yyyy")} 
-      &nbsp;&nbsp; - On Going
+      &nbsp;&nbsp; - &nbsp;&nbsp;Present
     </Typography>)
     }
     return (<></>)

@@ -114,7 +114,7 @@ function SkillController(props) {
                   </div>):
                   <div>
                     <Typography className={classes.text}>
-                      You have not entered any tech skills.
+                      The user has not entered any tech skill.
                     </Typography>
                   </div>
                 }
@@ -133,7 +133,7 @@ function SkillController(props) {
                     </div>):
                     <div>
                       <Typography className={classes.text}>
-                      You have not entered any Soft skills.
+                      The user has not entered any soft skill.
                     </Typography>
                     </div>
                 }

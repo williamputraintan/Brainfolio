@@ -12,6 +12,12 @@ const useStyles = makeStyles( theme => ({
   },
   title:{
     fontWeight: 700
+  },
+  text:{
+    fontWeight: 700,
+    fontSize: "0.875rem",
+    fontStyle: "italic",
+    color: theme.palette.text.secondary
   }
 }));
 
@@ -38,34 +44,36 @@ function DescriptionController(props) {
 
   // const [description, setDescription] = useState("Lorem ipsum dolor amet")
 
-  if ((description == undefined)) {
-    return (<></>);
-  };
-  if ((description.length) < 1) {
-    return (
-      <>
-      </>
-    )
-  }
+  // if ((description == undefined)) {
+  //   return (<></>);
+  // };
+  // if ((description.length) < 1) {
+  //   return (
+  //     <>
+  //     </>
+  //   )
+  // }
   return (
 
     
     <div>
       <CardAccent className={classes.root} color={accentColor}>
       {
-        description.length?
+        ((description==undefined) || description.length)?
         (  <div>
           <Typography className={classes.title} variant="h4" gutterBottom> Description</Typography>
-            <Typography variant="body1">
-              {description}
+            <Typography className={classes.text} variant="body1">
+              <b>The user has not entered any description.</b>
           </Typography>
           <br/>
-          </div>):
+          </div>):(
           <div>
-            <Typography className={classes.text}>
-            There is no description here.
+            <Typography className={classes.title} variant="h4" gutterBottom> Description</Typography>
+            <Typography variant="body1">
+            {description}
           </Typography>
           </div>
+          )
       }
       </CardAccent>
       

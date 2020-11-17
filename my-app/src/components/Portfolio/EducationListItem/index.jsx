@@ -14,7 +14,12 @@ const useStyles = makeStyles( theme => ({
   },
   title:{
     fontWeight: 700,
-    fontSize: "1.333rem"
+    fontSize: "1.333rem",
+    [theme.breakpoints.down('sm')]: {
+      display: "block",
+      justifyContent: "column",
+      marginBottom: theme.spacing(0)
+    }
   },
   subTitle:{
     fontWeight: 700,
@@ -53,7 +58,7 @@ function EducationListItem(props) {
       return(
       <Typography className={classes.subTitle} variant="body1" gutterBottom>
       {format(parseISO(data.startDate), "MMMM yyyy")} 
-      &nbsp;&nbsp; - On Going
+      &nbsp;&nbsp; - &nbsp;&nbsp;Present
     </Typography>)
     }
     return (<></>)
@@ -76,10 +81,13 @@ function EducationListItem(props) {
       </Typography>
    
       
-      
-      <Typography className={classes.desc}  variant="h3" gutterBottom>
+      { data.score ?
+      (<Typography className={classes.desc}  variant="h3" gutterBottom>
           Score: {data.score}
       </Typography>
+      ):
+      (<></>)
+      }
       </div>
   )
 }

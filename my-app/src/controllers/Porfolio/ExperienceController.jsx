@@ -117,7 +117,7 @@ function ExperienceController(props) {
     <div id="experience">
       <CardAccent  className={classes.root} color={accentColor}>
         <Typography className={classes.title} variant="h4" gutterBottom> Experience</Typography>
-      <CardEmpty text="You have not entered any experience :("/>
+      <CardEmpty text="The user has not entered any experience."/>
       </CardAccent>
     </div>
   )

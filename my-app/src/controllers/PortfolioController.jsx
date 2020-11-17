@@ -229,9 +229,9 @@ function PortfolioController() {
                   <Typography className={classes.name} color="inherit" variant="h3"> {profile.fullname||profile.username}</Typography>
                   {profile.title && <Typography className={classes.caption} variant="h5"> {profile.title}</Typography>}
                   <br/>
-                  {profile.address && <Typography className={classes.details} > Location: {profile.address} </Typography>}
                   {profile.phone && <Typography className={classes.details} > Ph.: {profile.phone} </Typography>}
-                  {profile.email && <Typography className={classes.details} > Email:{profile.email}</Typography>}
+                  {profile.email && <Typography className={classes.details} > Email: {profile.email}</Typography>}
+                  {profile.address && <Typography className={classes.details} > Address: {profile.address} </Typography>}
                 </div>
               </Grid>
             </Grid>
