@@ -236,22 +236,30 @@ function PortfolioController() {
               </Grid>
             </Grid>
             <Paper className={classes.actionCenter} elevation={1} square>
-            <Button
+            {/* show button if there is linkedIn profile */}
+            {profile.linkedIn?
+              (<Button
               color="primary"
               className={classes.button}
               startIcon={<LinkedInIcon />}
-              href= {profile.linkedIn}
-            >
+              href= {`https://${profile.linkedIn}`}
+              >
               LinkedIn
-            </Button>
-            <Button
-              color="primary"
-              className={classes.button}
-              startIcon={<GitHubIcon />}
-              href= {profile.github}
-            >
-              Github
-            </Button>
+              </Button>):
+              (<></>)
+            }
+            {/* show button if there is github profile */}
+            {profile.github?
+              (<Button
+                color="primary"
+                className={classes.button}
+                startIcon={<GitHubIcon />}
+                href= {`https://${profile.github}`}
+              >
+                Github
+              </Button>):
+              (<></>)
+            }
             </Paper>
             <Grid container item xs={12} wrap='nowrap'>
               {matches && <SectionMenu />}
