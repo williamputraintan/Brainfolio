@@ -172,8 +172,8 @@ export default function Custom2() {
                           variant="outlined"
                           fullWidth
                           id="sectionTitle"
-                          placeholder="Section Title"
-                          value={sectionTitleFinal?sectionTitleFinal:null}
+                          placeholder={sectionTitleFinal?sectionTitleFinal:"Section Title"}
+                          value={fields.sectionTitle}
                           autoFocus
                           onChange={onInputChange}                  
                           />
