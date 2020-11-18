@@ -34,13 +34,20 @@ Brainfolio is a digital portfolio web app developed with NestJS and ReactJS
 
 
 
-
 [![CircleCI](https://circleci.com/gh/warmnuances/Brainfolio-prod/tree/testBranch.svg?style=shield&circle-token=5c717fc9b0423e3af7ff084ca0c91e3b497c21e3)](https://testdockerprod123.herokuapp.com/swagger)
 
 
 ## Links
-Backend Github Link -  <link> #Note: Test cases description and scripts are in this link. 
-(Maybe make the backend repo public or invite catherine, but most possibly make public - Andrew)
+### App
+
+**Backend** - https://testdockerprod123.herokuapp.com/swagger/
+**Frontend** - https://brainfolio.herokuapp.com/
+
+### Repo
+
+**Backend** - https://github.com/warmnuances/Brainfolio-prod
+**Frontend** - https://github.com/wintan123/Brainfolio
+
 
 ## Tech Stack
 **NestJS** - Intially, we picked .NetCore to have a taste of enterprise development. However, the lack of libraries in the .NetCore forced us to seek another solution. NestJS turns out to be that perfect solution as it support Dependency Injection used in enterprise solutions such as Spring Boot and .Net. We applied service repostiory pattern design in our code. 
