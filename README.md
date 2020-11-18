@@ -22,9 +22,8 @@ Brainfolio is a digital portfolio web app developed with NestJS and ReactJS
 
 ### Functionalities
 ![Project Display](https://github.com/wintan123/Brainfolio/blob/prod/screenshots/ProjectsDisplay.gif)
-**Profile Visibility**
 ![Private Profile](https://github.com/wintan123/Brainfolio/blob/prod/screenshots/privateProfile.gif)
-
+**Profile Visibility**
 
 ## Mobile
 <p float="left">
