@@ -40,13 +40,13 @@ Brainfolio is a digital portfolio web app developed with NestJS and ReactJS
 ## Links
 ### App
 
-**Backend** - https://testdockerprod123.herokuapp.com/swagger/
-**Frontend** - https://brainfolio.herokuapp.com/
+**Backend** - https://testdockerprod123.herokuapp.com/swagger/  
+**Frontend** - https://brainfolio.herokuapp.com/  
 
 ### Repo
 
-**Backend** - https://github.com/warmnuances/Brainfolio-prod
-**Frontend** - https://github.com/wintan123/Brainfolio
+**Backend** - https://github.com/warmnuances/Brainfolio-prod  
+**Frontend** - https://github.com/wintan123/Brainfolio  
 
 
 ## Tech Stack
