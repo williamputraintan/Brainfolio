@@ -49,7 +49,6 @@ function FormDataLayout(props) {
   const classes = useStyles();
   const { pathname } = useLocation();
   React.useEffect(() =>{
-    console.log(pathname)
   },[])
 
 

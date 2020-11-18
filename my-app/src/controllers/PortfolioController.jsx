@@ -171,7 +171,7 @@ function PortfolioController() {
 
   React.useEffect(() => {
     const source = axios.CancelToken.source();
-    console.log(config)
+
 
     AxiosInstance
       .get(`/public/profile/${lastPath}`, config)

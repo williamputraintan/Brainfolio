@@ -101,7 +101,6 @@ function SearchBar() {
         .then(res => {
           if(res.data){
             setData(res.data)
-            console.log(res.data)
           }
           setLoading(false)
         }).catch(err =>{
@@ -126,10 +125,8 @@ function SearchBar() {
   // );
 
   const classes = useStyles();
-  console.log(loading)
 
   function navigateToProject(e, args){
-    console.log(args)
     history.push("/app/portfolio/"+ args)
     setSearch("")
     setData([])

@@ -89,9 +89,7 @@ function ProjectController() {
   // };
 
   const { pathname } = useLocation();
-  console.log("Pathname "+ pathname);
 
-  console.log("USRRR "+ JSON.stringify(state));
   const [project,setProject] = useState({
     contributor: [],
     projectFileName: [],
@@ -139,7 +137,6 @@ function ProjectController() {
     //       backgroundRef.current.style.backgroundColor = `url(backgroundImageName)`;
     //     }
       })
-    console.log("PORJ "+project)
     return () => {
       source.cancel(
         "Canceled because of component unmounted"

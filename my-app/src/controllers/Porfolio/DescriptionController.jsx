@@ -37,7 +37,6 @@ function DescriptionController(props) {
     .get(`/public/profile/${user}`, config)
     .then(res => {
       setDescription(res.data.user.profile.description)
-        console.log("dESCCC ",res.data.user.profile)
       })
 
   },[])

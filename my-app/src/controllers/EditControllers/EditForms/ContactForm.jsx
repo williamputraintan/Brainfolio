@@ -147,7 +147,6 @@ function ContactForm() {
     for(const [key,value] of Object.entries(fields)){
       formData.append(key,value)
     }
-    console.log(formData)
 
     Axios
      .post("https://testdockerprod123.herokuapp.com/v2/edit/profile/save",
@@ -187,7 +186,6 @@ function ContactForm() {
   
   function onAvatarUpload(e){
     e.preventDefault();
-    console.log("Avatar", e.target.files[0])
     setFields({
       ...fields,
       avatarFile: e.target.files[0]
@@ -197,7 +195,6 @@ function ContactForm() {
   
   function onBackgroundUpload(e){
     e.preventDefault();
-    console.log("Background",e.target.files[0])
     setFields({
       ...fields,
       backgroundFile: e.target.files[0]

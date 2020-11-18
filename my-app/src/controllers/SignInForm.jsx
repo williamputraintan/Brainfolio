@@ -62,7 +62,6 @@ function SignInController(props) {
 
     const {email, password} = fields;
 
-    console.log("dasdas")
     signInUser(dispatch, email, password)
   }
 

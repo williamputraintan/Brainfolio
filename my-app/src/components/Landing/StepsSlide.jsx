@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 function Slide(props) {
   const classes = useStyles();
   const data = props?.data;
-  console.log(data)
   
 
   return (

@@ -91,7 +91,6 @@ function BottomNavigationbar(props) {
 
   const closeSearch = () => {
     setOpen(true);
-    console.log("Close")
   }
 
   return (

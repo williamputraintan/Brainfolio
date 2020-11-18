@@ -92,7 +92,6 @@ export const getUserFromDb = async (dispatch, idToken) => {
     })
 
     const data = response.data;
-    console.log(data)
 
     if(data){
 
@@ -169,7 +168,7 @@ export const signUpUser = async (dispatch, email, password) => {
     const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
     if(user){
       const idToken = await firebase.auth().currentUser.getIdToken(true);
-      console.log(idToken);
+
       await getUserFromDb(dispatch, idToken);
     }
     

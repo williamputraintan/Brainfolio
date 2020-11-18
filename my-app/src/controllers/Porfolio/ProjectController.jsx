@@ -49,7 +49,6 @@ function ProjectController(props) {
         // setProjects(data);
         const data = response?.data;
         if(data) setProjects(data);
-        console.log(response)
       })
     
     setLoading(false);

@@ -60,7 +60,6 @@ function Custom1Controller(props) {
         // const { data } = response;
         // setProjects(data);
         const data = response?.data;
-        console.log("dataaaa", data)
 
         if(data) {
           setCustom(data.custom1.data);
@@ -84,8 +83,6 @@ function Custom1Controller(props) {
       )
     }
 
-  console.log("CUSTOM1:",custom);
-  console.log("SECTION ", sectionTitle);
   return (
     <CardAccent className={classes.root} color={accentColor}>
       <Typography className={classes.label} variant="h4" gutterBottom>

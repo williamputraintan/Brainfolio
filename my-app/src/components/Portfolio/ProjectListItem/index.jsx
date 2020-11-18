@@ -50,7 +50,6 @@ function ProjectListItem(props) {
   const { pathname } = useLocation();
 
 
-  console.log("_id", data._id);
   function projectLinkClick(){
     const username = pathname.split("/")?.pop();
     if(username){

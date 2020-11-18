@@ -72,7 +72,6 @@ function NavAvatar(props) {
 
   React.useEffect(() => {
     setMode(darkMode)
-    // console.log(user.profile.profileImage)
 
     return () =>{
       setAnchorEl(null)

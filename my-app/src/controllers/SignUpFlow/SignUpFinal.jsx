@@ -114,13 +114,11 @@ function SignUpFinal(props) {
     formData.append("background",fields.background);
 
 
-    console.log("Fields", fields)
     uploadProfileImages(formData,state.user.token);
   }
 
   function onAvatarUpload(e){
     e.preventDefault();
-    console.log(e.target.files[0])
     if(avatarEl){
       avatarEl.current.style.display = "block";
 

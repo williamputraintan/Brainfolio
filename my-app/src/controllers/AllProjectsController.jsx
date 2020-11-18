@@ -120,7 +120,7 @@ export default function DisplayAllProjectsController() {
           
           const responseData = response.data;
           setAllProjects(responseData);
-          console.log(responseData);
+
         })
       },[]);
       // const transitions = useTransition(allProjects, item => item.key, {

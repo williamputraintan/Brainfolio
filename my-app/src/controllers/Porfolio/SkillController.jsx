@@ -81,7 +81,7 @@ function SkillController(props) {
         const soft = data.filter(item => item.category == "Soft") 
         setTechnical(technical)
         setSoft(soft)
-        console.log("Data euyy", data)
+
       })
     
     setLoading(false);

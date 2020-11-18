@@ -24,7 +24,6 @@ const useEducationAPI = (user) => {
         const data = response?.data;
         if(data) setData(data);
         setLoading(false);
-        console.log(data)
       }
       catch(err){
         console.log(err)

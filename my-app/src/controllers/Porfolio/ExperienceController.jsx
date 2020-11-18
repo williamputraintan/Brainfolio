@@ -1,3 +1,4 @@
+
 import React, {useState, useContext} from 'react';
 import { StoreContext } from '../../context/store.context';
 import Typography from '@material-ui/core/Typography';
@@ -57,9 +58,6 @@ function ExperienceController(props) {
         setWork(work)
         setVolunteer(volunteer)
         
-        console.log("EXPPPP",data)
-        console.log("WORKKK", work)
-        console.log("Volunterrrr", volunteer)
       })
     
     setLoading(false);
