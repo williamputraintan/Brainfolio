@@ -158,7 +158,7 @@ function NavAvatar(props) {
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <Link className={classes.links} component={RouterLink} to={Paths.EDIT_PORTFOLIO}>Settings</Link>
+          <Link className={classes.links} component={RouterLink} to={`${Paths.EDIT_PORTFOLIO}/${state.user.username}/contact`}>Settings</Link>
         </MenuItem>
 
 
