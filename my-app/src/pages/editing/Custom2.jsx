@@ -62,7 +62,7 @@ export default function Custom2() {
       setFormDisable(true);
       //Handle Edit custom entry
       if(editId!=null){
-        AxiosInstance.put('edit/custom/item',{username: state.user.username,...fields},config)
+        AxiosInstance.put('edit/custom/'+editId,{username: state.user.username,...fields},config)
         .then((res)=> {
           if(res.status === 200 || res.status === 201){
             setAlertSuccess(true)
