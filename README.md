@@ -2,9 +2,9 @@
 
 
 <p float="left">
-  ![DarkMode](https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif)
-  ![DarkMode](https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif)
-  ![DarkMode](https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif)
+  <img src="https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif" width="100" />
+  <img src="https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif" width="100" />
+  <img src="https://github.com/wintan123/Brainfolio/blob/prod/screenshots/DarkMode.gif" width="100" />
 </p>
 
 <p align="center">
