@@ -89,7 +89,7 @@ This can be found in our docs file (include https://drive.google.com/drive/folde
 ## Things we think we did well
 **Adopting TypeScript for the backend** - Catching compile time errors helped in saving time during deployment and improved the overall developer experience
 
-**Code-splitting** - Lazy loading components improved the overall performance of the app. We did a lighthouse test and saw an improvement of **16** for performance score to the **90** range.
+**Code-splitting** - Lazy loading components improved the overall performance of the app. We did a lighthouse test and saw an improvement of **16** for performance score to the **80** range.
 
 ## Lessons Learnt
 1) **Unnecassary Rerenders** - This project uses React Context for global state management and the lack of state slicing **(See [reselect](https://stackoverflow.com/questions/59741558/implement-useselector-equivalent-for-react-context))** really causes unneccessary rerenders. We should have adopted redux from the start.
