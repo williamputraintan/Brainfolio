@@ -83,7 +83,7 @@ This can be found in our docs file (include https://drive.google.com/drive/folde
 4. Architecture diagram
 5. User Stories and personas
 6. Whodobefeel and motivational model
-7. UML Diagram (Missing, need to make a new updated one)
+7. UML Diagram
 8. Change Log: Sprint Retrospective
 
 ## Things we think we did well
