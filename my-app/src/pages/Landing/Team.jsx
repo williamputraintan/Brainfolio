@@ -23,26 +23,26 @@ const members = [
     description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
-    name: "Patricia",
-    title: "Full Stack Engineer",
+    name: "Patricia Budiman",
+    title: "Front-end Engineer",
     imageUrl: womanAvatar,
     description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
-    name: "Franklin",
-    title: "Full Stack Engineer",
+    name: "Franklin Darmansa",
+    title: "Front-end Engineer",
     imageUrl: manAvatar,
     description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
-    name: "William",
-    title: "Full Stack Engineer",
+    name: "William Intan",
+    title: "Back-end Engineer",
     imageUrl: manAvatar,
     description: "Final semester computing and software systems student at the University of Melbourne."
   },
   {
-    name: "Andrew",
-    title: "Full Stack Engineer",
+    name: "Andrew Tjen",
+    title: "Back-end Engineer",
     imageUrl: manAvatar,
     description: "Final semester data science student at the University of Melbourne."
   },
