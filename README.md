@@ -97,7 +97,7 @@ This can be found in our docs file. <br>The files include:
 3) **Folder structure and code design** - As we code more and more , we discovered more effecient ways of reusing code logic and structuring code.
 
 ## Final Commit
-Commit id: 7c1d3b671d02ae9f88a26237a31bbd6372b4877d
+Commit id: 42e6095ef00ae88fe443219972420812be01fef8
 
 ## Note:
 Please give it some time when openning the app, the server is located in united states and heroku have a cold open system when you open the app for the first time. 
