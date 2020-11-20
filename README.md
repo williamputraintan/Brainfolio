@@ -76,7 +76,7 @@ Steps to recreate production such as: (cd, npm install, npm start, runs on local
 **Front-end** - Create a performant 
 
 ## Documentation
-This can be found in our docs file (include https://drive.google.com/drive/folders/1aHxL7sSejj5TpGqYbi4OyQU4PPwtCi-L?usp=sharing into our repository if possible). Files include:
+This can be found in our docs file. <br>The files include:
 
 1. Backend File Layers
 2. Front end File Layers
