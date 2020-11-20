@@ -96,3 +96,5 @@ This can be found in our docs file. <br>The files include:
 1) **Unnecassary Rerenders** - This project uses React Context for global state management and the lack of state slicing **(See [reselect](https://stackoverflow.com/questions/59741558/implement-useselector-equivalent-for-react-context))** really causes unneccessary rerenders. We should have adopted redux from the start.
 3) **Folder structure and code design** - As we code more and more , we discovered more effecient ways of reusing code logic and structuring code.
 
+## Final Commit
+Commit id: 7c1d3b671d02ae9f88a26237a31bbd6372b4877d
