@@ -84,7 +84,8 @@ This can be found in our docs file (include https://drive.google.com/drive/folde
 5. User Stories and personas
 6. Whodobefeel and motivational model
 7. UML Diagram
-8. Change Log: Sprint Retrospective
+9. System Architecture
+10. Change Log: Sprint Retrospective
 
 ## Things we think we did well
 **Adopting TypeScript for the backend** - Catching compile time errors helped in saving time during deployment and improved the overall developer experience
@@ -95,4 +96,3 @@ This can be found in our docs file (include https://drive.google.com/drive/folde
 1) **Unnecassary Rerenders** - This project uses React Context for global state management and the lack of state slicing **(See [reselect](https://stackoverflow.com/questions/59741558/implement-useselector-equivalent-for-react-context))** really causes unneccessary rerenders. We should have adopted redux from the start.
 3) **Folder structure and code design** - As we code more and more , we discovered more effecient ways of reusing code logic and structuring code.
 
-## Change Log
