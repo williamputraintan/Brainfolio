@@ -98,3 +98,6 @@ This can be found in our docs file. <br>The files include:
 
 ## Final Commit
 Commit id: 7c1d3b671d02ae9f88a26237a31bbd6372b4877d
+
+## Note:
+Please give it some time when openning the app, the server is located in united states and heroku have a cold open system when you open the app for the first time. 
