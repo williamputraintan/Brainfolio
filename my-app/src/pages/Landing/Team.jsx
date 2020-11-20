@@ -11,35 +11,40 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
-
+import womanAvatar from "../../Assets/images/Avatar/icon1.svg";
+import manAvatar from "../../Assets/images/Avatar/icon2.png";
 
 
 const members = [
   {
     name: "Hanson Lynn",
     title: "Full Stack Engineer",
-    imageUrl: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    imageUrl: manAvatar,
+    description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
     name: "Patricia",
     title: "Full Stack Engineer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    imageUrl: womanAvatar,
+    description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
     name: "Franklin",
     title: "Full Stack Engineer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    imageUrl: manAvatar,
+    description: "Final year computing and software systems student at the University of Melbourne."
   },
   {
     name: "William",
     title: "Full Stack Engineer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    imageUrl: manAvatar,
+    description: "Final semester computing and software systems student at the University of Melbourne."
   },
   {
     name: "Andrew",
     title: "Full Stack Engineer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    imageUrl: manAvatar,
+    description: "Final semester data science student at the University of Melbourne."
   },
 
 ];
@@ -147,9 +152,9 @@ function Team() {
                       </Typography>
                      
                     </CardContent>
-                    <CardActions>
+                    {/* <CardActions>
                       <Button size="small">View More</Button>
-                    </CardActions>
+                    </CardActions> */}
                   </Card>
                 </Grid>
               )
